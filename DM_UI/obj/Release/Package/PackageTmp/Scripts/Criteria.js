@@ -68,7 +68,7 @@ $(function () {
         setMultipleSelect();
     });
     $(_criteria_btnSearch).click(function () {
-
+        //debugger;
         if ($(_criteria_txtTemplateName).val().trim() == null
             || $(_criteria_txtTemplateName).val().trim() == '' && !$(_criteria_ddlTemplateName).is(':visible')) {
             alert('Please enter template name');

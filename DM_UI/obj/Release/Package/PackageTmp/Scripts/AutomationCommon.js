@@ -1,24 +1,16 @@
 ﻿
 //----------------------------------------------------------------------Automation-----------------------------------------------------------
 
-function GetTemplateList() {
+
+function LoadDataTemplate(value, callback) {
+
     $.ajax({
         type: "GET",
         url: baseUrl + "api/AutomatAPI/GetTemplateList",
-        data: { client_Id: $("#hdnClientId").val(), Project_Id: $("#hdnProjectId").val(), Type: "Transformation" },
-        dataType: "json",
-        success: function (Result) {
-            $('#select_existing_Template').append($('<option>').text("Select"));
-            $.each(Result, function (index, value) {
-                var template = value.split(':');
-                var tempname = template[0];
-                var tempid = template[1];
-                if (tempname != '')
-                    $('#select_existing_Template').append($('<option>').text(tempname).val(tempid));
-            });
-        }
+        data: { client_Id: $("#hdnClientId").val(), Project_Id: $("#hdnProjectId").val(), Type: value },
+        dataType: 'json',
+        success: callback
     });
-
 }
 
 function LoadSourceTarget(value, callback) {
@@ -53,4 +45,6 @@ function GetTransformationType() {
         }
     });
 }
+
+
 

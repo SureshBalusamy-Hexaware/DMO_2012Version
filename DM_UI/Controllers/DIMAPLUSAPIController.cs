@@ -423,7 +423,8 @@ namespace DM_UI.Controllers
             string _ClientID = UIProperties.Sessions.Client.Client_ID;
             string _ProjectID = UIProperties.Sessions.Client.project_ID;
 
-            List<DIMAPLUSCriteriaEntity> _Purge = _dimaplus.GetDeleteList(page, rows, _ClientID, _ProjectID, Convert.ToInt32(TemplateId), Convert.ToInt32(Run_ID), ref StatusCode, ref Message);
+            List<DIMAPLUSCriteriaEntity> _Purge = _dimaplus.GetDeleteList(page, rows, _ClientID, _ProjectID, Convert.ToInt32(TemplateId), 
+                Convert.ToInt32(Run_ID), ref StatusCode, ref Message);
             if (_Purge.Count <= 0) return null;
             var result = new
             {

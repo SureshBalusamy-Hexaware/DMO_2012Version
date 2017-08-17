@@ -127,7 +127,18 @@
         });
 
 
-        GetTemplateList();
+        LoadDataTemplate('Transformation', function (data) {
+            $('#select_existing_Template').html('');
+            $('#select_existing_Template').append($('<option>').text("Select"));
+            $.each(data, function (index, value) {
+                var template = value.split(':');
+                var tempname = template[0];
+                var tempid = template[1];
+                // if (tempname != '')
+                $('#select_existing_Template').append($('<option>').text(tempname).val(tempid));
+            });
+        });
+
         GetTransformationType();
 
         LoadSourceTarget('SOURCE', function (data) {
