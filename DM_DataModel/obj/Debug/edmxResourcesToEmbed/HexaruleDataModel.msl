@@ -1,0 +1,1161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DM_MetaDataModelStoreContainer" CdmEntityContainer="DM_MetaDataEntities">
+    <FunctionImportMapping FunctionImportName="HXR_INSERT_METADATA_INFO_SP" FunctionName="DM_MetaDataModel.Store.HXR_INSERT_METADATA_INFO_SP" />
+    <FunctionImportMapping FunctionImportName="HXR_GET_TABLE_COLUMN_LIST_SP" FunctionName="DM_MetaDataModel.Store.HXR_GET_TABLE_COLUMN_LIST_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.HXR_GET_TABLE_COLUMN_LIST_SP_Result">
+          <ScalarProperty Name="Column_Name" ColumnName="Column_Name" />
+          <ScalarProperty Name="Data_Type" ColumnName="Data_Type" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="HXR_GET_TABLES_LIST_SP" FunctionName="DM_MetaDataModel.Store.HXR_GET_TABLES_LIST_SP" />
+    <FunctionImportMapping FunctionImportName="HXR_ALLOCATE_RULE_ATTRIBUTE_SP" FunctionName="DM_MetaDataModel.Store.HXR_ALLOCATE_RULE_ATTRIBUTE_SP" />
+    <FunctionImportMapping FunctionImportName="PRC_TO_CREATE_PROC" FunctionName="DM_MetaDataModel.Store.PRC_TO_CREATE_PROC" />
+    <FunctionImportMapping FunctionImportName="HXR_ACTIVATE_RULE_ATTRIBUTE_SP" FunctionName="DM_MetaDataModel.Store.HXR_ACTIVATE_RULE_ATTRIBUTE_SP" />
+    <FunctionImportMapping FunctionImportName="HXR_GET_ERROR_DESC_SP" FunctionName="DM_MetaDataModel.Store.HXR_GET_ERROR_DESC_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.HXR_GET_ERROR_DESC_SP_Result">
+          <ScalarProperty Name="Error_code" ColumnName="Error_code" />
+          <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
+          <ScalarProperty Name="Error_Description" ColumnName="Error_Description" />
+          <ScalarProperty Name="Active_Flag" ColumnName="Active_Flag" />
+          <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+          <ScalarProperty Name="Last_Modified_Date" ColumnName="Last_Modified_Date" />
+          <ScalarProperty Name="last_Modified_By" ColumnName="last_Modified_By" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="HXR_GET_RULE_CATEGORY_SP" FunctionName="DM_MetaDataModel.Store.HXR_GET_RULE_CATEGORY_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.HXR_GET_RULE_CATEGORY_SP_Result">
+          <ScalarProperty Name="RuleCategory_ID" ColumnName="RuleCategory_ID" />
+          <ScalarProperty Name="RuleCategory_Name" ColumnName="RuleCategory_Name" />
+          <ScalarProperty Name="RuleCategory_Desc" ColumnName="RuleCategory_Desc" />
+          <ScalarProperty Name="Active_Flag" ColumnName="Active_Flag" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="HXR_UPDATE_RULE_ATTRIBUTE_SP" FunctionName="DM_MetaDataModel.Store.HXR_UPDATE_RULE_ATTRIBUTE_SP" />
+    <FunctionImportMapping FunctionImportName="HXR_VALIDATE_COLUMN_SP" FunctionName="DM_MetaDataModel.Store.HXR_VALIDATE_COLUMN_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.HXR_VALIDATE_COLUMN_SP_Result">
+          <ScalarProperty Name="column_name" ColumnName="column_name" />
+          <ScalarProperty Name="data_type" ColumnName="data_type" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="HXR_GET_RULE_TYPE_SP" FunctionName="DM_MetaDataModel.Store.HXR_GET_RULE_TYPE_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.HXR_GET_RULE_TYPE_SP_Result">
+          <ScalarProperty Name="RuleType_ID" ColumnName="RuleType_ID" />
+          <ScalarProperty Name="RuleType_Name" ColumnName="RuleType_Name" />
+          <ScalarProperty Name="RuleType_Desc" ColumnName="RuleType_Desc" />
+          <ScalarProperty Name="Active_Flag" ColumnName="Active_Flag" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="HXR_GET_RULE_SP" FunctionName="DM_MetaDataModel.Store.HXR_GET_RULE_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.HXR_GET_RULE_SP_Result">
+          <ScalarProperty Name="Rule_ID" ColumnName="Rule_ID" />
+          <ScalarProperty Name="Rule_Name" ColumnName="Rule_Name" />
+          <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
+          <ScalarProperty Name="Active_Flag" ColumnName="Active_Flag" />
+          <ScalarProperty Name="Start_Date" ColumnName="Start_Date" />
+          <ScalarProperty Name="End_Date" ColumnName="End_Date" />
+          <ScalarProperty Name="Default_value" ColumnName="Default_value" />
+          <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+          <ScalarProperty Name="Last_Modified_Date" ColumnName="Last_Modified_Date" />
+          <ScalarProperty Name="Last_Modified_By" ColumnName="Last_Modified_By" />
+          <ScalarProperty Name="Rule_Description" ColumnName="Rule_Description" />
+          <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
+          <ScalarProperty Name="Conditional_Clause" ColumnName="Conditional_Clause" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="HXR_INSERT_RULE_ATTRIBUTE_SP" FunctionName="DM_MetaDataModel.Store.HXR_INSERT_RULE_ATTRIBUTE_SP" />
+    <FunctionImportMapping FunctionImportName="HXR_GET_RULE_VALIDATION_SP" FunctionName="DM_MetaDataModel.Store.HXR_GET_RULE_VALIDATION_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.HXR_GET_RULE_VALIDATION_SP">
+          <ScalarProperty Name="VAL" ColumnName="VAL" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="DIMA_DELETE_MAPPING_MS_SP" FunctionName="DM_MetaDataModel.Store.DIMA_DELETE_MAPPING_MS_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.DIMA_DELETE_MAPPING_MS_SP_Result" />
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="DIMA_UPDATE_TABLE_TYPE_SP" FunctionName="DM_MetaDataModel.Store.DIMA_UPDATE_TABLE_TYPE_SP" />
+    <FunctionImportMapping FunctionImportName="HXR_GET_RULE_ATTRIBUTE_FOR_DISPLAY_SP" FunctionName="DM_MetaDataModel.Store.HXR_GET_RULE_ATTRIBUTE_FOR_DISPLAY_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.HXR_GET_RULE_ATTRIBUTE_FOR_DISPLAY_SP_Result">
+          <ScalarProperty Name="Attribute_Rule_ID" ColumnName="Attribute_Rule_ID" />
+          <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
+          <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
+          <ScalarProperty Name="Rule_ID" ColumnName="Rule_ID" />
+          <ScalarProperty Name="Rule_Name" ColumnName="Rule_Name" />
+          <ScalarProperty Name="Rule_Description" ColumnName="Rule_Description" />
+          <ScalarProperty Name="RuleType_ID" ColumnName="RuleType_ID" />
+          <ScalarProperty Name="RuleType_Name" ColumnName="RuleType_Name" />
+          <ScalarProperty Name="RuleType_Desc" ColumnName="RuleType_Desc" />
+          <ScalarProperty Name="RuleCategory_ID" ColumnName="RuleCategory_ID" />
+          <ScalarProperty Name="RuleCategory_Name" ColumnName="RuleCategory_Name" />
+          <ScalarProperty Name="RuleCategory_Desc" ColumnName="RuleCategory_Desc" />
+          <ScalarProperty Name="Error_Code" ColumnName="Error_Code" />
+          <ScalarProperty Name="Error_Description" ColumnName="Error_Description" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="Table_Name" ColumnName="Table_Name" />
+          <ScalarProperty Name="Column_Name" ColumnName="Column_Name" />
+          <ScalarProperty Name="Default_Value" ColumnName="Default_Value" />
+          <ScalarProperty Name="Conditional_Clause" ColumnName="Conditional_Clause" />
+          <ScalarProperty Name="Priority" ColumnName="Priority" />
+          <ScalarProperty Name="Reference_Table" ColumnName="Reference_Table" />
+          <ScalarProperty Name="Reference_Column" ColumnName="Reference_Column" />
+          <ScalarProperty Name="Reference_Cond" ColumnName="Reference_Cond" />
+          <ScalarProperty Name="Start_Date" ColumnName="Start_Date" />
+          <ScalarProperty Name="End_Date" ColumnName="End_Date" />
+          <ScalarProperty Name="Version_No" ColumnName="Version_No" />
+          <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+          <ScalarProperty Name="Last_Modified_Date" ColumnName="Last_Modified_Date" />
+          <ScalarProperty Name="Last_Modified_By" ColumnName="Last_Modified_By" />
+          <ScalarProperty Name="Rule_Desc" ColumnName="Rule_Desc" />
+          <ScalarProperty Name="Data_Steward" ColumnName="Data_Steward" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="RPT_GET_REPORT_DETAILS_SP" FunctionName="DM_MetaDataModel.Store.RPT_GET_REPORT_DETAILS_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.RPT_GET_REPORT_DETAILS_SP_Result">
+          <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
+          <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
+          <ScalarProperty Name="Tool_ID" ColumnName="Tool_ID" />
+          <ScalarProperty Name="Report_ID" ColumnName="Report_ID" />
+          <ScalarProperty Name="Report_Name" ColumnName="Report_Name" />
+          <ScalarProperty Name="Report_Display_Name" ColumnName="Report_Display_Name" />
+          <ScalarProperty Name="Report_Description" ColumnName="Report_Description" />
+          <ScalarProperty Name="Report_Server_Path" ColumnName="Report_Server_Path" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="COMMON_GET_TABLE_LIST_SP" FunctionName="DM_MetaDataModel.Store.COMMON_GET_TABLE_LIST_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.COMMON_GET_TABLE_LIST_SP_Result">
+          <ScalarProperty Name="Table_Name" ColumnName="Table_Name" />
+          <ScalarProperty Name="Database_name" ColumnName="Database_name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="PROFILER_GET_TABLE_DETAILS_SP" FunctionName="DM_MetaDataModel.Store.PROFILER_GET_TABLE_DETAILS_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.PROFILER_GET_TABLE_DETAILS_SP_Result">
+          <ScalarProperty Name="Table_Name" ColumnName="Table_Name" />
+          <ScalarProperty Name="Column_Name" ColumnName="Column_Name" />
+          <ScalarProperty Name="data_type" ColumnName="data_type" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="PROFILER_GET_TEMPLATE_SP" FunctionName="DM_MetaDataModel.Store.PROFILER_GET_TEMPLATE_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.PROFILER_GET_TEMPLATE_SP_Result">
+          <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
+          <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
+          <ScalarProperty Name="Template_Name" ColumnName="Template_Name" />
+          <ScalarProperty Name="Table_Name" ColumnName="Table_Name" />
+          <ScalarProperty Name="Column_Name" ColumnName="Column_Name" />
+          <ScalarProperty Name="Data_Type" ColumnName="Data_Type" />
+          <ScalarProperty Name="Null_Ratio_Profile" ColumnName="Null_Ratio_Profile" />
+          <ScalarProperty Name="Statistics_Profile" ColumnName="Statistics_Profile" />
+          <ScalarProperty Name="Value_Distribution_Profile" ColumnName="Value_Distribution_Profile" />
+          <ScalarProperty Name="Length_Distribution_Profile" ColumnName="Length_Distribution_Profile" />
+          <ScalarProperty Name="Pattern_Profile" ColumnName="Pattern_Profile" />
+          <ScalarProperty Name="Candidate_Key_Profile" ColumnName="Candidate_Key_Profile" />
+          <ScalarProperty Name="Profiling_Status" ColumnName="Profiling_Status" />
+          <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+          <ScalarProperty Name="Created_By" ColumnName="Created_By" />
+          <ScalarProperty Name="Modified_Date" ColumnName="Modified_Date" />
+          <ScalarProperty Name="Modified_By" ColumnName="Modified_By" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="PROFILER_INSERT_TEMPLATE_SP" FunctionName="DM_MetaDataModel.Store.PROFILER_INSERT_TEMPLATE_SP" />
+    <FunctionImportMapping FunctionImportName="PROFILER_UPDATE_TEMPLATE_SP" FunctionName="DM_MetaDataModel.Store.PROFILER_UPDATE_TEMPLATE_SP" />
+    <FunctionImportMapping FunctionImportName="COMMON_GET_META_DATA_SP" FunctionName="DM_MetaDataModel.Store.COMMON_GET_META_DATA_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.COMMON_GET_META_DATA_SP_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
+          <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
+          <ScalarProperty Name="Config_ID" ColumnName="Config_ID" />
+          <ScalarProperty Name="Database_IP" ColumnName="Database_IP" />
+          <ScalarProperty Name="Source_Target" ColumnName="Source_Target" />
+          <ScalarProperty Name="Table_Catalog" ColumnName="Table_Catalog" />
+          <ScalarProperty Name="Table_Schema" ColumnName="Table_Schema" />
+          <ScalarProperty Name="Table_Name" ColumnName="Table_Name" />
+          <ScalarProperty Name="Column_Name" ColumnName="Column_Name" />
+          <ScalarProperty Name="Ordinal_Position" ColumnName="Ordinal_Position" />
+          <ScalarProperty Name="Key_column" ColumnName="Key_column" />
+          <ScalarProperty Name="Field_Data" ColumnName="Field_Data" />
+          <ScalarProperty Name="Constraint_Type" ColumnName="Constraint_Type" />
+          <ScalarProperty Name="Column_Default" ColumnName="Column_Default" />
+          <ScalarProperty Name="Is_Nullable" ColumnName="Is_Nullable" />
+          <ScalarProperty Name="Data_Type" ColumnName="Data_Type" />
+          <ScalarProperty Name="Data_precision" ColumnName="Data_precision" />
+          <ScalarProperty Name="Data_scale" ColumnName="Data_scale" />
+          <ScalarProperty Name="Character_Set_Catalog" ColumnName="Character_Set_Catalog" />
+          <ScalarProperty Name="Character_Set_Schema" ColumnName="Character_Set_Schema" />
+          <ScalarProperty Name="Character_Set_Name" ColumnName="Character_Set_Name" />
+          <ScalarProperty Name="Domain_Catalog" ColumnName="Domain_Catalog" />
+          <ScalarProperty Name="Domain_Schema" ColumnName="Domain_Schema" />
+          <ScalarProperty Name="Domain_Name" ColumnName="Domain_Name" />
+          <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+          <ScalarProperty Name="Modified_On" ColumnName="Modified_On" />
+          <ScalarProperty Name="Modified_By" ColumnName="Modified_By" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ETL_GET_SOURCE_SP" FunctionName="DM_MetaDataModel.Store.ETL_GET_SOURCE_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.ETL_GET_SOURCE_SP_Result">
+          <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
+          <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
+          <ScalarProperty Name="Connection_ID" ColumnName="Connection_ID" />
+          <ScalarProperty Name="Template_ID" ColumnName="Template_ID" />
+          <ScalarProperty Name="Template_Name" ColumnName="Template_Name" />
+          <ScalarProperty Name="Field_Seq_No" ColumnName="Field_Seq_No" />
+          <ScalarProperty Name="Field_Name" ColumnName="Field_Name" />
+          <ScalarProperty Name="Field_Description" ColumnName="Field_Description" />
+          <ScalarProperty Name="Field_Data_Type" ColumnName="Field_Data_Type" />
+          <ScalarProperty Name="Field_Prec" ColumnName="Field_Prec" />
+          <ScalarProperty Name="Field_Scale" ColumnName="Field_Scale" />
+          <ScalarProperty Name="Field_Key" ColumnName="Field_Key" />
+          <ScalarProperty Name="Field_Type" ColumnName="Field_Type" />
+          <ScalarProperty Name="Field_Data" ColumnName="Field_Data" />
+          <ScalarProperty Name="Business_name" ColumnName="Business_name" />
+          <ScalarProperty Name="Created_By" ColumnName="Created_By" />
+          <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+          <ScalarProperty Name="Modified_by" ColumnName="Modified_by" />
+          <ScalarProperty Name="Modified_Date" ColumnName="Modified_Date" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ETL_GET_SOURCE_TEMPLATE_LIST_SP" FunctionName="DM_MetaDataModel.Store.ETL_GET_SOURCE_TEMPLATE_LIST_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.ETL_GET_SOURCE_TEMPLATE_LIST_SP_Result">
+          <ScalarProperty Name="Template_Name" ColumnName="Template_Name" />
+          <ScalarProperty Name="Template_ID" ColumnName="Template_ID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ETL_GET_SOURCE_TEMPLATE_SP" FunctionName="DM_MetaDataModel.Store.ETL_GET_SOURCE_TEMPLATE_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.ETL_GET_SOURCE_TEMPLATE_SP_Result">
+          <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
+          <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
+          <ScalarProperty Name="Connection_ID" ColumnName="Connection_ID" />
+          <ScalarProperty Name="Template_ID" ColumnName="Template_ID" />
+          <ScalarProperty Name="Template_Name" ColumnName="Template_Name" />
+          <ScalarProperty Name="Table_Name" ColumnName="Table_Name" />
+          <ScalarProperty Name="Field_Seq_No" ColumnName="Field_Seq_No" />
+          <ScalarProperty Name="Field_Name" ColumnName="Field_Name" />
+          <ScalarProperty Name="Field_Description" ColumnName="Field_Description" />
+          <ScalarProperty Name="Field_Data_Type" ColumnName="Field_Data_Type" />
+          <ScalarProperty Name="Field_Prec" ColumnName="Field_Prec" />
+          <ScalarProperty Name="Field_Scale" ColumnName="Field_Scale" />
+          <ScalarProperty Name="Field_Key" ColumnName="Field_Key" />
+          <ScalarProperty Name="Field_Type" ColumnName="Field_Type" />
+          <ScalarProperty Name="Field_Data" ColumnName="Field_Data" />
+          <ScalarProperty Name="Business_name" ColumnName="Business_name" />
+          <ScalarProperty Name="Created_By" ColumnName="Created_By" />
+          <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+          <ScalarProperty Name="Modified_by" ColumnName="Modified_by" />
+          <ScalarProperty Name="Modified_Date" ColumnName="Modified_Date" />
+          <ScalarProperty Name="Row_ID" ColumnName="Row_ID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ETL_GET_TARGET_TEMPLATE_SP" FunctionName="DM_MetaDataModel.Store.ETL_GET_TARGET_TEMPLATE_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.ETL_GET_TARGET_TEMPLATE_SP_Result">
+          <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
+          <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
+          <ScalarProperty Name="Connection_ID" ColumnName="Connection_ID" />
+          <ScalarProperty Name="Template_ID" ColumnName="Template_ID" />
+          <ScalarProperty Name="Template_Name" ColumnName="Template_Name" />
+          <ScalarProperty Name="Table_Name" ColumnName="Table_Name" />
+          <ScalarProperty Name="Field_Seq_No" ColumnName="Field_Seq_No" />
+          <ScalarProperty Name="Field_Name" ColumnName="Field_Name" />
+          <ScalarProperty Name="Field_Description" ColumnName="Field_Description" />
+          <ScalarProperty Name="Field_Data_Type" ColumnName="Field_Data_Type" />
+          <ScalarProperty Name="Field_Prec" ColumnName="Field_Prec" />
+          <ScalarProperty Name="Field_Scale" ColumnName="Field_Scale" />
+          <ScalarProperty Name="Field_Key" ColumnName="Field_Key" />
+          <ScalarProperty Name="Field_Type" ColumnName="Field_Type" />
+          <ScalarProperty Name="Field_Data" ColumnName="Field_Data" />
+          <ScalarProperty Name="Business_name" ColumnName="Business_name" />
+          <ScalarProperty Name="Created_By" ColumnName="Created_By" />
+          <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+          <ScalarProperty Name="Modified_by" ColumnName="Modified_by" />
+          <ScalarProperty Name="Modified_Date" ColumnName="Modified_Date" />
+          <ScalarProperty Name="Row_ID" ColumnName="Row_ID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ETL_GET_TRANS_TEMPLATE_SP" FunctionName="DM_MetaDataModel.Store.ETL_GET_TRANS_TEMPLATE_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.ETL_GET_TRANS_TEMPLATE_SP_Result">
+          <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
+          <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
+          <ScalarProperty Name="Table_Name" ColumnName="Table_Name" />
+          <ScalarProperty Name="Field_Seq_No" ColumnName="Field_Seq_No" />
+          <ScalarProperty Name="Trans_Name" ColumnName="Trans_Name" />
+          <ScalarProperty Name="Trans_Field" ColumnName="Trans_Field" />
+          <ScalarProperty Name="Trans_Rule" ColumnName="Trans_Rule" />
+          <ScalarProperty Name="Field_Type" ColumnName="Field_Type" />
+          <ScalarProperty Name="Field_Length" ColumnName="Field_Length" />
+          <ScalarProperty Name="Trans_Type" ColumnName="Trans_Type" />
+          <ScalarProperty Name="Trans_Order" ColumnName="Trans_Order" />
+          <ScalarProperty Name="Source_Name" ColumnName="Source_Name" />
+          <ScalarProperty Name="Template_ID" ColumnName="Template_ID" />
+          <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+          <ScalarProperty Name="Modified_by" ColumnName="Modified_by" />
+          <ScalarProperty Name="Modified_Date" ColumnName="Modified_Date" />
+          <ScalarProperty Name="Trans_ID" ColumnName="Trans_ID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ETL_INSERT_SOURCE_SP" FunctionName="DM_MetaDataModel.Store.ETL_INSERT_SOURCE_SP" />
+    <FunctionImportMapping FunctionImportName="ETL_INSERT_TARGET_SP" FunctionName="DM_MetaDataModel.Store.ETL_INSERT_TARGET_SP" />
+    <FunctionImportMapping FunctionImportName="ETL_INSERT_TRANS_SP" FunctionName="DM_MetaDataModel.Store.ETL_INSERT_TRANS_SP" />
+    <FunctionImportMapping FunctionImportName="ETL_UPDATE_SOURCE_SP" FunctionName="DM_MetaDataModel.Store.ETL_UPDATE_SOURCE_SP" />
+    <FunctionImportMapping FunctionImportName="ETL_UPDATE_TARGET_SP" FunctionName="DM_MetaDataModel.Store.ETL_UPDATE_TARGET_SP" />
+    <FunctionImportMapping FunctionImportName="ETL_UPDATE_TRANS_SP" FunctionName="DM_MetaDataModel.Store.ETL_UPDATE_TRANS_SP" />
+    <FunctionImportMapping FunctionImportName="PROFILER_CREATE_DYNAMIC_VIEW_SP" FunctionName="DM_MetaDataModel.Store.PROFILER_CREATE_DYNAMIC_VIEW_SP" />
+    <FunctionImportMapping FunctionImportName="PROFILER_DROP_DYNAMIC_VIEW_SP" FunctionName="DM_MetaDataModel.Store.PROFILER_DROP_DYNAMIC_VIEW_SP" />
+    <FunctionImportMapping FunctionImportName="PROFILER_GET_DISTINCT_TEMPLATES_SP" FunctionName="DM_MetaDataModel.Store.PROFILER_GET_DISTINCT_TEMPLATES_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.PROFILER_GET_DISTINCT_TEMPLATES_SP_Result">
+          <ScalarProperty Name="Template_Name" ColumnName="Template_Name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="PROFILER_GET_PARAMETER_VALUES_SP" FunctionName="DM_MetaDataModel.Store.PROFILER_GET_PARAMETER_VALUES_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.PROFILER_GET_PARAMETER_VALUES_SP_Result">
+          <ScalarProperty Name="Parameter_ID" ColumnName="Parameter_ID" />
+          <ScalarProperty Name="Prameter_value" ColumnName="Prameter_value" />
+          <ScalarProperty Name="Tool_ID" ColumnName="Tool_ID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="PROFILER_GET_TABLE_COLUMN_VALUES_SP" FunctionName="DM_MetaDataModel.Store.PROFILER_GET_TABLE_COLUMN_VALUES_SP" />
+    <FunctionImportMapping FunctionImportName="PROFILER_GET_TEMPALTE_DETAILS_SP" FunctionName="DM_MetaDataModel.Store.PROFILER_GET_TEMPALTE_DETAILS_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.PROFILER_GET_TEMPALTE_DETAILS_SP_Result">
+          <ScalarProperty Name="Template_Name" ColumnName="Template_Name" />
+          <ScalarProperty Name="Table_Name" ColumnName="Table_Name" />
+          <ScalarProperty Name="Column_Name" ColumnName="Column_Name" />
+          <ScalarProperty Name="Null_Ratio_Profile" ColumnName="Null_Ratio_Profile" />
+          <ScalarProperty Name="Statistics_Profile" ColumnName="Statistics_Profile" />
+          <ScalarProperty Name="Value_Distribution_Profile" ColumnName="Value_Distribution_Profile" />
+          <ScalarProperty Name="Length_Distribution_Profile" ColumnName="Length_Distribution_Profile" />
+          <ScalarProperty Name="Pattern_Profile" ColumnName="Pattern_Profile" />
+          <ScalarProperty Name="Candidate_Key_Profile" ColumnName="Candidate_Key_Profile" />
+          <ScalarProperty Name="Profiling_Status" ColumnName="Profiling_Status" />
+          <ScalarProperty Name="Profile_Type" ColumnName="Profile_Type" />
+          <ScalarProperty Name="Rec_Count" ColumnName="Rec_Count" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="HXR_GET_RULE_FUNCTION_SP" FunctionName="DM_MetaDataModel.Store.HXR_GET_RULE_FUNCTION_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.HXR_GET_RULE_FUNCTION_SP_Result">
+          <ScalarProperty Name="Function_ID" ColumnName="Function_ID" />
+          <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
+          <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
+          <ScalarProperty Name="Function_Syntax" ColumnName="Function_Syntax" />
+          <ScalarProperty Name="Data_type" ColumnName="Data_type" />
+          <ScalarProperty Name="Function_Sample" ColumnName="Function_Sample" />
+          <ScalarProperty Name="Create_date" ColumnName="Create_date" />
+          <ScalarProperty Name="Created_by" ColumnName="Created_by" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ETL_GET_COLUMN_DATA_TYPE_SP" FunctionName="DM_MetaDataModel.Store.ETL_GET_COLUMN_DATA_TYPE_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.ETL_GET_COLUMN_DATA_TYPE_SP_Result">
+          <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
+          <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
+          <ScalarProperty Name="Template_Name" ColumnName="Template_Name" />
+          <ScalarProperty Name="field_name" ColumnName="field_name" />
+          <ScalarProperty Name="Field_Data_Type" ColumnName="Field_Data_Type" />
+          <ScalarProperty Name="Field_Prec" ColumnName="Field_Prec" />
+          <ScalarProperty Name="Field_Scale" ColumnName="Field_Scale" />
+          <ScalarProperty Name="Trans_Name" ColumnName="Trans_Name" />
+          <ScalarProperty Name="Trans_Type" ColumnName="Trans_Type" />
+          <ScalarProperty Name="Table_Name" ColumnName="Table_Name" />
+          <ScalarProperty Name="Column_Name" ColumnName="Column_Name" />
+          <ScalarProperty Name="Trans_Rule" ColumnName="Trans_Rule" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ETL_GET_CONN_STRING_SP" FunctionName="DM_MetaDataModel.Store.ETL_GET_CONN_STRING_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.ETL_GET_CONN_STRING_SP_Result">
+          <ScalarProperty Name="Config_ID" ColumnName="Config_ID" />
+          <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
+          <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
+          <ScalarProperty Name="Tool_ID" ColumnName="Tool_ID" />
+          <ScalarProperty Name="Source_Target" ColumnName="Source_Target" />
+          <ScalarProperty Name="DB_Type" ColumnName="DB_Type" />
+          <ScalarProperty Name="Server_Name" ColumnName="Server_Name" />
+          <ScalarProperty Name="Server_IP_Address" ColumnName="Server_IP_Address" />
+          <ScalarProperty Name="Server_Port" ColumnName="Server_Port" />
+          <ScalarProperty Name="Database_Name" ColumnName="Database_Name" />
+          <ScalarProperty Name="Database_Password" ColumnName="Database_Password" />
+          <ScalarProperty Name="Schema_Name" ColumnName="Schema_Name" />
+          <ScalarProperty Name="Schema_Password" ColumnName="Schema_Password" />
+          <ScalarProperty Name="Active_Flag" ColumnName="Active_Flag" />
+          <ScalarProperty Name="OS_Username" ColumnName="OS_Username" />
+          <ScalarProperty Name="OS_Password" ColumnName="OS_Password" />
+          <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+          <ScalarProperty Name="Last_Modified_Date" ColumnName="Last_Modified_Date" />
+          <ScalarProperty Name="Last_Modified_By" ColumnName="Last_Modified_By" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ETL_GET_SOURCE_TARGET_TABLE_SP" FunctionName="DM_MetaDataModel.Store.ETL_GET_SOURCE_TARGET_TABLE_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.ETL_GET_SOURCE_TARGET_TABLE_SP_Result">
+          <ScalarProperty Name="Table_Name" ColumnName="Table_Name" />
+          <ScalarProperty Name="Database_name" ColumnName="Database_name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ETL_GET_TARGET_SP" FunctionName="DM_MetaDataModel.Store.ETL_GET_TARGET_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.ETL_GET_TARGET_SP_Result">
+          <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
+          <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
+          <ScalarProperty Name="Connection_ID" ColumnName="Connection_ID" />
+          <ScalarProperty Name="Template_ID" ColumnName="Template_ID" />
+          <ScalarProperty Name="Template_Name" ColumnName="Template_Name" />
+          <ScalarProperty Name="Field_Seq_No" ColumnName="Field_Seq_No" />
+          <ScalarProperty Name="Field_Name" ColumnName="Field_Name" />
+          <ScalarProperty Name="Field_Description" ColumnName="Field_Description" />
+          <ScalarProperty Name="Field_Data_Type" ColumnName="Field_Data_Type" />
+          <ScalarProperty Name="Field_Prec" ColumnName="Field_Prec" />
+          <ScalarProperty Name="Field_Scale" ColumnName="Field_Scale" />
+          <ScalarProperty Name="Field_Key" ColumnName="Field_Key" />
+          <ScalarProperty Name="Field_Type" ColumnName="Field_Type" />
+          <ScalarProperty Name="Field_Data" ColumnName="Field_Data" />
+          <ScalarProperty Name="Business_name" ColumnName="Business_name" />
+          <ScalarProperty Name="Created_By" ColumnName="Created_By" />
+          <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+          <ScalarProperty Name="Modified_by" ColumnName="Modified_by" />
+          <ScalarProperty Name="Modified_Date" ColumnName="Modified_Date" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ETL_GET_TEMPLATE_TABLE_COLUMNS_SP" FunctionName="DM_MetaDataModel.Store.ETL_GET_TEMPLATE_TABLE_COLUMNS_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.ETL_GET_TEMPLATE_TABLE_COLUMNS_SP_Result">
+          <ScalarProperty Name="Table_Name" ColumnName="Table_Name" />
+          <ScalarProperty Name="Column_Name" ColumnName="Column_Name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ETL_GET_TEMPLATE_TABLE_SP" FunctionName="DM_MetaDataModel.Store.ETL_GET_TEMPLATE_TABLE_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.ETL_GET_TEMPLATE_TABLE_SP_Result">
+          <ScalarProperty Name="Table_Name" ColumnName="Table_Name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ETL_GET_TRANS_METADATA" FunctionName="DM_MetaDataModel.Store.ETL_GET_TRANS_METADATA">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.ETL_GET_TRANS_METADATA_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Trans_Type" ColumnName="Trans_Type" />
+          <ScalarProperty Name="Trans_Description" ColumnName="Trans_Description" />
+          <ScalarProperty Name="Trans_Tool" ColumnName="Trans_Tool" />
+          <ScalarProperty Name="Syntax" ColumnName="Syntax" />
+          <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+          <ScalarProperty Name="Last_Modified_Date" ColumnName="Last_Modified_Date" />
+          <ScalarProperty Name="Last_Modified" ColumnName="Last_Modified" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ETL_GET_TRANS_SP" FunctionName="DM_MetaDataModel.Store.ETL_GET_TRANS_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.ETL_GET_TRANS_SP_Result">
+          <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
+          <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
+          <ScalarProperty Name="Field_Seq_No" ColumnName="Field_Seq_No" />
+          <ScalarProperty Name="Trans_Name" ColumnName="Trans_Name" />
+          <ScalarProperty Name="Trans_Field" ColumnName="Trans_Field" />
+          <ScalarProperty Name="Trans_Rule" ColumnName="Trans_Rule" />
+          <ScalarProperty Name="Field_Type" ColumnName="Field_Type" />
+          <ScalarProperty Name="Field_Length" ColumnName="Field_Length" />
+          <ScalarProperty Name="Trans_Type" ColumnName="Trans_Type" />
+          <ScalarProperty Name="Trans_Order" ColumnName="Trans_Order" />
+          <ScalarProperty Name="Source_Name" ColumnName="Source_Name" />
+          <ScalarProperty Name="Template_ID" ColumnName="Template_ID" />
+          <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+          <ScalarProperty Name="Modified_by" ColumnName="Modified_by" />
+          <ScalarProperty Name="Modified_Date" ColumnName="Modified_Date" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ETL_INSERT_ADDTRANS_SP" FunctionName="DM_MetaDataModel.Store.ETL_INSERT_ADDTRANS_SP" />
+    <FunctionImportMapping FunctionImportName="COMMON_INSERT_METADATA_INFO_SP" FunctionName="DM_MetaDataModel.Store.COMMON_INSERT_METADATA_INFO_SP" />
+    <FunctionImportMapping FunctionImportName="ETL_GENERATE_TEMPLATES_EY_SP" FunctionName="DM_MetaDataModel.Store.ETL_GENERATE_TEMPLATES_EY_SP" />
+    <FunctionImportMapping FunctionImportName="HXR_INSERT_RULE_CATEGORY_SP" FunctionName="DM_MetaDataModel.Store.HXR_INSERT_RULE_CATEGORY_SP" />
+    <FunctionImportMapping FunctionImportName="HXR_UPDATE_RULE_CATEGORY_SP" FunctionName="DM_MetaDataModel.Store.HXR_UPDATE_RULE_CATEGORY_SP" />
+    <FunctionImportMapping FunctionImportName="HXR_INSERT_ERROR_SP" FunctionName="DM_MetaDataModel.Store.HXR_INSERT_ERROR_SP" />
+    <FunctionImportMapping FunctionImportName="HXR_UPDATE_ERROR_SP" FunctionName="DM_MetaDataModel.Store.HXR_UPDATE_ERROR_SP" />
+    <FunctionImportMapping FunctionImportName="HXR_INSERT_RULE_SP" FunctionName="DM_MetaDataModel.Store.HXR_INSERT_RULE_SP" />
+    <FunctionImportMapping FunctionImportName="HXR_UPDATE_RULE_SP" FunctionName="DM_MetaDataModel.Store.HXR_UPDATE_RULE_SP" />
+    <FunctionImportMapping FunctionImportName="COMMON_INSERT_CONFIG_DETAILS_SP" FunctionName="DM_MetaDataModel.Store.COMMON_INSERT_CONFIG_DETAILS_SP" />
+    <FunctionImportMapping FunctionImportName="COMMON_GET_CONFIG_DETAILS_SP" FunctionName="DM_MetaDataModel.Store.COMMON_GET_CONFIG_DETAILS_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.COMMON_GET_CONFIG_DETAILS_SP_Result">
+          <ScalarProperty Name="Config_ID" ColumnName="Config_ID" />
+          <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
+          <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
+          <ScalarProperty Name="Source_Target" ColumnName="Source_Target" />
+          <ScalarProperty Name="Tool_ID" ColumnName="Tool_ID" />
+          <ScalarProperty Name="DB_Type" ColumnName="DB_Type" />
+          <ScalarProperty Name="Server_Name" ColumnName="Server_Name" />
+          <ScalarProperty Name="Server_IP_Address" ColumnName="Server_IP_Address" />
+          <ScalarProperty Name="Server_Port" ColumnName="Server_Port" />
+          <ScalarProperty Name="Database_Name" ColumnName="Database_Name" />
+          <ScalarProperty Name="Database_Password" ColumnName="Database_Password" />
+          <ScalarProperty Name="Schema_Name" ColumnName="Schema_Name" />
+          <ScalarProperty Name="Schema_Password" ColumnName="Schema_Password" />
+          <ScalarProperty Name="Active_Flag" ColumnName="Active_Flag" />
+          <ScalarProperty Name="OS_Username" ColumnName="OS_Username" />
+          <ScalarProperty Name="OS_Password" ColumnName="OS_Password" />
+          <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+          <ScalarProperty Name="Last_Modified_Date" ColumnName="Last_Modified_Date" />
+          <ScalarProperty Name="Last_Modified_By" ColumnName="Last_Modified_By" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="HXR_INSERT_RULE_TYPE_SP" FunctionName="DM_MetaDataModel.Store.HXR_INSERT_RULE_TYPE_SP" />
+    <FunctionImportMapping FunctionImportName="HXR_UPDATE_RULE_TYPE_SP" FunctionName="DM_MetaDataModel.Store.HXR_UPDATE_RULE_TYPE_SP" />
+    <FunctionImportMapping FunctionImportName="COMMON_GET_TABLE_COLUMN_LIST_SP" FunctionName="DM_MetaDataModel.Store.COMMON_GET_TABLE_COLUMN_LIST_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.COMMON_GET_TABLE_COLUMN_LIST_SP_Result">
+          <ScalarProperty Name="Column_Name" ColumnName="Column_Name" />
+          <ScalarProperty Name="Data_Type" ColumnName="Data_Type" />
+          <ScalarProperty Name="Seq_No" ColumnName="Seq_No" />
+          <ScalarProperty Name="Is_key_column" ColumnName="Is_key_column" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="DRD_GET_SOURCE_TARGET_TABLE_COLUMNS_SP" FunctionName="DM_MetaDataModel.Store.DRD_GET_SOURCE_TARGET_TABLE_COLUMNS_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.DRD_GET_SOURCE_TARGET_TABLE_COLUMNS_SP_Result">
+          <ScalarProperty Name="Source_Column" ColumnName="Source_Column" />
+          <ScalarProperty Name="Target_Column" ColumnName="Target_Column" />
+          <ScalarProperty Name="Source_Column_Id" ColumnName="Source_Column_Id" />
+          <ScalarProperty Name="Target_Column_Id" ColumnName="Target_Column_Id" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="DRD_GET_SOURCE_TARGET_TABLE_TRANS_SP" FunctionName="DM_MetaDataModel.Store.DRD_GET_SOURCE_TARGET_TABLE_TRANS_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.DRD_GET_SOURCE_TARGET_TABLE_TRANS_SP_Result">
+          <ScalarProperty Name="Source_Table_name" ColumnName="Source_Table_name" />
+          <ScalarProperty Name="source_field_name" ColumnName="source_field_name" />
+          <ScalarProperty Name="source_trans_rule" ColumnName="source_trans_rule" />
+          <ScalarProperty Name="Target_Table_name" ColumnName="Target_Table_name" />
+          <ScalarProperty Name="Target_field_name" ColumnName="Target_field_name" />
+          <ScalarProperty Name="Target_trans_rule" ColumnName="Target_trans_rule" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="DRD_DATA_COMPARE_SP" FunctionName="DM_MetaDataModel.Store.DRD_DATA_COMPARE_SP" />
+    <FunctionImportMapping FunctionImportName="DRD_GET_DATARECON_REPORT_SP" FunctionName="DM_MetaDataModel.Store.DRD_GET_DATARECON_REPORT_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.DRD_GET_DATARECON_REPORT_SP_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Run_ID" ColumnName="Run_ID" />
+          <ScalarProperty Name="Template_Name" ColumnName="Template_Name" />
+          <ScalarProperty Name="Template_ID" ColumnName="Template_ID" />
+          <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
+          <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
+          <ScalarProperty Name="Source_Table_Name" ColumnName="Source_Table_Name" />
+          <ScalarProperty Name="Source_Column_Name" ColumnName="Source_Column_Name" />
+          <ScalarProperty Name="Target_Table_Name" ColumnName="Target_Table_Name" />
+          <ScalarProperty Name="Target_Column_Name" ColumnName="Target_Column_Name" />
+          <ScalarProperty Name="Source_Column_Value" ColumnName="Source_Column_Value" />
+          <ScalarProperty Name="Target_Column_value" ColumnName="Target_Column_value" />
+          <ScalarProperty Name="TABLE_KEY_COLUMN1" ColumnName="TABLE_KEY_COLUMN1" />
+          <ScalarProperty Name="TABLE_KEY_COLUMN2" ColumnName="TABLE_KEY_COLUMN2" />
+          <ScalarProperty Name="TABLE_KEY_COLUMN3" ColumnName="TABLE_KEY_COLUMN3" />
+          <ScalarProperty Name="TABLE_KEY_COLUMN4" ColumnName="TABLE_KEY_COLUMN4" />
+          <ScalarProperty Name="TABLE_KEY_COLUMN5" ColumnName="TABLE_KEY_COLUMN5" />
+          <ScalarProperty Name="Source_Record_Count" ColumnName="Source_Record_Count" />
+          <ScalarProperty Name="Target_Record_Count" ColumnName="Target_Record_Count" />
+          <ScalarProperty Name="Total_Error_Count" ColumnName="Total_Error_Count" />
+          <ScalarProperty Name="Expression_Error_Count" ColumnName="Expression_Error_Count" />
+          <ScalarProperty Name="Error_Count" ColumnName="Error_Count" />
+          <ScalarProperty Name="Run_date" ColumnName="Run_date" />
+          <ScalarProperty Name="Run_user" ColumnName="Run_user" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="DRD_GET_SOURCE_TARGET_TABLE_SP" FunctionName="DM_MetaDataModel.Store.DRD_GET_SOURCE_TARGET_TABLE_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.DRD_GET_SOURCE_TARGET_TABLE_SP_Result">
+          <ScalarProperty Name="Table_Name" ColumnName="Table_Name" />
+          <ScalarProperty Name="Database_name" ColumnName="Database_name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="DIMPLS_GET_SLICING_COL_LIST_SP" FunctionName="DM_MetaDataModel.Store.DIMPLS_GET_SLICING_COL_LIST_SP" />
+    <FunctionImportMapping FunctionImportName="HXR_GET_AUDITREPORT_SP" FunctionName="DM_MetaDataModel.Store.HXR_GET_AUDITREPORT_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.HXR_GET_AUDITREPORT_SP_Result">
+          <ScalarProperty Name="Object_Type" ColumnName="Object Type" />
+          <ScalarProperty Name="Source_Object_Count" ColumnName="Source Object Count" />
+          <ScalarProperty Name="Target_Object_Count" ColumnName="Target Object Count" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="HXR_GET_OBJECTNAME_SP" FunctionName="DM_MetaDataModel.Store.HXR_GET_OBJECTNAME_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.HXR_GET_OBJECTNAME_SP_Result">
+          <ScalarProperty Name="TYPE" ColumnName="TYPE" />
+          <ScalarProperty Name="Object_Name" ColumnName="Object_Name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="HXR_GET_PARAMETERCOUNT_SP" FunctionName="DM_MetaDataModel.Store.HXR_GET_PARAMETERCOUNT_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.HXR_GET_PARAMETERCOUNT_SP_Result">
+          <ScalarProperty Name="No_of_Tables" ColumnName="No of Tables" />
+          <ScalarProperty Name="No_of_Views" ColumnName="No of Views" />
+          <ScalarProperty Name="No_of_Procedures" ColumnName="No of Procedures" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="COMMON_GET_TABLE_DATA_SP" FunctionName="DM_MetaDataModel.Store.COMMON_GET_TABLE_DATA_SP" />
+    <FunctionImportMapping FunctionImportName="COMMON_UPDATE_BATCH_ID_SP" FunctionName="DM_MetaDataModel.Store.COMMON_UPDATE_BATCH_ID_SP" />
+    <FunctionImportMapping FunctionImportName="PROFILER_CREATE_RULES_SP" FunctionName="DM_MetaDataModel.Store.PROFILER_CREATE_RULES_SP" />
+    <FunctionImportMapping FunctionImportName="PROFILER_GET_COLUMN_LIST_SP" FunctionName="DM_MetaDataModel.Store.PROFILER_GET_COLUMN_LIST_SP" />
+    <FunctionImportMapping FunctionImportName="ATMTN_COPY_TEMPLATE_SP" FunctionName="DM_MetaDataModel.Store.ATMTN_COPY_TEMPLATE_SP" />
+    <FunctionImportMapping FunctionImportName="ETL_GET_COLUMN_DETAIL_SP" FunctionName="DM_MetaDataModel.Store.ETL_GET_COLUMN_DETAIL_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.ETL_GET_COLUMN_DETAIL_SP_Result">
+          <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
+          <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
+          <ScalarProperty Name="Template_Name" ColumnName="Template_Name" />
+          <ScalarProperty Name="field_name" ColumnName="field_name" />
+          <ScalarProperty Name="Field_Data_Type" ColumnName="Field_Data_Type" />
+          <ScalarProperty Name="Field_Prec" ColumnName="Field_Prec" />
+          <ScalarProperty Name="Field_Scale" ColumnName="Field_Scale" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ATMTN_GET_TBL_EXPORT_STATUS_SP" FunctionName="DM_MetaDataModel.Store.ATMTN_GET_TBL_EXPORT_STATUS_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.ATMTN_GET_TBL_EXPORT_STATUS_SP_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Config_ID" ColumnName="Config_ID" />
+          <ScalarProperty Name="Table_Name" ColumnName="Table_Name" />
+          <ScalarProperty Name="Download_XML" ColumnName="Download_XML" />
+          <ScalarProperty Name="Download_CSV" ColumnName="Download_CSV" />
+          <ScalarProperty Name="Download_XLSX" ColumnName="Download_XLSX" />
+          <ScalarProperty Name="Download_XLS" ColumnName="Download_XLS" />
+          <ScalarProperty Name="Download_Others" ColumnName="Download_Others" />
+          <ScalarProperty Name="Folder_Path" ColumnName="Folder_Path" />
+          <ScalarProperty Name="File_Name" ColumnName="File_Name" />
+          <ScalarProperty Name="Last_Run" ColumnName="Last_Run" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="DRD_GET_DISTINCT_TEMPLATES_SP" FunctionName="DM_MetaDataModel.Store.DRD_GET_DISTINCT_TEMPLATES_SP" />
+    <FunctionImportMapping FunctionImportName="DRD_GET_TEMPLATE_DETAILS_SP" FunctionName="DM_MetaDataModel.Store.DRD_GET_TEMPLATE_DETAILS_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.DRD_GET_TEMPLATE_DETAILS_SP_Result">
+          <ScalarProperty Name="Source_Table_Name" ColumnName="Source_Table_Name" />
+          <ScalarProperty Name="Source_Column_Name" ColumnName="Source_Column_Name" />
+          <ScalarProperty Name="Source_Col_Seq_No" ColumnName="Source_Col_Seq_No" />
+          <ScalarProperty Name="Target_Table_Name" ColumnName="Target_Table_Name" />
+          <ScalarProperty Name="Target_Column_Name" ColumnName="Target_Column_Name" />
+          <ScalarProperty Name="Target_Col_Seq_No" ColumnName="Target_Col_Seq_No" />
+          <ScalarProperty Name="Source_Expression" ColumnName="Source_Expression" />
+          <ScalarProperty Name="Target_Expression" ColumnName="Target_Expression" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CMN_UPDATE_PROJECT_SP" FunctionName="DM_MetaDataModel.Store.CMN_UPDATE_PROJECT_SP" />
+    <FunctionImportMapping FunctionImportName="ETL_DELETE_SOURCE_SP" FunctionName="DM_MetaDataModel.Store.ETL_DELETE_SOURCE_SP" />
+    <FunctionImportMapping FunctionImportName="ETL_DELETE_TARGET_SP" FunctionName="DM_MetaDataModel.Store.ETL_DELETE_TARGET_SP" />
+    <FunctionImportMapping FunctionImportName="ETL_DELETE_TRANS_SP" FunctionName="DM_MetaDataModel.Store.ETL_DELETE_TRANS_SP" />
+    <FunctionImportMapping FunctionImportName="ETL_GET_TEMPLATE_SOURCE_TARGET_TABLE_SP" FunctionName="DM_MetaDataModel.Store.ETL_GET_TEMPLATE_SOURCE_TARGET_TABLE_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.ETL_GET_TEMPLATE_SOURCE_TARGET_TABLE_SP_Result">
+          <ScalarProperty Name="Row_ID" ColumnName="Row_ID" />
+          <ScalarProperty Name="Field_Seq_No" ColumnName="Field_Seq_No" />
+          <ScalarProperty Name="Field_Type" ColumnName="Field_Type" />
+          <ScalarProperty Name="Table_Name" ColumnName="Table_Name" />
+          <ScalarProperty Name="Field_Name" ColumnName="Field_Name" />
+          <ScalarProperty Name="Field_Data_Type" ColumnName="Field_Data_Type" />
+          <ScalarProperty Name="Target_Table_Name" ColumnName="Target_Table_Name" />
+          <ScalarProperty Name="Target_Field_Name" ColumnName="Target_Field_Name" />
+          <ScalarProperty Name="Target_Data_Type" ColumnName="Target_Data_Type" />
+          <ScalarProperty Name="Target_Row_ID" ColumnName="Target_Row_ID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ATMTN_REQUEST_TBL_EXPORT_SP" FunctionName="DM_MetaDataModel.Store.ATMTN_REQUEST_TBL_EXPORT_SP" />
+    <FunctionImportMapping FunctionImportName="CMN_GET_KEY_COLUMNS_SP" FunctionName="DM_MetaDataModel.Store.CMN_GET_KEY_COLUMNS_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.CMN_GET_KEY_COLUMNS_SP_Result">
+          <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
+          <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
+          <ScalarProperty Name="Table_Name" ColumnName="Table_Name" />
+          <ScalarProperty Name="Tool_ID" ColumnName="Tool_ID" />
+          <ScalarProperty Name="Config_ID" ColumnName="Config_ID" />
+          <ScalarProperty Name="Key_Column1" ColumnName="Key_Column1" />
+          <ScalarProperty Name="Key_Column2" ColumnName="Key_Column2" />
+          <ScalarProperty Name="Key_Column3" ColumnName="Key_Column3" />
+          <ScalarProperty Name="Key_Column4" ColumnName="Key_Column4" />
+          <ScalarProperty Name="Key_Column5" ColumnName="Key_Column5" />
+          <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+          <ScalarProperty Name="Modified_On" ColumnName="Modified_On" />
+          <ScalarProperty Name="Modified_By" ColumnName="Modified_By" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CMN_INSERT_KEY_COLUMN_SP" FunctionName="DM_MetaDataModel.Store.CMN_INSERT_KEY_COLUMN_SP" />
+    <FunctionImportMapping FunctionImportName="ATMTN_INSERT_RUN_AUDIT_SP" FunctionName="DM_MetaDataModel.Store.ATMTN_INSERT_RUN_AUDIT_SP" />
+    <FunctionImportMapping FunctionImportName="CMN_GET_TOOL_SP" FunctionName="DM_MetaDataModel.Store.CMN_GET_TOOL_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.CMN_GET_TOOL_SP_Result">
+          <ScalarProperty Name="Tool_Name" ColumnName="Tool_Name" />
+          <ScalarProperty Name="Tool_Description" ColumnName="Tool_Description" />
+          <ScalarProperty Name="ACTIVE_FLAG" ColumnName="ACTIVE_FLAG" />
+          <ScalarProperty Name="Tool_ID" ColumnName="Tool_ID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CMN_AUTHENTICATE_USER_SP" FunctionName="DM_MetaDataModel.Store.CMN_AUTHENTICATE_USER_SP" />
+    <FunctionImportMapping FunctionImportName="CMN_INSERT_USER_SP" FunctionName="DM_MetaDataModel.Store.CMN_INSERT_USER_SP" />
+    <FunctionImportMapping FunctionImportName="CMN_UPDATE_TOOL_SP" FunctionName="DM_MetaDataModel.Store.CMN_UPDATE_TOOL_SP" />
+    <FunctionImportMapping FunctionImportName="CMN_GET_ALL_USER_DETAILS_SP" FunctionName="DM_MetaDataModel.Store.CMN_GET_ALL_USER_DETAILS_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.CMN_GET_ALL_USER_DETAILS_SP_Result">
+          <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+          <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
+          <ScalarProperty Name="User_name" ColumnName="User_name" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="email_ID" ColumnName="email_ID" />
+          <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
+          <ScalarProperty Name="Active_Flag" ColumnName="Active_Flag" />
+          <ScalarProperty Name="ROLE_NAME" ColumnName="ROLE_NAME" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CMN_GET_CLIENT_SP" FunctionName="DM_MetaDataModel.Store.CMN_GET_CLIENT_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.CMN_GET_CLIENT_SP_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
+          <ScalarProperty Name="Client_Name" ColumnName="Client_Name" />
+          <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="PROFILER_INSERT_STATUS_SP" FunctionName="DM_MetaDataModel.Store.PROFILER_INSERT_STATUS_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.PROFILER_INSERT_STATUS_SP_Result">
+          <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CMN_INST_OFLINE_BATCH_JOBS_SP" FunctionName="DM_MetaDataModel.Store.CMN_INST_OFLINE_BATCH_JOBS_SP" />
+    <FunctionImportMapping FunctionImportName="DASM_GET_CRITERIA_TYPE_SP" FunctionName="DM_MetaDataModel.Store.DASM_GET_CRITERIA_TYPE_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.DASM_GET_CRITERIA_TYPE_SP_Result">
+          <ScalarProperty Name="Template_ID" ColumnName="Template_ID" />
+          <ScalarProperty Name="Criteria_ID" ColumnName="Criteria_ID" />
+          <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
+          <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
+          <ScalarProperty Name="Template_ID1" ColumnName="Template_ID1" />
+          <ScalarProperty Name="Object_Type" ColumnName="Object_Type" />
+          <ScalarProperty Name="Object_Name" ColumnName="Object_Name" />
+          <ScalarProperty Name="Slicing_field" ColumnName="Slicing_field" />
+          <ScalarProperty Name="Slicing_Value" ColumnName="Slicing_Value" />
+          <ScalarProperty Name="Expression_Code" ColumnName="Expression_Code" />
+          <ScalarProperty Name="Sx_Flag" ColumnName="Sx_Flag" />
+          <ScalarProperty Name="Tx_Flag" ColumnName="Tx_Flag" />
+          <ScalarProperty Name="Fx_Flag" ColumnName="Fx_Flag" />
+          <ScalarProperty Name="Is_Delete" ColumnName="Is_Delete" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="DASM_GET_TEMPLATE_SP" FunctionName="DM_MetaDataModel.Store.DASM_GET_TEMPLATE_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.DASM_GET_TEMPLATE_SP_Result">
+          <ScalarProperty Name="Template_ID" ColumnName="Template_ID" />
+          <ScalarProperty Name="Template_Name" ColumnName="Template_Name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="DASM_INSERT_TEMPLATE_SP" FunctionName="DM_MetaDataModel.Store.DASM_INSERT_TEMPLATE_SP" />
+    <FunctionImportMapping FunctionImportName="DASM_GET_OBJECTNAME_SP" FunctionName="DM_MetaDataModel.Store.DASM_GET_OBJECTNAME_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.DASM_GET_OBJECTNAME_SP_Result">
+          <ScalarProperty Name="Object_Type" ColumnName="Object_Type" />
+          <ScalarProperty Name="Object_Name" ColumnName="Object_Name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="DASM_FX_GET_CRITERIAMASTER_SP" FunctionName="DM_MetaDataModel.Store.DASM_FX_GET_CRITERIAMASTER_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.DASM_FX_GET_CRITERIAMASTER_SP_Result" />
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="DASM_UP_TRANSFERPROCESS_SP" FunctionName="DM_MetaDataModel.Store.DASM_UP_TRANSFERPROCESS_SP" />
+    <FunctionImportMapping FunctionImportName="DASM_GET_TRANSFERRESULT_SP" FunctionName="DM_MetaDataModel.Store.DASM_GET_TRANSFERRESULT_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.DASM_GET_TRANSFERRESULT_SP_Result">
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Object_Name" ColumnName="Object Name" />
+          <ScalarProperty Name="Slicing_Field" ColumnName="Slicing Field" />
+          <ScalarProperty Name="Slicing_Value" ColumnName="Slicing Value" />
+          <ScalarProperty Name="Source_Records" ColumnName="Source Records" />
+          <ScalarProperty Name="Target_Records" ColumnName="Target Records" />
+          <ScalarProperty Name="Criteria_Sucess" ColumnName="Criteria Sucess" />
+          <ScalarProperty Name="Is_Delete" ColumnName="Is Delete" />
+          <ScalarProperty Name="Run_ID" ColumnName="Run_ID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="DASM_UP_PURGE_DATA_SP" FunctionName="DM_MetaDataModel.Store.DASM_UP_PURGE_DATA_SP" />
+    <FunctionImportMapping FunctionImportName="DASM_GET_CRI_OBJ_COUNT_SP1" FunctionName="DM_MetaDataModel.Store.DASM_GET_CRI_OBJ_COUNT_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.DASM_GET_CRI_OBJ_COUNT_SP1_Result">
+          <ScalarProperty Name="No_of_Tables" ColumnName="No of Tables" />
+          <ScalarProperty Name="No_of_Views" ColumnName="No of Views" />
+          <ScalarProperty Name="No_of_Procedures" ColumnName="No of Procedures" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="DASM_GET_CRI_OBJ_COUNT_SP" FunctionName="DM_MetaDataModel.Store.DASM_GET_CRI_OBJ_COUNT_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.DASM_GET_CRI_OBJ_COUNT_SP_Result">
+          <ScalarProperty Name="No_of_Tables" ColumnName="No of Tables" />
+          <ScalarProperty Name="No_of_Views" ColumnName="No of Views" />
+          <ScalarProperty Name="No_of_Procedures" ColumnName="No of Procedures" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="DASM_INSERT_AUDIT_LOG_SP" FunctionName="DM_MetaDataModel.Store.DASM_INSERT_AUDIT_LOG_SP" />
+    <FunctionImportMapping FunctionImportName="CMN_GET_DATA_MASK_TYPE_SP" FunctionName="DM_MetaDataModel.Store.CMN_GET_DATA_MASK_TYPE_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.CMN_GET_DATA_MASK_TYPE_SP_Result">
+          <ScalarProperty Name="Column_Type" ColumnName="Column_Type" />
+          <ScalarProperty Name="Mask_Type" ColumnName="Mask_Type" />
+          <ScalarProperty Name="Mask_Type_ID" ColumnName="Mask_Type_ID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CMN_GET_ENTITY_LIST_SP" FunctionName="DM_MetaDataModel.Store.CMN_GET_ENTITY_LIST_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.CMN_GET_ENTITY_LIST_SP_Result">
+          <ScalarProperty Name="Entity_ID" ColumnName="Entity_ID" />
+          <ScalarProperty Name="Entity_Name" ColumnName="Entity_Name" />
+          <ScalarProperty Name="Entity_Business_Name" ColumnName="Entity_Business_Name" />
+          <ScalarProperty Name="Entity_Description" ColumnName="Entity_Description" />
+          <ScalarProperty Name="Ordinal_Position" ColumnName="Ordinal_Position" />
+          <ScalarProperty Name="LOB" ColumnName="LOB" />
+          <ScalarProperty Name="Legacy_Appl_Name" ColumnName="Legacy_Appl_Name" />
+          <ScalarProperty Name="Input_Type" ColumnName="Input_Type" />
+          <ScalarProperty Name="Parent_Entity_ID" ColumnName="Parent_Entity_ID" />
+          <ScalarProperty Name="Active_Flag" ColumnName="Active_Flag" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CMN_INSERT_PROJECT_SP" FunctionName="DM_MetaDataModel.Store.CMN_INSERT_PROJECT_SP" />
+    <FunctionImportMapping FunctionImportName="CMN_GET_ENTITY_COLS_SP" FunctionName="DM_MetaDataModel.Store.CMN_GET_ENTITY_COLS_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.CMN_GET_ENTITY_COLS_SP_Result">
+          <ScalarProperty Name="Column_Name" ColumnName="Column_Name" />
+          <ScalarProperty Name="Attribute_Business_Name" ColumnName="Attribute_Business_Name" />
+          <ScalarProperty Name="Attribute_Desscription" ColumnName="Attribute_Desscription" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Entity_ID" ColumnName="Entity_ID" />
+          <ScalarProperty Name="data_type" ColumnName="data_type" />
+          <ScalarProperty Name="data_precision" ColumnName="data_precision" />
+          <ScalarProperty Name="Attribute_Business_Data_Type" ColumnName="Attribute_Business_Data_Type" />
+          <ScalarProperty Name="Attribute_Business_Data_precision" ColumnName="Attribute_Business_Data_precision" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CMN_INS_WORK_FLOW_SEQ_SP" FunctionName="DM_MetaDataModel.Store.CMN_INS_WORK_FLOW_SEQ_SP" />
+    <FunctionImportMapping FunctionImportName="CMN_GET_WORK_FLOW_SEQ_SP" FunctionName="DM_MetaDataModel.Store.CMN_GET_WORK_FLOW_SEQ_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.CMN_GET_WORK_FLOW_SEQ_SP_Result">
+          <ScalarProperty Name="ToolName" ColumnName="ToolName" />
+          <ScalarProperty Name="ToolID" ColumnName="ToolID" />
+          <ScalarProperty Name="Tool_TaskSequence" ColumnName="Tool_TaskSequence" />
+          <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+          <ScalarProperty Name="Created_By" ColumnName="Created_By" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CMN_GET_PROJECT_SP" FunctionName="DM_MetaDataModel.Store.CMN_GET_PROJECT_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.CMN_GET_PROJECT_SP_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
+          <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
+          <ScalarProperty Name="Project_Description" ColumnName="Project_Description" />
+          <ScalarProperty Name="Active_Flag" ColumnName="Active_Flag" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CMN_INSERT_CLIENT_SP" FunctionName="DM_MetaDataModel.Store.CMN_INSERT_CLIENT_SP" />
+    <FunctionImportMapping FunctionImportName="CMN_UPDATE_USER_SP" FunctionName="DM_MetaDataModel.Store.CMN_UPDATE_USER_SP" />
+    <FunctionImportMapping FunctionImportName="ETL_DELTE_VARIABLE_PARAM_SP" FunctionName="DM_MetaDataModel.Store.ETL_DELTE_VARIABLE_PARAM_SP" />
+    <FunctionImportMapping FunctionImportName="ETL_GET_VARIABLE_PARAM_SP" FunctionName="DM_MetaDataModel.Store.ETL_GET_VARIABLE_PARAM_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.ETL_GET_VARIABLE_PARAM_SP_Result">
+          <ScalarProperty Name="Parameter_ID" ColumnName="Parameter_ID" />
+          <ScalarProperty Name="Template_ID" ColumnName="Template_ID" />
+          <ScalarProperty Name="Template_Name" ColumnName="Template_Name" />
+          <ScalarProperty Name="Parameter_Name" ColumnName="Parameter_Name" />
+          <ScalarProperty Name="Parameter_Value" ColumnName="Parameter_Value" />
+          <ScalarProperty Name="Package_Save_Location" ColumnName="Package_Save_Location" />
+          <ScalarProperty Name="Tool_ID" ColumnName="Tool_ID" />
+          <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+          <ScalarProperty Name="Created_By" ColumnName="Created_By" />
+          <ScalarProperty Name="Modified_Date" ColumnName="Modified_Date" />
+          <ScalarProperty Name="Modified_by" ColumnName="Modified_by" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ETL_INSERT_VARIABLE_PARAM_SP" FunctionName="DM_MetaDataModel.Store.ETL_INSERT_VARIABLE_PARAM_SP" />
+    <FunctionImportMapping FunctionImportName="ETL_UPDT_VARIABLE_PARAM_SP" FunctionName="DM_MetaDataModel.Store.ETL_UPDT_VARIABLE_PARAM_SP" />
+    <FunctionImportMapping FunctionImportName="CMN_GET_OFFLINE_JOB_STATS_SP" FunctionName="DM_MetaDataModel.Store.CMN_GET_OFFLINE_JOB_STATS_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.CMN_GET_OFFLINE_JOB_STATS_SP_Result">
+          <ScalarProperty Name="Offline_Job_ID" ColumnName="Offline_Job_ID" />
+          <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
+          <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
+          <ScalarProperty Name="Tool_Name" ColumnName="Tool_Name" />
+          <ScalarProperty Name="Config_ID" ColumnName="Config_ID" />
+          <ScalarProperty Name="Template_Name" ColumnName="Template_Name" />
+          <ScalarProperty Name="Table_Name" ColumnName="Table_Name" />
+          <ScalarProperty Name="Column_Name" ColumnName="Column_Name" />
+          <ScalarProperty Name="Run_Status" ColumnName="Run_Status" />
+          <ScalarProperty Name="Task_Description" ColumnName="Task_Description" />
+          <ScalarProperty Name="Template_Path" ColumnName="Template_Path" />
+          <ScalarProperty Name="Procedure_Name" ColumnName="Procedure_Name" />
+          <ScalarProperty Name="Parameter_List" ColumnName="Parameter_List" />
+          <ScalarProperty Name="Start_Time" ColumnName="Start_Time" />
+          <ScalarProperty Name="End_Time" ColumnName="End_Time" />
+          <ScalarProperty Name="Created_by" ColumnName="Created_by" />
+          <ScalarProperty Name="Tool_ID" ColumnName="Tool_ID" />
+          <ScalarProperty Name="Run_Status_Message" ColumnName="Run_Status_Message" />
+          <ScalarProperty Name="Ref_Run_ID" ColumnName="Ref_Run_ID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CMN_GET_METADATA_BUSNAME_SP" FunctionName="DM_MetaDataModel.Store.CMN_GET_METADATA_BUSNAME_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.CMN_GET_METADATA_BUSNAME_SP_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
+          <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
+          <ScalarProperty Name="Config_ID" ColumnName="Config_ID" />
+          <ScalarProperty Name="Database_IP" ColumnName="Database_IP" />
+          <ScalarProperty Name="Source_Target" ColumnName="Source_Target" />
+          <ScalarProperty Name="Table_Catalog" ColumnName="Table_Catalog" />
+          <ScalarProperty Name="Table_Schema" ColumnName="Table_Schema" />
+          <ScalarProperty Name="Table_Name" ColumnName="Table_Name" />
+          <ScalarProperty Name="Column_Name" ColumnName="Column_Name" />
+          <ScalarProperty Name="Ordinal_Position" ColumnName="Ordinal_Position" />
+          <ScalarProperty Name="Key_column" ColumnName="Key_column" />
+          <ScalarProperty Name="Field_Data" ColumnName="Field_Data" />
+          <ScalarProperty Name="Constraint_Type" ColumnName="Constraint_Type" />
+          <ScalarProperty Name="Column_Default" ColumnName="Column_Default" />
+          <ScalarProperty Name="Is_Nullable" ColumnName="Is_Nullable" />
+          <ScalarProperty Name="Data_Type" ColumnName="Data_Type" />
+          <ScalarProperty Name="Data_precision" ColumnName="Data_precision" />
+          <ScalarProperty Name="Data_scale" ColumnName="Data_scale" />
+          <ScalarProperty Name="Character_Set_Catalog" ColumnName="Character_Set_Catalog" />
+          <ScalarProperty Name="Character_Set_Schema" ColumnName="Character_Set_Schema" />
+          <ScalarProperty Name="Character_Set_Name" ColumnName="Character_Set_Name" />
+          <ScalarProperty Name="Domain_Catalog" ColumnName="Domain_Catalog" />
+          <ScalarProperty Name="Domain_Schema" ColumnName="Domain_Schema" />
+          <ScalarProperty Name="Domain_Name" ColumnName="Domain_Name" />
+          <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+          <ScalarProperty Name="Modified_On" ColumnName="Modified_On" />
+          <ScalarProperty Name="Modified_By" ColumnName="Modified_By" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CMN_CHANGE_PASSWORD_SP" FunctionName="DM_MetaDataModel.Store.CMN_CHANGE_PASSWORD_SP" />
+    <FunctionImportMapping FunctionImportName="PROF_GET_PROFILER_RULE_SP" FunctionName="DM_MetaDataModel.Store.PROF_GET_PROFILER_RULE_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.PROF_GET_PROFILER_RULE_SP_Result">
+          <ScalarProperty Name="Table_Name" ColumnName="Table_Name" />
+          <ScalarProperty Name="Column_Name" ColumnName="Column_Name" />
+          <ScalarProperty Name="Conditional_Clause" ColumnName="Conditional_Clause" />
+          <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CMN_GUESS_DATA_TYPE_SP" FunctionName="DM_MetaDataModel.Store.CMN_GUESS_DATA_TYPE_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.CMN_GUESS_DATA_TYPE_SP_Result">
+          <ScalarProperty Name="Col_Min_length" ColumnName="Col_Min_length" />
+          <ScalarProperty Name="Col_Max_length" ColumnName="Col_Max_length" />
+          <ScalarProperty Name="Data_Type_List" ColumnName="Data_Type_List" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CMN_UPDATE_ENTITY_ATTRS_SP" FunctionName="DM_MetaDataModel.Store.CMN_UPDATE_ENTITY_ATTRS_SP" />
+    <FunctionImportMapping FunctionImportName="CMN_GET_ROLE_MENU_ITEMS_SP" FunctionName="DM_MetaDataModel.Store.CMN_GET_ROLE_MENU_ITEMS_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.CMN_GET_ROLE_MENU_ITEMS_SP_Result">
+          <ScalarProperty Name="Menu_ID" ColumnName="Menu_ID" />
+          <ScalarProperty Name="Menu_Name" ColumnName="Menu_Name" />
+          <ScalarProperty Name="Parent_Menu_ID" ColumnName="Parent_Menu_ID" />
+          <ScalarProperty Name="Active_Flag" ColumnName="Active_Flag" />
+          <ScalarProperty Name="Menu_Type" ColumnName="Menu_Type" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CMN_UPDATE_ROLE_MENU_SP" FunctionName="DM_MetaDataModel.Store.CMN_UPDATE_ROLE_MENU_SP" />
+    <FunctionImportMapping FunctionImportName="CMN_GET_USR_RLE_MNU_BY_TYPE_SP" FunctionName="DM_MetaDataModel.Store.CMN_GET_USR_RLE_MNU_BY_TYPE_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.CMN_GET_USR_RLE_MNU_BY_TYPE_SP_Result">
+          <ScalarProperty Name="URL" ColumnName="URL" />
+          <ScalarProperty Name="ReportPath" ColumnName="ReportPath" />
+          <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+          <ScalarProperty Name="MenuName" ColumnName="MenuName" />
+          <ScalarProperty Name="ParentMenuId" ColumnName="ParentMenuId" />
+          <ScalarProperty Name="Action" ColumnName="Action" />
+          <ScalarProperty Name="Controller" ColumnName="Controller" />
+          <ScalarProperty Name="ToolId" ColumnName="ToolId" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="HXR_GET_RUN_ID_SP" FunctionName="DM_MetaDataModel.Store.HXR_GET_RUN_ID_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.HXR_GET_RUN_ID_SP_Result">
+          <ScalarProperty Name="Run_Number" ColumnName="Run_Number" />
+          <ScalarProperty Name="Run_ID" ColumnName="Run_ID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CMN_GET_SCHEDULED_JOBS_SP" FunctionName="DM_MetaDataModel.Store.CMN_GET_SCHEDULED_JOBS_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.CMN_GET_SCHEDULED_JOBS_SP_Result">
+          <ScalarProperty Name="Offline_Job_ID" ColumnName="Offline_Job_ID" />
+          <ScalarProperty Name="Template_Name" ColumnName="Template_Name" />
+          <ScalarProperty Name="Run_Status" ColumnName="Run_Status" />
+          <ScalarProperty Name="Task_Description" ColumnName="Task_Description" />
+          <ScalarProperty Name="Schedule_Date" ColumnName="Schedule_Date" />
+          <ScalarProperty Name="Start_Time" ColumnName="Start_Time" />
+          <ScalarProperty Name="End_Time" ColumnName="End_Time" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CMN_CHECK_KEY_COLS_SP" FunctionName="DM_MetaDataModel.Store.CMN_CHECK_KEY_COLS_SP" />
+    <FunctionImportMapping FunctionImportName="HXR_GET_ERROR_RULE_CATEGORY_SP" FunctionName="DM_MetaDataModel.Store.HXR_GET_ERROR_RULE_CATEGORY_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.HXR_GET_ERROR_RULE_CATEGORY_SP_Result">
+          <ScalarProperty Name="RuleCategory_ID" ColumnName="RuleCategory_ID" />
+          <ScalarProperty Name="RuleCategory_Name" ColumnName="RuleCategory_Name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="HXR_GET_ERROR_RULE_SP" FunctionName="DM_MetaDataModel.Store.HXR_GET_ERROR_RULE_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.HXR_GET_ERROR_RULE_SP_Result">
+          <ScalarProperty Name="Rule_id" ColumnName="Rule_id" />
+          <ScalarProperty Name="Rule_Name" ColumnName="Rule_Name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="DASM_GET_MASKING_TEMPLATE_DETAILS_SP" FunctionName="DM_MetaDataModel.Store.DASM_GET_MASKING_TEMPLATE_DETAILS_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.DASM_GET_MASKING_TEMPLATE_DETAILS_SP_Result">
+          <ScalarProperty Name="Template_Name" ColumnName="Template_Name" />
+          <ScalarProperty Name="Template_ID" ColumnName="Template_ID" />
+          <ScalarProperty Name="Table_Name" ColumnName="Table_Name" />
+          <ScalarProperty Name="Column_Name" ColumnName="Column_Name" />
+          <ScalarProperty Name="Mask_Type_ID" ColumnName="Mask_Type_ID" />
+          <ScalarProperty Name="Mask_Type" ColumnName="Mask_Type" />
+          <ScalarProperty Name="un_mask" ColumnName="un_mask" />
+          <ScalarProperty Name="Config_ID" ColumnName="Config_ID" />
+          <ScalarProperty Name="connection" ColumnName="connection" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="DASM_GET_MASKING_TEMPLATE_SP" FunctionName="DM_MetaDataModel.Store.DASM_GET_MASKING_TEMPLATE_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.DASM_GET_MASKING_TEMPLATE_SP_Result">
+          <ScalarProperty Name="Template_ID" ColumnName="Template_ID" />
+          <ScalarProperty Name="Template_Name" ColumnName="Template_Name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="DASM_INS_MASKING_TEMPLATE_SP" FunctionName="DM_MetaDataModel.Store.DASM_INS_MASKING_TEMPLATE_SP" />
+    <FunctionImportMapping FunctionImportName="DASM_GET_TARGETSERVER_SP" FunctionName="DM_MetaDataModel.Store.DASM_GET_TARGETSERVER_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.DASM_GET_TARGETSERVER_SP_Result">
+          <ScalarProperty Name="Server_IP" ColumnName="Server IP" />
+          <ScalarProperty Name="Database" ColumnName="Database" />
+          <ScalarProperty Name="User" ColumnName="User" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="DASM_GET_SLICING_COL_LIST_SP" FunctionName="DM_MetaDataModel.Store.DASM_GET_SLICING_COL_LIST_SP" />
+    <FunctionImportMapping FunctionImportName="DASM_GET_AUDITREPORT_SP" FunctionName="DM_MetaDataModel.Store.DASM_GET_AUDITREPORT_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.DASM_GET_AUDITREPORT_SP_Result">
+          <ScalarProperty Name="Template_ID" ColumnName="Template ID" />
+          <ScalarProperty Name="Run_ID" ColumnName="Run_ID" />
+          <ScalarProperty Name="Object_Type" ColumnName="Object Type" />
+          <ScalarProperty Name="Source_Object_Count" ColumnName="Source Object Count" />
+          <ScalarProperty Name="Target_Object_Count" ColumnName="Target Object Count" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="DASM_GET_SLICING_RUNID_SP" FunctionName="DM_MetaDataModel.Store.DASM_GET_SLICING_RUNID_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.DASM_GET_SLICING_RUNID_SP_Result">
+          <ScalarProperty Name="Run_ID" ColumnName="Run_ID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="DASM_GET_DELETELIST_SP" FunctionName="DM_MetaDataModel.Store.DASM_GET_DELETELIST_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DM_MetaDataModel.DASM_GET_DELETELIST_SP_Result">
+          <ScalarProperty Name="Criteria_ID" ColumnName="Criteria_ID" />
+          <ScalarProperty Name="Object_Name" ColumnName="Object Name" />
+          <ScalarProperty Name="Slicing_Field" ColumnName="Slicing Field" />
+          <ScalarProperty Name="Slicing_Value" ColumnName="Slicing Value" />
+          <ScalarProperty Name="Source_Delete" ColumnName="Source Delete" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ETL_INSERT_FILE_UPLOAD_TEMPLATE_SP" FunctionName="DM_MetaDataModel.Store.ETL_INSERT_FILE_UPLOAD_TEMPLATE_SP" />
+    <FunctionImportMapping FunctionImportName="ETL_INSERT_TEMPLATE_SP" FunctionName="DM_MetaDataModel.Store.ETL_INSERT_TEMPLATE_SP" />
+    <FunctionImportMapping FunctionImportName="DASM_CHECK_DUPLICATE_RUN_SP" FunctionName="DM_MetaDataModel.Store.DASM_CHECK_DUPLICATE_RUN_SP" />
+    <FunctionImportMapping FunctionImportName="ETL_GET_THRESH_LIMIT_SP" FunctionName="DM_MetaDataModel.Store.ETL_GET_THRESH_LIMIT_SP" />
+  </EntityContainerMapping>
+</Mapping>

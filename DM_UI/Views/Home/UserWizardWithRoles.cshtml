@@ -1,0 +1,251 @@
+﻿@{
+    ViewBag.Title = "User Roles Wizard";
+}
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery.jqGrid.min.js"></script>
+
+<script type="text/javascript">
+
+    $(function () {
+
+        var baseUrl = '@Url.Content("~/")',
+            client_ID = $("#hdnClientId").val(),
+            project_ID = $("#hdnProjectID").val();
+
+        $.ajax({
+            type: "GET",
+            url: baseUrl + "Home/GetRoles",
+            data: { Client_ID: $("#hdnClientId").val(), Project_ID: $("#hdnProjectID").val() },
+            dataType: 'json',
+            success: function (data) {
+                var cell;
+                //debugger;
+                $('#ddlRole').html('');
+                $.each(data.rows, function (index, value) {
+                    cell = $.parseJSON(JSON.stringify(data.rows[index].cell));
+                    $('#ddlRole').append($('<option>').text(cell[1]).val(cell[0]));
+                });
+                loadData();
+            },
+            error: function (xhr) {
+                alert(xhr.statusText);
+            }
+        });
+
+      
+
+        $('#ddlRole').change(function () {
+            loadData();
+        });
+
+        function loadData() {
+            jQuery.ajaxSetup({ cache: false });
+            var menuList = $.ajax({
+                type: 'Get',
+                url: '@Url.Action("GetRoleMenus")',
+                data: { role_id: $('#ddlRole').val() },
+                async: false,
+                success: function (data, result) {
+                    jQuery("#grdRole").jqGrid('setGridParam', { datatype: 'json' }).trigger('reloadGrid');
+                },
+                error: function (err) {
+                    alert(err.statusText);
+                }
+            }).responseText,
+
+                menuData = jQuery.parseJSON(menuList);
+
+            getColumnIndexByName = function (grid, columnName) {
+                var cm = grid.jqGrid('getGridParam', 'colModel'), i, l;
+                for (i = 0, l = cm.length; i < l; i += 1) {
+                    if (cm[i].name === columnName) {
+                        return i; // return the index
+                    }
+                }
+                return -1;
+            };
+
+            $("#grdRole").GridUnload();
+            jQuery("#grdRole").jqGrid({
+                datatype: "jsonstring",
+                datastr: menuData.mydata,
+                colNames: ["id", "Menu Name", "menu id", "parent menu id", "Enable / Disable"],
+                colModel: [
+                    { name: 'id', index: 'id', width: 1, hidden: true, key: true },
+                    { name: 'menuname', index: 'menuname', width: 350 },
+                    { name: 'menuid', index: 'menuid', width: 80, align: "center", hidden: true },
+                    { name: 'pmenuid', index: 'pmenuid', width: 80, align: "right", hidden: true },
+                    {
+                        name: 'enbl', index: 'enbl', width: 160, align: 'center',
+                        formatter: 'checkbox', editoptions: { value: '1:0' },
+                        formatoptions: { disabled: false }
+                    }
+                ],
+                height: '100%',
+                autowidth: true,
+                rowNum: 10000,
+                sortname: 'id',
+                treeGrid: true,
+                treeGridModel: 'adjacency',
+                treedatatype: "jsonstring",
+                ExpandColumn: 'menuname',
+                caption: "Manage Role",
+                jsonReader: {
+                    repeatitems: false,
+                    root: function (obj) { return obj; },
+                    page: function (obj) { return 1; },
+                    total: function (obj) { return 1; },
+                    records: function (obj) { return obj.length; }
+                },
+                loadComplete: function () {
+                    var iCol = getColumnIndexByName($(this), 'enbl'), rows = this.rows, i, c = rows.length;
+
+                    for (i = 0; i < c; i += 1) {
+
+                        $(rows[i].cells[iCol]).click(function (e) {
+
+                            if ($(e.target).prop('nodeName').indexOf('INPUT') != -1) {
+
+                                var rowid = $(e.target).closest('tr')[0].id, isChecked = $(e.target).is(':checked');
+
+                                setCheckboxVal(rowid, isChecked);
+
+                                setCheckboxSelect(rowid, isChecked);
+                            }
+                        }); //End Click Event
+                    } //End for loop
+
+                } //End load complete
+            });
+
+            var setCheckboxSelect = function (rowid, isChecked) {
+
+                var grid = $("#grdRole")
+                var record = grid.jqGrid('getLocalRow', rowid),
+
+                //Getting parent node
+                parentRecord = record.parent == "" ? grid.jqGrid('getLocalRow', rowid) : grid.jqGrid('getLocalRow', record.parent),
+
+                parentId = parentRecord.id,
+
+                //all children of parent node
+                children = grid.jqGrid('getNodeChildren', parentRecord), i, l = children.length;
+
+                if (record.parent == "") {
+                    //Parent is empty then the parent row is selected. Do the selection/non-selection in child rows
+                    //Parent is selected then all child should be selected.
+                    for (i = 0; i < l; i += 1) {
+                        var childid = children[i].id;
+                        $("#" + childid + " input:checkbox").prop("checked", isChecked);
+                        setCheckboxVal(childid, isChecked);
+                    }
+                }
+                else {
+                    //All the child de-selected then de-select the parent node.
+                    var isAnyChildChecked = false;
+                    for (i = 0; i < l; i += 1) {
+                        var childid = children[i].id;
+                        if ($("#" + children[i].id + " input:checkbox").is(':checked')) {
+                            isAnyChildChecked = true;
+                            break;
+                        }
+                    }
+                    $("#" + parentId + " input:checkbox").prop("checked", isAnyChildChecked);
+                    setCheckboxVal(parentId, isAnyChildChecked);
+                }
+            }
+
+            //Set checkbox value to read either is checked or not.
+            var setCheckboxVal = function (rowid, isChecked) {
+
+                var grid = $("#grdRole");
+                dataIndex = grid[0].p._index[rowid];
+                if (typeof dataIndex !== "undefined" && dataIndex >= 0) {
+                    grid[0].p.data[dataIndex].enbl = isChecked ? "1" : "0";
+                }
+            }
+
+        }
+
+        $("#btnUpd").click(function () {
+
+            var grid = $("#grdRole");
+            var ids = [], i, data = grid[0].p.data, l = data.length, dataItem;
+            for (i = 0; i < l; i++) {
+                dataItem = data[i];
+                if (dataItem.enbl === "1") {
+                    ids.push(dataItem.menuid);
+                }
+            }
+
+            $.ajax({
+                type: 'Get',
+                url: '@Url.Action("UpdateRoleMenu")',
+                data: { role_id: $('#ddlRole').val(), menu_list: ids.join(", ") },
+                async: false,
+                success: function (data, result) {
+                    alert(data);
+                },
+                error: function (err) {
+                    alert(err.statusText);
+                }
+            });
+        });
+
+
+        // we have to use addJSONData to load the data
+        //grid[0].addJSONData({
+        //    total: 1,
+        //    page: 1,
+        //    records: mydata.length,
+        //    rows: mydata
+        //});
+
+        @*var userResult = $.ajax({
+            type: 'Get',
+            url: '@Url.Action("GetUserDetail")',
+            data: { Client_ID: client_ID, Project_ID: project_ID },
+            async: false,
+            success: function (data, result) {
+            },
+            error: function (err) {
+                alert(err.statusText);
+            }
+        }).responseText;
+
+        var userlist = jQuery.parseJSON(userResult);
+
+        var len = userlist.rows.length;
+        for (var i = 0; i < len; i++) {
+            $("#ddlUser").append($('<option>').text(userlist.rows[i].cell[2]).val(userlist.rows[i].cell[0]));
+        }*@
+
+    });
+</script>
+<div class="content-body width-per-100">
+    <div style="width:45%;margin:auto; margin-top:3%;">
+
+        <div class="group">
+            <div class="form-group width-per-100">
+                <span class="control-label">Select Role</span>
+                <select id="ddlRole" class="dropdown" style="width:55%;">                  
+                </select>
+            </div>
+        </div>
+        <div class="group">
+            <div class="form-group width-per-100">
+                <table id="grdRole" class="scroll" align="center"></table>
+                <div id="pgrRole" class="scroll"></div>
+            </div>
+        </div>
+        <div class="group">
+            <div style="text-align:right;">
+                <input id="btnUpd" type="button" class="button" value="Update" />
+            </div>
+        </div>
+
+    </div>
+</div>
+<input type="hidden" value="@(Convert.ToString(DM_UI.App_Start.UIProperties.Sessions.Client.Client_ID))" id="hdnClientId" />
+<input type="hidden" value="@(Convert.ToString(DM_UI.App_Start.UIProperties.Sessions.Client.project_ID))" id="hdnProjectID" />

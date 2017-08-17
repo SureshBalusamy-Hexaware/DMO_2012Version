@@ -1,0 +1,935 @@
+﻿@using Resources
+@{
+    ViewBag.Title = @DM_en_US.TabhdrPreDefinedRule;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var message = TempData["AlertMsg"] ?? string.Empty;
+
+}
+
+<script type="text/javascript">
+    function ShowMessage(message, cssclass) {
+        $("#msgbox").show();
+        $("#msgbox span").text(message);
+
+        $("#msgbox span").removeClass();
+        $("#msgbox span").addClass(cssclass);
+    }
+    function HideMessage() {
+        $("#msgbox").hide();
+    }
+    var baseUrl = '@Url.Content("~/")';
+    var Types =
+               $.ajax({
+                   url: baseUrl + "api/HXRRuleAPI/GetRuleType",
+                   async: false,
+                   success: function (data, result) { if (!result) alert('Failure to retrieve the Types.'); }
+               }).responseText;
+    var _arRuleType = new Array();
+    var ruleTypes = jQuery.parseJSON(Types);
+    for (i = 0; i < ruleTypes.length; i++) {
+        _arRuleType.push(ruleTypes[i].RuleType_ID + ":" + ruleTypes[i].RuleType_Name);
+    }
+    ruleTypes = _arRuleType.join("; ");
+
+
+    var Categories =
+        $.ajax({
+            url: baseUrl + "api/HXRRuleAPI/GetRuleCategories",
+            async: false,
+            success: function (data, result) { if (!result) alert('Failure to retrieve the Categories.'); }
+        }).responseText;
+    var _arRuleCat = new Array();
+    var ruleCategories = jQuery.parseJSON(Categories);
+    for (i = 0; i < ruleCategories.length; i++) { _arRuleCat.push(ruleCategories[i].RuleCategory_ID + ":" + ruleCategories[i].RuleCategory_Name); }
+    ruleCategories = _arRuleCat.join("; ");
+
+
+    $(document).ready(function () {
+        var client_ID = $("#hdnClientId").val();
+        var project_ID = $("#hdnProjectId").val();
+        var DatabaseIP = $("#hdnDatabaseIP").val();
+        var SourceTarget = $("#hdnSourceTarget").val();
+        var DatabaseName = $("#hdnDatabaseName").val();
+        var ConfigID = $("#hdnConfigId").val();
+
+
+
+        var errorCodes =
+            $.ajax({
+                url: baseUrl + 'api/HXRRuleAPI/GetErrorCode',
+                data: { client_ID: client_ID, project_ID: project_ID },
+                async: false,
+                success: function (data, result)
+                { if (!result) alert('Failure to retrieve the Countries.'); }
+            }).responseText;
+
+        var errorObj = JSON.parse(errorCodes);
+        var _arErrorObj = new Array();
+        $.each(errorObj, function (key, value) {
+            var currentKey = key;
+            var currentValue = value;
+            _arErrorObj.push(currentValue.ErrorCode + ":" + currentValue.ErrorCode + ' - ' + currentValue.ErrorDesc);
+        });
+
+        errorObj = _arErrorObj.join(";");
+
+        $.each(JSON.parse(Types), function (index, value) {
+            $("#ddlhygieneRuleType").append($('<option>').val(value.RuleType_ID).text(value.RuleType_Name));
+        });
+        $.each(JSON.parse(Categories), function (index, value) {
+            $("#ddlhygieneRuleCategory").append($('<option>').val(value.RuleCategory_ID).text(value.RuleCategory_Name));
+        });
+        $.each(JSON.parse(errorCodes), function (index, value) {
+            $("#ddlhygieneError").append($('<option>').val(value.ErrorCode).text(value.ErrorCode + ' - ' + value.ErrorDesc));
+        });
+
+        $("#btnViewData").hide();
+        $("#btnSave").hide();
+        var message = '@message'
+        if (message) {
+            var _class;
+            if (message == 'Saved successfully.') {
+                _class = 'success';
+            }
+            else {
+                _class = 'failed';
+            }
+            ShowMessage(message, _class);
+        }
+        else
+            HideMessage();
+
+
+        $("input[name='Rule']").change(function () {
+            radioValue = $(this).val();
+            if ($(this).is(":checked") && radioValue == "By Column") {
+                $("#pnlHygiene").hide();
+                $("#pnlPreDefine").show();
+            }
+            else if ($(this).is(":checked") && radioValue == "By Rule") {
+                $("#pnlHygiene").show();
+                $("#pnlPreDefine").hide();
+            }
+        });
+        ActionName = "GetRuleType";
+        $.ajax({
+            type: "GET",
+            url: baseUrl + "api/HXRRuleAPI/GetRuleType",
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (index, value) {
+                    var RuleType_Name = value.RuleType_Name;
+                    var RuleType_ID = value.RuleType_ID;
+                    $('#ddlRuletype').append($('<option>').text(RuleType_Name).val(RuleType_ID));
+                });
+                $.ajax({
+                    type: "GET",
+                    url: baseUrl + "api/HXRRuleAPI/MetaDataTable",
+                    data: { client_ID: client_ID, project_ID: project_ID, config_ID: ConfigID },
+                    dataType: 'json',
+                    success: function (data) {
+                        $.each(data, function (index, value) {
+                            $('#ddlTables').append($('<option>').text(value).val(value));
+                            $('#ddlhygieneTables').append($('<option>').text(value).val(value));
+                        });
+
+                        $('#ddlTables').change();
+                        $('#ddlhygieneTables').change();
+
+                    },
+                    error: function (xhr) {
+                        alert(xhr.statusText);
+                    }
+                });
+
+            }
+        });
+        $.ajax({
+            type: "GET",
+            url: baseUrl + "api/HXRRuleAPI/GetRule",
+            data: { client_ID: client_ID, project_ID: project_ID, rule_Id: null, rule_Name: null },
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (index, value) {
+                    $('#ddlhygieneRule').append($('<option>').text(value.Rule_Name).val(value.Rule_ID));
+                });
+            },
+            error: function (xhr) {
+                alert(xhr.statusText);
+            }
+        });
+
+        $("#ddlhygieneTables").change(function () {
+            $("#btnViewData").show();
+            $("#btnSave").show();
+            $("#grdData").GridUnload();
+            var selected = $("#ddlhygieneTables option:selected").text();
+
+
+            var _Results =
+                    $.ajax({
+                        url: baseUrl + "api/HXRRuleAPI/GetMetaDataColumnByTableName",
+                        type: "GET",
+                        contentType: "application/json; charset=utf-8",
+                        data: {
+                            client_ID: client_ID,
+                            project_ID: project_ID,
+                            database_IP: DatabaseIP,
+                            source_Target: SourceTarget,
+                            database_Name: DatabaseName,
+                            Config_Id: ConfigID,
+                            Table_Name: selected
+                        },
+                        dataType: "json",
+                        async: false,
+                        success: function (data, result) {
+                            if (!result) alert('Failure to retrieve columns.');
+
+                        },
+                        error: function (xhr) {
+                            alert("Failed");
+                        }
+                    }).responseText;
+            _Results = JSON.parse(_Results);
+
+            var mydata = {
+                "page": "1",
+                "records": _Results.length,
+                "rows": []
+            };
+
+            //for (var i = 0; i < _Results.rows.length; i++) {
+            $.each(_Results, function (index, item) {
+                var val = item.split(":");
+                mydata.rows.push(
+                    {
+                        id: index + 1,
+                        columnname: val[0],
+                        datatype: val[1]
+                    });
+            });
+
+            $("#grdHygiene").GridUnload();
+            $grid = jQuery("#grdHygiene").jqGrid({
+                datastr: mydata,
+                datatype: 'jsonstring',
+                height: 240,
+                //width: 1075,
+                rowNum: -1,
+                jsonReader: { repeatitems: false },
+                ignoreCase: true,
+                search: { caption: 'Search Record' },
+
+                colNames: ['Column Name', 'Data Type'],
+                colModel: [
+                    { name: 'columnname', index: 'columnname', width: 630, align: 'left', editable: false },
+                    { name: 'datatype', index: 'datatype', width: 500, align: 'left', editable: false }
+                ],
+                pager: '#pgrHygiene',
+                viewrecords: true,
+                pginput: false,
+                pgbuttons: false,
+                sortable: true,
+                autowidth: true,
+                shrinkToFit: true,
+                showButtonPanel: true,
+                closeAfterEdit: true,
+                caption: 'Column details',
+                loadui: "block",
+                loadtext: "Loading...", 
+                rownumbers: true,
+                multiselect: true
+            });//.navGrid('#pgrHygiene', { edit: false, add: false, del: false, search: false, refresh: false });
+
+
+        });
+
+
+        $("#btnViewData").click(function () {
+
+            var _ColumnList = "";
+            var tablename = $("#ddlhygieneTables option:selected").text();
+            var grd = $("#grdHygiene");
+            var selRowIds = grd.jqGrid("getGridParam", "selarrrow"), rowData;
+
+            for (var i = 0; i < selRowIds.length; i++) {
+                rowData = grd.jqGrid("getLocalRow", selRowIds[i]);
+                _ColumnList += rowData.columnname + ",";
+            }
+            _ColumnList = _ColumnList.slice(0, -1);
+
+            $.ajax({
+                url: baseUrl + "api/HXRRuleAPI/GetTableData",
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                //data: { table_name: tablename, column_list: selectedColumns },
+                data: { table_name: tablename, ColumnList: _ColumnList },
+                dataType: "json",
+                cache: false,
+                success: function (data) {
+
+                    var cols = data.ColNames;
+                    var mydata = {
+                        "page": "1",
+                        "records": 100,
+                        "rows": JSON.parse(data.rows)
+                    };
+                    rows = data.rows;
+
+
+                    var uFields = cols.split(',');
+                    var columns = [];
+                    for (var i = 0; i < uFields.length ; i++) {
+                        columns.push(uFields[i]);
+                    }
+
+                    ColumnNames = columns;
+
+                    var uFields = cols.split(',');
+                    var columns = [];
+                    for (var i = 0; i < uFields.length ; i++) {
+                        columns.push({ name: uFields[i], index: uFields[i], search: true, sortable: false, editable: true, hidden: false, align: 'left' });
+                    }
+                    ColumnModel = columns;
+                    $("#grdData").GridUnload();
+                    $grid = jQuery("#grdData").jqGrid({
+                        //data: JSON.parse(rows),
+                        //datatype: "local",
+                        datastr: mydata,
+                        datatype: 'jsonstring',
+                        jsonReader: { repeatitems: false },
+                        ignoreCase: true,
+                        height: 100,
+                        width: 1195,
+                        rowNum: -1,
+                        //search: { caption: 'Search Record' },
+                        //rowList: [5, 10, 20, 50],
+                        colNames: ColumnNames,
+                        colModel: ColumnModel,
+                        pager: '#pgrData',
+                        viewrecords: true,
+                        loadonce: true,
+                        gridview: true,
+                        sortorder: 'asc',
+                        autowidth: false,
+                        shrinkToFit: false,
+                        scrollOffset: 0,
+                        showButtonPanel: true,
+                        closeAfterEdit: true,
+                        caption: 'Source table',
+                        pginput: false,
+                        pgbuttons: false,
+                        rownumbers: true
+
+                    })
+                    jQuery("#grdData").jqGrid('sortableRows');
+                },
+                error: function () {
+                    alert("Failed.");
+                }
+            });
+        });
+        $("#btnSave").click(function () {
+
+             
+            var txtHygieneDataSteward = $("#txtHygieneDataSteward").val();
+            if (txtHygieneDataSteward == undefined || txtHygieneDataSteward == " " || txtHygieneDataSteward == "") {
+                alert('Data Steward required.');
+                return;
+            }
+
+            if (confirm('Are you applying selected Hygiene Rule for selected column(s)?')) {
+
+                var ruleattributes = [];
+                var myGrid = $("#grdHygiene");
+                var selRowIds = myGrid.jqGrid('getGridParam', 'selarrrow');
+                var rowData;                
+                //var _Rule_Name = $("#ddlhygieneRule option:selected").text();
+                var _Rule_ID = $("#ddlhygieneRule").val();
+                var _RuleType_ID = $("#ddlhygieneRuleType").val();
+                var _Error_Code = $("#ddlhygieneError").val();
+                var _RuleCategory_ID = $("#ddlhygieneRuleCategory").val();
+                var _priority = $("#ddlhygienePriority").val();
+                var _Table_Name = $("#ddlhygieneTables").val();
+
+
+                $.each(selRowIds, function (index, value) {
+                    rowData = myGrid.getRowData(value);
+                    ruleattributes.push(
+                        {
+                            Client_ID: client_ID,
+                            Project_ID: project_ID,
+                            Rule_ID: _Rule_ID,
+                            RuleType_ID: _RuleType_ID,
+                            Error_Code: _Error_Code,
+                            RuleCategory_ID: _RuleCategory_ID,
+                            Table_Name: _Table_Name,
+                            Column_Name: "[" + rowData.columnname + "]",
+                            Default_Value: 0,
+                            Conditional_Clause: null,
+                            priority: _priority,
+                            Data_Steward: txtHygieneDataSteward
+
+                        });
+
+                });
+
+                $.ajax({
+                    type: "POST",
+                    data: JSON.stringify(ruleattributes),
+                    url: baseUrl + "api/HXRRuleAPI/SaveHygieneRule",
+                    contentType: "application/json",
+                    success: function (data) {
+                        if (data == 'Saved successfully.')
+                            ShowMessage(data, 'success');
+                        else ShowMessage('Saving failed.', 'failed');
+                    }
+                });
+
+
+
+            }
+
+        });
+
+
+        $("#ddlTables").change(function () {
+            var client_ID = $("#hdnClientId").val();
+            var project_ID = $("#hdnProjectId").val();
+            var DatabaseIP = $("#hdnDatabaseIP").val();
+            var SourceTarget = $("#hdnSourceTarget").val();
+            var DatabaseName = $("#hdnDatabaseName").val();
+            var ConfigID = $("#hdnConfigId").val();
+
+            var selected = $("#ddlTables option:selected").text();
+            var baseUrl = '@Url.Content("~/")';
+            $.ajax({
+                type: "GET",
+                url: baseUrl + 'api/HXRRuleAPI/GetMetaDataColumnByTableName',
+                data: {
+                    client_ID: client_ID, project_ID: project_ID, database_IP: DatabaseIP, source_Target: SourceTarget, database_Name: DatabaseName, Config_Id: ConfigID,
+                    Table_Name: selected
+                },
+                dataType: 'json',
+                success: function (data) {
+                    $("#ddlColumns option").remove();
+                    if (data.length != 0) {
+                        $.each(data, function (index, item) {
+                            var tooltipval = item.split(":");
+                            $("#ddlColumns").append($('<option>').text(tooltipval[0]).val(tooltipval[0]))
+                        });
+
+                    } else {
+                        $("#ddlColumns").append($('<option>').text('No Column found').val('No Column found'));
+
+                    }
+                    $("#ddlColumns").change();
+
+                }
+            });
+
+        });
+
+        $("#ddlColumns,#ddlRuletype").change(function () {
+            var client_ID = $("#hdnClientId").val();
+            var project_ID = $("#hdnProjectId").val();
+            var lastsel;
+            var feed_type = $("#ddlTables option:selected").text();
+            var splitcol = $("#ddlColumns option:selected").text().split(":");
+            splitcol[0] = $.trim(splitcol[0]);
+            splitcol[0] = "[" + splitcol[0] + "]";
+            var column_val = splitcol[0];
+            var baseUrl = '@Url.Content("~/")';
+            var rule_type = 0;//$("#ddlRuletype").val();
+
+
+
+            //Getting Rule Descriptions into drop down.
+            var ruleDescriptions =
+                $.ajax({
+                    url: baseUrl + "api/HXRRuleAPI/GetRule",
+                    data: { client_ID: client_ID, project_ID: project_ID, rule_Id: null, rule_Name: null },
+                    async: false,
+                    success: function (data, result) { if (!result) alert('Failure to retrieve the Countries.'); }
+                }).responseText;
+
+            var _arRuleDescriptions = new Array();
+            var ruleObj = jQuery.parseJSON(ruleDescriptions);
+            var listruleObj = "";
+            for (i = 0; i < ruleObj.length; i++) {
+                _arRuleDescriptions.push(ruleObj[i].Rule_ID + "-" + ruleObj[i].Default_value + ":" + ruleObj[i].Rule_Name);
+            }
+            ruleObj = _arRuleDescriptions.join("; ");
+
+
+            //Getting Default Values
+            var defaultValues =
+                $.ajax({
+                    //url: "GetDefaultValueServlet",
+                    url: baseUrl + "api/HXRRuleAPI/GetRule",
+                    data: { client_ID: client_ID, project_ID: project_ID, rule_Id: null, rule_Name: '' },
+                    async: false,
+                    success: function (data, result)
+                    { if (!result) alert('Failure to retrieve the Default values.'); }
+                }).responseText;
+            var defaultObj = jQuery.parseJSON(defaultValues);
+
+
+            //jQuery("#grid_id").restoreRow(rowid, afterrestorefunc);
+
+            var selRowID = "";
+            var selErrorCode = "";
+            $("#jqgrid1").GridUnload();
+            $grid = jQuery("#jqgrid1").jqGrid({
+                mytype: 'POST',
+                datatype: 'json',
+                url: baseUrl + 'api/HXRRuleAPI/GetPreRuleAttributes',
+                postData: { client_ID: client_ID, project_ID: project_ID, Table_Name: feed_type, Column_Name: column_val, Rule_TypeID: rule_type },
+                height: 180,
+                //width: 980,
+                autowidth: true,
+                shrinkToFit: true,
+                autowidth: true,
+                rowNum: 10,
+                rowList: [10, 20, 30],
+                colNames: ['Attribute Id', '@DM_en_US.lblRuleType', '@DM_en_US.lblRuleCategory', 'Priority', 'Rule', 'Default Value', 'Error Description'],//, 'Error Desc'],
+                colModel: [
+                { name: 'ruleattribid', index: 'ruleattribid', editable: false, hidden: true },
+                { name: 'ruletype', index: 'ruletype', align: 'left', editable: true, width: 140, edittype: "select", editoptions: { value: ruleTypes } },
+                { name: 'rulecategory', index: 'rulecategory', align: 'left', editable: true, width: 140, edittype: "select", editoptions: { value: ruleCategories } },
+                {
+                    name: 'rulePriority', index: 'rulePriority', align: 'left', editable: true, width: 120, edittype: "select", editoptions:
+                      { value: { 'E': 'Error', 'W': 'Warning', 'R': 'Report' } }
+                },
+                {
+                    name: 'ruledesc', index: 'ruledesc', align: 'left', width: 300, editable: true, edittype: 'select',
+                    editoptions: {
+                        value: ruleObj,
+                        dataEvents: [{
+                            type: 'change',
+                            fn: function (e) {
+                                var ruleDesc = $(this).val();
+                                selRowID = $('#jqgrid1').jqGrid('getGridParam', 'selrow');
+                                selruleDesc = $('#' + selRowID + '_ruledesc').val();
+                                var _arValues = selruleDesc.split('-');
+
+                                if (_arValues.length > 0 && _arValues[1] == 1) {
+                                    $('#' + selRowID + '_defaultflag').prop("disabled", false);
+                                }
+                                else {
+                                    $('#' + selRowID + '_defaultflag').val("");
+                                    $('#' + selRowID + '_defaultflag').prop("disabled", true);
+
+                                }
+                            }
+                        }]
+                    }
+                },
+                { name: 'defaultflag', index: 'defaultflag', align: 'left', width: 100, editrules: { required: true }, editable: true },
+                {
+                    name: 'errorcode', index: 'errorcode', align: 'left', width: 380, editable: true, edittype: 'select',
+                    editoptions: {
+                        value: errorObj,
+                        dataInit: function (elem) {
+                        },
+                        dataEvents: [{
+                            type: 'change',
+                            fn: function (e) {
+                            }
+                        }]
+                    }
+                }
+                   //{ name: 'errordesc', index: 'errordesc', search: false, width: 50, align: 'left', editable: true },
+
+                ],
+                pager: '#pager2',
+                //scrollOffset: 0,
+                viewrecords: true,
+                viewsortcols: true,
+                loadonce: true,
+                gridview: true,
+                sortorder: 'asc',
+                onSelectRow: function (rowId) {
+                    var rowData = $('#jqgrid1').jqGrid('getRowData', rowId);
+                    if (rowId && rowId !== lastsel) {
+                        jQuery('#jqgrid1').jqGrid('restoreRow', lastsel);
+                        jQuery('#jqgrid1').jqGrid('editRow', rowId, true);
+                        lastsel = rowId;
+                        $('#' + rowId + '_errorcode option').filter(function () {
+                            return this.text.split('-')[1].trim() == rowData.errorcode;
+                        }).attr('selected', true);
+                    }
+                },
+                gridComplete: function () {
+
+                    var recs = $('#jqgrid1').jqGrid('getGridParam', 'reccount');
+                    if (recs == 0) {
+
+                    }
+                },
+                loadComplete: function () {
+
+                },
+
+                caption: 'Pre Defined Rules'
+            });
+            jQuery("#jqgrid1").jqGrid('navGrid', '#pager2', { edit: false, add: false, del: false, view: false, search: false, refresh: false });
+            jQuery("#jqgrid1").jqGrid('inlineNav', '#pager2', { addParams: { position: "last" } });
+            jQuery("#jqgrid1").jqGrid('sortableRows');
+
+            /*  jQuery("#savecompl").click(function(){
+            jQuery("#jqgrid1").setGridParam({datatype: 'json'});
+            jQuery("#jqgrid1").trigger("reloadGrid");
+
+            }); */
+
+            //  });
+        });
+
+        $("#reset_firstpage").click(function () {
+            $('#ddlTables').prop('selectedIndex', 0);
+            $('#ddlRuletype').prop('selectedIndex', 0);
+            //Need to reload the grid here.
+
+        });
+
+        $("#savecompl").click(function () {
+
+            var txtPreDefineDataSteward = $("#txtPreDefineDataSteward").val();
+            if (txtPreDefineDataSteward == undefined || txtPreDefineDataSteward == " " || txtPreDefineDataSteward == "") {
+                alert('Data Steward required.');
+                return;
+            }
+
+            var tablename = $("#ddlTables option:selected").text();
+            var splitcol = $("#ddlColumns option:selected").text().split(":");
+            splitcol[0] = $.trim(splitcol[0]);
+            splitcol[0] = "[" + splitcol[0] + "]";
+            var columnname = splitcol[0];
+
+
+            var selRowId = $("#jqgrid1").jqGrid('getGridParam', 'selrow');
+
+            var dropdown = jQuery('#' + selRowId + '_ruletype')[0];
+            if (dropdown == undefined) {
+                alert('Please select the @DM_en_US.lblRuleType.');
+                return;
+            }
+            var selectedOption = dropdown.options[dropdown.selectedIndex];
+            var selectedType = selectedOption.value;
+
+            var dropdown = jQuery('#' + selRowId + '_rulecategory')[0];
+            if (dropdown == undefined) {
+                alert('Please select the @DM_en_US.lblRuleCategory.');
+                return;
+            }
+            var selectedOption = dropdown.options[dropdown.selectedIndex];
+            var selectedCategory = selectedOption.value;
+
+            var dropdown = jQuery('#' + selRowId + '_rulePriority')[0];
+            if (dropdown == undefined) {
+                alert('Please select the Priority');
+                return;
+            }
+            var selectedOption = dropdown.options[dropdown.selectedIndex];
+            var selectedPriority = selectedOption.value;
+
+            var dropdown = jQuery('#' + selRowId + '_ruledesc')[0];
+            var selectedOption = dropdown.options[dropdown.selectedIndex];
+            //var selectedruleDescription = selectedOption.text;
+            var selectedRuleId = selectedOption.value.split('-')[0];
+
+
+            var DefaultFlag = selectedOption.value.split('-')[1];
+            var dropdown = jQuery('#' + selRowId + '_errorcode')[0];
+            var selectedOption = dropdown.options[dropdown.selectedIndex];
+            //var selectederrorCode = selectedOption.text;
+            var selectederrorCode = selectedOption.value;
+            var defaultValue = jQuery('#' + selRowId + '_defaultflag').val();
+
+            if (DefaultFlag == "1") {
+                if (defaultValue == null || defaultValue == "") {
+                    $(defaultValue).focus();
+                    alert("Default Value Required!");
+                    return false;
+                }
+            }
+            else {
+                defaultValue = "0";
+            }
+
+
+            $.ajax({
+                type: "GET",
+                url: baseUrl + "api/HXRRuleAPI/SavePreRuleAttribute",
+                dataType: 'json',
+                data: {
+                    client_ID: client_ID,
+                    project_ID: project_ID,
+                    //rule_ID: selectedruleDescription,
+                    rule_ID: selectedRuleId,
+                    ruleType_ID: selectedType,
+                    error_Code: selectederrorCode,
+                    ruleCategory_ID: selectedCategory,
+                    table_name: tablename,
+                    column_Name: columnname,
+                    default_value: defaultValue,
+                    conditional_Clause: null,
+                    priority: selectedPriority,
+                    reference_Table: null,
+                    reference_Column: null,
+                    reference_Cond: null,
+                    last_Modified_By: 'Hexaware',
+                    data_steward: txtPreDefineDataSteward
+                },
+                success: function (data) {
+                    if (data == "Success") {
+                        //functionselect();
+                        alert("Saved successfully");
+                        $('#ddlTables').change();
+
+                    }
+                    else
+                        alert("Saving failed");
+                }
+            });
+
+        });
+        $("#update_compl").click(function () {
+            //
+            //  var rowcount = $("#jqgrid1").getGridParam("reccount");
+            var selRowId = $("#jqgrid1").jqGrid('getGridParam', 'selrow');
+            //   for (i = 1; i <= rowcount; i++) {
+            var myGrid = $('#jqgrid1');
+            //  selRowId = i;
+            var ruleattribId = $('#jqgrid1').jqGrid('getCell', selRowId, 'ruleattribid');
+            var ddlruledesc = jQuery('#' + selRowId + '_ruledesc')[0];
+            if (ddlruledesc == undefined) {
+                alert('Please edit the rule.');
+                return;
+            }
+
+
+            var ddlruleSelected = ddlruledesc.options[ddlruledesc.selectedIndex];
+            var ruleId = ddlruleSelected.value.split("-")[0];
+
+
+            var splitcol = $("#ddlColumns option:selected").text().split(":");
+            splitcol[0] = $.trim(splitcol[0]);
+            splitcol[0] = "[" + splitcol[0] + "]";
+            var column_val = splitcol[0];
+
+            var dropdown = jQuery('#' + selRowId + '_ruletype')[0];
+            if (dropdown == undefined) {
+                alert('Please edit the @DM_en_US.lblRuleType.');
+                return;
+            }
+            var selectedOption = dropdown.options[dropdown.selectedIndex];
+            var selectedType = selectedOption.value;
+
+            var dropdown = jQuery('#' + selRowId + '_rulecategory')[0];
+            if (dropdown == undefined) {
+                alert('Please edit the @DM_en_US.lblRuleCategory.');
+                return;
+            }
+            var selectedOption = dropdown.options[dropdown.selectedIndex];
+            var selectedCategory = selectedOption.value;
+
+
+            var dropdown = jQuery('#' + selRowId + '_rulePriority')[0];
+            if (dropdown == undefined) {
+                alert('Please edit the Priority.');
+                return;
+            }
+            var selectedOption = dropdown.options[dropdown.selectedIndex];
+            var selectedPriority = selectedOption.value;
+
+
+
+            var dropdown = jQuery('#' + selRowId + '_errorcode')[0];
+            if (dropdown.selectedIndex <= 0) {
+                alert('This is can\'t be used as error code');
+                return;
+            }
+            var selectedOption = dropdown.options[dropdown.selectedIndex];
+            //var selectederrorCode = selectedOption.text;
+            var selectederrorCode = selectedOption.value;
+
+            var defaultValue = jQuery('#' + selRowId + '_defaultflag').val();
+
+            if (defaultValue.trim() == '' && jQuery('#' + selRowId + '_defaultflag').attr('disabled') == undefined) {
+                alert('Default value is required.');
+                return;
+
+            }
+
+            //Getting Rule Description.
+
+            /* var dropdown = jQuery('#' + selRowId + '_ruledescription')[0];
+            var selectedOption = dropdown.options[dropdown.selectedIndex];
+            var selectedruleDescription = selectedOption.text;
+            alert(selectedruleDescription); */
+
+            //Getting default value.
+            //alert(selRowId);
+            $.ajax({
+                type: "GET",
+                // url: "UpdatePreRuleServlet",
+                url: baseUrl + "api/HXRRuleAPI/UpdatePreRuleAttribute",
+                //data: { client_ID: client_ID, project_ID: project_ID, ruleattribId: ruleattribId, selectedCategory: selectedCategory, selectederrorCode: selectederrorCode },
+                data: {
+                    client_ID: client_ID,
+                    project_ID: project_ID,
+                    attribute_Rule_ID: ruleattribId,
+                    rule_ID: ruleId,
+                    // ruleType_ID: ruletypeId,
+                    ruleType_ID: selectedType,
+                    error_Code: selectederrorCode,
+                    ruleCategory_ID: selectedCategory,
+                    column_Name: column_val,
+                    default_value: defaultValue,
+                    conditional_Clause: null,
+                    priority: selectedPriority,
+                    last_Modified_By: 'Hexaware'
+                },
+                dataType: 'json',
+                success: function (data) {
+                    //functionselect();
+                    alert('Updated Successfully!');
+                    $('#ddlTables').change();
+
+                }
+            });
+            //}
+
+        });
+        $("input[name='Rule']").change();
+        //$("#ddlRuletype").change(function () {
+
+        //});
+
+    });
+</script>
+<div style="width:100%;">
+    <div style="width:80%;margin:auto;">
+        <div class="div-header">
+            <input type="radio" name="Rule" value="By Column" checked="checked" /><span class="control-label label-bold">By Column</span>
+            <input type="radio" name="Rule" value="By Rule" /><span class="control-label label-bold">By Rule</span>
+        </div>
+    </div>
+</div>
+<div id="pnlPreDefine">
+    <div class="content-body" style="width:100%;">
+        <div class="group">
+            <div class="form-group width-per-100 fL" style="width: 80%;margin: auto;float: none;">
+                <div class="col-40" style="width: 32%;">
+                    <span class="control-label">Select table</span>
+                    <select id="ddlTables" class="dropdown" style="width:100%;"></select>
+                </div>
+                <div class="col-40" style="width: 34%; padding-right: 0; ">
+                    <label class="control-label">Select Column</label>
+                    <select id="ddlColumns" class="dropdown" style="width:95%;"></select>
+                </div>
+                <div class="col-40" style="width: 32%; padding-right: 0; ">
+                    <label class="control-label">Data Steward</label>
+                    <input id="txtPreDefineDataSteward" type="text" class="form-control" />
+                    @*@Html.Partial("DataSteward")*@
+                </div>
+                <div class="col-40" style="width: 16%; padding: 0px;display:none;">
+                    <span id="type" class="control-label">@DM_en_US.lblRuleType</span>
+                    <select id="ddlRuletype" class="dropdown" style="width:100%;"></select>
+                </div>
+            </div>
+        </div>
+        <div style="width:80%;margin:auto;">
+            <div class="group">
+                <div class="form-group width-per-100">
+                    <table id="jqgrid1" class="width-per-100"></table>
+                    <div id="pager2" class="scroll"></div>
+                </div>
+            </div>
+        </div>
+        <div class="group">
+            <div class="form-group text-align-center form-group-btn width-per-100">
+                <input class="form-button" type="button" value="Update" id="update_compl">
+                <input class="form-button" type="button" value="Save Rule" id="savecompl">
+                <input class="form-button" type="button" value="Reset" id="reset_firstpage">
+            </div>
+        </div>
+    </div>
+</div>
+<div id="pnlHygiene">
+    <div class="content-body" style="width:100%;">
+        <div class="group">
+            <div class="form-group width-per-100 fL" style="width: 80%;margin: auto;float: none;">
+                <div class="col-40" style="width: 32%;">
+                    <span class="control-label">Select Rule</span>
+                    <select id="ddlhygieneRule" class="dropdown" style="width:100%;"></select>
+                </div>
+                <div class="col-40" style="width: 34%; padding-right: 0; ">
+                    <label class="control-label">Select Table</label>
+                    <select id="ddlhygieneTables" class="dropdown" style="width:95%;"></select>
+                </div>
+                <div class="col-40" style="width: 32%; padding-right: 0; ">
+                    <label class="control-label">Data Steward</label>
+                    <input id="txtHygieneDataSteward" type="text" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="group">
+            <div class="form-group width-per-100 fL" style="width: 80%;margin: auto;float: none;">
+                <div class="col-40" style="width: 24%; padding-right: 10px;">
+                    <span class="control-label">@DM_en_US.lblRuleType</span>
+                    <select id="ddlhygieneRuleType" class="dropdown" style="width:100%;"></select>
+                </div>
+                <div class="col-40" style="width: 25%; ">
+                    <label class="control-label">@DM_en_US.lblRuleCategory</label>
+                    <select id="ddlhygieneRuleCategory" class="dropdown" style="width:100%;"></select>
+                </div>
+                <div class="col-40" style="width: 12%; padding-right: 10px;">
+                    <label class="control-label">Priority</label>
+                    <select id="ddlhygienePriority" class="dropdown" style="width:100%;">
+                        <option value="E">Error</option>
+                        <option value="W">Warning</option>
+                        <option value="R">Report</option>
+                    </select>
+                </div>
+                <div class="col-40" style="width: 35%; padding-right: 0px;">
+                    <label class="control-label">Error</label>
+                    <select id="ddlhygieneError" class="dropdown" style="width:100%;"></select>
+                </div>
+            </div>
+        </div>
+        <div style="width:80%;margin:auto;">
+            <div class="group">
+                <div class="form-group width-per-100">
+                    <table id="grdHygiene" class="width-per-100"></table>
+                    <div id="pgrHygiene" class="scroll"></div>
+                </div>
+            </div>
+        </div>
+        <div style="width:80%;margin:auto;">
+            <div class="group">
+                <div class="form-group width-per-100">
+                    <table id="grdData" class="width-per-100"></table>
+                    <div id="pgrData" class="scroll"></div>
+                </div>
+            </div>
+        </div>
+        <div id="msgbox" class="group text-align-center">
+            <span class="success">Saved Successfully.</span>
+        </div>
+        <div class="group">
+            <div class="form-group text-align-center form-group-btn width-per-100">
+                <input class="form-button" type="button" value="View Data" id="btnViewData">
+                <input class="form-button" type="button" value="Save" id="btnSave">
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" value="@ViewData["ClientID"]" id="hdnClientId" />
+<input type="hidden" value="@ViewData["ProjectID"]" id="hdnProjectId" />
+<input type="hidden" value="@ViewData["DatabaseIP"]" id="hdnDatabaseIP" />
+<input type="hidden" value="@ViewData["SourceTarget"]" id="hdnSourceTarget" />
+<input type="hidden" value="@ViewData["DatabaseName"]" id="hdnDatabaseName" />
+<input type="hidden" value="@ViewData["ConfigID"]" id="hdnConfigId" />

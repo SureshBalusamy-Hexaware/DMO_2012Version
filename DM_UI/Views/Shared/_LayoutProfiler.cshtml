@@ -1,0 +1,42 @@
+﻿@{
+    //ViewBag.Title = "_Layout";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+<div class="content">
+    <!-- Body start -->
+    <div class="content_mid contact">
+        <div class="ui-tabs">
+            <ul id="Menu" class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-corner-all" style="font-weight: normal;">
+                <li style="width: 14%;" class="@((ViewBag.SelectedMenu == "1") ? "ui-state-default ui-corner-top ui-tabs-selected" : "ui-state-default ui-corner-top")">
+                    @Html.ActionLink("Configuration", "Configuration", "DataProfiler")
+                </li>
+                <li style="width: 14%;" class="@((ViewBag.SelectedMenu == "5") ? "ui-state-default ui-corner-top ui-tabs-selected" : "ui-state-default ui-corner-top")">
+                    @Html.ActionLink("Load Data", "ExcelTemplate", "DataProfiler")
+                </li>
+                <li style="width: 14%;" class="@((ViewBag.SelectedMenu == "2") ? "ui-state-default ui-corner-top ui-tabs-selected" : "ui-state-default ui-corner-top")">
+                    @Html.ActionLink("Profile", "DataProfiling", "DataProfiler")
+                </li>
+                <li style="width: 14%;" class="@((ViewBag.SelectedMenu == "4") ? "ui-state-default ui-corner-top ui-tabs-selected" : "ui-state-default ui-corner-top")">
+                    @Html.ActionLink("Offline Profile", "OfflineProfiling", "DataProfiler")
+                </li>
+                <li style="width: 24%;" class="@((ViewBag.SelectedMenu == "6") ? "ui-state-default ui-corner-top ui-tabs-selected" : "ui-state-default ui-corner-top")">
+                    @Html.ActionLink("Code Rule Management", "CodeRuleManagement", "DataProfiler")
+                </li>
+                <li style="width: 14%;" class="@((ViewBag.SelectedMenu == "3") ? "ui-state-default ui-corner-top ui-tabs-selected" : "ui-state-default ui-corner-top")">
+                    @*@Html.ActionLink("Report", "ProfileReport", "DataProfiler")*@
+                    @Html.ActionLink("Report", "DataProfiler", "DashBoard")
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    @RenderBody()
+    <div class="form-load-img">
+        <asp:Image ID="Loadinglbl" ClientIDMode="Static" runat="server" ImageUrl="~/DMO_Style/images/load5.gif" Style="visibility: visible;" />
+    </div>
+    <!-- Body end -->
+</div>
+
+
+@RenderSection("scripts", required: false)
+

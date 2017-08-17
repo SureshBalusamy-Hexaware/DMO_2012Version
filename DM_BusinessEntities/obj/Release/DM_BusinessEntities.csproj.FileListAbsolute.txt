@@ -1,0 +1,64 @@
+D:\DM_Project\DM\DM_BusinessEntities\bin\Release\DM_BusinessEntities.dll
+D:\DM_Project\DM\DM_BusinessEntities\bin\Release\DM_BusinessEntities.pdb
+D:\DM_Project\DM\DM_BusinessEntities\obj\Release\DM_BusinessEntities.csprojResolveAssemblyReference.cache
+D:\DM_Project\DM\DM_BusinessEntities\obj\Release\DM_BusinessEntities.dll
+D:\DM_Project\DM\DM_BusinessEntities\obj\Release\DM_BusinessEntities.pdb
+D:\gitlab\DMO\DM_BusinessEntities\bin\Release\DM_BusinessEntities.dll
+D:\gitlab\DMO\DM_BusinessEntities\bin\Release\DM_BusinessEntities.pdb
+D:\gitlab\DMO\DM_BusinessEntities\obj\Release\DM_BusinessEntities.csprojResolveAssemblyReference.cache
+D:\gitlab\DMO\DM_BusinessEntities\obj\Release\DM_BusinessEntities.dll
+D:\gitlab\DMO\DM_BusinessEntities\obj\Release\DM_BusinessEntities.pdb
+D:\01Feb2016\DM_BusinessEntities\bin\Release\DM_BusinessEntities.dll
+D:\01Feb2016\DM_BusinessEntities\bin\Release\DM_BusinessEntities.pdb
+D:\01Feb2016\DM_BusinessEntities\obj\Release\DM_BusinessEntities.csprojResolveAssemblyReference.cache
+D:\01Feb2016\DM_BusinessEntities\obj\Release\DM_BusinessEntities.dll
+D:\01Feb2016\DM_BusinessEntities\obj\Release\DM_BusinessEntities.pdb
+D:\08-01-2016\DM_BusinessEntities\bin\Release\DM_BusinessEntities.dll
+D:\08-01-2016\DM_BusinessEntities\bin\Release\DM_BusinessEntities.pdb
+D:\08-01-2016\DM_BusinessEntities\obj\Release\DM_BusinessEntities.csprojResolveAssemblyReference.cache
+D:\08-01-2016\DM_BusinessEntities\obj\Release\DM_BusinessEntities.dll
+D:\08-01-2016\DM_BusinessEntities\obj\Release\DM_BusinessEntities.pdb
+D:\Project\GIT Source\NET-DMO\DM_BusinessEntities\bin\Release\DM_BusinessEntities.dll
+D:\Project\GIT Source\NET-DMO\DM_BusinessEntities\bin\Release\DM_BusinessEntities.pdb
+D:\Project\GIT Source\NET-DMO\DM_BusinessEntities\obj\Release\DM_BusinessEntities.csprojResolveAssemblyReference.cache
+D:\Project\GIT Source\NET-DMO\DM_BusinessEntities\obj\Release\DM_BusinessEntities.dll
+D:\Project\GIT Source\NET-DMO\DM_BusinessEntities\obj\Release\DM_BusinessEntities.pdb
+C:\Users\31312\Desktop\Final Version - 11102016\DM_BusinessEntities\bin\Release\DM_BusinessEntities.dll
+C:\Users\31312\Desktop\Final Version - 11102016\DM_BusinessEntities\bin\Release\DM_BusinessEntities.pdb
+C:\Users\31312\Desktop\Final Version - 11102016\DM_BusinessEntities\obj\Release\DM_BusinessEntities.csprojResolveAssemblyReference.cache
+C:\Users\31312\Desktop\Final Version - 11102016\DM_BusinessEntities\obj\Release\DM_BusinessEntities.dll
+C:\Users\31312\Desktop\Final Version - 11102016\DM_BusinessEntities\obj\Release\DM_BusinessEntities.pdb
+D:\gitlab\28022017\DM_BusinessEntities\bin\Release\DM_BusinessEntities.dll
+D:\gitlab\28022017\DM_BusinessEntities\bin\Release\DM_BusinessEntities.pdb
+D:\gitlab\28022017\DM_BusinessEntities\obj\Release\DM_BusinessEntities.dll
+D:\gitlab\28022017\DM_BusinessEntities\obj\Release\DM_BusinessEntities.pdb
+D:\gitlab\28022017\DM_BusinessEntities\obj\Release\DM_BusinessEntities.csprojResolveAssemblyReference.cache
+D:\GitHub-DMO\Development\DM_BusinessEntities\bin\Release\DM_BusinessEntities.dll
+D:\GitHub-DMO\Development\DM_BusinessEntities\bin\Release\DM_BusinessEntities.pdb
+D:\GitHub-DMO\Development\DM_BusinessEntities\obj\Release\DM_BusinessEntities.dll
+D:\GitHub-DMO\Development\DM_BusinessEntities\obj\Release\DM_BusinessEntities.pdb
+D:\GitHub-DMO\Development\DM_BusinessEntities\obj\Release\DM_BusinessEntities.csprojResolveAssemblyReference.cache
+D:\Workarea\25052017\DM_BusinessEntities\bin\Release\DM_BusinessEntities.dll
+D:\Workarea\25052017\DM_BusinessEntities\bin\Release\DM_BusinessEntities.pdb
+D:\Workarea\25052017\DM_BusinessEntities\obj\Release\DM_BusinessEntities.dll
+D:\Workarea\25052017\DM_BusinessEntities\obj\Release\DM_BusinessEntities.pdb
+D:\Workarea\25052017\DM_BusinessEntities\obj\Release\DM_BusinessEntities.csprojResolveAssemblyReference.cache
+E:\Share\Ashok\2014Version\DM_BusinessEntities\bin\Release\DM_BusinessEntities.dll
+E:\Share\Ashok\2014Version\DM_BusinessEntities\bin\Release\DM_BusinessEntities.pdb
+E:\Share\Ashok\2014Version\DM_BusinessEntities\obj\Release\DM_BusinessEntities.dll
+E:\Share\Ashok\2014Version\DM_BusinessEntities\obj\Release\DM_BusinessEntities.pdb
+E:\Share\Ashok\2014Version\DM_BusinessEntities\obj\Release\DM_BusinessEntities.csprojResolveAssemblyReference.cache
+E:\Share\Ashok\2012Version\DM_BusinessEntities\bin\Release\DM_BusinessEntities.dll
+E:\Share\Ashok\2012Version\DM_BusinessEntities\bin\Release\DM_BusinessEntities.pdb
+E:\Share\Ashok\2012Version\DM_BusinessEntities\obj\Release\DM_BusinessEntities.csprojResolveAssemblyReference.cache
+E:\Share\Ashok\2012Version\DM_BusinessEntities\obj\Release\DM_BusinessEntities.dll
+E:\Share\Ashok\2012Version\DM_BusinessEntities\obj\Release\DM_BusinessEntities.pdb
+E:\Workarea\Source code\2012Version\DM_BusinessEntities\bin\Release\DM_BusinessEntities.dll
+E:\Workarea\Source code\2012Version\DM_BusinessEntities\bin\Release\DM_BusinessEntities.pdb
+E:\Workarea\Source code\2012Version\DM_BusinessEntities\obj\Release\DM_BusinessEntities.csprojResolveAssemblyReference.cache
+E:\Workarea\Source code\2012Version\DM_BusinessEntities\obj\Release\DM_BusinessEntities.dll
+E:\Workarea\Source code\2012Version\DM_BusinessEntities\obj\Release\DM_BusinessEntities.pdb
+D:\2012Version\DM_BusinessEntities\bin\Release\DM_BusinessEntities.dll
+D:\2012Version\DM_BusinessEntities\bin\Release\DM_BusinessEntities.pdb
+D:\2012Version\DM_BusinessEntities\obj\Release\DM_BusinessEntities.dll
+D:\2012Version\DM_BusinessEntities\obj\Release\DM_BusinessEntities.pdb

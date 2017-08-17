@@ -1,0 +1,495 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1BE81F15-AEE1-4FC9-AEDD-512C475B432D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DM_DataModel</RootNamespace>
+    <AssemblyName>DM_DataModel</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\DM\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\DM\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFrameworkExtras.EF6">
+      <HintPath>..\DM\packages\EntityFrameworkExtras.EF6.1.0.0\lib\net45\EntityFrameworkExtras.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.DataProfiler, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Microsoft SQL Server\110\DTS\Binn\Microsoft.SqlServer.DataProfiler.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.DataProfilingTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\172.25.164.63\share\Muthu\31032016\Microsoft.SqlServer.DataProfilingTask.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ATMTN_GET_TBL_EXPORT_STATUS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ATMTN_REQUEST_TBL_EXPORT_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CMN_GET_ALL_USER_DETAILS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CMN_GET_CLIENT_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CMN_GET_COL_DATA_TYPES_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CMN_GET_DATA_MASK_TYPE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CMN_GET_ENTITY_COLS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CMN_GET_ENTITY_LIST_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CMN_GET_KEY_COLUMNS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CMN_GET_METADATA_BUSNAME_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CMN_GET_OFFLINE_JOB_STATS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CMN_GET_PROJECT_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CMN_GET_ROLE_MENU_ITEMS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CMN_GET_ROLE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CMN_GET_SCHEDULED_JOBS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CMN_GET_TOOL_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CMN_GET_USR_RLE_MNU_BY_TYPE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CMN_GET_WORK_FLOW_SEQ_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CMN_GUESS_DATA_TYPE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="COMMON_GET_CONFIG_DETAILS_SP1_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="COMMON_GET_CONFIG_DETAILS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="COMMON_GET_KEY_COLUMNS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="COMMON_GET_META_DATA_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="COMMON_GET_TABLE_COLUMN_LIST_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="COMMON_GET_TABLE_LIST_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="COMMON_INSERT_CONFIG_DETAILS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DASM_FX_GET_CRITERIAMASTER_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DASM_GET_AUDITREPORT_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DASM_GET_CRITERIA_TYPE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DASM_GET_CRI_OBJ_COUNT_SP1_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DASM_GET_CRI_OBJ_COUNT_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DASM_GET_DELETELIST_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DASM_GET_MASKING_TEMPLATE_DETAILS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DASM_GET_MASKING_TEMPLATE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DASM_GET_MASKING_TEMPLATE_SP_Result1.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DASM_GET_OBJECTNAME_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DASM_GET_SLICING_RUNID_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DASM_GET_TARGETSERVER_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DASM_GET_TEMPLATE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DASM_GET_TRANSFERRESULT_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DIMA_DELETE_MAPPING_MS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DRD_GET_DATARECON_REPORT_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DRD_GET_SOURCE_TARGET_TABLE_COLUMNS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DRD_GET_SOURCE_TARGET_TABLE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DRD_GET_SOURCE_TARGET_TABLE_TRANS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DRD_GET_TEMPLATE_DETAILS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DRD_INSERT_AUTOMATON_TEMPLATE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ETL_GET_COLUMN_DATA_TYPE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ETL_GET_COLUMN_DETAIL_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ETL_GET_CONN_STRING_SP1_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ETL_GET_CONN_STRING_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ETL_GET_SOURCE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ETL_GET_SOURCE_TARGET_MAPPING_DTLS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ETL_GET_SOURCE_TARGET_TABLE_COLUMNS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ETL_GET_SOURCE_TARGET_TABLE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ETL_GET_SOURCE_TEMPLATE_LIST_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ETL_GET_SOURCE_TEMPLATE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ETL_GET_TARGET_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ETL_GET_TARGET_TEMPLATE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ETL_GET_TEMPLATE_SOURCE_TARGET_TABLE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ETL_GET_TEMPLATE_TABLE_COLUMNS_SP_old_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ETL_GET_TEMPLATE_TABLE_COLUMNS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ETL_GET_TEMPLATE_TABLE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ETL_GET_TRANS_METADATA_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ETL_GET_TRANS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ETL_GET_TRANS_TEMPLATE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ETL_GET_VARIABLE_PARAM_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GenericRepository\GenericRepository.cs" />
+    <Compile Include="HexaruleDataModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HexaruleDataModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HexaruleDataModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HexaruleDataModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HexaruleDataModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_AUTHENTICATE_USER_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_FX_GET_CRITERIAMASTER_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_ALL_USER_DETAILS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_AUDITREPORT_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_CLIENT_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_CRITERIA_ALL_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_DELETELIST_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_ERROR_DESC_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_ERROR_RULE_CATEGORY_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_ERROR_RULE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_KEY_COLUMNS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_OBJECTNAME_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_PARAMETERCOUNT_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_PROJECT_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_RULE_ATTRIBUTE_FOR_DISPLAY_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_RULE_ATTRIBUTE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_RULE_CATEGORY_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_RULE_ERROR_SUMMARY_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_RULE_FUNCTION_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_RULE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_RULE_TYPE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_RULE_VALIDATION_RESULTS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_RULE_VALIDATION_SP.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_RUN_ID_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_SCRIPTDIFINATION_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_TABLE_COLUMN_LIST_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_TOOL_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_TRANSFERRESULT_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_VALIDATE_COLUMN_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="INFAGEN_GET_AB_TRANS_METADATA_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="INFAGEN_GET_COLUMN_DATA_TYPE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="INFAGEN_GET_CONN_STRING_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="INFAGEN_GET_SOURCE_TARGET_TABLE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="INFAGEN_GET_TEMPLATE_TABLE_COLUMNS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="INFAGEN_GET_TEMPLATE_TABLE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PRC_TO_UPDATE_SOURCE_TABLE_QUERY_SP.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProfilerOutput.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProfilerOutput.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="PROFILER_GET_DISTINCT_TEMPLATES_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PROFILER_GET_PARAMETER_VALUES_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PROFILER_GET_TABLE_DETAILS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PROFILER_GET_TEMPALTE_DETAILS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PROFILER_GET_TEMPLATE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PROFILER_INSERT_STATUS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PROF_GET_BATCH_STATUS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PROF_GET_PROFILER_RULE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="RPT_GET_REPORT_DETAILS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfWork\Dashboard.cs" />
+    <Compile Include="UnitOfWork\DataRecon.cs" />
+    <Compile Include="UnitOfWork\DIMA.cs" />
+    <Compile Include="UnitOfWork\DASEM.cs" />
+    <Compile Include="UnitOfWork\HXRAutomaton.cs" />
+    <Compile Include="UnitOfWork\HXRConfigurationMS.cs" />
+    <Compile Include="UnitOfWork\HXRRule.cs" />
+    <Compile Include="UnitOfWork\MasterSetup.cs" />
+    <Compile Include="UnitOfWork\Profiler.cs" />
+    <Compile Include="UnitOfWork\UnitOfWork.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="HexaruleDataModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>HexaruleDataModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="HexaruleDataModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HexaruleDataModel.edmx</DependentUpon>
+      <LastGenOutput>HexaruleDataModel.Context.cs</LastGenOutput>
+    </None>
+    <None Include="HexaruleDataModel.edmx.diagram">
+      <DependentUpon>HexaruleDataModel.edmx</DependentUpon>
+    </None>
+    <None Include="HexaruleDataModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HexaruleDataModel.edmx</DependentUpon>
+      <LastGenOutput>HexaruleDataModel.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+    <None Include="ProfilerOutput.xsc">
+      <DependentUpon>ProfilerOutput.xsd</DependentUpon>
+    </None>
+    <None Include="ProfilerOutput.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ProfilerOutput.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ProfilerOutput.xss">
+      <DependentUpon>ProfilerOutput.xsd</DependentUpon>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DM_BusinessEntities\DM_BusinessEntities.csproj">
+      <Project>{846a39c6-cc30-4b40-aec2-7650dade88bb}</Project>
+      <Name>DM_BusinessEntities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

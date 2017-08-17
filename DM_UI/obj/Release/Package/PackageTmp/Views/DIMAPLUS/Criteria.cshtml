@@ -1,0 +1,86 @@
+﻿@using System.Configuration
+@{
+    ViewBag.Title = "Criteria";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Scripts.Render("~/Scripts/ProgressBar.js")
+@Scripts.Render("~/Scripts/Criteria.js")
+
+
+@using (Html.BeginForm("CriteriaDetail", "DIMAPLUS"))
+{
+    <div class="content-body width-per-100">
+        <div style="width:99%;margin:auto;">
+            <div class="group">
+                <div class="form-group width-per-100 fL">
+                    <div class="col-40" style="width: 20%;">
+                        <span id="lblTemplateName" class="control-label">Enter Template Name* </span> <a id="lnkNewTemplate" class="control-label" style="color:blue;" href="#" title="click here to create a new template">[New Template]</a>
+                        <div id="divdbl">
+                            <input id="txtTemplateName" type="text" class="textbox" style="width: 91%;" />
+                            <select id="ddlTemplateName" class="dropdown" style="width:100%;"></select>
+                        </div>
+                    </div>
+                    <div class="col-40" style="width: 20%;">
+                        <span class="control-label">Source SlicingField *</span>
+                        <select id="ddlSlicingField" class="dropdown" style="width: 99%;"></select>
+                    </div>
+                    <div class="col-40" style="width: 9%;">
+                        <span class="control-label">Condition *</span>
+                        <select id="ddlOperator" class="dropdown" style="width: 99%;">
+                            <option label="=">=</option>
+                            <option label="<>"><></option>
+                            <option label="<"><</option>
+                            <option label=">">></option>
+                            <option label="<="><=</option>
+                            <option label=">=">>=</option>
+                            <option label="IN">IN</option>
+                            @*<option label="BETWEEN">BETWEENs</option>*@
+                        </select>
+                    </div>
+                    <div class="col-40" style="width: 20%; line-height: 23px;">
+                        <span class="control-label">Source Slicing Value *</span>
+                        <div id="divSlicingFieldValue"></div>
+                        @*<select id="ddlSlicingFieldValue"  multiple="multiple" style="width: 99%;"></select>*@
+                    </div>
+                    <div class="col-40" style="width: 10%; line-height: 23px;">
+                        <span class="control-label">Select Type *</span>
+                        <select id="ddltype" style="width: 99%;" multiple="multiple">
+                            <option selected="selected" value="Tables">Tables</option>
+                            <option value="Procedures">Procedures</option>
+                            <option value="Views">Views</option>
+                        </select>
+                    </div>
+                    <div class="col-40" style="width: 6%; padding-top: 27px;">
+                        <input class="form-button" type="button" value="Search" id="btnSearch" />
+                        @*<input class="form-button" type="submit" value="Verify Criteria" id="btnverifyCriteria" />*@
+                        @*@Html.ActionLink("Verify Criteria", "CriteriaDetail")*@
+                    </div>
+                </div>
+            </div>
+            <div class="group" >
+                <div class="form-group width-per-100 margin-zero text-align-center">
+                    <span id="lblSearchstr" class="fontnote" style="color:Maroon;display:none;"></span>
+                </div>
+                <div id="divgridbox" class="form-group width-per-100 margin-zero text-align-right">
+                    <span class="control-label">Select All</span>
+                    <input type="checkbox" id="chkSlice" />
+                    <span class="control-label">Slice Criteria</span>
+                    <input type="checkbox" id="chkSource" />
+                    <span class="control-label">Source Delete</span>
+                </div>
+                <div class="form-group width-per-100" style="width:99%;">
+                    <table id="grdCriteria" class="scroll"></table>
+                    <div id="pgrCriteria" class="scroll"></div>
+                </div>
+                <div id="divbuttons" class="form-group text-align-center form-group-btn width-per-100">
+                    <input class="form-button" type="button" value="Save" id="btnSave" />
+                    <input class="form-button" type="button" value="Reset" id="btnReset" onclick="location.href='@Url.Action("Criteria","DIMAPLUS")'" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" value="@ViewData["ClientID"]" id="hdnClientId" />
+    <input type="hidden" value="@ViewData["ProjectID"]" id="hdnProjectId" />
+    <input type="hidden" value="@ViewData["ConfigID"]" id="hdnConfigId" />
+    <input type="hidden" value='@ViewContext.RouteData.Values["controller"]' id="hdnfldVirtualDir" />
+}

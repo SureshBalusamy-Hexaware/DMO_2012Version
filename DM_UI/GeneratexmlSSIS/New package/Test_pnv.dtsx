@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="2/3/2017 4:17:07 PM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="CCH1WTDMP01"
+  DTS:CreatorName="CORP\31312"
+  DTS:DTSID="{B1A25F08-828D-4025-9341-C139B1C55356}"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.2100.60"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="{B1A25F08-828D-4025-9341-C139B1C55356}"
+  DTS:VersionGUID="{5B2DDD25-B6B8-4974-B67F-BCF0A3764282}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[OLEDB Destination]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{A219847B-5261-44BD-B0DD-A919539AFA88}"
+      DTS:ObjectName="OLEDB Destination">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=172.25.164.63;User ID=sa;Initial Catalog=ENY_STAGE1;Provider=SQLOLEDB.1;Trusted_Connection = False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAh9TalfIL2UKs0sK+wGwqaQAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAACSvBMBoUL4Atxrfcn7JoBVAAAAAASAAACgAAAAEAAAAO3XZhls+1/O9EJNC07wumEYAAAA4UHa/J8bz2/VjpxfyKvo2sFFoFIa/S5hFAAAAAptjHYWnXYnfR214s4hMMRghIip</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[OLEDB Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{B8F456ED-8204-4548-A262-136858CD632D}"
+      DTS:ObjectName="OLEDB Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=172.25.164.63;User ID=sa;Initial Catalog=ENY_STAGE0;Provider=SQLOLEDB.1;Trusted_Connection = False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAh9TalfIL2UKs0sK+wGwqaQAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAACnXML7X5VBBgJQffbzTSkhAAAAAASAAACgAAAAEAAAAPB0TiGWywSIdteJmnW3t5EYAAAAoBo0Xk88n9qPXEr+rSZSM2uS9LgNXZ8RFAAAANa5nsxQe9ohIvuKtqTVPnFiL6zQ</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:PackageParameters>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{357E69E3-2F77-4B2D-A431-1522AFA6B18E}"
+      DTS:ObjectName="ParameterChild">
+      <DTS:Property
+        DTS:DataType="0"
+        DTS:Name="ParameterValue"
+        xml:space="preserve"></DTS:Property>
+    </DTS:PackageParameter>
+  </DTS:PackageParameters>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Sequence Container_30374"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{D4679ED2-833B-45D2-9E44-AB84CBECF6BB}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:FailPackageOnFailure="True"
+      DTS:FailParentOnFailure="True"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Sequence Container_30374">
+      <DTS:Variables />
+      <DTS:Executables />
+    </DTS:Executable>
+  </DTS:Executables>
+</DTS:Executable>

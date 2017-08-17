@@ -1,0 +1,88 @@
+﻿@{
+    ViewBag.Title = "Offline Profiler";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var baseUrl = '@Url.Content("~/")';
+        var client_ID = $("#hdnClientId").val();
+        var project_ID = $("#hdnProjectId").val();
+        var configId = $("#hdnConfigId").val();
+
+        $("#progressDiv").hide()
+
+        $("#btnLoad").click(function () {
+
+            var loginuser = '@ViewBag.UserName';
+            var templateName = $('#txtProfilerName').val();
+
+            if (templateName == '') {
+                alert('Enter Profiler Name');
+                return;
+            }
+            else
+                $("#progressDiv").show();
+
+            $.ajax({
+                type: "GET",
+                url: baseUrl + "api/DataProfilerAPI/InsertProfileTemplate",
+                dataType: "json",
+                data: {
+                    client_ID: client_ID, project_ID: project_ID, template_name: templateName, table_name: 'Backend process', column_name: 'Backend process',
+                    data_type: 'Backend process', null__ratio_profile: false, statistics_Profile: false, value_Distribution_Profile: false,
+                    length_Distribution_Profile: false, pattern_Profile: false, candidate_Key_Profile: false, profiling_Status: false, config_ID: configId,
+                    created_by: loginuser
+                },
+                success: function (data) {
+                },
+                error: function (err) {
+
+                    alert('error: ' + err.statusText);
+                }
+            });
+
+            $.ajax({
+                type: "GET",
+                url: baseUrl + "api/DataProfilerAPI/OfflineProfiling",
+                dataType: "json",
+                data: { client_ID: client_ID, project_ID: project_ID, template_name: templateName },
+                success: function (data) {
+                    alert(data);
+                    $("#progressDiv").hide();
+                },
+                error: function (err) {
+                    alert('error: ' + err.statusText);
+                    $("#progressDiv").hide();
+                }
+            });
+        });
+
+    });
+
+</script>
+
+<div class="content-body" style="width:100%;">
+    <div class="group" style="padding-top: 20px;">
+        <div class="form-group width-per-100 fL">
+            <div class="col-10" style="padding-right: 0px; width : 8%;">
+                <span id="lblProfilerName" class="control-label">Profiler Name</span>
+            </div>
+            <div class="col-40" style="padding-right: 0px;">
+                <input id="txtProfilerName" type="text" style="width:85%" class="textbox" />
+            </div>
+            <div class="col-40" style="padding-right: 0px;">
+                <input class="form-button" type="button" value="Load" id="btnLoad">
+            </div>
+        </div>
+    </div>
+    <div class="group">
+        <div class="form-load-img text-align-center width-per-100" id="progressDiv">
+            <img src="~/Images/load5.gif" />
+        </div>
+    </div>
+</div>
+<input type="hidden" value="@ViewData["ClientID"]" id="hdnClientId" />
+<input type="hidden" value="@ViewData["ProjectID"]" id="hdnProjectId" />
+<input type="hidden" value="@ViewData["ConfigId"]" id="hdnConfigId" />

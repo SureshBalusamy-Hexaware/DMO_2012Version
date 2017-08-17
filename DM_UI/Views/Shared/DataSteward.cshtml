@@ -1,0 +1,19 @@
+﻿<label class="control-label">Data Steward</label>
+<select id="ddlDataSteward" class="dropdown" style="width:100%;"></select>
+
+<script type="text/javascript">
+    var _ddlDataSteward = "#ddlDataSteward";
+    $(function () {
+        $.ajax({
+            type: "GET",
+            url: baseUrl + "api/HXRRuleAPI/GetRuleType",
+            dataType: 'json',
+            success: function (data) {
+                $(_ddlDataSteward + ' option').remove();
+                $.each(data, function (i, value) {
+                    $(_ddlDataSteward).text(value).val(value);
+                });
+            }
+        });
+    });
+</script>

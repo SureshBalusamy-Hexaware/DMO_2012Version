@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/redmond/jquery-ui.css" />
+    <link rel="stylesheet" type="text/css" href="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-4.5.4/css/ui.jqgrid.css" />
+
+    @*<link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+        <link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />*@
+    <script src="~/Scripts/jquery-1.9.1.min.js"></script>
+    <script src="~/Scripts/i18n/grid.locale-en.js"></script>
+    <script src="~/Scripts/jquery.jqGrid.min.js" type="text/javascript"></script>
+
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="container">
+                <div class="header">
+                    <!-- Header start -->
+                    <div class="header-logo" style="padding: 0;">
+                        <img src="~/Images/InfaGen.png" alt="logo" style="height: 70px;" />
+                        @*<a class="home-a" href="http://172.25.146.11/DMO/Common/frm_DMO_Home.aspx">Home</a>*@
+                        <a class="home-a" href="@(System.Configuration.ConfigurationManager.AppSettings["HostIP"] + System.Configuration.ConfigurationManager.AppSettings["UrlHomePage"]
+)">Home</a>
+                    </div>
+                    <div class="header-user">
+                        <div class="header-user-details">
+                            <a id="lnkUserName">@(ViewBag.UserName)</a>
+                        </div>
+                        <div class="header-logout">
+                            @*<asp:LinkButton ID="lnkbtnLogout" runat="server" Text="Logout" OnClick="lnkbtnLogout_Click"></asp:LinkButton>*@
+                            <a href="@(System.Configuration.ConfigurationManager.AppSettings["HostIP"].ToString() + System.Configuration.ConfigurationManager.AppSettings["urlloginpage"])">Logout</a>
+                        </div>
+                    </div>
+                    <!-- Header end -->
+                </div>
+            </div>
+        </header>
+        <div class="content">
+            <!-- Body start -->
+            <div class="content_mid contact">
+                <div class="ui-tabs">
+                    <ul id="Menu" class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-corner-all" style="font-weight: normal;">
+                        <li id="liConfig" class="@((ViewBag.SelectedMenu == "1") ? "ui-state-default ui-corner-top ui-tabs-selected" : "ui-state-default ui-corner-top")">
+                            @Html.ActionLink("Configuration", "Configuration", "InfaGen")
+                        </li>
+                        <li id="liPreRuleSelection" class="@((ViewBag.SelectedMenu == "2") ? "ui-state-default ui-corner-top ui-tabs-selected" : "ui-state-default ui-corner-top")">
+                            @*<a href="#">Pre-Define Rule Selection</a>*@
+                            @Html.ActionLink("Create Template", "CreateTemplate", "InfaGen")
+                        </li>
+                        <li id="liUserDefineRule" class="@((ViewBag.SelectedMenu == "3") ? "ui-state-default ui-corner-top ui-tabs-selected" : "ui-state-default ui-corner-top")">
+                            @*<a href="#">User Define Rule</a>*@
+                            @Html.ActionLink("Modify Template", "ModifyTemplate", "InfaGen")
+                        </li>
+                        <li id="liRuleAllocation" class="@((ViewBag.SelectedMenu == "4") ? "ui-state-default ui-corner-top ui-tabs-selected" : "ui-state-default ui-corner-top")">
+                            @*<a href="#">Rule Allocation</a>*@
+                            @Html.ActionLink("Review & Generate", "ReviewAndGenerate", "InfaGen")
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            @RenderBody()
+            <div class="form-load-img">
+                <asp:Image ID="Loadinglbl" ClientIDMode="Static" runat="server" ImageUrl="~/DMO_Style/images/load5.gif" Style="visibility: hidden;" />
+            </div>
+            <!-- Body end -->
+        </div>
+        <footer class="footer">
+            <div>
+                <!-- Footer start -->
+                <div class="ft-img">
+                    © copyright, 2015. Hexaware Technologies. All Rights Reserved.
+                </div>
+                <!-- Footer end -->
+            </div>
+        </footer>
+    </div>
+    @*@Scripts.Render("~/bundles/jquery")*@
+    @RenderSection("scripts", required: false);
+
+</body>
+</html>

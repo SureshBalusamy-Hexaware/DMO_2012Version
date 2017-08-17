@@ -1,0 +1,276 @@
+D:\DM_Project\DM\DM_BusinessService\bin\Release\DM_BusinessService.dll.config
+D:\DM_Project\DM\DM_BusinessService\bin\Release\DM_BusinessService.dll
+D:\DM_Project\DM\DM_BusinessService\bin\Release\DM_BusinessService.pdb
+D:\DM_Project\DM\DM_BusinessService\bin\Release\AutoMapper.dll
+D:\DM_Project\DM\DM_BusinessService\bin\Release\DM_BusinessEntities.dll
+D:\DM_Project\DM\DM_BusinessService\bin\Release\DM_DataModel.dll
+D:\DM_Project\DM\DM_BusinessService\bin\Release\EntityFramework.dll
+D:\DM_Project\DM\DM_BusinessService\bin\Release\EntityFramework.SqlServer.dll
+D:\DM_Project\DM\DM_BusinessService\bin\Release\DM_BusinessEntities.pdb
+D:\DM_Project\DM\DM_BusinessService\bin\Release\DM_DataModel.pdb
+D:\DM_Project\DM\DM_BusinessService\bin\Release\AutoMapper.xml
+D:\DM_Project\DM\DM_BusinessService\bin\Release\EntityFramework.xml
+D:\DM_Project\DM\DM_BusinessService\bin\Release\EntityFramework.SqlServer.xml
+D:\DM_Project\DM\DM_BusinessService\obj\Release\DM_BusinessService.csprojResolveAssemblyReference.cache
+D:\DM_Project\DM\DM_BusinessService\obj\Release\DM_BusinessService.dll
+D:\DM_Project\DM\DM_BusinessService\obj\Release\DM_BusinessService.pdb
+D:\gitlab\DMO\DM_BusinessService\bin\Release\DM_BusinessService.dll.config
+D:\gitlab\DMO\DM_BusinessService\bin\Release\DM_BusinessService.dll
+D:\gitlab\DMO\DM_BusinessService\bin\Release\DM_BusinessService.pdb
+D:\gitlab\DMO\DM_BusinessService\bin\Release\AutoMapper.dll
+D:\gitlab\DMO\DM_BusinessService\bin\Release\DM_BusinessEntities.dll
+D:\gitlab\DMO\DM_BusinessService\bin\Release\DM_DataModel.dll
+D:\gitlab\DMO\DM_BusinessService\bin\Release\EntityFramework.dll
+D:\gitlab\DMO\DM_BusinessService\bin\Release\EntityFramework.SqlServer.dll
+D:\gitlab\DMO\DM_BusinessService\bin\Release\Microsoft.SqlServer.DTSRuntimeWrap.dll
+D:\gitlab\DMO\DM_BusinessService\bin\Release\DM_BusinessEntities.pdb
+D:\gitlab\DMO\DM_BusinessService\bin\Release\DM_DataModel.pdb
+D:\gitlab\DMO\DM_BusinessService\bin\Release\AutoMapper.xml
+D:\gitlab\DMO\DM_BusinessService\bin\Release\EntityFramework.xml
+D:\gitlab\DMO\DM_BusinessService\bin\Release\EntityFramework.SqlServer.xml
+D:\gitlab\DMO\DM_BusinessService\obj\Release\DM_BusinessService.csprojResolveAssemblyReference.cache
+D:\gitlab\DMO\DM_BusinessService\obj\Release\DM_BusinessService.dll
+D:\gitlab\DMO\DM_BusinessService\obj\Release\DM_BusinessService.pdb
+D:\Websites\DMO_MVC_Latest\DM_BusinessService\bin\Release\DM_BusinessService.dll.config
+D:\Websites\DMO_MVC_Latest\DM_BusinessService\bin\Release\DM_BusinessService.dll
+D:\Websites\DMO_MVC_Latest\DM_BusinessService\bin\Release\DM_BusinessService.pdb
+D:\Websites\DMO_MVC_Latest\DM_BusinessService\bin\Release\AutoMapper.dll
+D:\Websites\DMO_MVC_Latest\DM_BusinessService\bin\Release\DM_BusinessEntities.dll
+D:\Websites\DMO_MVC_Latest\DM_BusinessService\bin\Release\DM_DataModel.dll
+D:\Websites\DMO_MVC_Latest\DM_BusinessService\bin\Release\EntityFramework.dll
+D:\Websites\DMO_MVC_Latest\DM_BusinessService\bin\Release\EntityFramework.SqlServer.dll
+D:\Websites\DMO_MVC_Latest\DM_BusinessService\bin\Release\DM_BusinessEntities.pdb
+D:\Websites\DMO_MVC_Latest\DM_BusinessService\bin\Release\DM_DataModel.pdb
+D:\Websites\DMO_MVC_Latest\DM_BusinessService\bin\Release\AutoMapper.xml
+D:\Websites\DMO_MVC_Latest\DM_BusinessService\bin\Release\EntityFramework.xml
+D:\Websites\DMO_MVC_Latest\DM_BusinessService\bin\Release\EntityFramework.SqlServer.xml
+D:\Websites\DMO_MVC_Latest\DM_BusinessService\obj\Release\DM_BusinessService.csprojResolveAssemblyReference.cache
+D:\Websites\DMO_MVC_Latest\DM_BusinessService\obj\Release\DM_BusinessService.dll
+D:\Websites\DMO_MVC_Latest\DM_BusinessService\obj\Release\DM_BusinessService.pdb
+D:\Websites\DMO_MVC\DM_BusinessService\bin\Release\DM_BusinessService.dll.config
+D:\Websites\DMO_MVC\DM_BusinessService\bin\Release\DM_BusinessService.dll
+D:\Websites\DMO_MVC\DM_BusinessService\bin\Release\DM_BusinessService.pdb
+D:\Websites\DMO_MVC\DM_BusinessService\bin\Release\AutoMapper.dll
+D:\Websites\DMO_MVC\DM_BusinessService\bin\Release\DM_BusinessEntities.dll
+D:\Websites\DMO_MVC\DM_BusinessService\bin\Release\DM_DataModel.dll
+D:\Websites\DMO_MVC\DM_BusinessService\bin\Release\EntityFramework.dll
+D:\Websites\DMO_MVC\DM_BusinessService\bin\Release\EntityFramework.SqlServer.dll
+D:\Websites\DMO_MVC\DM_BusinessService\bin\Release\DM_BusinessEntities.pdb
+D:\Websites\DMO_MVC\DM_BusinessService\bin\Release\DM_DataModel.pdb
+D:\Websites\DMO_MVC\DM_BusinessService\bin\Release\AutoMapper.xml
+D:\Websites\DMO_MVC\DM_BusinessService\bin\Release\EntityFramework.xml
+D:\Websites\DMO_MVC\DM_BusinessService\bin\Release\EntityFramework.SqlServer.xml
+D:\Websites\DMO_MVC\DM_BusinessService\obj\Release\DM_BusinessService.csprojResolveAssemblyReference.cache
+D:\Websites\DMO_MVC\DM_BusinessService\obj\Release\DM_BusinessService.dll
+D:\Websites\DMO_MVC\DM_BusinessService\obj\Release\DM_BusinessService.pdb
+D:\01Feb2016\DM_BusinessService\bin\Release\DM_BusinessService.dll.config
+D:\01Feb2016\DM_BusinessService\bin\Release\DM_BusinessService.dll
+D:\01Feb2016\DM_BusinessService\bin\Release\DM_BusinessService.pdb
+D:\01Feb2016\DM_BusinessService\bin\Release\AutoMapper.dll
+D:\01Feb2016\DM_BusinessService\bin\Release\DM_BusinessEntities.dll
+D:\01Feb2016\DM_BusinessService\bin\Release\DM_DataModel.dll
+D:\01Feb2016\DM_BusinessService\bin\Release\EntityFramework.dll
+D:\01Feb2016\DM_BusinessService\bin\Release\EntityFramework.SqlServer.dll
+D:\01Feb2016\DM_BusinessService\bin\Release\Microsoft.SqlServer.DTSRuntimeWrap.dll
+D:\01Feb2016\DM_BusinessService\bin\Release\DM_BusinessEntities.pdb
+D:\01Feb2016\DM_BusinessService\bin\Release\DM_DataModel.pdb
+D:\01Feb2016\DM_BusinessService\bin\Release\AutoMapper.xml
+D:\01Feb2016\DM_BusinessService\bin\Release\EntityFramework.xml
+D:\01Feb2016\DM_BusinessService\bin\Release\EntityFramework.SqlServer.xml
+D:\01Feb2016\DM_BusinessService\obj\Release\DM_BusinessService.csprojResolveAssemblyReference.cache
+D:\01Feb2016\DM_BusinessService\obj\Release\DM_BusinessService.dll
+D:\01Feb2016\DM_BusinessService\obj\Release\DM_BusinessService.pdb
+D:\02Feb2016\DM_BusinessService\bin\Release\DM_BusinessService.dll.config
+D:\02Feb2016\DM_BusinessService\bin\Release\DM_BusinessService.dll
+D:\02Feb2016\DM_BusinessService\bin\Release\DM_BusinessService.pdb
+D:\02Feb2016\DM_BusinessService\bin\Release\AutoMapper.dll
+D:\02Feb2016\DM_BusinessService\bin\Release\DM_BusinessEntities.dll
+D:\02Feb2016\DM_BusinessService\bin\Release\DM_DataModel.dll
+D:\02Feb2016\DM_BusinessService\bin\Release\EntityFramework.dll
+D:\02Feb2016\DM_BusinessService\bin\Release\EntityFramework.SqlServer.dll
+D:\02Feb2016\DM_BusinessService\bin\Release\Microsoft.SqlServer.DTSRuntimeWrap.dll
+D:\02Feb2016\DM_BusinessService\bin\Release\DM_BusinessEntities.pdb
+D:\02Feb2016\DM_BusinessService\bin\Release\DM_DataModel.pdb
+D:\02Feb2016\DM_BusinessService\bin\Release\AutoMapper.xml
+D:\02Feb2016\DM_BusinessService\bin\Release\EntityFramework.xml
+D:\02Feb2016\DM_BusinessService\bin\Release\EntityFramework.SqlServer.xml
+D:\02Feb2016\DM_BusinessService\obj\Release\DM_BusinessService.csprojResolveAssemblyReference.cache
+D:\02Feb2016\DM_BusinessService\obj\Release\DM_BusinessService.dll
+D:\02Feb2016\DM_BusinessService\obj\Release\DM_BusinessService.pdb
+D:\08-01-2016\DM_BusinessService\bin\Release\DM_BusinessService.dll.config
+D:\08-01-2016\DM_BusinessService\bin\Release\DM_BusinessService.dll
+D:\08-01-2016\DM_BusinessService\bin\Release\DM_BusinessService.pdb
+D:\08-01-2016\DM_BusinessService\bin\Release\AutoMapper.dll
+D:\08-01-2016\DM_BusinessService\bin\Release\DM_BusinessEntities.dll
+D:\08-01-2016\DM_BusinessService\bin\Release\DM_DataModel.dll
+D:\08-01-2016\DM_BusinessService\bin\Release\EntityFramework.dll
+D:\08-01-2016\DM_BusinessService\bin\Release\EntityFramework.SqlServer.dll
+D:\08-01-2016\DM_BusinessService\bin\Release\Microsoft.SqlServer.DTSRuntimeWrap.dll
+D:\08-01-2016\DM_BusinessService\bin\Release\DM_BusinessEntities.pdb
+D:\08-01-2016\DM_BusinessService\bin\Release\DM_DataModel.pdb
+D:\08-01-2016\DM_BusinessService\bin\Release\AutoMapper.xml
+D:\08-01-2016\DM_BusinessService\bin\Release\EntityFramework.xml
+D:\08-01-2016\DM_BusinessService\bin\Release\EntityFramework.SqlServer.xml
+D:\08-01-2016\DM_BusinessService\obj\Release\DM_BusinessService.csprojResolveAssemblyReference.cache
+D:\08-01-2016\DM_BusinessService\obj\Release\DM_BusinessService.dll
+D:\08-01-2016\DM_BusinessService\obj\Release\DM_BusinessService.pdb
+D:\Websites\Merge_DMO\DM_BusinessService\obj\Release\DM_BusinessService.csprojResolveAssemblyReference.cache
+D:\Websites\Merge_DMO\DM_BusinessService\obj\Release\DM_BusinessService.dll
+D:\Websites\Merge_DMO\DM_BusinessService\obj\Release\DM_BusinessService.pdb
+D:\Project\GIT Source\NET-DMO\DM_BusinessService\obj\Release\DM_BusinessService.csprojResolveAssemblyReference.cache
+D:\Project\GIT Source\NET-DMO\DM_BusinessService\obj\Release\DM_BusinessService.dll
+D:\Project\GIT Source\NET-DMO\DM_BusinessService\obj\Release\DM_BusinessService.pdb
+D:\Project\GIT Source\NET-DMO\DM_BusinessService\bin\Release\DM_BusinessService.dll.config
+D:\Project\GIT Source\NET-DMO\DM_BusinessService\bin\Release\DM_BusinessService.dll
+D:\Project\GIT Source\NET-DMO\DM_BusinessService\bin\Release\DM_BusinessService.pdb
+D:\Project\GIT Source\NET-DMO\DM_BusinessService\bin\Release\AutoMapper.dll
+D:\Project\GIT Source\NET-DMO\DM_BusinessService\bin\Release\DM_BusinessEntities.dll
+D:\Project\GIT Source\NET-DMO\DM_BusinessService\bin\Release\DM_DataModel.dll
+D:\Project\GIT Source\NET-DMO\DM_BusinessService\bin\Release\DocX.dll
+D:\Project\GIT Source\NET-DMO\DM_BusinessService\bin\Release\EntityFramework.dll
+D:\Project\GIT Source\NET-DMO\DM_BusinessService\bin\Release\EntityFramework.SqlServer.dll
+D:\Project\GIT Source\NET-DMO\DM_BusinessService\bin\Release\Microsoft.SqlServer.DTSRuntimeWrap.dll
+D:\Project\GIT Source\NET-DMO\DM_BusinessService\bin\Release\DM_BusinessEntities.pdb
+D:\Project\GIT Source\NET-DMO\DM_BusinessService\bin\Release\DM_DataModel.pdb
+D:\Project\GIT Source\NET-DMO\DM_BusinessService\bin\Release\AutoMapper.xml
+D:\Project\GIT Source\NET-DMO\DM_BusinessService\bin\Release\EntityFramework.xml
+D:\Project\GIT Source\NET-DMO\DM_BusinessService\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\31312\Desktop\Final Version - 11102016\DM_BusinessService\bin\Release\DM_BusinessService.dll.config
+C:\Users\31312\Desktop\Final Version - 11102016\DM_BusinessService\bin\Release\DM_BusinessService.dll
+C:\Users\31312\Desktop\Final Version - 11102016\DM_BusinessService\bin\Release\DM_BusinessService.pdb
+C:\Users\31312\Desktop\Final Version - 11102016\DM_BusinessService\bin\Release\AutoMapper.dll
+C:\Users\31312\Desktop\Final Version - 11102016\DM_BusinessService\bin\Release\DM_BusinessEntities.dll
+C:\Users\31312\Desktop\Final Version - 11102016\DM_BusinessService\bin\Release\DM_DataModel.dll
+C:\Users\31312\Desktop\Final Version - 11102016\DM_BusinessService\bin\Release\EntityFramework.dll
+C:\Users\31312\Desktop\Final Version - 11102016\DM_BusinessService\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\31312\Desktop\Final Version - 11102016\DM_BusinessService\bin\Release\Microsoft.SqlServer.DTSRuntimeWrap.dll
+C:\Users\31312\Desktop\Final Version - 11102016\DM_BusinessService\bin\Release\DM_BusinessEntities.pdb
+C:\Users\31312\Desktop\Final Version - 11102016\DM_BusinessService\bin\Release\DM_DataModel.pdb
+C:\Users\31312\Desktop\Final Version - 11102016\DM_BusinessService\bin\Release\AutoMapper.xml
+C:\Users\31312\Desktop\Final Version - 11102016\DM_BusinessService\bin\Release\EntityFramework.xml
+C:\Users\31312\Desktop\Final Version - 11102016\DM_BusinessService\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\31312\Desktop\Final Version - 11102016\DM_BusinessService\obj\Release\DM_BusinessService.csprojResolveAssemblyReference.cache
+C:\Users\31312\Desktop\Final Version - 11102016\DM_BusinessService\obj\Release\DM_BusinessService.dll
+C:\Users\31312\Desktop\Final Version - 11102016\DM_BusinessService\obj\Release\DM_BusinessService.pdb
+D:\gitlab\28022017\DM_BusinessService\bin\Release\DM_BusinessService.dll.config
+D:\gitlab\28022017\DM_BusinessService\bin\Release\DM_BusinessService.dll
+D:\gitlab\28022017\DM_BusinessService\bin\Release\DM_BusinessService.pdb
+D:\gitlab\28022017\DM_BusinessService\bin\Release\AutoMapper.dll
+D:\gitlab\28022017\DM_BusinessService\bin\Release\DM_BusinessEntities.dll
+D:\gitlab\28022017\DM_BusinessService\bin\Release\DM_DataModel.dll
+D:\gitlab\28022017\DM_BusinessService\bin\Release\EntityFramework.dll
+D:\gitlab\28022017\DM_BusinessService\bin\Release\EntityFramework.SqlServer.dll
+D:\gitlab\28022017\DM_BusinessService\bin\Release\Microsoft.SqlServer.DTSRuntimeWrap.dll
+D:\gitlab\28022017\DM_BusinessService\bin\Release\DM_BusinessEntities.pdb
+D:\gitlab\28022017\DM_BusinessService\bin\Release\DM_DataModel.pdb
+D:\gitlab\28022017\DM_BusinessService\bin\Release\AutoMapper.xml
+D:\gitlab\28022017\DM_BusinessService\bin\Release\EntityFramework.xml
+D:\gitlab\28022017\DM_BusinessService\bin\Release\EntityFramework.SqlServer.xml
+D:\gitlab\28022017\DM_BusinessService\obj\Release\DM_BusinessService.csprojResolveAssemblyReference.cache
+D:\gitlab\28022017\DM_BusinessService\obj\Release\DM_BusinessService.dll
+D:\gitlab\28022017\DM_BusinessService\obj\Release\DM_BusinessService.pdb
+D:\GitHub-DMO\Development\DM_BusinessService\bin\Release\DM_BusinessService.dll.config
+D:\GitHub-DMO\Development\DM_BusinessService\bin\Release\DM_BusinessService.dll
+D:\GitHub-DMO\Development\DM_BusinessService\bin\Release\DM_BusinessService.pdb
+D:\GitHub-DMO\Development\DM_BusinessService\bin\Release\AutoMapper.dll
+D:\GitHub-DMO\Development\DM_BusinessService\bin\Release\DM_BusinessEntities.dll
+D:\GitHub-DMO\Development\DM_BusinessService\bin\Release\DM_DataModel.dll
+D:\GitHub-DMO\Development\DM_BusinessService\bin\Release\EntityFramework.dll
+D:\GitHub-DMO\Development\DM_BusinessService\bin\Release\EntityFramework.SqlServer.dll
+D:\GitHub-DMO\Development\DM_BusinessService\bin\Release\Microsoft.SqlServer.DTSRuntimeWrap.dll
+D:\GitHub-DMO\Development\DM_BusinessService\bin\Release\DM_BusinessEntities.pdb
+D:\GitHub-DMO\Development\DM_BusinessService\bin\Release\DM_DataModel.pdb
+D:\GitHub-DMO\Development\DM_BusinessService\bin\Release\AutoMapper.xml
+D:\GitHub-DMO\Development\DM_BusinessService\bin\Release\EntityFramework.xml
+D:\GitHub-DMO\Development\DM_BusinessService\bin\Release\EntityFramework.SqlServer.xml
+D:\GitHub-DMO\Development\DM_BusinessService\obj\Release\DM_BusinessService.csprojResolveAssemblyReference.cache
+D:\GitHub-DMO\Development\DM_BusinessService\obj\Release\DM_BusinessService.dll
+D:\GitHub-DMO\Development\DM_BusinessService\obj\Release\DM_BusinessService.pdb
+D:\Workarea\25052017\DM_BusinessService\obj\Release\DM_BusinessService.csprojResolveAssemblyReference.cache
+D:\Workarea\25052017\DM_BusinessService\obj\Release\DM_BusinessService.dll
+D:\Workarea\25052017\DM_BusinessService\bin\Release\DM_BusinessService.dll.config
+D:\Workarea\25052017\DM_BusinessService\bin\Release\DM_BusinessService.dll
+D:\Workarea\25052017\DM_BusinessService\bin\Release\DM_BusinessService.pdb
+D:\Workarea\25052017\DM_BusinessService\bin\Release\AutoMapper.dll
+D:\Workarea\25052017\DM_BusinessService\bin\Release\DM_BusinessEntities.dll
+D:\Workarea\25052017\DM_BusinessService\bin\Release\DM_DataModel.dll
+D:\Workarea\25052017\DM_BusinessService\bin\Release\EntityFramework.dll
+D:\Workarea\25052017\DM_BusinessService\bin\Release\EntityFramework.SqlServer.dll
+D:\Workarea\25052017\DM_BusinessService\bin\Release\Microsoft.SqlServer.DTSRuntimeWrap.dll
+D:\Workarea\25052017\DM_BusinessService\bin\Release\DM_BusinessEntities.pdb
+D:\Workarea\25052017\DM_BusinessService\bin\Release\DM_DataModel.pdb
+D:\Workarea\25052017\DM_BusinessService\bin\Release\AutoMapper.xml
+D:\Workarea\25052017\DM_BusinessService\bin\Release\EntityFramework.xml
+D:\Workarea\25052017\DM_BusinessService\bin\Release\EntityFramework.SqlServer.xml
+D:\Workarea\25052017\DM_BusinessService\obj\Release\DM_BusinessService.pdb
+E:\Share\Ashok\2014Version\DM_BusinessService\obj\Release\DM_BusinessService.csprojResolveAssemblyReference.cache
+E:\Share\Ashok\2014Version\DM_BusinessService\obj\Release\DM_BusinessService.dll
+E:\Share\Ashok\2014Version\DM_BusinessService\obj\Release\DM_BusinessService.pdb
+E:\Share\Ashok\2014Version\DM_BusinessService\bin\Release\DM_BusinessService.dll.config
+E:\Share\Ashok\2014Version\DM_BusinessService\bin\Release\DM_BusinessService.dll
+E:\Share\Ashok\2014Version\DM_BusinessService\bin\Release\DM_BusinessService.pdb
+E:\Share\Ashok\2014Version\DM_BusinessService\bin\Release\AutoMapper.dll
+E:\Share\Ashok\2014Version\DM_BusinessService\bin\Release\DM_BusinessEntities.dll
+E:\Share\Ashok\2014Version\DM_BusinessService\bin\Release\DM_DataModel.dll
+E:\Share\Ashok\2014Version\DM_BusinessService\bin\Release\EntityFramework.dll
+E:\Share\Ashok\2014Version\DM_BusinessService\bin\Release\EntityFramework.SqlServer.dll
+E:\Share\Ashok\2014Version\DM_BusinessService\bin\Release\Microsoft.SqlServer.DataProfilingTask.dll
+E:\Share\Ashok\2014Version\DM_BusinessService\bin\Release\Microsoft.SQLServer.ManagedDTS.dll
+E:\Share\Ashok\2014Version\DM_BusinessService\bin\Release\Microsoft.SqlServer.PipelineHost.dll
+E:\Share\Ashok\2014Version\DM_BusinessService\bin\Release\Microsoft.SqlServer.DTSPipelineWrap.dll
+E:\Share\Ashok\2014Version\DM_BusinessService\bin\Release\DM_BusinessEntities.pdb
+E:\Share\Ashok\2014Version\DM_BusinessService\bin\Release\DM_DataModel.pdb
+E:\Share\Ashok\2014Version\DM_BusinessService\bin\Release\AutoMapper.xml
+E:\Share\Ashok\2014Version\DM_BusinessService\bin\Release\EntityFramework.xml
+E:\Share\Ashok\2014Version\DM_BusinessService\bin\Release\EntityFramework.SqlServer.xml
+E:\Share\Ashok\2012Version\DM_BusinessService\bin\Release\DM_BusinessService.dll.config
+E:\Share\Ashok\2012Version\DM_BusinessService\bin\Release\DM_BusinessService.dll
+E:\Share\Ashok\2012Version\DM_BusinessService\bin\Release\DM_BusinessService.pdb
+E:\Share\Ashok\2012Version\DM_BusinessService\bin\Release\AutoMapper.dll
+E:\Share\Ashok\2012Version\DM_BusinessService\bin\Release\DM_BusinessEntities.dll
+E:\Share\Ashok\2012Version\DM_BusinessService\bin\Release\DM_DataModel.dll
+E:\Share\Ashok\2012Version\DM_BusinessService\bin\Release\EntityFramework.dll
+E:\Share\Ashok\2012Version\DM_BusinessService\bin\Release\EntityFramework.SqlServer.dll
+E:\Share\Ashok\2012Version\DM_BusinessService\bin\Release\Microsoft.SqlServer.DTSRuntimeWrap.dll
+E:\Share\Ashok\2012Version\DM_BusinessService\bin\Release\DM_BusinessEntities.pdb
+E:\Share\Ashok\2012Version\DM_BusinessService\bin\Release\DM_DataModel.pdb
+E:\Share\Ashok\2012Version\DM_BusinessService\bin\Release\AutoMapper.xml
+E:\Share\Ashok\2012Version\DM_BusinessService\bin\Release\EntityFramework.xml
+E:\Share\Ashok\2012Version\DM_BusinessService\bin\Release\EntityFramework.SqlServer.xml
+E:\Share\Ashok\2012Version\DM_BusinessService\obj\Release\DM_BusinessService.csprojResolveAssemblyReference.cache
+E:\Share\Ashok\2012Version\DM_BusinessService\obj\Release\DM_BusinessService.dll
+E:\Share\Ashok\2012Version\DM_BusinessService\obj\Release\DM_BusinessService.pdb
+E:\Workarea\Source code\2012Version\DM_BusinessService\bin\Release\DM_BusinessService.dll.config
+E:\Workarea\Source code\2012Version\DM_BusinessService\bin\Release\DM_BusinessService.dll
+E:\Workarea\Source code\2012Version\DM_BusinessService\bin\Release\DM_BusinessService.pdb
+E:\Workarea\Source code\2012Version\DM_BusinessService\bin\Release\AutoMapper.dll
+E:\Workarea\Source code\2012Version\DM_BusinessService\bin\Release\DM_BusinessEntities.dll
+E:\Workarea\Source code\2012Version\DM_BusinessService\bin\Release\DM_DataModel.dll
+E:\Workarea\Source code\2012Version\DM_BusinessService\bin\Release\EntityFramework.dll
+E:\Workarea\Source code\2012Version\DM_BusinessService\bin\Release\EntityFramework.SqlServer.dll
+E:\Workarea\Source code\2012Version\DM_BusinessService\bin\Release\Microsoft.SqlServer.DTSRuntimeWrap.dll
+E:\Workarea\Source code\2012Version\DM_BusinessService\bin\Release\DM_BusinessEntities.pdb
+E:\Workarea\Source code\2012Version\DM_BusinessService\bin\Release\DM_DataModel.pdb
+E:\Workarea\Source code\2012Version\DM_BusinessService\bin\Release\AutoMapper.xml
+E:\Workarea\Source code\2012Version\DM_BusinessService\bin\Release\EntityFramework.xml
+E:\Workarea\Source code\2012Version\DM_BusinessService\bin\Release\EntityFramework.SqlServer.xml
+E:\Workarea\Source code\2012Version\DM_BusinessService\obj\Release\DM_BusinessService.csprojResolveAssemblyReference.cache
+E:\Workarea\Source code\2012Version\DM_BusinessService\obj\Release\DM_BusinessService.dll
+E:\Workarea\Source code\2012Version\DM_BusinessService\obj\Release\DM_BusinessService.pdb
+D:\2012Version\DM_BusinessService\bin\Release\DM_BusinessService.dll.config
+D:\2012Version\DM_BusinessService\bin\Release\DM_BusinessService.dll
+D:\2012Version\DM_BusinessService\bin\Release\DM_BusinessService.pdb
+D:\2012Version\DM_BusinessService\bin\Release\AutoMapper.dll
+D:\2012Version\DM_BusinessService\bin\Release\DM_BusinessEntities.dll
+D:\2012Version\DM_BusinessService\bin\Release\DM_DataModel.dll
+D:\2012Version\DM_BusinessService\bin\Release\EntityFramework.dll
+D:\2012Version\DM_BusinessService\bin\Release\EntityFramework.SqlServer.dll
+D:\2012Version\DM_BusinessService\bin\Release\Microsoft.SqlServer.DTSRuntimeWrap.dll
+D:\2012Version\DM_BusinessService\bin\Release\DM_BusinessEntities.pdb
+D:\2012Version\DM_BusinessService\bin\Release\DM_DataModel.pdb
+D:\2012Version\DM_BusinessService\bin\Release\AutoMapper.xml
+D:\2012Version\DM_BusinessService\bin\Release\EntityFramework.xml
+D:\2012Version\DM_BusinessService\bin\Release\EntityFramework.SqlServer.xml
+D:\2012Version\DM_BusinessService\obj\Release\DM_BusinessService.csprojResolveAssemblyReference.cache
+D:\2012Version\DM_BusinessService\obj\Release\DM_BusinessService.dll
+D:\2012Version\DM_BusinessService\obj\Release\DM_BusinessService.pdb

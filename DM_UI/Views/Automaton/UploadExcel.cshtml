@@ -1,0 +1,317 @@
+﻿@{
+    ViewBag.Title = "FileUpload";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style type="text/css">
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: black;
+        z-index: 99;
+        opacity: 0.8;
+        filter: alpha(opacity=80);
+        -moz-opacity: 0.8;
+        min-height: 100%;
+        width: 100%;
+    }
+
+    .loadingProgress {
+        font-family: Arial;
+        font-size: 10pt;
+        border: 5px solid #67CFF5;
+        width: 200px;
+        height: 100px;
+        display: none;
+        position: fixed;
+        background-color: White;
+        z-index: 999;
+    }
+
+    table {
+        /*border-collapse: collapse;*/
+        width: 100%;
+        font-family: arial;
+        font-size: 11px;
+    }
+
+    th {
+        background-color: #3498db;
+        color: white;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        $("#fileexcel").on('change', function () {
+
+
+
+            $("#lblMessage").hide();
+            $("#btnViewData").hide();
+            $("#grdData").GridUnload();
+
+            var opmlFile = $('#fileexcel')[0];
+            var file = opmlFile.files[0].name;
+            var extension = file.substr((file.lastIndexOf('.') + 1));
+
+
+            if (extension.toLowerCase() == "xls" || extension.toLowerCase() == "xlsx")
+            {
+                    ShowProgress();
+
+                    var formData = new FormData();
+                    formData.append("opmlFile", opmlFile.files[0]);
+                    $.ajax({
+                        url: '@Url.Action("_ReadExcelSheetName")',
+                        type: 'POST',
+                        data: formData,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function (result) {
+
+                            $("#btnimport").show();
+
+                            HideProgress();
+                            $("#jqgrid1").GridUnload();
+
+                            jQuery("#jqgrid1").jqGrid({
+                                datatype: "local",
+                                data: result,
+                                height: 150,
+                                width: 350,
+                                autowidth: false,
+                                shrinkToFit: true,
+                                colNames: ['SheetName'],
+                                colModel: [
+                                { name: 'SheetName', index: 'SheetName', width: 30, align: 'left', editable: false }
+                                ],
+                                multiselect: true,
+                                scrollOffset: 0,
+                                loadonce: true,
+                                gridview: true,
+                                viewrecords: false,
+                                caption: 'Excel SheetNames'
+                            });
+
+
+                        },
+                        error: function (jqXHR) {
+                            HideProgress();
+                            alert(jqXHR.responseText);
+                        }
+
+                     });
+
+            } else {
+                $("#btnimport").show();
+            }
+
+        });
+
+
+        $('#btnimport').click(function () {
+
+            var opmlFile = $('#fileexcel')[0];
+            var file = opmlFile.files[0].name;
+            var extension = file.substr((file.lastIndexOf('.') + 1));
+            var selectedColumns = '';
+
+            if (extension.toLowerCase() == "xls" || extension.toLowerCase() == "xlsx") {
+                var selectedRow = jQuery("#jqgrid1").jqGrid('getGridParam', 'selarrrow');
+                if (selectedRow == undefined || selectedRow == "") {
+                    alert('Select Sheet Name(s) to Load data');
+                    return;
+                }
+                for (var i = 0; i < selectedRow.length; i++) {
+                    selectedColumns += jQuery("#jqgrid1").jqGrid('getCell', selectedRow[i], 'SheetName').replace("$", "") + "$" + "~";
+                }
+
+            }
+
+            ShowProgress();
+
+            var formData = new FormData();
+            formData.append("DataFile", opmlFile.files[0]);
+            formData.append("SheetName", selectedColumns.slice(0, -1));
+            $.ajax({
+                url: '@Url.Action("ImportData")',
+                type: 'POST',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    HideProgress();
+                    if (result.PackageMessage == "success") {
+                        $("#lblMessage").show();
+                        $("#btnViewData").show();
+                        $("#hdnBatchID").val( result.BatchID);
+                        $("#hdnTableName").val(result.TableName);
+                        $("#hdnFileName").val(result.FileName);
+                        $("#hdnSheetNames").val(result.SheetName);
+                        //$("#lblMessage").text("Total Record(s) loaded :" + result.TotalRecords);
+                        $("#lblMessage").text("Data Loaded Successfully.");
+                    }else{
+                        $("#lblMessage").show();
+                        $("#btnViewData").hide();
+                        $("#grdData").GridUnload();
+                        $("#lblMessage").text(result.PackageMessage);
+                    }
+
+                },
+                error: function (jqXHR) {
+                    HideProgress();
+                    alert(jqXHR.responseText);
+
+                }
+
+            });
+        });
+
+
+        $('#btnViewData').click(function () {
+
+
+            var client_ID = $("#hdnClientId").val();
+            var project_ID = $("#hdnProjectId").val();
+            var ConfigID = $("#hdnConfigID").val();
+            var BatchID = $("#hdnBatchID").val();
+            var TableName = $("#hdnTableName").val();
+            var baseUrl = '@Url.Content("~/")';
+
+            var FileName=$("#hdnFileName").val();
+            var SheetNames=$("#hdnSheetNames").val();
+            var ColumnModel;
+            var rows = null;
+
+            var mResult = $.ajax({
+                url: baseUrl + "api/AutomatAPI/GetBatchData",
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                data: { client_ID: client_ID, project_ID: project_ID, config_ID: ConfigID, table_name: TableName, BatchID: BatchID, SheetName: SheetNames, FileName: FileName },
+                dataType: "json",
+                async: false,
+                success: function (data, result) { if (!result) alert('Failure to retrieve run status.'); },
+                error: function (xhr) {
+                    alert("Failed");
+                }
+            }).responseText;
+
+            mResult = jQuery.parseJSON(mResult);
+            var cols = mResult.ColNames;
+            var uFields = cols.split(',');
+            var ColumnNames = [];
+            for (var i = 0; i < uFields.length ; i++) {
+                ColumnNames.push(uFields[i]);
+            }
+            var uFields = cols.split(',');
+            var ColumnModel = [];
+            for (var i = 0; i < uFields.length ; i++) {
+                ColumnModel.push({ name: uFields[i], index: uFields[i], width: 80, search: false, sortable: false, editable: false, hidden: false, align: 'center' });
+            }
+            ShowProgress();
+            $("#grdData").GridUnload();
+            $grid = jQuery("#grdData").jqGrid({
+                mtype: 'GET',
+                postData: {
+                    client_ID: client_ID, project_ID: project_ID, config_ID: ConfigID, table_name: TableName, BatchID: BatchID, SheetName: SheetNames, FileName: FileName
+                },
+                url: baseUrl + "api/AutomatAPI/GetBatchData_Paging",
+                datatype: 'json',
+                height: 150,
+                width: 1200,
+                autowidth: false,
+                shrinkToFit: false,
+                rowNum: 10,
+                rowList: [10, 20, 30],
+                colNames: ColumnNames,
+                colModel: ColumnModel,
+                pager: '#pgrData',
+                viewrecords: true,
+                loadonce: true,
+                sortable: true,
+                autowidth: true,
+                caption: 'View Sample Data'
+            });
+
+            HideProgress();
+
+        });
+
+    });
+
+
+
+
+    function ShowProgress() {
+        setTimeout(function () {
+            var modal = $('<div />');
+            modal.addClass("modal");
+            var loading = $(".loadingProgress");
+            loading.show();
+            var top = Math.max($(window).height() / 2 - loading[0].offsetHeight / 2, 0);
+            var left = Math.max($(window).width() / 2 - loading[0].offsetWidth / 2, 0);
+            loading.css({ top: top, left: left });
+        }, 200);
+    }
+    function HideProgress() {
+        setTimeout(function () {
+            var modal = $('<div />');
+            modal.addClass("modal");
+            var loading = $(".loadingProgress");
+            loading.hide();
+            var top = Math.max($(window).height() / 2 - loading[0].offsetHeight / 2, 0);
+            var left = Math.max($(window).width() / 2 - loading[0].offsetWidth / 2, 0);
+            loading.css({ top: top, left: left });
+        }, 200);
+    }
+</script>
+<br />
+<div class="table-div">
+    <div class="loadingProgress" align="center">
+        Please wait.<br />
+        <br />
+        <img src="../Images/loader.gif" alt=" " />
+    </div>
+    <table style="width: 40%;">
+        <tr>
+            <td>
+                <span id="labeltable" class="fontstyle">Select Data File</span>
+            </td>
+            <td><input type="file" id="fileexcel" name="fileexcel" accept=".xls,.xlsx,.xml,.txt,.csv" /></td>
+            <td></td>
+        </tr>
+    </table>
+    <table id="jqgrid1" class="scroll" align='center'></table>
+    <br />
+    <br />
+    <input type="submit" id="btnimport" value="Load Data" class="button" style="display:none;" />
+    <input type="submit" id="btnViewData" value="View Data" class="button" style="display:none;" />
+    <br /><br />
+    <div> <h4 id="lblMessage" style="display:none;"></h4></div>
+    <table id="grdData" class="scroll" align='center'></table>
+    <div id="pgrData" class="scroll"></div>
+    <br />
+    <br />
+</div>
+
+
+<input type="hidden" value="@ViewData["ClientID"]" id="hdnClientId" />
+<input type="hidden" value="@ViewData["ProjectID"]" id="hdnProjectId" />
+<input type="hidden" value="@ViewData["ConfigID"]" id="hdnConfigID" />
+<input type="hidden" value="" id="hdnBatchID" />
+<input type="hidden" value="" id="hdnTableName" />
+<input type="hidden" value="" id="hdnSheetNames" />
+<input type="hidden" value="" id="hdnFileName" />

@@ -1,0 +1,364 @@
+﻿@{
+    ViewBag.Title = "Copy";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style type="text/css">
+    .ui-dialog {
+        z-index: 1000 !important;
+    }
+
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: black;
+        z-index: 99;
+        opacity: 0.8;
+        filter: alpha(opacity=80);
+        -moz-opacity: 0.8;
+        min-height: 10%;
+        width: 100%;
+    }
+
+    .loadingprogress {
+        font-family: Arial;
+        font-size: 10pt;
+        border: 5px solid #67CFF5;
+        width: 200px;
+        height: 100px;
+        display: none;
+        position: fixed;
+        background-color: White;
+        z-index: 999;
+    }
+</style>
+<script lang="ja" type="text/javascript">
+    var baseUrl = '@Url.Content("~/")';
+    $(function () {
+        $("#divObjectDetails").dialog({
+            modal: true,
+            autoOpen: false,
+            title: "Objects",
+            width: 900,
+            height: 400
+        });
+    });
+    $(document).ready(function () {
+
+        var client_ID = $("#hdnClientId").val();
+        var project_ID = $("#hdnProjectID").val();
+        var _copy_ddlTemplateName = "#ddlTemplateName";
+
+        //Fill TemplateName field dropdown
+        var templateNames = $.ajax({
+            url: baseUrl + "api/DIMAPLUSAPI/GetAllTemplates",
+            data: {
+                client_ID: client_ID
+                , project_ID: project_ID
+            },
+            async: false,
+            success: function (data, result) {
+                if (!result)
+                    alert('Failure to retrieve the existing template names.');
+            },
+            error: function (err) {
+                alert(err.statusText);
+            }
+        }).responseText;
+        //debugger;
+        var tempNamelist = jQuery.parseJSON(templateNames);
+
+        for (i = 0; i < tempNamelist.length; i++) {
+            $(_copy_ddlTemplateName).append($('<option>').text(tempNamelist[i].Template_Name).val(tempNamelist[i].Template_ID));
+        }
+
+        $(_copy_ddlTemplateName).change(function () {
+            $("#btnStartProcessing").val("Start");
+            $("#btnStartProcessing").css({ 'color': 'white' });
+            $("#grdSourcedetails").GridUnload();
+            $grid = jQuery("#grdSourcedetails").jqGrid({
+                postData: { Client_ID: client_ID, project_ID: project_ID, Template_ID: $(_copy_ddlTemplateName).val() },
+                mytype: 'GET',
+                datatype: 'json',
+                url: baseUrl + "api/DIMAPLUSAPI/GetSourceDetails",
+                colModel: [
+
+                             {
+                                 label: 'No of Tables',
+                                 name: 'No_of_Tables',
+                                 width: 75,
+                                 formatter: function (cellvalue, options, rowObject) {
+                                     var _link = "<a style='height:22px;width:20px;text-decoration: underline;cursor: pointer;' onclick=\"GetObjectDetails('TABLES');\"  >" + rowObject[0] + "<a/>";
+                                     return _link;
+                                 }
+                             }, {
+                                 label: 'No of Procedures',
+                                 name: 'No_of_Procedures',
+                                 width: 75,
+                                 formatter: function (cellvalue, options, rowObject) {
+                                     var _link = "<a style='height:22px;width:20px;text-decoration: underline;cursor: pointer;' onclick=\"GetObjectDetails('PROCEDURES');\"  >" + rowObject[1] + "<a/>";
+                                     if (rowObject[1] <= "0")
+                                         return "0";
+                                     return _link;
+                                 }
+
+                             },
+                             {
+                                 label: 'No of Views',
+                                 name: 'No_of_Views',
+                                 width: 75,
+                                 formatter: function (cellvalue, options, rowObject) {
+                                     var _link = "<a style='height:22px;width:20px;text-decoration: underline;cursor: pointer;' onclick=\"GetObjectDetails('VIEWS');\"  >" + rowObject[2] + "<a/>";
+                                     if (rowObject[2] <= "0")
+                                         return "0";
+                                     return _link;
+                                 }
+                             }
+                ],
+                sortname: 'No_of_Tables',
+                sortorder: 'asc',
+                loadonce: true,
+                viewrecords: true,
+                width: 980,
+                height: 50,
+                autowidth: true,
+                scrollOffset: 0,
+                reloadAfterSubmit: true,
+                rowNum: 10,
+                pager: "#pager1",
+                caption: 'Source Object Ready To Copy'
+            });
+
+
+
+        });
+
+
+
+        $("#grdTargetdetails").GridUnload();
+        $grid = jQuery("#grdTargetdetails").jqGrid({
+            postData: { Client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectID").val() },
+            mytype: 'GET',
+            datatype: 'json',
+            url: baseUrl + "api/DIMAPLUSAPI/GetTargetDetails",
+            colModel: [
+
+                         {
+                             label: 'Server IP',
+                             name: 'Server_IP',
+                             width: 75
+                         }, {
+                             label: 'Database',
+                             name: 'Database',
+                             width: 75
+
+                         },
+                         {
+                             label: 'User',
+                             name: 'User',
+                             width: 75
+                         }
+            ],
+            sortname: 'Server_IP',
+            sortorder: 'asc',
+            loadonce: true,
+            viewrecords: true,
+            width: 980,
+            height: 50,
+            autowidth: true,
+            scrollOffset: 0,
+            reloadAfterSubmit: true,
+            rowNum: 10,
+            pager: "#pager2",
+            caption: 'Target Server Details'
+        });
+
+
+        $("#btnStartProcessing").click(function () {
+            $.ajax({
+                type: "GET",
+                url: baseUrl + "api/DIMAPLUSAPI/CheckCopyCount",
+                data: {
+                    TemplateId: $(_copy_ddlTemplateName).val()
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data == undefined) return false;
+                    ShowProgress();
+                    if (data.StatusCode == 'HX_1234' && confirm(data.Message)) {
+                        CopyObjects();
+                    }
+                    else if (data.Message == "Success") {
+                        CopyObjects();
+                    }
+                    HideProgress();
+
+                }
+            });
+        });
+        $(_copy_ddlTemplateName).change();
+    });
+    function ShowProgress() {
+        setTimeout(function () {
+            var modal = $('<div />');
+            modal.addClass("modal");
+            var loading = $(".loadingprogress");
+            loading.show();
+            var top = Math.max($(window).height() / 2 - loading[0].offsetHeight / 2, 0);
+            var left = Math.max($(window).width() / 2 - loading[0].offsetWidth / 2, 0);
+            loading.css({ top: top, left: left });
+        }, 200);
+    }
+    function HideProgress() {
+        setTimeout(function () {
+            var modal = $('<div />');
+            modal.addClass("modal");
+            var loading = $(".loadingprogress");
+            loading.hide();
+            var top = Math.max($(window).height() / 2 - loading[0].offsetHeight / 2, 0);
+            var left = Math.max($(window).width() / 2 - loading[0].offsetWidth / 2, 0);
+            loading.css({ top: top, left: left });
+        }, 200);
+    }
+
+    function GetObjectDetails(ObjType) {
+
+        var ServiceUrl = baseUrl + "api/DIMAPLUSAPI/GetObjectDetails";
+        var _copy_ddlTemplateName = "#ddlTemplateName";
+
+        $("#grdObjectDetails").GridUnload();
+        $("#grdObjectDetails").jqGrid({
+            postData: {
+                Client_ID: $("#hdnClientId").val(),
+                project_ID: $("#hdnProjectID").val(),
+                ObjType: ObjType,
+                TemplateName: $(_copy_ddlTemplateName + " option:selected").text(),
+                ConfigId: $("#hdnConfigId").val()
+            },
+            mytype: 'GET',
+            datatype: 'json',
+            url: ServiceUrl,
+            height: 230,
+            width: 870,
+            //autowidth: true,
+            shrinkToFit: true,
+            rowNum: 10,
+            rowList: [10, 20, 30],
+            colNames: ['ID', 'Object', 'Record Count'],
+            colModel: [
+            { key: true, name: 'ID', index: 'ID', hidden: true },
+            { name: 'ObjectName', index: 'ObjectName', width: 200 },
+            { name: 'Record_Count', index: 'Record_Count', align: 'center', width: 100 }
+            ],
+            pager: '#pgrObjDetails',
+            viewrecords: true,
+            viewsortcols: true,
+            gridview: true,
+            sortorder: 'asc',
+            gridComplete: function () {
+            },
+            loadComplete: function () {
+            },
+            caption: 'Object type: ' + ObjType
+        });
+
+        jQuery("#grdObjectDetails").jqGrid('navGrid', '#pgrObjDetails', { edit: false, add: false, del: false, view: false, search: false, refresh: false });
+        jQuery("#grdObjectDetails").jqGrid('sortableRows');
+
+
+        var myGrid = $('#grdObjectDetails');
+        var colPos = 2;
+        if (ObjType != "TABLES")
+            myGrid.jqGrid('hideCol', myGrid.getGridParam("colModel")[colPos].name);
+        else
+            myGrid.jqGrid('showCol', myGrid.getGridParam("colModel")[colPos].name);
+
+        $("#divObjectDetails").dialog('option', 'title', 'Template: ' + $(_copy_ddlTemplateName + " option:selected").text());
+        $("#divObjectDetails").dialog('open');
+    }
+    function CopyObjects() {
+        $.ajax({
+            type: "POST",
+            url: baseUrl + "api/DIMAPLUSAPI/CopySlicedData",
+            data: {
+                Client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectID").val(), ToolID: $("#hdnToolID").val(), TemplateId: $("#ddlTemplateName").val()
+            },
+            dataType: 'json',
+            success: function (data) {
+
+                //if (data.toLowerCase().indexOf("Sucessfully Copied") >= 0) {
+                //if (data == "Sucessfully Copied") {
+                //$("#btnStartProcessing").val("Complete.");
+                //$("#btnStartProcessing").css({ 'color': 'green' });
+                alert(data)
+                // }
+                //else {
+                // alert(data);
+                //  }
+            }
+        });
+    }
+</script>
+<div class="loadingprogress" align="center">
+    <span id="lodingMessage" style="display:none;">Copying...</span>Please wait.<br />
+    <br />
+    <img src="../Images/loader.gif" alt=" " />
+</div>
+<input type="hidden" value="@(Convert.ToString(DM_UI.App_Start.UIProperties.Sessions.Client.Client_ID))" id="hdnClientId" />
+<input type="hidden" value="@(Convert.ToString(DM_UI.App_Start.UIProperties.Sessions.Client.project_ID))" id="hdnProjectID" />
+<input type="hidden" value="@(Convert.ToString(DM_UI.App_Start.UIProperties.Sessions.ToolID))" id="hdnToolID" />
+<input type="hidden" value="@(Convert.ToString(DM_UI.App_Start.UIProperties.Sessions.ConfigEntity.Config_ID))" id="hdnConfigId" />
+<br />
+<div id="divObjectDetails" title="Objects">
+    <div class="group width-per-100">
+        <div class="form-group width-per-100">
+            <table id="grdObjectDetails"></table>
+            <div id="pgrObjDetails" class="scroll"></div>
+        </div>
+    </div>
+</div>
+<div class="content-body width-per-100">
+    <div style="width:80%;margin:auto;">
+        <div class="group" style="width:40%;">
+            <div class="form-group width-per-100">
+                @*@Html.Partial("_DASEMTemplateName", new ViewDataDictionary { { "clientId", Convert.ToString(DM_UI.App_Start.UIProperties.Sessions.Client.Client_ID) },
+                    { "projectId", Convert.ToString(DM_UI.App_Start.UIProperties.Sessions.Client.project_ID) } })*@
+                <span class="control-label">Template</span>
+                <select id="ddlTemplateName" class="dropdown" style="width:100%;"></select>
+            </div>
+        </div>
+        <div class="group">
+            <div class="div-header">
+                <span class="control-label label-bold">Source Object Ready To Copy</span>
+            </div>
+        </div>
+        <div class="group">
+            <div id="grddiv" class="form-group width-per-100">
+                <table id="grdSourcedetails" align='center'></table>
+                <div id="pager1" class="scroll"></div>
+            </div>
+        </div>
+        <div class="group">
+            <div class="div-header">
+                <span class="control-label label-bold">Target Server Details</span>
+            </div>
+        </div>
+        <div class="group">
+            <div id="grddiv" class="form-group width-per-100">
+                <table id="grdTargetdetails"></table>
+                <div id="pager2" class="scroll"></div>
+            </div>
+        </div>
+        <div class="group">
+            <div class="form-group text-align-center form-group-btn width-per-100">
+                <input type="radio" id="rdbtnOnline" name="RunType" value="Online" checked="checked" /><label class="control-label" for="rdbtnOnline">Online</label>
+                <input type="radio" id="rdbtnOffline" name="RunType" value="Offline" title="" /><label class="control-label" for="rdbtnOffline">Offline</label>
+            </div>
+        </div>
+        <div class="group">
+            <div id="grddiv" class="form-group text-align-center form-group-btn width-per-100">
+                <input value="Start" id="btnStartProcessing" class="button" name="btnStartProcessing" type="button" />
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,177 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="6/1/2017 3:57:27 PM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="CCH1WTDMP01"
+  DTS:CreatorName="CORP\36988"
+  DTS:DTSID="{E04CDC1B-F39A-4C52-A584-0B3A0B32A893}"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.2100.60"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="{E04CDC1B-F39A-4C52-A584-0B3A0B32A893}"
+  DTS:VersionGUID="{6188B357-57CB-472C-8401-E371DB731A5A}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[OLEDB Destination]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{8301F929-F876-4FF4-BC0F-6A6E23093608}"
+      DTS:ObjectName="OLEDB Destination">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=172.25.164.88;User ID=sa;Initial Catalog=poc_target;Provider=SQLOLEDB.1;Trusted_Connection = False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAIZD3BC+PgEWZEaAYQRkK3wAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAClXnX0fcvWNytpbFG0rqlmAAAAAASAAACgAAAAEAAAAFdyaXxvABiBjtCZ70ATza4YAAAAN+DcE9S1e+/GBwZL3/AwG5/cnRA5IZ6KFAAAALsoecA6dRB8IMj/QBw+DHx7lm+E</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[OLEDB Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{F2790BD8-58D7-4AA1-94D7-5D7DBA5332E6}"
+      DTS:ObjectName="OLEDB Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=172.25.164.88;User ID=sa;Initial Catalog=poc_data;Provider=SQLOLEDB.1;Trusted_Connection = False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAIZD3BC+PgEWZEaAYQRkK3wAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADr8N4J1flKjs4FV8XMZPiKAAAAAASAAACgAAAAEAAAALlOqhlNMZmMzLnBu7UcXrgYAAAAF2v4hOY8yY+gmVeuQwjM4tFk16RSM5VsFAAAAAk/giSjw07wJidXPZkngozXgHLr</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{AB443DC8-45E8-4ECC-A77E-64E693D28DDC}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="V_SourceProductName">
+      <DTS:VariableValue
+        DTS:DataType="8">TESTING</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Sequence Container"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{66818C62-DCA6-4C73-A88C-F160A8A2CDF5}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:FailPackageOnFailure="True"
+      DTS:FailParentOnFailure="True"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Sequence Container">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container\DFT_CUSTOMER_TGT,CUSTOMER_TGT1"
+          DTS:CreationName="SSIS.Pipeline.3"
+          DTS:DTSID="{96F4E46D-5580-4831-9CBD-1860390AF289}"
+          DTS:ExecutableType="SSIS.Pipeline.3"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="DFT_CUSTOMER_TGT,CUSTOMER_TGT1"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Sequence Container\DFT_CUSTOMER_TGT,CUSTOMER_TGT1\OLEDBSource"
+                  componentClassID="{165A526D-D5DE-47FF-96A6-F8274C19826B}"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLEDBSource"
+                  name="OLEDBSource"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset"></property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT [= IN_cust_code], last_name AS last_name , last_name AS last_name FROM [Customer_Join] WHERE ISNULL(ZZ_STATUS_CODE,'') != 'I'</property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">2</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Sequence Container\DFT_CUSTOMER_TGT,CUSTOMER_TGT1\OLEDBSource.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[OLEDB Source]"
+                      connectionManagerRefId="Package.ConnectionManagers[OLEDB Source]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Sequence Container\DFT_CUSTOMER_TGT,CUSTOMER_TGT1\OLEDBSource.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <externalMetadataColumns
+                        isUsed="True" />
+                    </output>
+                    <output
+                      refId="Package\Sequence Container\DFT_CUSTOMER_TGT,CUSTOMER_TGT1\OLEDBSource.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_TGT,CUSTOMER_TGT1\OLEDBSource.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_TGT,CUSTOMER_TGT1\OLEDBSource.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_TGT,CUSTOMER_TGT1\OLEDBSource.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_TGT,CUSTOMER_TGT1\OLEDBSource.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:Executable>
+  </DTS:Executables>
+</DTS:Executable>

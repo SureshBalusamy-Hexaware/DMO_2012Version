@@ -1,0 +1,633 @@
+﻿@{
+    ViewBag.Title = "DataProfiling";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ajaxStart(function () {
+        $('.modal').show();
+    }).ajaxStop(function () {
+        $('.modal').hide();
+    });
+
+    $(document).ready(function () {
+
+        $("#btnViewReport").prop("disabled", true);
+        $("#select_existing_profiler").hide();
+        $("#divSampleData").hide();
+        $("#sampledata").GridUnload();
+
+        var baseUrl = '@Url.Content("~/")';
+        var client_ID = $("#hdnClientId").val();
+        var project_ID = $("#hdnProjectId").val();
+        var DatabaseIP = $("#hdnDatabaseIP").val();
+        var SourceTarget = $("#hdnSourceTarget").val();
+        var DatabaseName = $("#hdnDatabaseName").val();
+        var configId = $("#hdnConfigId").val();
+
+        var selectedColumn = [];
+        var profilerTables =
+                $.ajax({
+                    url: baseUrl + "api/DataProfilerAPI/GetProfilerTableNames",
+                    data: { client_ID: client_ID, project_ID: project_ID, config_Id: configId },
+                    async: false,
+                    success: function (data, result) {
+                        if (!result) alert('Failure to retrieve the Tables.');
+                    },
+                    error: function (err) {
+                        alert(err.statusText);
+                    }
+                }).responseText;
+
+        var tableNames = jQuery.parseJSON(profilerTables);
+
+        for (i = 0; i < tableNames.length; i++) {
+            $('#select_table').append($('<option>').text(tableNames[i].Table_Name).val(tableNames[i].Table_Name));
+        }
+
+        ShowColumns();
+
+        /*
+        var profilerParameters =
+                $.ajax({
+                    url: baseUrl + "api/DataProfilerAPI/GetProfilerParameterRecordsValue",
+                    async: false,
+                    success: function (data, result) {
+                        if (!result) alert('Failure to retrieve the parameter records.');
+                    },
+                    error: function (err) {
+                        alert(err.statusText);
+                    }
+                }).responseText;
+
+        var parameterRecords = jQuery.parseJSON(profilerParameters);
+
+        for (i = 0; i < parameterRecords.length; i++) {
+            //$('#ddSampleNoRecords').append($('<option>').text(parameterRecords[i].Prameter_value).val(parameterRecords[i].Parameter_ID));
+            //$('#ddProfileNoRecords').append($('<option>').text(parameterRecords[i].Prameter_value).val(parameterRecords[i].Parameter_ID));
+        }
+        */
+
+        var profilerTemplate =
+                $.ajax({
+                    url: baseUrl + "api/DataProfilerAPI/GetProfilerTemplateList",
+                    data: { client_ID: client_ID, project_ID: project_ID, config_ID: configId },
+                    async: false,
+                    success: function (data, result) {
+                        if (!result) alert('Failure to retrieve the Templates.');
+                    },
+                    error: function (err) {
+                        alert(err.statusText);
+                    }
+                }).responseText;
+
+        var templateList = jQuery.parseJSON(profilerTemplate);
+
+        for (i = 0; i < templateList.length; i++) {
+            $('#select_existing_profiler').append($('<option>').text(templateList[i].Template_Name));
+        }
+
+        $("#divdbl").dblclick(function () {
+
+            $("#txtProfilerName").val('');
+            if (!$('#select_existing_profiler').is(':visible')) {
+                $('#select_existing_profiler').show();
+                $("#select_existing_profiler").change();
+                $("#txtProfilerName").hide();
+            }
+            else {
+                $('#select_existing_profiler').hide();
+                $("#txtProfilerName").show();
+            }
+        });
+
+        $("#btnStartProfile").click(function () {
+
+            var templateName = $('#select_existing_profiler').is(':visible') ? $('#select_existing_profiler option:selected').val() : $('#txtProfilerName').val();
+            var tablename = $("#select_table option:selected").text();
+            var noOfRec = $('#txtNoOfRecs').val().trim();
+            var isValid = true;
+
+            if (noOfRec == 0) {
+                isValid = false;
+            }
+            else if (!$.isNumeric(noOfRec)) {
+
+                if (noOfRec.toUpperCase() != 'ALL') {
+                    isValid = false;
+                }
+                else
+                    noOfRec = 0;
+            }
+
+            var selectedRow = jQuery("#jqgrid1").jqGrid('getGridParam', 'selarrrow');
+            var rowCount = jQuery("#jqgrid1").jqGrid('getGridParam', 'records');
+            var checkedCount = $("#divOptions input:checked").length;
+
+            if (templateName == '' && !$('#select_existing_profiler').is(':visible')) {
+                alert('Enter Profiler Name');
+                return;
+            }
+            else if (selectedRow == undefined) {
+                alert('Select Column for profiling');
+                return;
+            }
+            else if (!isValid) {
+                alert('Enter valid record count.')
+                return;
+            }
+
+            if (selectedRow.length) {
+
+                var _profile_id;
+                var columnName;
+                var dataType;
+                var profilingColumn;
+                var _selectedcolumns = [];
+                var _profileType = $("input[name='runOption']:checked").val();
+
+                for (var i = 0; i < selectedRow.length; i++) {
+                    columnName = jQuery("#jqgrid1").jqGrid('getCell', selectedRow[i], 'columnname');
+                    _selectedcolumns.push('[' + columnName + ']');
+                }
+
+                $.ajax({
+                    type: "GET",
+                    url: baseUrl + "api/DataProfilerAPI/UpdateProfileStatus",
+                    data: { client_ID: client_ID, project_ID: project_ID, config_ID: configId, profile_type: _profileType, template_name: templateName, table_name: tablename, rec_count: noOfRec },
+                    success: function (data) {
+                        if (isNaN(data)) {
+                            alert(data);
+                            return;
+                        }
+                        _profile_id = data;
+                        updateTemplateDetails(data, selectedRow);
+
+                        if (_profileType == "Online") {
+
+                            if (selectedRow.length == rowCount) {
+                                profilingColumn = 'ALL';
+                            }
+                            else {
+                                profilingColumn = columnName;
+                            }
+
+                            var arr = pushToArray();
+
+                            $.ajax({
+                                type: "GET",
+                                url: baseUrl + "api/DataProfilerAPI/DataProfiling",
+                                dataType: "json",
+                                data: { client_ID: client_ID, project_ID: project_ID, template_name: templateName, table_name: tablename, profile_colum_name: profilingColumn, compute_options: arr, database_IP: DatabaseIP, database_name: DatabaseName, row_count: noOfRec, selected_columns: _selectedcolumns.join(), profile_id: data },
+                                success: function (data) {
+                                    if (data.indexOf('Success') != -1) {
+                                        $("#btnViewReport").prop("disabled", false);;
+                                        alert("Data profiled successfully for Run ID '" + _profile_id + "'.");
+                                    }
+                                    else
+                                        alert(data);
+                                },
+                                error: function (err) {
+                                    alert('Error: ' + err.statusText);
+                                    $("#btnViewReport").prop("disabled", true);;
+                                }
+                            });
+                        }
+                        else {
+                            alert('Batch Process Initiated. Track status by click "View Batch Status" ');
+                            // Do nothing for Batch process. It will processed behind by SQL job.
+                        }
+                    },
+                    error: function (err) {
+                        alert('Error: ' + err.statusText);
+                    }
+                });
+            }
+            else {
+                alert('Select Column for profiling');
+                return;
+            }
+
+        });
+
+        $("#select_table").change(function () {
+            ShowColumns();
+        })
+
+        $("#btnViewSampleData").click(function () {
+            var tablename = $("#select_table option:selected").text();
+            var rowcount = "ALL"; //$("#ddSampleNoRecords option:selected").text();
+            var colModel = new Array();
+            var colNames = new Array();
+            var ColumnNames;
+            var ColumnModel;
+            var rows;
+
+            var selectedRow = jQuery("#jqgrid1").jqGrid('getGridParam', 'selarrrow');
+            if (selectedRow == undefined || selectedRow == "") {
+                alert('Select column(s) to view data');
+                return;
+            }
+
+            var selectedColumns = '';
+            for (var i = 0; i < selectedRow.length; i++) {
+                selectedColumns += '[' + jQuery("#jqgrid1").jqGrid('getCell', selectedRow[i], 'columnname') + "],";
+            }
+
+            rows = null;
+
+            $.ajax({
+                url: baseUrl + "api/DataProfilerAPI/GetProfilerSampleDataColHeader",
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                data: { config_ID: configId, table_name: tablename, column_list: selectedColumns, row_count: rowcount },
+                dataType: "json",
+                cache: false,
+                success: function (data) {
+                    var cols = data.ColNames;
+                    //rows = data.rows;
+                    if (cols == undefined) { alert(data); return; }
+                    var uFields = cols.split(',');
+                    var columns = [];
+                    for (var i = 0; i < uFields.length ; i++) {
+                        columns.push(uFields[i]);
+                    }
+
+                    ColumnNames = columns;
+
+                    var uFields = cols.split(',');
+                    var columns = [];
+                    for (var i = 0; i < uFields.length ; i++) {
+
+                        columns.push({ name: uFields[i], index: uFields[i], width: 80, search: true, sortable: false, editable: true, hidden: false, align: 'center' });
+
+                    }
+
+                    ColumnModel = columns;
+
+                    $("#sampledata").GridUnload();
+                    $grid = jQuery("#sampledata").jqGrid({
+                        mtype: 'GET',
+                        postData: { config_ID: configId, table_name: tablename, column_list: selectedColumns, row_count: rowcount },
+                        url: baseUrl + "api/DataProfilerAPI/GetProfilerSampleData",
+                        datatype: 'json',
+                        //data: JSON.parse(rows),
+                        //datatype: "local",
+                        height: 100,
+                        width: 1100,
+                        rowNum: 50,
+                        rowList: [5, 10, 20, 50],
+                        colNames: ColumnNames,
+                        colModel: ColumnModel,
+                        pager: '#pager_sampledata',
+                        viewrecords: true,
+                        //loadonce: true,
+                        //gridview: true,
+                        //sortorder: 'asc',
+                        autowidth: false,
+                        shrinkToFit: false,
+                        scrollOffset: 0,
+                        showButtonPanel: true,
+                        closeAfterEdit: true,
+                        caption: 'Sample Data',
+                    })
+                    jQuery("#sampledata").jqGrid('sortableRows');
+                },
+                error: function (err) {
+                    //alert("Error with AJAX callback. Error: " + err.responseText);
+                    alert(err);
+                }
+            });
+
+        });
+
+        $("#select_existing_profiler").change(function () {
+            loadTemplateDetails();
+        });
+
+        $("#btnBatchStatus").click(function () {
+            $("#jqgStatus").GridUnload();
+            jQuery("#jqgStatus").jqGrid({
+                mytype: 'POST',
+                datatype: 'json',
+                url: baseUrl + 'api/DataProfilerAPI/GetProfileBatchStatus',
+                postData: { client_ID: client_ID, project_ID: project_ID },
+                rowNum: 10,
+                height: 135,
+                width: 847,
+                autowidth: false,
+                shrinkToFit: false,
+                colNames: ['Template Name', 'Table Name', 'Profile ID', 'Profile Status', 'Description', 'Start Time', 'End Time'],
+                colModel: [
+                { name: 'templatename', index: 'templatename', width: 120, align: 'left', editable: false },
+                { name: 'tablename', index: 'tablename', width: 100, align: 'left', editable: false },
+                { name: 'profileid', index: 'profileid', width: 100, align: 'left', editable: false },
+                { name: 'profilestatus', index: 'profilestatus', width: 80, align: 'center', editable: false },
+                { name: 'profiledesc', index: 'profiledesc', width: 200, align: 'left', editable: false },
+                { name: 'starttime', index: 'starttime', width: 150, align: 'center', editable: false },
+                { name: 'endtime', index: 'endtime', width: 150, align: 'center', editable: false }
+                ],
+                pager: '#pgrStatus',
+                loadonce: false,
+                gridview: true,
+                viewrecords: true,
+                caption: ''
+            });
+
+            $('#jqgStatus').navGrid('#pgrStatus',
+                  // the buttons to appear on the toolbar of the grid
+                  { edit: false, add: false, del: false, search: false, refresh: true, view: false, position: "left", cloneToTop: false });
+
+            $("#dialog").dialog("open");
+        })
+
+        $("#dialog").dialog({
+            autoOpen: false,
+            width: 900,
+            draggable: false,
+            resizable: false,
+            title: "Profile Batch Status",
+            dialogClass: "myDialogClass"
+        });
+
+        $('#txtNoOfRecs').tooltip({
+        })
+
+        function ShowColumns() {
+
+            var tablename = $("#select_table option:selected").text();
+            $("#divSampleData").show();
+
+
+            $("#jqgrid1").GridUnload();
+            jQuery("#jqgrid1").jqGrid({
+                mytype: 'POST',
+                datatype: 'json',
+                url: baseUrl + 'api/DataProfilerAPI/GetProfilerTableDetails',
+                postData: { client_ID: client_ID, project_ID: project_ID, table_name: tablename, Config_ID: configId },
+                height: 135,
+                width: 930,
+                autowidth: false,
+                shrinkToFit: true,
+                colNames: ['Column Name', 'Data Type', 'Key Column'],
+                colModel: [
+                { name: 'columnname', index: 'columnname', width: 30, align: 'left', editable: false },
+                { name: 'datatype', index: 'datatype', width: 30, align: 'left', editable: false },
+                { name: 'keycolumn', index: 'keycolumn', width: 30, align: 'left', editable: false, },
+
+                ],
+                rowNum: -1,
+                pager: '#pager',
+                multiselect: true,
+                loadonce: true,
+                gridview: true,
+                pginput: false,
+                pgbuttons: false,
+                viewrecords: true,
+                caption: 'Data Profiling',
+                loadComplete: function () {
+                    var rows = $("#jqgrid1").jqGrid('getDataIDs');
+                    for (i = 0; i < rows.length; i++) {
+                        var rowData = $("#jqgrid1").getRowData(rows[i]);
+                        var columnName = rowData.columnname;
+                        if ($.inArray(columnName, selectedColumn) != -1) {
+                            $("#jqgrid1").jqGrid('setSelection', rows[i], true);
+                        }
+                    }
+                    //reset the array
+                    selectedColumn = [];
+                }
+            });
+
+            $("#jqgrid1").hideCol("keycolumn");
+        }
+
+        function updateTemplateDetails(profileID, selectedRow) {
+            var columnData = [];
+            var nullRatio = $('#chkNullRatio').is(":checked") ? 1 : 0;
+            var statistics = $('#chkStat').is(":checked") ? 1 : 0;
+            var valueDist = $('#chkValDist').is(":checked") ? 1 : 0;
+            var lengthDist = $('#chkLenDist').is(":checked") ? 1 : 0;
+            var pattern = $('#chkPattern').is(":checked") ? 1 : 0;
+            var canditateKey = $('#chkCanditateKey').is(":checked") ? 1 : 0;
+
+            for (var i = 0; i < selectedRow.length; i++) {
+
+                columnName = jQuery("#jqgrid1").jqGrid('getCell', selectedRow[i], 'columnname');
+                dataType = jQuery("#jqgrid1").jqGrid('getCell', selectedRow[i], 'datatype');
+
+                columnData.push({
+                    Column_Name: columnName,
+                    Data_Type: dataType,
+                });
+            }
+
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                url: baseUrl + "api/DataProfilerAPI/InsertProfileData",
+                data: JSON.stringify({
+                    Profile_ID: profileID,
+                    Client_ID: client_ID,
+                    Project_ID: project_ID,
+                    Null_Ratio_Profile: nullRatio,
+                    Statistics_Profile: statistics,
+                    Value_Distribution_Profile: valueDist,
+                    Length_Distribution_Profile: lengthDist,
+                    Pattern_Profile: pattern,
+                    Candidate_Key_Profile: canditateKey,
+                    Profiling_Status: 0,
+                    ColumnList: columnData
+                }),
+                success: function (data) {
+                    //alert(data);
+                },
+                error: function (err) {
+                    alert(err.statusText);
+                }
+            })
+        }
+
+        function loadTemplateDetails() {
+            var templateName = $("#select_existing_profiler option:selected").text();
+            var templateDetails =
+                    $.ajax({
+                        url: baseUrl + "api/DataProfilerAPI/GetProfilerTemplateDetails",
+                        data: { client_ID: client_ID, project_ID: project_ID, template_name: templateName,config_ID: configId },
+                        async: false,
+                        success: function (data, result) {
+                            if (!result) alert('Failure to retrieve the Tables.');
+                        },
+                        error: function (err) {
+                            alert(err.statusText);
+                        }
+                    }).responseText;
+
+            var details = jQuery.parseJSON(templateDetails);
+
+            if (details.length > 0) {
+                $("#select_table").val(details[0].Table_Name);
+                $('#chkNullRatio').prop('checked', details[0].Null_Ratio_Profile.toUpperCase() == "TRUE");
+                $('#chkStat').prop('checked', details[0].Statistics_Profile.toUpperCase() == "TRUE");
+                $('#chkValDist').prop('checked', details[0].Value_Distribution_Profile.toUpperCase() == "TRUE");
+                $('#chkLenDist').prop('checked', details[0].Length_Distribution_Profile.toUpperCase() == "TRUE");
+                $('#chkPattern').prop('checked', details[0].Pattern_Profile.toUpperCase() == "TRUE");
+                $('#chkCanditateKey').prop('checked', details[0].Candidate_Key_Profile.toUpperCase() == "TRUE");
+                $('#txtNoOfRecs').val(details[0].Rec_Count);
+                $("input[name=runOption][value='" + details[0].Profile_Type + "']").prop("checked", true);
+
+                $("#select_table").change();
+                //$("#btnShowColumns").click();
+            }
+
+            for (i = 0; i < details.length; i++) {
+                selectedColumn.push(details[i].Column_Name);
+            }
+        }
+
+        function pushToArray() {
+            var selected = [];
+            $('#divOptions input:checkbox:not(:checked)').each(function () {
+                selected.push($(this).attr('name'));
+            });
+
+            return selected;
+        }
+    });
+</script>
+
+<style type="text/css">
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #ababab;
+        z-index: 10000 !important;
+        opacity: 0.9;
+        filter: alpha(opacity=80) !important;
+        min-height: 100%;
+        width: 100%;
+    }
+
+    .myLoadingProgress {
+        z-index: 9999 !important;
+        margin: 300px auto;
+        padding: 10px;
+        width: 200px;
+        background-color: White;
+        border: 5px solid #67CFF5;
+        /*border-radius: 10px;*/
+        filter: alpha(opacity=100);
+        opacity: 1;
+        -moz-opacity: 1;
+    }
+
+    .myDialogClass .ui-widget-header {
+        font-family: "open_sansregular", "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        margin-bottom: 5px;
+        font-size: 13px;
+        letter-spacing: 0.3px !important;
+        font-weight: normal;
+    }
+
+    .myDialogClass .ui-widget-content {
+        background-color: #F3F3F3;
+    }
+
+    .ui-tooltip {
+        border-radius: 6px;
+        font-size: 12px;
+    }
+</style>
+<div class="content-body" style="width:100%;">
+    <div class="group">
+        <div class="form-group width-per-100 fL">
+            <div class="col-40" style="padding-left: 10px;">
+                <span id="lblProfilerName" class="control-label">Profiler Name</span>
+                <div id="divdbl">
+                    <input id="txtProfilerName" type="text" style="width:92%" class="textbox" />
+                    <select id="select_existing_profiler" class="dropdown" style="width:97%;"></select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="group">
+        <div class="form-group width-per-100 fL">
+            <div class="col-40" style="padding-right: 0px; padding-left: 10px;">
+                <span id="labeltable" class="control-label">Select profiler table</span>
+                <select id="select_table" class="dropdown" style="width:97%;text-transform:none;"></select> @*onchange="function_tableselect()"*@
+            </div>
+        </div>
+    </div>
+    <div class="group">
+        <div class="form-group width-per-100" style="padding-left: 10px;">
+            <table id="jqgrid1" class="scroll" align='center'></table>
+            <div id="pager" class="scroll"></div>
+        </div>
+    </div>
+    <div class="group" style="width:51%;" id="divSampleData">
+        <div class="form-group width-per-100" style="text-align: right;">
+            <input class="form-button" type="button" value="View Data" id="btnViewSampleData">
+        </div>
+    </div>
+    <div class="group">
+        <div class="form-group" style="padding-left: 10px;">
+            <table id="sampledata" class="scroll" align='center'></table>
+            <div id="pager_sampledata" class="scroll"></div>
+        </div>
+    </div>
+    <div class="group" id="divOptions" style="width:51%;">
+        <div style="padding-left: 10px;">
+            <fieldset>
+                <legend>Profile Option</legend><br />
+                <div class="form-group width-per-100">
+                    <div class="col-10" style="width: 50%; padding-right: 0px; " >
+                        <input type="checkbox" id="chkNullRatio" checked="checked" name="ColumnNullRatioProfileRequest"  />Column Null Ratio Profile <br /><br />
+                        <input type="checkbox" id="chkStat" checked="checked" name="ColumnStatisticsProfileRequest" />Column Statistics Profile<br /><br />
+                        <input type="checkbox" id="chkValDist" checked="checked" name="ColumnValueDistributionProfileRequest" />Column Value Distribution Profile
+                    </div>
+                    <div class="col-10" style="width: 50%; padding-right: 0px; ">
+                        <input type="checkbox" id="chkLenDist" checked="checked" name="ColumnLengthDistributionProfileRequest" />Column Length Distribution Profile<br /><br />
+                        <input type="checkbox" id="chkPattern" checked="checked" name="ColumnPatternProfileRequest" />Column Pattern Profile<br /><br />
+                        <input type="checkbox" id="chkCanditateKey" name="CandidateKeyProfileRequest" />Canditate Key Profile
+                    </div>@*disabled="disabled"*@
+                </div>
+            </fieldset>
+        </div>
+    </div>
+    <div class="group" style="width:51%;">
+        <div class="form-group width-per-100" style="text-align: right;">
+            <span id="lblNoRecords" class="control-label">No.of Records</span>
+            <input id="txtNoOfRecs" type="text" style="width:50px" maxlength="15" value="1000" title="Input 'ALL' to profile all the records.">
+            <input type="radio" id="radOnline" value="Online" name="runOption" checked="checked" /><span id="lblOnline" class="control-label">Online</span>
+            <input type="radio" id="radBatch" value="Batch" name="runOption" /><span id="lblBatch" class="control-label">Batch</span>
+        </div>
+    </div>
+    <div class="group" style="width:51%;">
+        <div class="form-group-btn width-per-100" style="text-align: right;">
+            <input class="form-button" type="button" value="View Batch Status" id="btnBatchStatus">
+            <input class="form-button" type="button" value="Start Profiling" id="btnStartProfile">
+            <input class="form-button" type="button" value="View Report" id="btnViewReport" onclick="window.location.href='@Url.Action("ProfileReport", "DataProfiler")';">
+        </div>
+    </div>
+    <div class="group" id="dialog">
+        <div class="form-group" style="padding-left: 10px;">
+            <table id="jqgStatus" class="scroll" align='center'></table>
+            <div id="pgrStatus" class="scroll"></div>
+        </div>
+    </div>
+</div>
+<div class="modal" style="display: none">
+    <div class="myLoadingProgress" align="center">
+        Processing. Please wait.<br /><br />
+        <img alt="" src="~/Images/loader.gif" />
+    </div>
+</div>
+<input type="hidden" value="@ViewData["ClientID"]" id="hdnClientId" />
+<input type="hidden" value="@ViewData["ProjectID"]" id="hdnProjectId" />
+<input type="hidden" value="@ViewData["DatabaseIP"]" id="hdnDatabaseIP" />
+<input type="hidden" value="@ViewData["SourceTarget"]" id="hdnSourceTarget" />
+<input type="hidden" value="@ViewData["DatabaseName"]" id="hdnDatabaseName" />
+<input type="hidden" value="@ViewData["ConfigId"]" id="hdnConfigId" />

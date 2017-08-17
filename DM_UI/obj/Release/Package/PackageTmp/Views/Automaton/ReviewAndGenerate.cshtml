@@ -1,0 +1,745 @@
+﻿@{
+    ViewBag.Title = "ReviewAndGenerate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style type="text/css">
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: black;
+        z-index: 99;
+        opacity: 0.8;
+        filter: alpha(opacity=80);
+        -moz-opacity: 0.8;
+        min-height: 100%;
+        width: 100%;
+    }
+
+    .loadingprogress {
+        font-family: Arial;
+        font-size: 10pt;
+        border: 5px solid #67CFF5;
+        width: 200px;
+        height: 100px;
+        display: none;
+        position: fixed;
+        background-color: White;
+        z-index: 999;
+    }
+
+    .myDialogClass .ui-widget-header {
+        font-family: "open_sansregular", "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        margin-bottom: 5px;
+        font-size: 13px;
+        letter-spacing: 0.3px !important;
+        font-weight: normal;
+    }
+
+    .myDialogClass .ui-widget-content {
+        background-color: #F3F3F3;
+    }
+</style>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var baseUrl = '@Url.Content("~/")';
+
+        $("#hdnClientId").val('@ViewData["ClientID"]');
+        $("#hdnProjectId").val('@ViewData["ProjectID"]');
+        $("#hdnToolID").val('@ViewData["ToolID"]');
+        $('#cont').hide();
+
+        LoadTemplateNameList();
+
+        function LoadTemplateNameList() {
+
+            $("#grdTemplate").GridUnload();
+
+            $grid = jQuery("#grdTemplate").jqGrid({
+                mytype: 'GET',
+                url: baseUrl + "api/AutomatAPI/GetTemplateNameList",
+                postData: { client_Id: $("#hdnClientId").val(), Project_Id: $("#hdnProjectId").val(), Type: $('#selectTemplateType option:selected').val() },
+                datatype: 'json',
+                height: 200,
+                autowidth: true,
+                shrinkToFit: true,
+                rowNum: 50,
+                rowList: [5, 10, 20, 50],
+                colNames: ['Template_ID', 'Template Name', 'Action'],
+                colModel: [
+                    { name: 'Template_ID', search: false, sortable: false, align: 'Left', width: 10, hidden: true, key: true },
+                    { name: 'Template_Name', search: false, sortable: false, align: 'Left', width: 200 },
+                    { name: 'Action', search: false, sortable: false, align: 'Left', width: 500, formatter: FormatterActionColumn },
+                ],
+                pager: '#pgrTemplate',
+                viewrecords: true,
+                loadonce: true,
+                gridview: true,
+                scrollOffset: 0,
+                sortable: false,
+                sortname: 'Template_Name',
+                sortorder: 'desc',
+                reloadAfterSubmit: true,
+                showButtonPanel: true,
+                loadui: "disable",
+                caption: 'Templates',
+                onSelectRow: function (rowId) {
+                },
+                gridComplete: function () {
+                    $(this).prop('p').loadui = 'enable';
+                },
+            });
+
+        }
+
+
+        function FormatterActionColumn(cellvalue, options, rowObject) {
+
+            //var _rowId = options.rowId;
+            //var _TemplateID = rowObject[0];
+            //var _TemplateName = rowObject[1];
+
+            var _rowId = options.rowId;
+            var _TemplateID = rowObject[0];
+            var _TemplateName = rowObject[1];
+
+            if (typeof _TemplateID === "undefined") {
+                _TemplateID = rowObject.Template_ID;
+                _TemplateName = rowObject.Template_Name;
+            }
+
+                //else if (_TemplateName == "Master Template") {
+            else if (_TemplateName == "Master") {
+                return '<div style="padding:4px;">' +
+                 ' <input class="form-button" style="font-weight: bold;visibility: hidden;" type="button" name="btnReview' + _TemplateID + '" value="Review" onclick="Review(' + _TemplateID + ',\'' + _TemplateName + '\')">' +
+                 ' <input class="form-button" style="font-weight: bold;" type="button" name="btnGenerate' + _TemplateID + '" value="Generate" onclick="Generate(' + _TemplateID + ',\'' + _TemplateName + '\')">' +
+                 ' <input class="form-button" style="font-weight: bold;" type="button" name="btnDownload' + _TemplateID + '" value="Download" onclick="Download(' + _TemplateID + ',\'' + _TemplateName + '\')">' +
+                 ' <input class="form-button" style="font-weight: bold;"  type="button" name="btnRun' + _TemplateID + '" value="Run" onclick="Run(' + _TemplateID + ',\'' + _TemplateName + '\')">' +
+                 ' <input class="form-button" style="font-weight: bold;"  type="button" name="btnRunOffline' + _TemplateID + '" value="Run Offline" onclick="RunOffline(' + _TemplateID + ',\'' + _TemplateName + '\')">' +
+                 ' <input class="form-button" style="font-weight: bold;"  type="button" name="btnRunOffline' + _TemplateID + '" value="Generate DR Template" onclick="GenerateDRTemplate(' + _TemplateID + ',\'' + _TemplateName + '\')">' +
+                 ' <input class="form-button" style="font-weight: bold;visibility: hidden;"  type="button" name="btnGenerateDoc' + _TemplateID + '" value="Generate Document" onclick="GenerateDocument(' + _TemplateID + ',\'' + _TemplateName + '\')">' +
+                 '<div>';
+            }
+
+            return '<div style="padding:4px;">' +
+                ' <input class="form-button" style="font-weight: bold;" type="button" name="btnReview' + _TemplateID + '" value="Review" onclick="Review(' + _TemplateID + ',\'' + _TemplateName + '\')">' +
+                ' <input class="form-button" style="font-weight: bold;" type="button" name="btnGenerate' + _TemplateID + '" value="Generate" onclick="Generate(' + _TemplateID + ',\'' + _TemplateName + '\')">' +
+                ' <input class="form-button" style="font-weight: bold;" type="button" name="btnDownload' + _TemplateID + '" value="Download" onclick="Download(' + _TemplateID + ',\'' + _TemplateName + '\')">' +
+                ' <input class="form-button" style="font-weight: bold;"  type="button" name="btnRun' + _TemplateID + '" value="Run" onclick="Run(' + _TemplateID + ',\'' + _TemplateName + '\')">' +
+                ' <input class="form-button" style="font-weight: bold;"  type="button" name="btnRunOffline' + _TemplateID + '" value="Run Offline" onclick="RunOffline(' + _TemplateID + ',\'' + _TemplateName + '\')">' +
+                ' <input class="form-button" style="font-weight: bold;"  type="button" name="btnGenerateDoc' + _TemplateID + '" value="Generate Document" onclick="GenerateDocument(' + _TemplateID + ',\'' + _TemplateName + '\')">' +
+                ' <input class="form-button" style="font-weight: bold;"  type="button" name="btnGenerateReconcile' + _TemplateID + '" value="Generate Reconcile" onclick="GenerateReconcile(' + _TemplateID + ',\'' + _TemplateName + '\')">' +
+                '<div>';
+        }
+
+
+        $('#selectTemplateType').on('change', function (e) {
+
+            LoadTemplateNameList();
+
+        });
+
+        $("#btnBatchStatus").click(function () {
+
+            $("#jqgStatus").GridUnload();
+            jQuery("#jqgStatus").jqGrid({
+                mytype: 'POST',
+                datatype: 'json',
+                url: baseUrl + 'api/AutomatAPI/GetAutomatonBatchStatus',
+                postData: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), Tool_ID: $("#hdnToolID").val() },
+                rowNum: 10,
+                height: 135,
+                width: 700,
+                autowidth: false,
+                shrinkToFit: false,
+                colNames: ['Template Name', 'Status', 'Start Time', 'End Time'],
+                colModel: [
+                { name: 'Template_Name', index: 'templatename', width: 200, align: 'left', editable: false },
+                { name: 'Run_Status', index: 'Run_Status', width: 100, align: 'center', editable: false },
+                { name: 'Start_Time', index: 'Start_Time', width: 150, align: 'center', editable: false },
+                { name: 'End_Time', index: 'End_Time', width: 150, align: 'center', editable: false }
+                ],
+                pager: '#pgrStatus',
+                loadonce: false,
+                gridview: true,
+                viewrecords: true,
+                caption: ''
+            });
+
+            $('#jqgStatus').navGrid('#pgrStatus',
+                  // the buttons to appear on the toolbar of the grid
+                  { edit: false, add: false, del: false, search: false, refresh: true, view: false, position: "left", cloneToTop: false });
+
+            $("#dialog").dialog("open");
+        });
+
+        $("#dialog").dialog({
+            autoOpen: false,
+            width: 750,
+            draggable: false,
+            resizable: false,
+            title: "Automaton Status",
+            dialogClass: "myDialogClass"
+        });
+
+    });
+
+
+    function selectRow(TemplateID) {
+        jQuery('#grdTemplate').jqGrid('setSelection', TemplateID);
+    }
+
+    function Generate(TemplateID, TemplateName) {
+        var _TemplateType = $("#selectTemplateType").val();
+
+        selectRow(TemplateID);
+        $("#lblTemplateName").text("");
+        //$("#lblTemplateName").text("Template Name : " + TemplateName);
+        $('#cont').hide();
+        $("#hdnTemplateID").val(TemplateID);
+        $("#hdnTemplateName").val(TemplateName);
+
+        //Review(TemplateID, TemplateName);
+
+        ShowProgress();
+        if (_TemplateType == "Master") {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GenerateMasterAutomatonXML")',
+                dataType: 'json',
+                data: { Template_ID: TemplateID },
+                success: function (data) {
+                    HideProgress();
+                    alert(data[0]);
+                },
+                error: function (xhr) {
+                    HideProgress();
+                    alert(xhr);
+                }
+            });
+        }
+        else if (_TemplateType == "FileUpload") {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("FileUpload_GenerateXML")',
+                dataType: 'json',
+                data: { Template_ID: TemplateID },
+                success: function (data) {
+                    HideProgress();
+                    alert(data[0]);
+                },
+                error: function (xhr) {
+                    HideProgress();
+                    alert(xhr);
+                }
+            });
+        }
+        else {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GenerateXML")',
+                dataType: 'json',
+                data: { Template_ID: TemplateID, TemplateType: _TemplateType },
+                success: function (data) {
+                    HideProgress();
+                    alert(data[0]);
+                },
+                error: function (xhr) {
+                    HideProgress();
+                    alert(xhr);
+                }
+            });
+        }
+    }
+    function GenerateReconcile(TemplateID, TemplateName) {
+         
+        selectRow(TemplateID);
+
+        $("#lblTemplateName").text("");
+        $('#cont').hide();
+        $("#hdnTemplateID").val(TemplateID);
+        $("#hdnTemplateName").val(TemplateName);
+
+        var _TemplateType = $("#selectTemplateType").val();
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GenerateReconcile")',
+            dataType: 'json',
+            data: { Template_ID: TemplateID },
+            success: function (data) {
+            },
+            error: function (xhr) {
+                HideProgress();
+                // alert(xhr);
+            }
+        });
+
+    }
+
+
+    function GenerateDRTemplate(TemplateID, TemplateName) {
+
+        selectRow(TemplateID);
+        $("#lblTemplateName").text("");
+        //$("#lblTemplateName").text("Template Name : " + TemplateName);
+        $('#cont').hide();
+        $("#hdnTemplateID").val(TemplateID);
+        $("#hdnTemplateName").val(TemplateName);
+
+        //Review(TemplateID, TemplateName);
+
+        ShowProgress();
+        if (TemplateName == "Master Template") {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GenerateDRTemplate")',
+                dataType: 'json',
+                data: { Template_ID: TemplateID },
+                success: function (data) {
+                    HideProgress();
+                    alert("DataRecon Template Generated successfully.");
+                },
+                error: function (xhr) {
+                    HideProgress();
+                    alert(xhr);
+                }
+            });
+        }
+    }
+
+
+    function Download(TemplateID, TemplateName) {
+
+        selectRow(TemplateID);
+
+        $("#lblTemplateName").text("");
+        $('#cont').hide();
+        $("#hdnTemplateID").val(TemplateID);
+        $("#hdnTemplateName").val(TemplateName);
+
+        @*ShowProgress();
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("DownloadPackage")',
+            dataType: 'json',
+            data: { TemplateID: TemplateID, TemplateName: TemplateName },
+            success: function (data) {
+                HideProgress();
+                alert(data[0]);
+            },
+            error: function (xhr) {
+                HideProgress();
+                alert(xhr);
+            }
+        });*@
+
+        baseUrl = '@Url.Content("~/")';
+        window.location.href = baseUrl + "/Automaton/DownloadPackage?TemplateID=" + TemplateID + "&TemplateName=" + TemplateName + "";
+
+    }
+
+    function GenerateDocument(TemplateID, TemplateName) {
+
+        selectRow(TemplateID);
+
+        $("#lblTemplateName").text("");
+        $('#cont').hide();
+        $("#hdnTemplateID").val(TemplateID);
+        $("#hdnTemplateName").val(TemplateName);
+
+        ShowProgress();
+        @*$.ajax({
+            type: 'POST',
+            url: '@Url.Action("DownloadDocument")',
+            dataType: 'json',
+            data: { TemplateID: TemplateID, TemplateName: TemplateName },
+            success: function (data) {
+                HideProgress();
+                alert(data[0]);
+            },
+            error: function (xhr) {
+                HideProgress();
+                alert(xhr);
+            }
+        });*@
+
+        baseUrl = '@Url.Content("~/")';
+
+        if (window.location.hostname == 'localhost')
+            baseUrl = "http://" + window.location.host;
+
+        window.location.href = baseUrl + "Automaton/DownloadDocument?TemplateID=" + TemplateID + "&TemplateName=" + TemplateName + "";
+
+        HideProgress();
+    }
+
+    function RunOffline(TemplateID, TemplateName) {
+
+        selectRow(TemplateID);
+
+        $("#lblTemplateName").text("");
+        $('#cont').hide();
+        $("#hdnTemplateID").val(TemplateID);
+        $("#hdnTemplateName").val(TemplateName);
+
+        var _TemplateType = $("#selectTemplateType").val();
+
+        @*$.ajax({
+            type: 'POST',
+            url: '@Url.Action("RunOfflinePackage")',
+            dataType: 'json',
+            data: { TemplateID: TemplateID, TemplateName: TemplateName },
+            success: function (data) {
+                HideProgress();
+                alert(data[0]);
+            },
+            error: function (xhr) {
+                HideProgress();
+                alert(xhr);
+            }
+        });*@
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("CheckETLThresholdLimit")',
+            dataType: 'json',
+            data: { Template_ID: TemplateID },
+            success: function (data) {
+                if (data.StatusCode == "1" && data.Message == "Success") {
+                    ShowProgress();
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("RunOfflinePackage")',
+                        dataType: 'json',
+                        data: { TemplateID: TemplateID, TemplateName: TemplateName, TemplateType: _TemplateType },
+                        success: function (data) {
+                            HideProgress();
+                            alert(data[0]);
+                        },
+                        error: function (xhr) {
+                            HideProgress();
+                            alert(xhr);
+                        }
+                    });
+                }
+                else if (data.StatusCode == "HX_20315") {
+                    alert(data.Message);
+                }
+                else
+                    alert('Run failed. Please contact Hexaware admin');
+
+            },
+            error: function (xhr) {
+                HideProgress();
+                alert(xhr);
+            }
+        });
+
+    }
+    function Run(TemplateID, TemplateName) {
+
+
+        selectRow(TemplateID);
+
+        $("#lblTemplateName").text("");
+        //$("#lblTemplateName").text("Template : " + TemplateName);
+        $('#cont').hide();
+        $("#hdnTemplateID").val(TemplateID);
+        $("#hdnTemplateName").val(TemplateName);
+
+        //Review(TemplateID, TemplateName);
+        var _TemplateType = $("#selectTemplateType").val();
+
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("CheckETLThresholdLimit")',
+            dataType: 'json',
+            data: { Template_ID: TemplateID },
+            success: function (data) {
+                if (data.StatusCode == "1" && data.Message == "Success") {
+                    ShowProgress();
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("RunPackage")',
+                        dataType: 'json',
+                        data: { TemplateName: TemplateName, TemplateType: _TemplateType },
+                        success: function (data) {
+                            HideProgress();
+                            alert(data[0]);
+                        },
+                        error: function (xhr) {
+                            HideProgress();
+                            alert(xhr);
+                        }
+                    });
+
+
+                }
+                else if (data.StatusCode == "HX_20315") {
+                    alert(data.Message);
+                }
+                else
+                    alert('Run failed. Please contact Hexaware admin');
+
+            },
+            error: function (xhr) {
+                HideProgress();
+                alert(xhr);
+            }
+        });
+    }
+
+    function Review(TemplateID, TemplateName) {
+
+        selectRow(TemplateID);
+
+        $("#lblTemplateName").text("Template Name : " + TemplateName);
+        $("#hdnTemplateID").val(TemplateID);
+        $("#hdnTemplateName").val(TemplateName);
+        $('#cont').show();
+
+        var baseUrl = '@Url.Content("~/")';
+
+        //Load Source Grid
+        var ServiceUrl = baseUrl + "api/AutomatAPI/GetSourceTemplateList";
+        $("#selectedtable").GridUnload();
+        $grid = jQuery("#selectedtable").jqGrid({
+            mytype: 'GET',
+            datatype: 'json',
+            url: ServiceUrl,
+            height: 100,
+            autowidth: true,
+            shrinkToFit: true,
+            rowNum: 10,
+            rowList: [10, 20, 30],
+            postData: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), Template_Id: $("#hdnTemplateID").val(), Template_Name: $("#hdnTemplateName").val(), SourceTargetType: 'SOURCE' },
+            colNames: ['Table Name', 'Field Name', 'Seq No', 'Field Type', 'Data Type', 'Precision', 'Scale', 'Data Feed', 'Key', 'Row ID'],
+            colModel: [
+             { name: 'Table_Name', index: 'Table_Name', width: 25, editable: true },
+                { name: 'Field_Name', index: 'Field_Name', width: 15, editable: true },
+                { name: 'Field_Seq_No', index: 'Field_Seq_No', sorttype: 'long', type: 'long', width: 5, editable: true },
+                { name: 'Field_Type', index: 'Field_Type', width: 10, editable: true },
+                { name: 'Data_Type', index: 'Data_Type', width: 10, editable: true },
+                { name: 'Data_Precision', index: 'Data_Precision', width: 5, editable: true },
+                { name: 'Data_Scale', index: 'Data_Scale', width: 5, editable: true },
+                { name: 'Field_Data', index: 'Field_Data', width: 10, editable: true },
+                { name: 'Key_column', index: 'Key_column', width: 5, editable: true },
+                { name: 'Row_ID', index: 'Row_ID', width: 20, key: true, hidden: true }
+
+            ],
+            multiselect: false,
+
+            pager: '#pager_datatable',
+            viewrecords: true,
+            loadonce: true,
+            gridview: true,
+            scrollOffset: 0,
+            reloadAfterSubmit: true,
+            showButtonPanel: true,
+            loadui: "disable",
+            loadComplete: function () {
+            },
+            onSelectRow: function (rowId) {
+            },
+            gridComplete: function () {
+                $(this).prop('p').loadui = 'enable';
+
+            },
+            caption: 'Source Records'
+        });
+
+        //Load Target Grid
+        var targetServiceUrl = baseUrl + "api/AutomatAPI/GetTargetTemplateList";
+        $("#Targettable").GridUnload();
+        $grid = jQuery("#Targettable").jqGrid({
+            mytype: 'POST',
+            datatype: 'json',
+            url: targetServiceUrl,
+            height: 100,
+            autowidth: true,
+            shrinkToFit: true,
+            rowNum: 10,
+            rowList: [10, 20, 30],
+            postData: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), Template_Id: $("#hdnTemplateID").val(), Template_Name: $("#hdnTemplateName").val(), SourceTargetType: 'TARGET' },
+            colNames: ['Table Name', 'Field Name', 'Seq No', 'Field Type', 'Data Type', 'Precision', 'Scale', 'Data Feed', 'Key', 'Row ID'],
+            colModel: [
+              { name: 'Table_Name', index: 'Table_Name', width: 25, editable: true },
+                { name: 'Field_Name', index: 'Field_Name', width: 15, editable: true },
+                { name: 'Field_Seq_No', index: 'Field_Seq_No', sorttype: 'long', type: 'long', width: 5, editable: true },
+                { name: 'Field_Type', index: 'Field_Type', width: 10, editable: true },
+                { name: 'Data_Type', index: 'Data_Type', width: 10, editable: true },
+                { name: 'Data_Precision', index: 'Data_Precision', width: 5, editable: true },
+                { name: 'Data_Scale', index: 'Data_Scale', width: 5, editable: true },
+                { name: 'Field_Data', index: 'Field_Data', width: 10, editable: true },
+                { name: 'Key_column', index: 'Key_column', width: 5, editable: true },
+                { name: 'Row_ID', index: 'Row_ID', width: 20, key: true, hidden: true }
+            ],
+            multiselect: false,
+
+            pager: '#pager_targetdatatable',
+            viewrecords: true,
+            loadonce: true,
+            gridview: true,
+            scrollOffset: 0,
+            reloadAfterSubmit: true,
+            showButtonPanel: true,
+            loadui: "disable",
+            loadComplete: function () {
+            },
+            onSelectRow: function (rowId) {
+            },
+            gridComplete: function () {
+                $(this).prop('p').loadui = 'enable';
+            },
+            caption: 'Target Records'
+        });
+
+
+        //Load Transformation Grid
+
+        var tranServiceUrl = baseUrl + "api/AutomatAPI/GetTransTemplateList";
+        $("#TransformListtable").GridUnload();
+        $grid = jQuery("#TransformListtable").jqGrid({
+            mytype: 'POST',
+            datatype: 'json',
+            url: tranServiceUrl,
+            height: 100,
+            autowidth: true,
+            shrinkToFit: true,
+            rowNum: 10,
+            rowList: [10, 20, 30],
+            postData: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), TemplateName: $("#hdnTemplateID").val() },
+            colNames: ['Trans Order', 'Trans Type', 'Trans Description', 'Trans Rule', 'Trans Table', 'Trans Column', 'Data Type', 'Length', 'Trans_ID'],
+            colModel: [
+                { name: 'Trans_Order', index: 'Trans_Order', width: 15, editable: true },
+                { name: 'Trans_Type', index: 'Trans_Type', width: 15 },
+                { name: 'Trans_Name', index: 'Trans_Name', width: 50 },
+                { name: 'Trans_Rule', index: 'Trans_Rule', width: 50 },
+                { name: 'Table_Name', index: 'Table_Name', width: 20, },
+                { name: 'Field_Name', index: 'Field_Name', width: 20 },
+                { name: 'Field_Data_Type', index: 'Field_Data_Type', width: 10, hidden: true },
+                { name: 'Field_Length', index: 'Field_Length', width: 10, hidden: true },
+                { name: 'Trans_ID', index: 'Trans_ID', width: 20, hidden: true }],
+            multiselect: false,
+            pager: '#pager_transformdatatable',
+            viewrecords: true,
+            loadonce: true,
+            gridview: true,
+            scrollOffset: 0,
+            reloadAfterSubmit: true,
+            showButtonPanel: true,
+            loadui: "disable",
+            loadComplete: function () {
+            },
+            onSelectRow: function (rowId) {
+            },
+            gridComplete: function () {
+                $(this).prop('p').loadui = 'enable';
+            },
+            caption: 'Transformation'
+        });
+    }
+
+
+
+
+
+    function ShowProgress() {
+        setTimeout(function () {
+            var modal = $('<div />');
+            modal.addClass("modal");
+            var loading = $(".loadingprogress");
+            loading.show();
+            var top = Math.max($(window).height() / 2 - loading[0].offsetHeight / 2, 0);
+            var left = Math.max($(window).width() / 2 - loading[0].offsetWidth / 2, 0);
+            loading.css({ top: top, left: left });
+        }, 200);
+    }
+
+    function HideProgress() {
+        setTimeout(function () {
+            var modal = $('<div />');
+            modal.addClass("modal");
+            var loading = $(".loadingprogress");
+            loading.hide();
+            var top = Math.max($(window).height() / 2 - loading[0].offsetHeight / 2, 0);
+            var left = Math.max($(window).width() / 2 - loading[0].offsetWidth / 2, 0);
+            loading.css({ top: top, left: left });
+        }, 200);
+    }
+</script>
+<br />
+
+<div class="loadingprogress" align="center">
+    Please wait.<br />
+    <br />
+    <img src="../Images/loader.gif" alt=" " />
+</div>
+
+<div style="width: 95%; margin: auto;">
+
+
+    <div class="form-group width-per-100" style="width:100%;">
+        <div class="table-div">
+            <span style="font-size: 12px; font-family: arial; font-weight: bold;"> Template Type:</span>
+            <select id="selectTemplateType" class="dropdown" style="width: 20%;">
+                <option value="Transformation">Transformation</option>
+                <option value="DataType">DataType</option>
+                <option value="Master">Master</option>
+                <option value="FileUpload">FileUpload</option>
+            </select>
+        </div>
+        <br />
+        <div class="table-div">
+            <table id="grdTemplate" class="scroll" align='center'></table>
+            <div id="pgrTemplate" class="scroll"></div>
+        </div>
+        <br />
+        <div style="float:right;"><input class="form-button" type="button" value="View Offline Status" id="btnBatchStatus"></div>
+        <br />
+        <div class="table-div">
+            <span id="lblTemplateName" style="font-size: 12px; font-family: arial; font-weight: bold;"></span>
+        </div>
+        <br />
+        <div class="table-div" id="cont">
+            <table id="selectedtable" class="scroll" align='center'></table>
+            <div id="pager_datatable" class="scroll"></div>
+            <br />
+            <table id="Targettable" class="scroll" align='center'></table>
+            <div id="pager_targetdatatable" class="scroll"></div>
+            <br />
+            <table id="TransformListtable" class="scroll" align='center'></table>
+            <div id="pager_transformdatatable" class="scroll"></div>
+        </div>
+
+
+
+
+        <br />
+        <br />
+    </div>
+</div>
+
+<div class="group" id="dialog">
+    <div class="form-group" style="padding-left: 10px;">
+        <table id="jqgStatus" class="scroll" align='center'></table>
+        <div id="pgrStatus" class="scroll"></div>
+    </div>
+</div>
+<input type="hidden" value="@ViewData[" ClientID"]" id="hdnClientId" />
+<input type="hidden" value="@ViewData[" ProjectID"]" id="hdnProjectId" />
+<input type="hidden" value="@ViewData["ConfigID"]" id="hdnConfigID" />
+<input type="hidden" value="@ViewData["ToolID"]" id="hdnToolID" />
+<input type="hidden" value="" id="hdnTemplateID" />
+<input type="hidden" value="" id="hdnTemplateName" />
+
+
+
+

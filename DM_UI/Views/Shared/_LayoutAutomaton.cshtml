@@ -1,0 +1,42 @@
+﻿@{
+    //ViewBag.Title = "_Layout";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+<div class="content">
+    <!-- Body start -->
+    <div class="content_mid contact">
+        <div class="ui-tabs">
+            <ul id="Menu" class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-corner-all" style="font-weight: normal;">
+                <li id="liConfig" style="width: 14%;" class="@((ViewBag.SelectedMenu == "1") ? "ui-state-default ui-corner-top ui-tabs-selected shadow" : "ui-state-default ui-corner-top shadow")">
+                    @Html.ActionLink("Configuration", "Configuration", "Automaton")
+                </li>
+                <li id="liPreRuleSelection" style="width: 14%;" class="@((ViewBag.SelectedMenu == "2") ? "ui-state-default ui-corner-top ui-tabs-selected shadow" : "ui-state-default ui-corner-top shadow")">
+                    @Html.ActionLink("Create Template", "CreateTemplate", "Automaton")
+                </li>
+                <li id="liUserDefineRule" style="width: 14%;" class="@((ViewBag.SelectedMenu == "3") ? "ui-state-default ui-corner-top ui-tabs-selected shadow" : "ui-state-default ui-corner-top shadow")">
+                    @Html.ActionLink("Modify Template", "ModifyTemplate", "Automaton")
+                </li>
+                <li style="width: 24%;" class="@((ViewBag.SelectedMenu == "4") ? "ui-state-default ui-corner-top ui-tabs-selected shadow" : "ui-state-default ui-corner-top shadow")">
+                    @Html.ActionLink("Review & Execute", "ReviewAndGenerate", "Automaton")
+                </li>
+                <li class="ui-state-default ui-corner-top shadow" style="width: 20%;">
+                    <a href="#">Data Management</a>
+                    <ul style="padding: 0px;width:100%;" class="shadow">
+                        <li style="width: 14%; margin: 1px !important; text-align: left; cursor: pointer; width: 99%;" class="@((ViewBag.SelectedMenu == "5") ? "ui-state-default ui-corner-top ui-tabs-selected" : "ui-state-default ui-corner-top")">
+                            @Html.ActionLink("Upload", "ExcelTemplate", "Automaton", null, new { @style = "width: 100% !important;" })
+                        </li>
+                        <li style="width: 14%; margin: 1px !important; text-align: left; cursor: pointer; width: 99%;" class="@((ViewBag.SelectedMenu == "6") ? "ui-state-default ui-corner-top ui-tabs-selected" : "ui-state-default ui-corner-top")">
+                            @Html.ActionLink("Download", "Downloads", "Automaton", null, new { @style = "width: 100% !important;" })
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    @RenderBody()
+    <div class="form-load-img">
+        <asp:Image ID="Loadinglbl" ClientIDMode="Static" runat="server" ImageUrl="~/DMO_Style/images/load5.gif" Style="visibility: hidden;" />
+    </div>
+    <!-- Body end -->
+</div>

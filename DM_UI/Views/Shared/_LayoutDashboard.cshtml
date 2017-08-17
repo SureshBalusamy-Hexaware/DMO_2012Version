@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div>
+        <div class="container">
+            <header class="header">
+                <div class="container">
+                    <div class="header">
+                        <!-- Header start -->
+                        <div class="header-logo" style="padding: 0;">
+                            <img src="~/Images/DashBoard.png" alt="logo" style="height: 70px;" />
+                            <a class="home-a" href="@(System.Configuration.ConfigurationManager.AppSettings["HostIP"] +
+        System.Configuration.ConfigurationManager.AppSettings["UrlHomePage"]
+)">Home</a>
+                        </div>
+                        <div class="header-user">
+                            <div class="header-user-details">
+                                <a id="lnkUserName">@(ViewBag.UserName)</a>
+                            </div>
+                            <div class="header-logout">
+                                <a href="@(System.Configuration.ConfigurationManager.AppSettings["HostIP"].ToString() + System.Configuration.ConfigurationManager.AppSettings["urlloginpage"])">Logout</a>
+                            </div>
+                        </div>
+                        <!-- Header end -->
+                    </div>
+                </div>
+            </header>
+            <div class="content">
+                <!-- Body start -->
+                <div class="content_mid contact">
+                    <div class="ui-tabs">
+                        <ul id="Menu" class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-corner-all" style="font-weight: normal;">
+                            <li class="@((ViewBag.SelectedMenu == "1") ? "ui-state-default ui-corner-top ui-tabs-selected" : "ui-state-default ui-corner-top")">
+                                @Html.ActionLink("Hexa Rule", "Index", "Dashboard", new { ToolID = 7 }, null)
+                            </li>
+                            <li class="@((ViewBag.SelectedMenu == "2") ? "ui-state-default ui-corner-top ui-tabs-selected" : "ui-state-default ui-corner-top")">
+                                @Html.ActionLink("Automaton", "Index", "Dashboard", new { ToolID = 1 }, null)
+                            </li>
+                            <li class="@((ViewBag.SelectedMenu == "3") ? "ui-state-default ui-corner-top ui-tabs-selected" : "ui-state-default ui-corner-top")">
+                                @Html.ActionLink("DIMA Plus", "Index", "Dashboard", new { ToolID = 6 }, null)
+                            </li>
+                            <li class="@((ViewBag.SelectedMenu == "4") ? "ui-state-default ui-corner-top ui-tabs-selected" : "ui-state-default ui-corner-top")">
+                                @Html.ActionLink("Dart", "Index", "Dashboard", new { ToolID = 2 }, null)
+                            </li>
+                            <li class="@((ViewBag.SelectedMenu == "5") ? "ui-state-default ui-corner-top ui-tabs-selected" : "ui-state-default ui-corner-top")">
+                                @Html.ActionLink("Dima", "Index", "Dashboard", new { ToolID = 5 }, null)
+                            </li>
+                            <li class="@((ViewBag.SelectedMenu == "6") ? "ui-state-default ui-corner-top ui-tabs-selected" : "ui-state-default ui-corner-top")">
+                                @Html.ActionLink("SQL Parser", "Index", "Dashboard", new { ToolID = 9 }, null)
+                            </li>
+                            <li class="@((ViewBag.SelectedMenu == "7") ? "ui-state-default ui-corner-top ui-tabs-selected" : "ui-state-default ui-corner-top")">
+                                @Html.ActionLink("Data recon", "Index", "Dashboard", new { ToolID = 4 }, null)
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+                @RenderBody()
+                <div class="form-load-img">
+                    <asp:Image ID="Loadinglbl" ClientIDMode="Static" runat="server" ImageUrl="~/DMO_Style/images/load5.gif" Style="visibility: hidden;" />
+                </div>
+                <!-- Body end -->
+            </div>
+            <footer class="footer">
+                <div>
+                    <!-- Footer start -->
+                    <div class="ft-img">
+                        © copyright, 2016. Hexaware Technologies. All Rights Reserved.
+                    </div>
+                    <!-- Footer end -->
+                </div>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>

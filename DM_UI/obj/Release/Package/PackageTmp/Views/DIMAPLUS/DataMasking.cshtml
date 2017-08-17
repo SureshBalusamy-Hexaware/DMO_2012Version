@@ -1,0 +1,851 @@
+﻿@{
+    ViewBag.Title = "DataMasking";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*@Scripts.Render("~/Scripts/ProgressBar.js")
+    @Scripts.Render("~/Scripts/Criteria.js")*@
+<style type="text/css">
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: black;
+        z-index: 99;
+        opacity: 0.8;
+        filter: alpha(opacity=80);
+        -moz-opacity: 0.8;
+        min-height: 10%;
+        width: 100%;
+    }
+
+    .loadingprogress {
+        font-family: Arial;
+        font-size: 10pt;
+        border: 5px solid #67CFF5;
+        width: 200px;
+        height: 100px;
+        display: none;
+        position: fixed;
+        background-color: White;
+        z-index: 999;
+    }
+</style>
+<script type="text/javascript">
+
+    // column type used for particular row masking type references
+    var _clmn_type = '';
+
+    // This statement executed when the document is ready
+    // The page initialization like action button hide, mask option hide at very first
+    // When there is a connection and table selections are done then have to show them.
+    $(document).ready(function () {
+        baseUrl = '@Url.Content("~/")';
+        HideProgress();
+        $(".action-btn").hide();
+        $("#maskOption").hide();
+        $("#maskType").hide();
+
+        // JA : 20170310 Modification 1 begins
+        // Added criteria lable [Template div to enable or disable template feed functionality]
+        var _masking_ddlTemplateName = "#ddlTemplateName";
+        var _masking_lblTemplateName = "#lblTemplateName";
+        var _masking_txtTemplateName = "#txtTemplateName";
+        var _masking_divdbl = "#divdbl";
+        var _masking_lnkNewTemplate = "#lnkNewTemplate";
+        $(_masking_ddlTemplateName).hide();
+        $(_masking_lnkNewTemplate).hide();
+
+        $(_masking_divdbl).dblclick(function () {
+            $(_masking_txtTemplateName).val('');
+
+            if (!$(_masking_ddlTemplateName).is(':visible')) {
+                $(_masking_ddlTemplateName).show();
+                $(_masking_txtTemplateName).hide();
+                PopulateTemplates(baseUrl, client_ID, project_ID); // $("#hdnClientId").val()
+                //PopulateTemplates(baseUrl, $("#hdnClientId").val(), $("#hdnProjectId").val());
+                $(_masking_ddlTemplateName).focus();
+                $(_masking_lblTemplateName).text("Select Template");
+                $(_masking_lnkNewTemplate).show();
+                var _Template_Name = $(this).find("option:selected").text();
+                //GetTemplateDetails(client_ID, project_ID, 'NA', _Template_Name, 0, 'NA'); // Have to check this with Gobi about how are going to load this
+                //$(_masking_divbuttons).show();
+            }
+            else {
+                $(_masking_lblTemplateName).text("Enter Template Name*");
+                $(_masking_ddlTemplateName).hide();
+                $(_masking_txtTemplateName).show();
+            }
+        });
+        $(_masking_lnkNewTemplate).click(function () {
+            $(_masking_lblTemplateName).text("Enter Template Name");
+            $(_masking_ddlTemplateName).hide();
+            $(_masking_txtTemplateName).show();
+            $(_masking_txtTemplateName).val('');
+            $(_masking_lnkNewTemplate).hide();
+            $(_masking_txtTemplateName).focus();
+            $("#grdMasking").GridUnload();
+            $("#maskOption").hide();
+            $("#maskType").hide();
+            //$(_masking_divbuttons).hide();
+        });
+
+        $(_masking_ddlTemplateName).change(function () {
+            var _Template_Name = $(this).find("option:selected").text();
+            GetTemplateDetails(client_ID, project_ID, 'NA', _Template_Name, 0, 'NA');
+            var dataFromTheRow = jQuery('#grdMasking').jqGrid('getRowData', 1);
+
+        });
+        // JA : 20170310 Modification 1 ends
+
+        //var masktype = {
+        //    '1': 'Credit Card',
+        //    '2': 'Email',
+        //    '3': 'Encryption',
+        //    '4': 'Expression',
+        //    '5': 'IP Address',
+        //    '6': 'Key',
+        //    '7': 'Nullification',
+        //    '8': 'Phone',
+        //    '9': 'Random',
+        //    '10': 'Position(5)'
+        //};
+        //var masktype = $.ajax({
+        //    url: baseUrl + "api/AutomatAPI/GetMaskTypes",
+        //    data: {
+        //        column_Type: 'bigint'
+        //    },
+        //    async: false,
+        //    success: function (data, result) {
+        //        if (!result)
+        //            alert('Failure to retrieve mask types.');
+        //    },
+        //    error: function (err) {
+        //        alert(err.statusText);
+        //    }
+        //}).responseText;
+        //masktype = jQuery.parseJSON(masktype);
+        //var _armasktype = new Array();
+
+        //for (i = 0; i < masktype.length; i++) { _armasktype.push(masktype[i].Mask_Type + ":" + masktype[i].Mask_Type); }
+        //var masktypes = _armasktype.join("; ");
+
+        //debugger;
+
+        var client_ID = $("#hdnClientId").val();
+        var project_ID = $("#hdnProjectId").val();
+        var ConfigID = $("#hdnConfigID").val();
+
+        // Method to handle tables dropdown on Change event
+        $("#ddlTables").change(function () {
+            var connection_id = $("#ddlConnection option:selected").val();
+            var tablename = this.value;
+            $("#grdMasking").GridUnload();
+            var ServiceUrl = baseUrl + "api/AutomatAPI/GetSourceTargetTableColumnDetail";
+            $grid = jQuery("#grdMasking").jqGrid({
+                mytype: 'GET',
+                datatype: 'json',
+                url: ServiceUrl,
+                height: 150,
+                width: 200,
+                autowidth: true,
+                shrinkToFit: true,
+                rowNum: 1000,
+                rowList: [10, 20, 30],
+                postData: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), Table_Name: tablename, connectionid: connection_id },
+                colNames: ['Field Name', 'Data Type', 'Precision', 'Scale', 'Data Feed', 'Mask Type', 'Mask Type Id', 'Client_ID', 'Project_Id', 'Template_Name', 'Table_Name', 'Config_ID', 'Un_Mask', 'Update_By', 'Batch_Process'],//,               
+                colModel: [
+               { name: 'Column_Name', index: 'Column_Name', width: 20 },
+               { name: 'Data_Type', index: 'Data_Type', width: 20, search: false },
+               { name: 'Data_Precision', index: 'Data_Precision', width: 20, search: false, hidden: true },
+               { name: 'Data_Scale', index: 'Data_Scale', width: 20, search: false, hidden: true },
+               { name: 'Field_Data', index: 'Field_Data', width: 20, search: false, hidden: true },
+               { name: 'Mask_Type', index: 'Mask_Type', width: 50, align: 'left' },
+               { name: 'Mask_Type_ID', index: 'Mask_Type_ID', width: 50, search: false, hidden: true },
+               { name: 'Client_ID', index: 'Client_ID', width: 50, search: false, hidden: true },
+               { name: 'Project_Id', index: 'Project_Id', width: 50, search: false, hidden: true },
+                { name: 'Template_Name', index: 'Template_Name', width: 50, search: false, hidden: true },
+                { name: 'Table_Name', index: 'Table_Name', width: 50, search: false, hidden: true },
+                { name: 'Config_ID', index: 'Config_ID', width: 50, search: false, hidden: true },                                
+                { name: 'Un_Mask', index: 'Un_Mask', width: 50, search: false, hidden: true },
+                { name: 'Update_By', index: 'Update_By', width: 50, search: false, hidden: true },
+                 { name: 'Batch_process', index: 'Batch_process', width: 50, search: false, hidden: true }
+        ],
+        multiselect: true,
+        pager: '#pgrMasking',
+        viewrecords: true,
+        loadonce: true,
+        gridview: true,
+        //scrollOffset: 0,
+        reloadAfterSubmit: true,
+        showButtonPanel: true,
+        loadui: "disable",
+        ignoreCase: true,
+        loadComplete: function () {
+        },
+        onSelectRow: function (rowId) {
+            //var celValue = $('#grdMasking').jqGrid('getCell', rowId, 'Mask_Type');
+            //if (celValue.indexOf("select") != -1) {
+            //    celValue = $('#' + rowId + '_Mask_Type option:selected').text(); // 20170310: JA : Have to set the value from our root Mask type DDL.
+            //}
+            var rowData = $('#grdMasking').jqGrid('getRowData', rowId);
+            if (rowData.Mask_Type != ' ' && rowData.Mask_Type != '')
+                {
+                $("#grdMasking").jqGrid("setCell", rowId, "Mask_Type", " ");
+                $("#grdMasking").jqGrid("setCell", rowId, "Mask_Type_ID", "1");
+            }
+            else
+                {
+                $("#grdMasking").jqGrid("setCell", rowId, "Mask_Type", $('#ddlMaskType option:selected').text());
+                $("#grdMasking").jqGrid("setCell", rowId, "Mask_Type_ID", $('#ddlMaskType option:selected').val());
+            }
+            //_clmn_type = rowData.Data_Type;
+            //$("#grdMasking").setColProp('Mask_Type', { editoptions: { dataUrl: "/api/AutomatAPI/GetMaskTypes?column_Type=" + _clmn_type } });
+
+            //jQuery('#grdMasking').jqGrid('editRow', rowId, true);
+        },
+        gridComplete: function () {
+            $(this).prop('p').loadui = 'enable';
+        },
+        caption: "Data Masking"
+    });
+
+
+    $(".action-btn").show();
+    $("#maskOption").show();
+    $("#maskType").show();
+    });
+
+
+    // Method to handle connection dropdown on change event
+    $('#ddlConnection').html('');
+    $('#ddlConnection').append($('<option>').text('Select').val('Select'));
+
+    // Method used to get ddlConnection list using API to load it at very first time.
+    $.ajax({
+        type: "GET",
+        url: baseUrl + "api/AutomatAPI/GetMetaDataSourceAndTargetConnectionList",
+        data: { Client_ID: $("#hdnClientId").val(), Project_ID: $("#hdnProjectId").val(), Tool_ID: '@Convert.ToInt16(DM_UI.App_Start.UIProperties.Tools.DIMAPLUS)' },
+        dataType: 'json',
+        success: function (data) {
+            $.each(data, function (index, value) {
+                var name = value.split(',');
+                var ServerName = name[0];
+                var ConfigId = name[1];
+                $('#ddlConnection').append($('<option>').text(ServerName).val(ConfigId));
+            });
+        }
+    });
+
+
+    // Method to handle connection dropdown on change event
+    $('#ddlMaskType').html('');
+    $('#ddlMaskType').append($('<option>').text('Select').val('Select'));
+
+    // Method used to get ddlConnection list using API to load it at very first time.
+    $.ajax({
+        type: "GET",
+        url:  baseUrl + "api/AutomatAPI/GetMaskTypes?column_Type=nvarchar",
+        @*data: { Client_ID: $("#hdnClientId").val(), Project_ID: $("#hdnProjectId").val(), Tool_ID: '@Convert.ToInt16(DM_UI.App_Start.UIProperties.Tools.DIMAPLUS)' },*@
+        dataType: 'json',
+        success: function (data) {
+            $.each(data, function (index, value) {
+                //var name = value.split(',');
+                var Mask_Type = value.Mask_Type;// name[0];
+                var Mask_Type_ID = value.Mask_Type_ID; //name[1];
+                $('#ddlMaskType').append($('<option>').text(Mask_Type).val(Mask_Type_ID));
+            });
+        }
+    });
+
+    // Method used to handle ddlConnection on change event
+    $('#ddlConnection').on('change', function () {
+
+        var servername = $('#selectConnection option:selected').text().split(':')[1]
+        $('#ddlTables').val('');
+
+
+        $.ajax({
+            type: "GET",
+            url: baseUrl + "api/AutomatAPI/GetMetaDataTableNames",
+            data: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), config_ID: $("#ddlConnection option:selected").val(), },
+            dataType: 'json',
+            success: function (data) {
+                $('#ddlTables').empty();
+                $('#ddlTables').append($('<option>').text('Select').val('Select'));
+                $.each(data, function (index, value) {
+                    var name = value.split(':');
+                    var tablename = name[0];
+                    var databasename = name[1];
+                    $('#ddlTables').append($('<option>').text(tablename).val(tablename));
+                });
+            }
+        });
+    });
+
+    // Method used to handle Start button click event
+    $("#btnStart").click(function () {
+        ShowProgress()
+        var selectedRow = jQuery("#grdMasking").jqGrid('getGridParam', 'selarrrow');
+        var _selectedcolumns = [];
+        var columnName = "";
+        for (var i = 0; i < selectedRow.length; i++) {
+
+            columnName = jQuery("#grdMasking").jqGrid('getCell', selectedRow[i], '1');
+            _selectedcolumns.push(columnName);
+        }
+
+        $.ajax({
+            type: "GET",
+            url: baseUrl + "api/AutomatAPI/SubmitDataMasking",
+            dataType: "json",
+            data: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), ConfigID: $("#ddlConnection option:selected").val(), table_name: $("#ddlTables option:selected").val(), selected_columns: _selectedcolumns.join() },
+            success: function (data) {
+                HideProgress();
+                alert('Submitted successfully.');
+            },
+            error: function (err) {
+                HideProgress();
+
+            }
+        });
+
+    });
+
+
+    // Method used to handle View data button click event
+    //$("#btnViewData").click(function () {
+
+    //    ShowProgress();
+
+    //    //var selectedRow = jQuery("#grdMasking").jqGrid('getGridParam', 'selarrrow');
+    //    ////debugger;
+    //    //var _selectedcolumns = [];
+    //    //var columnName = "";
+
+    //    //for (var i = 0; i < selectedRow.length; i++) {
+
+    //    //    columnName = jQuery("#grdMasking").jqGrid('getCell', selectedRow[i], '1');
+
+    //    //    var dropdown = jQuery('#' + selectedRow[i] + '_Mask_Type')[0];
+    //    //    if (dropdown == undefined) {
+    //    //        return;
+    //    //    }
+    //    //    var selectedOption = dropdown.options[dropdown.selectedIndex];
+    //    //    var Mask_Type_Id = selectedOption.value;
+    //    //    var Mask_Type = selectedOption.text;
+
+    //    //    //if (Mask_Type_Id == "10")
+    //    //    //    columnName = "dbo.fnc_datamask(" + columnName + ",5) as masked_" + columnName;
+    //    //    //else
+    //    //    //    columnName = "dbo.fnc_datamask(" + columnName + ",15) as masked_" + columnName;
+    //    //    _selectedcolumns.push(columnName + ":" + Mask_Type);
+    //    //}
+
+
+
+
+    //    $.ajax({
+    //        type: "GET",
+    //        url: baseUrl + "api/AutomatAPI/GetDataMaskingColumn",
+    //        dataType: "json",
+    //        data: {
+    //            client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), Template_ID: $("#hdnTemplateID").val(),
+    //            Tool_ID: '6'
+    //        },
+    //        success: function (data) {
+
+    //            var cols = data.ColNames;
+    //            rows = data.rows;
+
+    //            var uFields = cols.split(',');
+    //            var columns = [];
+    //            for (var i = 0; i < uFields.length ; i++) {
+    //                columns.push(uFields[i]);
+    //            }
+    //            ColumnNames = columns;
+
+    //            var uFields = cols.split(',');
+    //            var columns = [];
+    //            for (var i = 0; i < uFields.length ; i++) {
+
+    //                columns.push({ name: uFields[i], index: uFields[i], width: 80, search: true, sortable: false, editable: true, hidden: false, align: 'center' });
+
+    //            }
+
+    //            ColumnModel = columns;
+
+    //            $("#sampledata").GridUnload();
+    //            $grid = jQuery("#sampledata").jqGrid({
+    //                data: JSON.parse(rows),
+    //                datatype: "local",
+    //                height: 100,
+    //                width: 1100,
+    //                rowNum: 10,
+    //                rowList: [5, 10, 20, 50],
+    //                colNames: ColumnNames,
+    //                colModel: ColumnModel,
+    //                pager: '#pager_sampledata',
+    //                viewrecords: true,
+    //                loadonce: true,
+    //                gridview: true,
+    //                sortorder: 'asc',
+    //                autowidth: false,
+    //                shrinkToFit: false,
+    //                scrollOffset: 0,
+    //                showButtonPanel: true,
+    //                closeAfterEdit: true,
+    //                caption: 'Data',
+    //            })
+    //            jQuery("#sampledata").jqGrid('sortableRows');
+
+    //            HideProgress();
+
+    //        },
+    //        error: function (err) {
+
+    //            HideProgress()
+
+    //        }
+    //    });
+
+    //});
+
+    // Method used to handle Reset button click event
+    $("#btnReset").click(function () {
+
+        var selectedRow = jQuery("#grdMasking").jqGrid('getGridParam', 'selarrrow');
+        var _selectedcolumns = [];
+        var columnName = "";
+        for (var i = 0; i < selectedRow.length; i++) {
+
+            columnName = jQuery("#grdMasking").jqGrid('getCell', selectedRow[i], '0');
+            _selectedcolumns.push(columnName);
+        }
+
+
+        var rowsCount = jQuery("#grdMasking").jqGrid('getGridParam', 'records');
+        for (var rowId = 0; rowId < rowsCount; rowId++) {
+            $("#grdMasking").jqGrid("setCell", rowId, "Mask_Type", " ");
+        };
+        $("#grdMasking").jqGrid('resetSelection');
+    });
+
+
+    //Method to save Masking template details
+
+    $("#btnSave").click(function () {
+        ShowProgress();
+        //var mydata = $("#grdCriteria").jqGrid('getGridParam', 'data');
+
+        //var CriteriaEntity = $("#grdCriteria").jqGrid('getRowData');
+        var MaskingEntity = $("#grdMasking").jqGrid('getGridParam', 'data');
+       
+        
+        var dtEntity=[]; 
+        $(MaskingEntity).each(function (key, value) {
+
+            var MaskEntityRow = {
+                ClientId: client_ID,
+                ProjectId: project_ID,
+                TemplateName: $('#txtTemplateName').val(),
+                Table_Name: $('#ddlTables').val(),
+                Config_ID: $("#ddlConnection option:selected").val(), //$('#hdnConfigID').val(),
+                Column_Name: "",
+                Masking_Type: "1",
+                Un_Mask: "1",
+                Updated_By: "Hexaware",
+                Batch_process: "1"
+            };
+
+            MaskEntityRow.Column_Name = value.Column_Name;
+            if(value.Mask_Type!=" " && value.Mask_Type!="" && value.Mask_Type != undefined)
+                MaskEntityRow.Masking_Type = value.Mask_Type_ID;
+            dtEntity.push(MaskEntityRow);
+
+            //value.Client_ID = client_ID;
+            //value.Project_ID = project_ID;
+            //value.Template_Name = $('#txtTemplateName').val();
+            //value.Table_Name = $('#ddlTables').val();
+            //value.Config_ID = $('hdnConfigID').val();
+            //value.Column_Name = value.Column_Name;
+            //value.Masking_Type = value.Masking_Type;
+            //value.Un_Mask = 1;
+            //value.Update_By = 'Hexaware';
+            //value.Batch_process = 1;
+            //value.ClientId = client_ID;
+            //value.ProjectId = project_ID;
+            //alert("key : " + key  + " - value : " + value);
+            //value.Criteria = value.Criteria ? 1 : 0;
+            //value.SourceDelete = value.SourceDelete ? 1 : 0;
+            //value.Criteria = value.Criteria == "Yes" ? 1 : 0;
+            //value.SourceDelete = value.SourceDelete == "Yes" ? 1 : 0;
+
+            //value.ObjectType = $(_criteria_ddltype).val();
+            //value.SlicingField = $(_criteria_ddlSlicingField).val();
+            //value.SlicingFieldValue = $(_criteria_ddlSlicingFieldValue).val()
+        });
+
+        $.ajax({
+            type: "POST",
+            url: baseUrl + "api/DIMAPLUSAPI/SaveUpdateMaskingTemplate",
+            data: JSON.stringify(dtEntity),
+            contentType: "application/json",
+            dataType: "json",
+            success: function (data) {
+                //alert("Processed successfully.");
+                alert(data);
+            },
+            error: function (xhr) {
+                alert(xhr.statusText);
+            }
+        });
+        HideProgress();
+    });
+
+    });
+
+
+
+
+    function ShowProgress() {
+        setTimeout(function () {
+            var modal = $('<div />');
+            modal.addClass("modal");
+            var loading = $(".loadingprogress");
+            loading.show();
+            var top = Math.max($(window).height() / 2 - loading[0].offsetHeight / 2, 0);
+            var left = Math.max($(window).width() / 2 - loading[0].offsetWidth / 2, 0);
+            loading.css({ top: top, left: left });
+        }, 200);
+    }
+    function HideProgress() {
+        setTimeout(function () {
+            var modal = $('<div />');
+            modal.addClass("modal");
+            var loading = $(".loadingprogress");
+            loading.hide();
+            var top = Math.max($(window).height() / 2 - loading[0].offsetHeight / 2, 0);
+            var left = Math.max($(window).width() / 2 - loading[0].offsetWidth / 2, 0);
+            loading.css({ top: top, left: left });
+        }, 200);
+    }
+
+    // JA : 20170310 Modification 2 begins
+    function GetTemplateDetails(_ClientId, _ProjectId, _ObjType, _Template_Name, ConfigID, _Expression) {
+
+
+
+        //var baseUrl = '/';
+        ////baseUrl = $("#hdnfldVirtualDir").val();
+        //var ctrlName = $("#hdnfldVirtualDir").val();
+        //var pathName = window.location.pathname;
+        //var relativePath = pathName.split('/')[1];
+        //baseUrl = ctrlName == relativePath ? baseUrl : baseUrl + relativePath + "/";
+
+        ////Get Columns
+        //var ColumnModel = [];
+        //var _Columns =
+        //        $.ajax({
+        //            url: baseUrl + "api/DIMAPLUSAPI/GetCriteria",
+        //            type: "GET",
+        //            contentType: "application/json; charset=utf-8",
+        //            data: { Type: $(_masking_ddltype).val() },
+        //            dataType: "json",
+        //            async: false,
+        //            success: function (data, result) { if (!result) alert('Failure to retrieve columns.'); },
+        //            error: function (xhr) {
+        //                alert("Failed");
+        //            }
+        //        }).responseText;
+
+        //_Columns = jQuery.parseJSON(_Columns);
+        //var cols = _Columns.ColNames;
+        //var uFields = cols.split(',');
+        //var columns = [];
+        //for (var i = 0; i < uFields.length ; i++) {
+        //    columns.push(uFields[i]);
+        //}
+        //var ColumnNames = columns;
+        //var uFields = cols.split(',');
+        //var columns = [];
+
+
+        //for (var i = 0; i < uFields.length ; i++) {
+        //    switch (uFields[i]) {
+        //        case "Criteria":
+        //            columns.push({
+        //                name: uFields[i], index: uFields[i], search: false, sortable: false, editable: true, align: 'center',
+        //                formatter: "checkbox", formatoptions: { disabled: false }, edittype: "checkbox", editoptions: {
+        //                    value: "Yes:No", defaultValue: "Yes"
+        //                },
+        //                cellattr: function (rowId, value, rawObject, cm, rdata) {
+        //                    if (rawObject[8] == "Ds")
+        //                        cm.formatoptions.disabled = true;
+        //                    //if (rawObject[8] == "Xn") cm.editoptions.defaultValue = "No";
+        //                    //else cm.editoptions.defaultValue = "Yes";
+        //                }
+        //            });
+        //            break;
+        //        case "SourceDelete":
+        //            columns.push({
+        //                name: uFields[i], index: uFields[i], search: false, sortable: false, editable: true, align: 'center',
+        //                formatter: "checkbox", formatoptions: { disabled: false }, edittype: "checkbox", editoptions: {
+        //                    value: "Yes:No", defaultValue: "Yes"
+        //                },
+        //                cellattr: function (rowId, value, rawObject, cm, rdata) {
+        //                    //debugger;
+        //                    if (rawObject[9] == "Y")
+        //                        cm.formatoptions.disabled = true;
+
+        //                    //if (rawObject[9] == "0")
+        //                    //    cm.editoptions.defaultValue = "No";
+        //                    //else cm.editoptions.defaultValue = "Yes";
+        //                }
+        //            });
+        //            break;
+        //        case "Template_ID":
+        //        case "Criteria_ID":
+        //            columns.push({ name: uFields[i], index: uFields[i], search: false, sortable: false, editable: false, hidden: true });
+        //            break;
+        //        case "Objects":
+        //            columns.push({ name: uFields[i], index: uFields[i], search: false, sortable: false, editable: false });
+        //            break;
+        //        case "ObjectType":
+        //            columns.push({ name: uFields[i], index: uFields[i], search: false, sortable: false, editable: false, align: 'center' });
+        //            break;
+        //        default:
+        //            columns.push({ name: uFields[i], index: uFields[i], search: false, sortable: false, editable: false, align: 'center', hidden: true });
+        //            break;
+
+        //    }
+        //}
+
+
+        //ColumnModel = columns;
+        //var mydata = [];
+        //var objType = []; // for getting unique values object type.
+
+        //var _Results =
+        //        $.ajax({
+        //            url: baseUrl + "api/DIMAPLUSAPI/GetCriteria",
+        //            type: "GET",
+        //            contentType: "application/json; charset=utf-8",
+        //            data: {
+        //                client_ID: _ClientId,
+        //                project_ID: _ProjectId,
+        //                Object_Type: _ObjType,
+        //                Template_Name: _Template_Name,
+        //                config_ID: ConfigID,
+        //                Column_name: $(_masking_ddlSlicingField).val(),
+        //                SlicingValue: $(_masking_ddlSlicingFieldValue).val(),
+        //                Expression: _Expression
+        //            },
+        //            dataType: "json",
+        //            async: false,
+        //            success: function (data, result) {
+        //                if (!result) alert('Failure to retrieve columns.');
+
+        //            },
+        //            error: function (xhr) {
+        //                alert("Failed");
+        //            }
+        //        }).responseText;
+
+        //_Results = JSON.parse(_Results);
+
+        //for (var i = 0; i < _Results.rows.length; i++) {
+        //    mydata.push(
+        //        {
+        //            id: i,
+        //            Template_ID: _Results.rows[i].cell[0],
+        //            Criteria_ID: _Results.rows[i].cell[1],
+        //            Template: _Results.rows[i].cell[2],
+        //            SlicingField: _Results.rows[i].cell[3],
+        //            Condition: _Results.rows[i].cell[4],
+        //            SlicingValue: _Results.rows[i].cell[5],
+        //            ObjectType: _Results.rows[i].cell[6],
+        //            Objects: _Results.rows[i].cell[7],
+        //            Criteria: false,
+        //            SourceDelete: false
+        //        });
+        //    if (objType.indexOf(_Results.rows[i].cell[6]) < 0) {
+        //        objType.push(_Results.rows[i].cell[6]);
+        //    }
+        //}
+
+        ////To fill all the fields for selected template.
+        //if (_Expression == 'NA' && mydata.length > 0) {
+
+        //    $(_masking_ddlSlicingField).val(mydata[0].SlicingField);
+        //    $(_masking_ddlOperator).val(mydata[0].Condition);
+        //    selectedSlicingVal = mydata[0].SlicingValue;
+        //    $(_masking_ddlSlicingField).trigger('change');
+
+        //    $(_masking_ddltype).multipleSelect("setSelects", objType)
+
+        //}
+
+        //$("#grdCriteria").GridUnload();
+        //$grid = jQuery("#grdCriteria").jqGrid({
+        //    data: mydata,
+        //    datatype: 'local',
+        //    height: 240,
+        //    //width: 980,
+        //    rowNum: 10,
+        //    search: { caption: 'Search Record' },
+        //    rowList: [5, 10, 20, 50],
+        //    colNames: ColumnNames,
+        //    colModel: ColumnModel,
+        //    pager: '#pgrCriteria',
+        //    viewrecords: true,
+        //    sortable: true,
+        //    autowidth: true,
+        //    showButtonPanel: true,
+        //    closeAfterEdit: true,
+        //    caption: 'Search results',
+        //    loadui: "block",
+        //    loadtext: "Loading...",
+        //    rownumbers: true,
+        //    ignoreCase: true,
+        //    autoencode: true,
+        //    onSelectRow: function (rowId) { },
+        //    gridComplete: function () {
+        //        //var lista = jQuery("#grdCriteria").getDataIDs();
+        //        //var rowData = jQuery("#grdCriteria").getRowData(lista[0]);
+        //    },
+        //    loadComplete: function () {
+        //    },
+        //    beforeSelectRow: function (rowid, e) {
+        //        var $self = $(this),
+        //            iCol = $.jgrid.getCellIndex($(e.target).closest("td")[0]),
+        //            cm = $self.jqGrid("getGridParam", "colModel"),
+        //            localData = $self.jqGrid("getLocalRow", rowid);
+        //        if (cm[iCol].name === "Criteria") {
+        //            localData.Criteria = $(e.target).is(":checked");
+        //        }
+        //        if (cm[iCol].name === "SourceDelete") {
+        //            localData.SourceDelete = $(e.target).is(":checked");
+        //        }
+        //        return true; // allow selection
+        //    }
+        //}).navGrid('#pgrCriteria', { edit: false, add: false, del: false, search: false, refresh: false });
+        ////jQuery("#grdCriteria").jqGrid('navGrid', '#pgrCriteria', { edit: false, add: false, del: false, search: false, refresh: false });
+        ////jQuery("#grdCriteria").jqGrid('sortableRows');
+
+    }
+    function PopulateTemplates(baseUrl, client_ID, project_ID) {
+        $('#ddlTemplateName').html('');
+        $('#ddlTemplateName').append($('<option>').text('Select').val('Select'));
+
+        // Method used to get ddlConnection list using API to load it at very first time.
+        $.ajax({
+            type: "GET",
+            url: baseUrl + "api/DIMAPLUSAPI/GetAllMaskingTemplates",
+            data: { client_ID: client_ID, project_ID: project_ID },
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                $.each(data, function (index, value) {                    
+                    var Template_Name = value.Template_Name;// name[0];
+                    var Template_ID = value.Template_ID; //name[1];
+                    $('#ddlTemplateName').append($('<option>').text(Template_Name).val(Template_ID));
+                });
+            }
+        });
+
+
+        ////Fill TemplateName field dropdown
+        //var templateNames = $.ajax({
+        //    url: baseUrl + "api/DIMAPLUSAPI/GetAllMaskingTemplates",
+        //    data: { client_ID: client_ID, project_ID: project_ID },
+        //    async: false,
+        //    success: function (data, result) {
+        //        if (!result)
+        //            alert('Failure to retrieve the existing template names.');
+        //    },
+        //    error: function (err) {
+        //        alert(err.statusText);
+        //    }
+        //}).responseText;
+        ////debugger;
+        //var tempNamelist = jQuery.parseJSON(templateNames);
+        ////$(_masking_ddlTemplateName).find('option').remove();
+        //for (i = 0; i < tempNamelist.length; i++) {
+        //    $(_masking_ddlTemplateName).append($('<option>').text(tempNamelist[i].Template_Name).val(tempNamelist[i].Template_ID));
+        //}
+    }
+
+    // JA : 20170310 Modification 2 ends
+</script>
+
+<div class="content-body width-per-100">
+    <div style="width:90%;margin:auto;">
+        <div class="loadingprogress" align="center">
+            <span id="lodingMessage" style="display:none;">Masking in progress...</span> Please wait.<br />
+            <br />
+            <img src="../Images/loader.gif" alt=" " />
+        </div>
+        <div class="group">
+            <div class="form-group width-per-100 fL">
+                <div class="col-40" style="width: 20%;">
+                    <span id="lblTemplateName" class="control-label">Enter Template Name* </span> <a id="lnkNewTemplate" class="control-label" style="color:blue;" href="#" title="click here to create a new template">[New Template]</a>
+                    <div id="divdbl">
+                        <input id="txtTemplateName" type="text" class="textbox" style="width: 91%;" />
+                        <select id="ddlTemplateName" class="dropdown" style="width:100%;"></select>
+                    </div>
+                </div>
+                <div class="col-40" style="width: 25%;">
+                    <span class="control-label">Connection</span>
+                    <select id="ddlConnection" class="dropdown" style="width:100%;"></select>
+                </div>
+                <div class="col-40" style="width: 25%;">
+                    <span class="control-label">Tables</span>
+                    <select id="ddlTables" class="dropdown" style="width:100%;"></select>
+                </div>
+            </div>
+        </div>.
+        <div class="form-group width-per-100 fL" id="maskType">
+            <div class="col-40" style="width: 25%;">
+                <span class="control-label">Masking Types</span>
+                <select id="ddlMaskType" class="dropdown" style="width:50%;"></select>
+            </div>
+            <div class="col-40" style="width: 50%;">
+                <input class="form-button" type="button" value="Reset" id="btnReset">
+            </div>
+        </div>
+
+        <div class="group">
+            <div class="form-group width-per-100">
+                <table id="grdMasking" class="width-per-100"></table>
+                <div id="pgrMasking" class="scroll"></div>
+            </div>
+        </div>
+        <div class="group" id="maskOption">
+            <div class="form-group text-align-center form-group-btn width-per-100">
+                <input type="radio" id="radOnline" value="Online" name="runOption" checked="checked" /><span id="lblOnline" class="control-label">Online</span>
+                <input type="radio" id="radBatch" value="Batch" name="runOption" /><span id="lblBatch" class="control-label">Batch</span>
+            </div>
+        </div>
+        <div class="group">
+            <div class="form-group" style="padding-left: 10px;">
+                <table id="sampledata" class="scroll"></table>
+                <div id="pager_sampledata" class="scroll"></div>
+            </div>
+        </div>
+        <div class="group action-btn">
+            <div class="form-group text-align-center form-group-btn width-per-100">
+                <input class="form-button" type="button" value="View Batch Status" id="btnViewBatchStatus">
+                @*<input class="form-button" type="button" value="Save" id="btnSave">*@
+                <input class="form-button" type="button" value="Start Masking" id="btnSave">
+                @*<input class="form-button" type="button" value="Start" id="btnStart">*@
+                <input class="form-button" type="button" value="View" id="btnViewData">
+            </div>
+        </div>
+
+        <input type="hidden" value="@ViewData["ClientID"]" id="hdnClientId" />
+        <input type="hidden" value="@ViewData["ProjectID"]" id="hdnProjectId" />
+        <input type="hidden" value="@ViewData["ConfigID"]" id="hdnConfigID" />
+        @*<input type="hidden" value="10132" id="hdnConfigID" />*@
+        <input type="hidden" value="@ViewData["ToolID"]" id="hdnToolID" />
+    </div>
+</div>

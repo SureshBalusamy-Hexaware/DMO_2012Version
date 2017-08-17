@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/redmond/jquery-ui.css" />
+    <link rel="stylesheet" type="text/css" href="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-4.5.4/css/ui.jqgrid.css" />
+    <link href="~/Content/multiple-select.css" rel="stylesheet" />
+
+    <script src="~/Scripts/jquery-1.9.1.min.js"></script>    
+    <script src="~/Scripts/i18n/grid.locale-en.js"></script>
+    <script src="~/Scripts/jquery.jqGrid.min.js" type="text/javascript"></script>    
+    <script src="~/Scripts/jquery.multiple.select.js"></script>
+
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="container">
+                <div class="header">
+                    <!-- Header start -->
+                    <div class="header-logo" style="padding: 0;">
+                        <img src="~/Images/dataprofiler.png" alt="Profiler logo" style="height: 70px;" />
+                        @Html.ActionLink("Home", "Index", "Home")
+                    </div>
+                    <div class="header-user">
+                        <div class="header-user-details">
+                            <a id="lnkUserName">@(ViewBag.UserName)</a>
+                        </div>
+                        <div class="header-logout">
+                            @Html.ActionLink("Logout", "Logout", "Home")
+
+                        </div>
+                    </div>
+                    <!-- Header end -->
+                </div>
+            </div>
+        </header>
+        <div class="content">
+            <!-- Body start -->
+            <div class="content_mid contact">
+                <div class="ui-tabs">
+                    <ul id="Menu" class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-corner-all" style="font-weight: normal;">
+                        <li style="width: 14%;" class="@((ViewBag.SelectedMenu == "1") ? "ui-state-default ui-corner-top ui-tabs-selected" : "ui-state-default ui-corner-top")">
+                            @Html.ActionLink("Configuration", "Configuration", "DataProfiler")
+                        </li>
+                        <li style="width: 14%;" class="@((ViewBag.SelectedMenu == "5") ? "ui-state-default ui-corner-top ui-tabs-selected" : "ui-state-default ui-corner-top")">
+                            @Html.ActionLink("Load Data", "ExcelTemplate", "DataProfiler")
+                        </li>   
+                        <li style="width: 14%;"  class="@((ViewBag.SelectedMenu == "2") ? "ui-state-default ui-corner-top ui-tabs-selected" : "ui-state-default ui-corner-top")">
+                            @Html.ActionLink("Profile", "DataProfiling", "DataProfiler")
+                        </li>
+                        <li style="width: 14%;"  class="@((ViewBag.SelectedMenu == "4") ? "ui-state-default ui-corner-top ui-tabs-selected" : "ui-state-default ui-corner-top")">
+                            @Html.ActionLink("Offline Profile", "OfflineProfiling", "DataProfiler")
+                        </li>
+                        <li style="width: 24%;" class="@((ViewBag.SelectedMenu == "6") ? "ui-state-default ui-corner-top ui-tabs-selected" : "ui-state-default ui-corner-top")">
+                            @Html.ActionLink("Code Rule Management", "CodeRuleManagement", "DataProfiler")
+                        </li>  
+                        <li style="width: 14%;"  class="@((ViewBag.SelectedMenu == "3") ? "ui-state-default ui-corner-top ui-tabs-selected" : "ui-state-default ui-corner-top")">
+                            @*@Html.ActionLink("Report", "ProfileReport", "DataProfiler")*@
+                            @Html.ActionLink("Report", "DataProfiler", "DashBoard")
+                        </li>
+                                
+                    </ul>
+                </div>
+            </div>
+            @RenderBody()
+            <div class="form-load-img">
+                <asp:Image ID="Loadinglbl" ClientIDMode="Static" runat="server" ImageUrl="~/DMO_Style/images/load5.gif" Style="visibility: visible;" />
+            </div>
+            <!-- Body end -->
+        </div>
+        <footer class="footer">
+            <div>
+                <!-- Footer start -->
+                <div class="ft-img">
+                    © copyright, 2016. Hexaware Technologies. All Rights Reserved.
+                </div>
+                <!-- Footer end -->
+            </div>
+        </footer>
+    </div>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

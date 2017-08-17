@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{846A39C6-CC30-4B40-AEC2-7650DADE88BB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DM_BusinessEntities</RootNamespace>
+    <AssemblyName>DM_BusinessEntities</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AutomatonExportStatus.cs" />
+    <Compile Include="AutomatonFileUploadTemplateEntity.cs" />
+    <Compile Include="AutomatonSourceEntity.cs" />
+    <Compile Include="BusinessColumnEntity.cs" />
+    <Compile Include="BusinessNameEntity.cs" />
+    <Compile Include="DASEMSliceRunIDsEntity.cs" />
+    <Compile Include="DBDeploymentEntity.cs" />
+    <Compile Include="DASEMTemplateEntity.cs" />
+    <Compile Include="DashboardReportEntity.cs" />
+    <Compile Include="DataReconEntity.cs" />
+    <Compile Include="DIMAPLUSCopySliceEntity.cs" />
+    <Compile Include="DIMAPLUSMaskingEntity.cs" />
+    <Compile Include="DIMAPLUSCriteriaEntity.cs" />
+    <Compile Include="DIMAPLUSReportEntity.cs" />
+    <Compile Include="DMOClientEntitiy.cs" />
+    <Compile Include="DMOProjectEntitiy.cs" />
+    <Compile Include="DMOUserEntitiy.cs" />
+    <Compile Include="HXRClientMSEntity.cs" />
+    <Compile Include="HXRConfigurationMSEntity.cs" />
+    <Compile Include="HXRDataTypeFunctionsEntity.cs" />
+    <Compile Include="HXRErrorDesc.cs" />
+    <Compile Include="HXRGetClientEntity.cs" />
+    <Compile Include="HXRKeyColumnsEntity.cs" />
+    <Compile Include="HXROfflineStatusEntity.cs" />
+    <Compile Include="HXRProjectMSEntity.cs" />
+    <Compile Include="HXRRuleEntity.cs" />
+    <Compile Include="HXRRuleCategory.cs" />
+    <Compile Include="HXRRuleErrorSummary.cs" />
+    <Compile Include="HXRRuleTypeEntity.cs" />
+    <Compile Include="HXRRuleValidationEntity.cs" />
+    <Compile Include="HXRRuleValidationResultsEntity.cs" />
+    <Compile Include="HXRSourceTable.cs" />
+    <Compile Include="HXRTargetConfigurationMSEntity.cs" />
+    <Compile Include="HXRValidateColumn.cs" />
+    <Compile Include="ImportMetaDataEntity.cs" />
+    <Compile Include="MaskEntity.cs" />
+    <Compile Include="MenuEntity.cs" />
+    <Compile Include="RoleEntity.cs" />
+    <Compile Include="RoleMenuEntity.cs" />
+    <Compile Include="ProfilerEntity.cs" />
+    <Compile Include="ProfilerTemplateEntity.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RuleAttributeEntity.cs" />
+    <Compile Include="SourceEntity.cs" />
+    <Compile Include="UserToolEntity.cs" />
+    <Compile Include="ToolsEntity.cs" />
+    <Compile Include="_JSON.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

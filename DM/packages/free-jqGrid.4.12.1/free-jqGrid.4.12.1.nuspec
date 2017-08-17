@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>free-jqGrid</id>
+    <version>4.12.1</version>
+    <authors>Oleg Kiriljuk</authors>
+    <owners>Oleg Kiriljuk</owners>
+    <licenseUrl>https://github.com/free-jqgrid/jqGrid/blob/master/LICENSE.md</licenseUrl>
+    <projectUrl>https://github.com/free-jqgrid/jqGrid</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>free jqGrid is the fork of jqGrid, based on v4.7, further development under MIT/GPL-licences</description>
+    <summary>MIT/GPL-licences</summary>
+    <language>en-US</language>
+    <tags>jQuery jqGrid plugins jQueryUI fontawesome</tags>
+    <dependencies>
+      <dependency id="jQuery" version="1.7.2" />
+      <dependency id="jQuery.UI.Combined" version="1.8.11" />
+    </dependencies>
+  </metadata>
+</package>

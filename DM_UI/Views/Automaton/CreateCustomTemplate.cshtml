@@ -1,0 +1,1855 @@
+﻿@{
+    ViewBag.Title = "Transformation Template";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/Scripts/AutomationCommon.js")
+<style type="text/css">
+    #hint {
+        cursor: pointer;
+    }
+
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: black;
+        z-index: 99;
+        opacity: 0.8;
+        filter: alpha(opacity=80);
+        -moz-opacity: 0.8;
+        min-height: 100%;
+        width: 100%;
+    }
+
+    .loadingprogress {
+        font-family: Arial;
+        font-size: 10pt;
+        border: 5px solid #67CFF5;
+        width: 200px;
+        height: 100px;
+        display: none;
+        position: fixed;
+        background-color: White;
+        z-index: 999;
+    }
+
+    .ui-autocomplete {
+        cursor: pointer;
+        height: 200px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        font-size: 13px;
+        line-height: normal;
+        font-family: "Open Sans",sans-serif;
+        background-image: none;
+    }
+
+        .ui-autocomplete.ui-widget {
+            font-family: "Open Sans",sans-serif;
+            font-size: 12px;
+        }
+
+    .ui-tooltip {
+        background: green;
+        color: white;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 14px;
+    }
+</style>
+
+<script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
+<script type="text/javascript">
+
+    var lastSel = -1;
+
+    $(document).ready(function () {
+
+
+        baseUrl = '@Url.Content("~/")';
+
+        $("#select_existing_Template").hide();
+        $("#hdnClientId").val('@ViewData["ClientID"]');
+        $("#hdnProjectId").val('@ViewData["ProjectID"]');
+        $("#hdnToolID").val('@ViewData["ToolID"]');
+        $('#TransformListtable').hide();
+        $('#btngeneratexml').hide();
+        $('#selecttransformation').attr('trigger', 'change');
+
+        InitializingGrid(0, '');
+
+
+        $("#divSourcetable").hide();
+        $("#divTransformListtable").hide();
+
+
+        var $radios = $('input:radio[name=rdb]');
+        if ($radios.is(':checked') === false) {
+            $radios.filter('[value=Source]').prop('checked', true);
+        }
+
+        $('#btnrulehower').tooltip({
+            track: true,
+        });
+
+        $('#select_existing_Template').on('change', function (e) {
+             
+            var optionSelected = $("option:selected", this);
+            var valueSelected = this.value;
+            $('#hdntemplateid').val(valueSelected);
+            $("#divSourcetable").show();
+            $("#divTransformListtable").show();
+
+            var TemplateID = $('#select_existing_Template option:selected').val();
+            var TemplateName = $('#select_existing_Template option:selected').text();
+
+
+
+            if (TemplateName == "Select" || TemplateName == "") {
+                TemplateName = '';
+                TemplateID = 0;
+            }
+
+            InitializingGrid(TemplateID, TemplateName);
+
+            $("#selectConnection")[0].selectedIndex = 1;
+            $("#TargetConnection")[0].selectedIndex = 1;
+
+
+            BindTransTableList();
+
+
+            bindTableList("Targetable", $("#TargetConnection option:selected").val(), true);
+            bindTableList("Sourcetable", $("#selectConnection option:selected").val(), true);
+
+
+        });
+
+
+        GetTemplateList();
+        GetTransformationType();
+
+        LoadSourceTarget('SOURCE', function (data) {
+            $('#TargetConnection').html('');
+            $('#TargetConnection').append($('<option>').text('Select').val('Select'));
+            $.each(data, function (index, value) {
+                var name = value.split(',');
+                var ServerName = name[0];
+                var ConfigId = name[1];
+                $('#TargetConnection').append($('<option>').text(ServerName).val(ConfigId));
+            });
+        });
+        LoadSourceTarget('TARGET', function (data) {
+            $('#selectConnection').html('');
+            $('#selectConnection').append($('<option>').text('Select').val('Select'));
+            $.each(data, function (index, value) {
+                var name = value.split(',');
+                var ServerName = name[0];
+                var ConfigId = name[1];
+                $('#selectConnection').append($('<option>').text(ServerName).val(ConfigId));
+            });
+        });
+
+
+        $("#automaticallocate").click(function () {
+
+             
+
+            var TemplateID = $('#select_existing_Template option:selected').val();
+            var TemplateName = $('#select_existing_Template option:selected').text();
+
+            if ($('#automaticallocate').is(':checked')) {
+
+                if ($("#Sourcetable").val() == null) {
+                    alert("Please Select TargetTable")
+                    $("#automaticallocate").attr('checked', false);
+                    return;
+                }
+
+                if ($("#Targetable").val() == null) {
+                    alert("Please Select Source Table")
+                    $("#automaticallocate").attr('checked', false);
+                    return;
+                }
+                 
+                var TargetTableList = $("#Targetable").multipleSelect("getSelects");
+                if (TargetTableList.length > 1)
+                {
+                    var TargetTables = ""; var i = 0;
+                    $.each(TargetTableList, function (key, value) {
+                        if (i == 0) {
+                            TargetTables = value;i++;}
+                        else { TargetTables = TargetTables + "," + value; }
+                    });
+                }
+                else
+                {
+                    TargetTables = $('#Targetable').val();
+                }
+
+                var SourceTableList = $("#Sourcetable").multipleSelect("getSelects");
+                if (SourceTableList.length > 1) {
+                    var SourceTables = ""; var i = 0;
+                    $.each(SourceTableList, function (key, value) {
+                        if (i == 0) {
+                            SourceTables = value; i++;
+                        }
+                        else { SourceTables = SourceTables + "," + value; }
+                    });
+                }
+                else {
+                    SourceTables = $('#Sourcetable').val();
+                }
+
+
+
+
+                var databaseIP = $('#selectConnection option:selected').text().split(':')[0];
+                var baseUrl = '@Url.Content("~/")';
+                var ServiceUrl = baseUrl + "api/AutomatAPI/GetTableDataDetailAutomatic";
+                jQuery("#SourcetableGrid").jqGrid("clearGridData");
+                var grid = jQuery("#SourcetableGrid");
+                var reccount = grid.getGridParam("reccount")
+                $("#divSourcetable").show();
+                $.ajax({
+                    type: "GET",
+                    url: ServiceUrl,
+                    data: {
+                        client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), Database_IP: databaseIP,
+                        Template_ID: TemplateID,Template_Name:TemplateName,
+                        sourceTable_Name: SourceTables, srcconnectionid: $('#selectConnection option:selected').val(),
+                        trtTable_Name: TargetTables, trtConnectionid: $('#TargetConnection option:selected').val(),
+                        Field_Type: $("input[name='rdb']:checked").val(), Recordcount: reccount, tgtConnectionid: $('#selectConnection option:selected').val()
+                    },
+                    dataType: "json",
+                    contentType: "application/json",
+                    success: function (data) {
+                         
+                        var grid = jQuery("#SourcetableGrid");
+                        var reccount = grid.getGridParam("reccount") + 1;
+
+                        for (i = 0; i < data.length; i++) {
+                            grid.jqGrid('addRowData', reccount + i, data[i], "last");
+                        }
+
+                        $("#sp_1_pager_datatable").text("1");
+
+                    }
+                });
+            }
+
+
+        });
+
+
+
+        $('#selecttransformation').on('change', function () {
+            $("#btnrulehower").attr("title", $('#selecttransformation option:selected').attr("Key"));
+        });
+
+        $('#TargetConnection').on('change', function () {
+
+            var TemplateName = $('#txttemplate').val();
+            if ($('#hdnMode').val() == "Edit") {
+                TemplateName = $('#select_existing_Template option:selected').text();
+            }
+
+            if (TemplateName == '') {
+                alert('Please enter template name');
+
+                $('#selectConnection').val('Select');
+                $('#TargetConnection').val('Select');
+                return;
+            }
+
+            var servername = $('#TargetConnection option:selected').text().split(':')[1];
+
+            bindTableList("Targetable", $("#TargetConnection option:selected").val(), false);
+
+        });
+
+        $('#selectConnection').on('change', function () {
+
+            var TemplateName = $('#txttemplate').val();
+            if ($('#hdnMode').val() == "Edit") {
+                TemplateName = $('#select_existing_Template option:selected').text();
+            }
+
+            if (TemplateName == '') {
+                alert('Please enter template name');
+                $('#selectConnection').val('Select');
+                $('#TargetConnection').val('Select');
+                return;
+            }
+
+            var servername = $('#selectConnection option:selected').text().split(':')[1]
+            $('#Sourcetable').val('');
+
+            bindTableList("Sourcetable", $("#selectConnection option:selected").val(), false);
+
+
+
+        });
+
+
+        //Trans table column
+        $('#selectTranstable').on('change', function () {
+
+            var baseUrl = '@Url.Content("~/")';
+            $('#selecttranscolumn').html('');
+
+            var TemplateName = $('#txttemplate').val();
+            if ($('#hdnMode').val() == "Edit") {
+                TemplateName = $('#select_existing_Template option:selected').text();
+            }
+
+            if ($('#selectTranstable option:selected').text() == "Select") {
+                return;
+            }
+
+            $.ajax({
+                type: "GET",
+                url: baseUrl + "api/AutomatAPI/GetTableColumnDetail",
+                data: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), Table_Name: $('#selectTranstable option:selected').text(), connectionid: $('#selectTranstable option:selected').val() },
+                dataType: 'json',
+                success: function (data) {
+                    $.each(data, function (index, value) {
+                        $('#selecttranscolumn').append($('<option>').text(value.Column_Name).val(value.Column_Name));
+                    });
+                    $("#selecttranscolumn").val($('#hdnFieldName').val());
+                }
+            });
+
+        });
+
+        //Save Source
+        $('#btnsavesource').click(function () {
+
+            var baseUrl = '@Url.Content("~/")';
+
+            var TemplateName = $('#txttemplate').val();
+            var TemplateID = $('#hdntemplateid').val();
+            if ($('#hdnMode').val() == "Edit") {
+                TemplateName = $('#select_existing_Template option:selected').text();
+            }
+
+            if (TemplateName == '') {
+                alert('Please enter template name');
+                return;
+            }
+
+            $("#lodingMessage").hide();
+            ShowProgress();
+
+            var data = {};
+            var grid = $("#SourcetableGrid");
+            var rows = grid.jqGrid('getDataIDs');
+            var SourceEntity = [];
+            $.each(rows, function (i, l) {
+
+                var rowData = grid.jqGrid('getRowData', rows[i]);
+                var seqno = rowData['Field_Seq_No'];
+                if (rowData['Field_Seq_No'].indexOf("input") != -1) {
+                    seqno = jQuery('#' + (l) + '_Field_Seq_No').val();
+                }
+
+                /*if (seqno == "0") {
+                    return;
+                } */
+
+                var sourceTableName = '';
+                var SourceFieldName = '';
+
+                var TargetTableName = '';
+                var TargetFieldName = '';
+
+
+                var sourceTableName = rowData['Table_Name'];
+                if (sourceTableName.indexOf("select") != -1) {
+                    sourceTableName = jQuery('#' + (l) + '_Table_Name').val();
+                }
+
+                var SourceFieldName = rowData['Column_Name'];
+                if (SourceFieldName.indexOf("select") != -1) {
+                    SourceFieldName = jQuery('#' + (l) + '_Column_Name').val();
+                }
+
+
+                var TargetTableName = rowData['Target_Table_Name'];
+                if (TargetTableName.indexOf("select") != -1) {
+                    TargetTableName = jQuery('#' + (l) + '_Target_Table_Name').val();
+                }
+
+
+                var TargetFieldName = rowData['Target_Column_Name'];
+                if (TargetFieldName.indexOf("input") != -1) {
+                    TargetFieldName = jQuery('#' + (l) + '_Target_Column_Name').val();
+                }
+
+
+
+                SourceEntity.push({
+                    Client_ID: $("#hdnClientId").val(),
+                    Project_ID: $("#hdnProjectId").val(),
+
+                    //Connection_ID: $('#selectConnection option:selected').val(),
+                    Connection_ID: $('#TargetConnection option:selected').val(),
+
+                    //Target_Connection_ID: $('#TargetConnection option:selected').val(),
+                    Target_Connection_ID: $('#selectConnection option:selected').val(),
+
+                    Template_Id: $('#hdntemplateid').val(),
+
+                    //Table_Name: sourceTableName,
+                    //Field_Name: SourceFieldName,
+                    //Target_Table_Name: TargetTableName,
+                    //Target_Field_Name: TargetFieldName,
+
+                    Target_Table_Name: sourceTableName,
+                    Target_Field_Name: SourceFieldName,
+                    Table_Name: TargetTableName,
+                    Field_Name: TargetFieldName,
+
+                    //Target_Data_Type: rowData['Target_Data_Type'],
+                    //Field_Data_Type: rowData['Data_Type'],
+                    Field_Data_Type: rowData['Target_Data_Type'],
+                    Target_Data_Type: rowData['Data_Type'],
+
+                    Template_Name: TemplateName,
+
+                    Field_Seq_No: seqno,
+
+                    Field_Type: rowData['Field_Type'],
+
+                    Row_ID: rowData['Row_ID'],
+                    Target_Row_ID: rowData['Target_Row_ID'],
+                    Create_Date: Date.now(),
+                    Modified_Date: Date.now(),
+                    Created_By: '@ViewData["UserName"]'
+                });
+
+
+            });
+
+            $.ajax({
+                type: "POST",
+                data: JSON.stringify(SourceEntity),
+                url: baseUrl + "Api/AutomatAPI/SaveSourceTargetGrid",
+                dataType: "json",
+                contentType: "application/json",
+                success: function (data) {
+                    alert('Saved successfully');
+
+
+                    if ($('#hdntemplateid').val() == "") {
+                        if ($('#hdnMode').val() == 'New') {
+                            $('#hdntemplateid').val(data);
+                        }
+                    }
+                    InitializingSourceGrid($('#hdntemplateid').val(), TemplateName);
+                    BindTransTableList();
+                    $('#btngeneratexml').show();
+                    HideProgress();
+
+                }
+            });
+
+
+        });
+
+
+
+        $('#btnaddtrans').click(function () {
+
+            var baseUrl = '@Url.Content("~/")';
+            $('#TransformListtable').show();
+
+            var TemplateName = $('#txttemplate').val();
+            if ($('#hdnMode').val() == "Edit") {
+                TemplateName = $('#select_existing_Template option:selected').text();
+            }
+            var TemplateID = $('#hdntemplateid').val();
+            //if (TemplateName == '') {
+            //    alert('Please enter template name');
+            //    return;
+            //}
+
+            if ($('#hdntemplateid').val() == '' || $('#hdntemplateid').val() == '0') {
+                alert('Please save the records');
+                return;
+            }
+
+            if ($('#txttrans').val() == '') {
+                alert('Please enter transformation name');
+                return;
+            }
+            if ($('#selectTranstable option:selected').text() == 'Select') {
+                alert('Please select table');
+                return;
+            }
+            if ($('#selecttranscolumn option:selected').text() == 'Select') {
+                alert('Please select column');
+                return;
+            }
+
+            var TransOrderNo = 0;
+            var grid = $('#TransformListtable');
+            var rows = grid.jqGrid('getDataIDs');
+
+            $.each(rows, function (i, l) {
+                var rowData = grid.jqGrid('getRowData', rows[i]);
+                var TransOrder = rowData['Trans_Order'];
+                if (TransOrder.indexOf("input") != -1) {
+                    TransOrder = jQuery('#' + (l) + '_Trans_Order').val();
+                }
+                TransOrderNo = TransOrder;
+
+            });
+
+            TransOrderNo = parseInt(TransOrderNo) + 1;
+
+            if ($('#txtTransOrder').val() != "") {
+
+                if ($.isNumeric($('#txtTransOrder').val())) {
+                    TransOrderNo = $('#txtTransOrder').val();
+                }
+            }
+
+            var TransitionAdd = {
+                Client_ID: $("#hdnClientId").val(),
+                Project_ID: $("#hdnProjectId").val(),
+                TemplateName: TemplateName,
+                Template_ID: TemplateID,
+                Trans_ID: $("#hdnTransformationID").val(),
+                TransName: $('#txttrans').val(),
+                TransType: $('#selecttransformation option:selected').text(),
+                TableName: $('#selectTranstable option:selected').text(),
+                ColumnName: $('#selecttranscolumn option:selected').text(),
+                TransRule: $('#txtTransRule').val(),
+                TransOrder: TransOrderNo,
+                SourceConnectionID: $('#TargetConnection option:selected').val(),
+                TargetConnectionID: $('#selectConnection option:selected').val()
+            };
+
+            $.ajax({
+                type: "POST",
+                url: baseUrl + "Api/AutomatAPI/SaveTransTable",
+                data: JSON.stringify(TransitionAdd),
+                dataType: "json",
+                contentType: "application/json",
+                success: function (data) {
+
+                    alert('Transformation saved successfully.');
+                    $("#divTransformListtable").show();
+                    InitializingTransformationGrid(TemplateID, TemplateName);
+                    $('#hdnTransformationID').val("");
+                    $('#txttrans').val("");
+                    $('#txtTransRule').val("");
+                    $('#txtTransOrder').val("");
+                    $("#btnaddtrans").attr('value', 'Save');
+                    $("#btnCanceltrans").attr('value', 'Clear');
+                }
+            });
+        });
+
+
+        $('#btnreset').click(function () {
+            Reset();
+        });
+
+        $("#divdbl").dblclick(function () {
+
+            Reset();
+
+            if (!$('#select_existing_Template').is(':visible')) {
+                $('#select_existing_Template').show();
+                $("#txttemplate").hide();
+                $("#hdnMode").val("Edit");
+
+            }
+            else {
+                $('#select_existing_Template').hide();
+                $("#txttemplate").show();
+                $("#hdnMode").val("New");
+            }
+        });
+
+        $('#btngeneratexml').click(function () {
+            $("#lodingMessage").show();
+            ShowProgress();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GenerateXML")',
+                dataType: 'json',
+                data: { Template_ID: $('#hdntemplateid').val() },
+                success: function (data) {
+                    HideProgress();
+                    $("#lbldisplaypath").text("Package saved path: " + data[1]);
+                    alert(data[0]);
+                },
+                error: function (xhr) {
+                    HideProgress();
+                    alert(xhr);
+                }
+            });
+        });
+
+        function bindTableList(_ControlID, _Config_ID, Setvalue) {
+             
+            $('#' + _ControlID).empty();
+            //$('#' + _ControlID).append($('<option>').text('Select').val('Select'));
+            $.ajax({
+                type: "GET",
+                url: baseUrl + "api/AutomatAPI/GetMetaDataTableNames",
+                data: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), config_ID: _Config_ID, },
+                dataType: 'json',
+                success: function (data) {
+                    $.each(data, function (index, value) {
+                        var name = value.split(':');
+                        var tablename = name[0];
+                        var databasename = name[1];
+                        $('#' + _ControlID).append($('<option>').text(tablename).val(tablename));
+                        $('#' + _ControlID).multipleSelect("refresh");
+
+
+                    });
+
+                    if (Setvalue) {
+                        SetSelectValue(_ControlID);
+                    }
+
+                }
+            });
+        }
+
+        function BindLocalStorage() {
+
+            var grid = $("#SourcetableGrid");
+            var rows = grid.jqGrid('getDataIDs');
+            localStorage.clear();
+            $.each(rows, function (i, l) {
+
+
+                var rowData = grid.jqGrid('getRowData', rows[i]);
+                var Type = rowData['Field_Type'];
+
+                var sourceTableName = rowData['Target_Table_Name'];
+                if (sourceTableName.indexOf("select") != -1) {
+                    sourceTableName = jQuery('#' + (l) + '_Target_Table_Name').val();
+                }
+                if (sourceTableName != "")
+                    localStorage.setItem(sourceTableName, Type);
+
+            });
+
+        }
+
+        function SetSelectValue(_ControlID) {
+
+            var Type = "Target";
+            var TemplateID = $('#hdntemplateid').val();
+            if (_ControlID == "Targetable") {
+                Type = "Source";
+            }
+
+            if (TemplateID == "0" || TemplateID == "") {
+                return;
+            }
+
+            $.ajax({
+                type: "GET",
+                url: baseUrl + "api/AutomatAPI/GetTemplateSourceTargetTableName",
+                data: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), Template_Id: TemplateID, Type: Type },
+                dataType: "json",
+                contentType: "application/json",
+                success: function (data) {
+                    $('#' + _ControlID).multipleSelect('setSelects', data);
+                }
+            });
+
+        }
+
+        function InitializingGrid(TemplateID, TemplateName) {
+
+            InitializingSourceGrid(TemplateID, TemplateName);
+            InitializingTransformationGrid(TemplateID, TemplateName);
+
+        }
+
+        function InitializingSourceGrid(TemplateID, TemplateName) {
+
+
+            $("#SourcetableGrid").GridUnload();
+            var ServiceUrl = baseUrl + "api/AutomatAPI/GetTemplateSourceTargetRecords";
+            $grid = jQuery("#SourcetableGrid").jqGrid({
+                mytype: 'GET',
+                datatype: 'json',
+                url: ServiceUrl,
+                height: 230,
+                width: 200,
+                autowidth: true,
+                shrinkToFit: true,
+                rowNum: 1000,
+                rowList: [10, 20, 30],
+                postData: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), Template_Id: TemplateID },
+                colNames: ['Seq No', 'Table Name', 'Field Name', 'Data Type', 'Table Name', 'Column Name', 'DataType', 'Field Type', 'Row ID', 'Target Row ID'],
+                colModel: [
+               { name: 'Field_Seq_No', index: 'Field_Seq_No', type: 'long', width: 8, sorttype: 'long', search: true, editable: true },
+                {
+                    name: 'Table_Name', index: 'Table_Name', width: 20, search: true, editable: true,
+                    edittype: 'select',
+                    editoptions: {
+                        value: "Ignore:Ignore",
+                    }
+                },
+               {
+                   name: 'Column_Name', index: 'Column_Name', width: 20, search: true, editable: true,
+                   edittype: 'select',
+                   editoptions: {
+                       value: "Ignore:Ignore",
+                   }
+               },
+               { name: 'Data_Type', index: 'Data_Type', width: 20, search: true },
+               {
+                   name: 'Target_Table_Name', index: 'Target_Table_Name', width: 20, search: true, editable: true,
+                   edittype: 'select',
+                   editoptions: {
+                       value: "Ignore:Ignore",
+                   }
+               },
+               {
+                  name: 'Target_Column_Name', index: 'Target_Column_Name', width: 20, search: true, editable: true,
+                   edittype: 'text',
+                   editoptions: {
+                       value: "Ignore:Ignore",
+                       //dataEvents: [{ ///From select dropdown changed to Autocomplte action
+                       //    type: 'change',
+                       //    fn: function (e) {
+                       //        var row = $(e.target).closest('tr.jqgrow');
+                       //        var rowid = row.attr('id');
+                       //        var optionValue = $(this).val();
+                       //        var dataType = $(this).val(optionValue).find("option[value=" + optionValue + "]").attr('key');
+                       //        $("#SourcetableGrid").jqGrid('setCell', rowid, 'Target_Data_Type', $('#hdnType').val() == 'Ignore' ? ' ' : $('#hdnType').val());
+                       //    }
+                       //}],
+                       dataInit: function (elem) {  //Adding autocomplete widget for column
+                           var rowid = $(elem).closest('tr.jqgrow').attr('id');
+                           var selectedTableName = $('#SourcetableGrid').jqGrid('getCell', rowid, 'Target_Table_Name');
+                           if (selectedTableName.indexOf("select") != -1) {
+                               selectedTableName = $('#' + rowid + '_Target_Table_Name option:selected').text();
+                           }
+
+                           $.ajax({
+                               type: "GET",
+                               url: baseUrl + "api/AutomatAPI/GetTableColumnDetailForAutoComplete",
+                               data: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), Table_Name: selectedTableName, connectionid: $('#TargetConnection option:selected').val() },
+                               dataType: 'json',
+                               success: function (data) {
+                                   data.unshift({ label: 'Ignore', value: 'Ignore' });
+                                   $(elem).autocomplete({
+                                       minLength: 0,
+                                       source: data,
+                                       select: function (event, ui) {
+                                           event.preventDefault();
+                                           $(this).val(ui.item.label);
+                                           $('#hdnType').val(ui.item.value);
+                                       },
+                                       focus: function (event, ui) {
+                                           event.preventDefault();
+                                       },
+                                       change: function (event, ui) {
+                                           //alert(ui.item.value);
+                                       },
+                                       close: function (event, ui) {
+                                           $("#SourcetableGrid").jqGrid('setCell', rowid, 'Target_Data_Type', $('#hdnType').val() == 'Ignore' ? ' ' : $('#hdnType').val());
+                                       }
+                                   });
+                               }
+                           });
+
+                           $(elem).bind('focus', function () { $(this).autocomplete("search", ""); })
+                       }
+                   }
+               },
+                { name: 'Target_Data_Type', index: 'Target_Data_Type', width: 20, search: true },
+                { name: 'Field_Type', index: 'Field_Type', width: 20, search: false },
+                { name: 'Row_ID', index: 'Row_ID', width: 20, hidden: true },
+                { name: 'Target_Row_ID', index: 'Target_Row_ID', width: 20, hidden: true }
+                ],
+                multiselect: false,
+                pager: '#pager_datatable',
+                viewrecords: true,
+                loadonce: true,
+                gridview: true,
+                //scrollOffset: 0,
+                reloadAfterSubmit: true,
+                showButtonPanel: true,
+                loadui: "disable",
+                ignoreCase: true,
+                loadComplete: function () {
+                },
+                onSelectRow: function (rowId, iRow, iCol, e) {
+
+                     
+                    var sourceTableName = '';
+                    var SourceFieldName = '';
+
+                    var TargetTableName = '';
+                    var TargetFieldName = '';
+
+                    var sourceTableName = $('#SourcetableGrid').jqGrid('getCell', rowId, 'Table_Name');
+                    if (sourceTableName.indexOf("select") != -1) {
+                        sourceTableName = $('#' + rowId + '_Table_Name option:selected').text();
+                    }
+
+                    var SourceFieldName = $('#SourcetableGrid').jqGrid('getCell', rowId, 'Column_Name');
+                    if (SourceFieldName.indexOf("select") != -1) {
+                        SourceFieldName = $('#' + rowId + '_Column_Name option:selected').text();
+                    }
+
+                    var TargetTableName = $('#SourcetableGrid').jqGrid('getCell', rowId, 'Target_Table_Name');
+                    if (TargetTableName.indexOf("select") != -1) {
+                        TargetTableName = $('#' + rowId + '_Target_Table_Name option:selected').text();
+                    }
+
+                    var TargetFieldName = $('#SourcetableGrid').jqGrid('getCell', rowId, 'Target_Column_Name');
+                    if (TargetFieldName.indexOf("select") != -1) {
+                        TargetFieldName = $('#' + rowId + '_Target_Column_Name option:selected').text();
+                    }
+
+                    var grid = $('#SourcetableGrid');
+
+                    var SourcetableList = $("#Sourcetable").multipleSelect("getSelects");
+                    var SourceTables = "";
+                    $.each(SourcetableList, function (key, value) {
+                        SourceTables = SourceTables + ";" + value + ":" + value;
+                    });
+
+                    var firstChar = SourceTables.slice(0, 1);
+                    if (firstChar == ';') {
+                        SourceTables = SourceTables.substring(1);
+                    }
+
+                    $('#hdnSourceTables').val(SourceTables);
+
+                    //Source Table Collection
+                    grid.setColProp('Table_Name', {
+                        editoptions: {
+                            value: $('#hdnSourceTables').val(),
+                            dataEvents: [{
+                                type: 'change',
+                                fn: function (e) {
+
+                                    var row = $(e.target).closest('tr.jqgrow');
+                                    var rowid = row.attr('id');
+
+
+                                    InitializingSourceColumnName($(this).val(), rowid, '');
+                                }
+                            }]
+                        }
+                    });
+
+
+                    var TargetTableList = $("#Targetable").multipleSelect("getSelects");
+                    var TargetTables = "";
+                    $.each(TargetTableList, function (key, value) {
+                        TargetTables = TargetTables + ";" + value + ":" + value;
+                    });
+
+                    var firstChar = TargetTables.slice(0, 1);
+                    if (firstChar == ';') {
+                        TargetTables = TargetTables.substring(1);
+                    }
+
+                    $('#hdnTargetTables').val(TargetTables);
+
+                    //Target Table Collection
+                    grid.setColProp('Target_Table_Name', {
+
+                        editoptions: {
+                            value: $('#hdnTargetTables').val(),
+                            dataEvents: [{
+                                type: 'change',
+                                fn: function (e) {
+                                     
+                                    var row = $(e.target).closest('tr.jqgrow');
+                                    var rowid = row.attr('id');
+
+                                    filedTypeVal = localStorage.getItem($(this).val());
+                                    $("#SourcetableGrid").jqGrid("setCell", rowid, "Field_Type", filedTypeVal);
+
+                                    InitializingTargetColumnName($(this).val(), rowid, '', false);
+                                }
+                            }]
+                        }
+                    });
+                     
+                    jQuery("#SourcetableGrid").jqGrid('editRow', rowId, true);
+
+                    if (rowId && rowId !== lastSel) {
+                        if (lastSel != -1) {
+                            grid.saveRow(lastSel);
+                        }
+                        lastSel = rowId;
+                    }
+
+                    var selRowID = $('#SourcetableGrid').jqGrid('getGridParam', 'selrow');
+                    if (sourceTableName != '') {
+
+                        InitializingSourceColumnName(sourceTableName, selRowID, SourceFieldName);
+                    }
+
+                    if (TargetTableName == '') //This code for first time dropdown colum list will be show
+                    {
+                        var TargetTableName = $('#SourcetableGrid').jqGrid('getCell', rowId, 'Target_Table_Name');
+                        if (TargetTableName.indexOf("select") != -1) {
+                            TargetTableName = $('#' + rowId + '_Target_Table_Name option:selected').text();
+                        }
+                    }
+
+                    if (TargetFieldName == '') // try to mapping the source column to Target column
+                    {
+                        TargetFieldName = SourceFieldName;
+                    }
+
+
+                    if (TargetTableName != '') {
+
+                        var selRowID = $('#SourcetableGrid').jqGrid('getGridParam', 'selrow');
+                        InitializingTargetColumnName(TargetTableName, selRowID, TargetFieldName, true);
+                    }
+
+                    ///Assigning Field Type value from the storage when change table name
+                    var filedTypeVal = localStorage.getItem(TargetTableName);
+                    $("#SourcetableGrid").jqGrid("setCell", rowId, "Field_Type", filedTypeVal);
+
+                },
+                //-----Complete Select Rows
+                gridComplete: function () {
+                    $(this).prop('p').loadui = 'enable';
+                    BindLocalStorage();
+                }
+            });
+
+            jQuery("#SourcetableGrid").jqGrid('setGroupHeaders', {
+                useColSpanStyle: true,
+                groupHeaders: [
+                  { startColumnName: 'Table_Name', numberOfColumns: 3, titleText: 'Target' },
+                  { startColumnName: 'Target_Table_Name', numberOfColumns: 4, titleText: 'Source' }
+                ]
+            });
+
+            jQuery("#SourcetableGrid").jqGrid("filterToolbar", { stringResult: true, searchOnEnter: false, defaultSearch: "cn", clearSearch: true, groupOp: "OR" });
+
+            var sourceBgColor = "#24b3b5";
+            var targetBgColor = "#1C94C6";
+            var GroupHeaderHeight = "36px";
+            var RowColumntargetHeight = "32px";
+
+            $('th[class="ui-state-default ui-th-column-header ui-th-ltr"]').each(function () {
+
+                if ($(this).text() == "Target") {
+                    this.style.color = "white";
+                    this.style.background = sourceBgColor;
+                    this.style.height = GroupHeaderHeight;
+                    this.style.fontSize = "13px";
+                } else if ($(this).text() == "Source") {
+
+                    this.style.color = "white";
+                    this.style.background = targetBgColor;
+                    this.style.height = GroupHeaderHeight;
+                    this.style.fontSize = "13px";
+                }
+            });
+
+            $('th[class="ui-state-default ui-th-column ui-th-ltr"]').each(function () {
+
+
+                if ($(this).attr("ID") == "SourcetableGrid_Table_Name") {
+                    this.style.color = "white";
+                    this.style.background = sourceBgColor;
+                    this.style.height = RowColumntargetHeight;
+                }
+
+                if ($(this).attr("ID") == "SourcetableGrid_Column_Name") {
+                    this.style.color = "white";
+                    this.style.background = sourceBgColor;
+                    this.style.height = RowColumntargetHeight;
+                }
+
+
+                if ($(this).attr("ID") == "SourcetableGrid_Data_Type") {
+                    this.style.color = "white";
+                    this.style.background = sourceBgColor;
+                    this.style.height = RowColumntargetHeight;
+                }
+
+
+                if ($(this).attr("ID") == "SourcetableGrid_Target_Table_Name") {
+                    this.style.color = "white";
+                    this.style.background = targetBgColor;
+                    this.style.height = RowColumntargetHeight;
+                }
+
+
+                if ($(this).attr("ID") == "SourcetableGrid_Target_Column_Name") {
+                    this.style.color = "white";
+                    this.style.background = targetBgColor;
+                    this.style.height = RowColumntargetHeight;
+                }
+
+
+                if ($(this).attr("ID") == "SourcetableGrid_Target_Data_Type") {
+                    this.style.color = "white";
+                    this.style.background = targetBgColor;
+                    this.style.height = RowColumntargetHeight;
+                }
+                if ($(this).attr("ID") == "SourcetableGrid_Field_Type") {
+                    this.style.color = "white";
+                    this.style.background = targetBgColor;
+                    this.style.height = RowColumntargetHeight;
+                }
+            });
+
+        }
+
+        function InitializingSourceColumnName(SelectedValue, selRowID, DefaultValue) {
+             
+            var jsonSourceData = $("#divHiddenDataSourceColumn").data(SelectedValue);
+
+            if (jQuery.type(jsonSourceData) === "undefined") {
+
+                $.ajax({
+                    type: "GET",
+                    url: baseUrl + "api/AutomatAPI/GetTableColumnDetail",
+                    data: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), Table_Name: SelectedValue, connectionid: $('#selectConnection option:selected').val() },
+                    dataType: 'json',
+                    success: function (data) {
+
+                        $("#divHiddenDataSourceColumn").data(SelectedValue, data);
+                        ProcessSourceDataColumn(data, selRowID, DefaultValue);
+                    }
+                });
+
+            } else {
+                ProcessSourceDataColumn(jsonSourceData, selRowID, DefaultValue);
+            }
+        }
+
+        function ProcessSourceDataColumn(data, selRowID, DefaultValue) {
+             
+            $('#' + selRowID + '_Column_Name').empty();
+
+            $('#' + selRowID + '_Column_Name').append($('<option>').text("Ignore").val("Ignore"));
+            $.each(data, function (index, value) {
+                var Column_Name = value.Column_Name;
+                $('#' + selRowID + '_Column_Name').append($('<option>').text(Column_Name).val(Column_Name));
+            });
+
+            if (DefaultValue != '' && DefaultValue != 'Ignore') {
+                $('#' + selRowID + '_Column_Name').val(DefaultValue);
+            }
+        }
+
+        function InitializingTargetColumnName(SelectedValue, selRowID, DefaultValue, automap) {
+             
+            //Data get loaded from the hidden field if already get from server for a table.<Avoiding Multiple call for same table>
+            var jsonTargetData = $("#divHiddenDataTargetColumn").data(SelectedValue);
+            if (jQuery.type(jsonTargetData) === "undefined") {
+
+                $.ajax({
+                    type: "GET",
+                    url: baseUrl + "api/AutomatAPI/GetTableColumnDetailForAutoComplete",
+                    data: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), Table_Name: SelectedValue, connectionid: $('#TargetConnection option:selected').val() },
+                    dataType: 'json',
+                    success: function (data) {
+                         
+                        data.unshift({ label: 'Ignore', value: 'Ignore' }); //Adding Ignore option in clollection on very first
+                        $('#' + selRowID + '_Target_Column_Name').autocomplete(); //Initializing autocomplete for input control
+                        $('#' + selRowID + '_Target_Column_Name').autocomplete('option', 'source', data); //Loading value on table change
+                        $("#divHiddenDataTargetColumn").data(SelectedValue, data);
+                        ProcessTargetDataColumn(data, selRowID, DefaultValue, automap);
+                    }
+                });
+
+            } else {
+                ProcessTargetDataColumn(jsonTargetData, selRowID, DefaultValue, automap);
+            }
+        }
+
+        function ProcessTargetDataColumn(data, selRowID, DefaultValue, automap) {
+             
+            //$('#' + selRowID + '_Target_Column_Name').empty();
+            $('#' + selRowID + '_Target_Column_Name').autocomplete();
+            $('#' + selRowID + '_Target_Column_Name').autocomplete('option', 'source', data);
+
+            //$('#' + selRowID + '_Target_Column_Name').append($('<option>').text("Ignore").val("Ignore"));
+            //$.each(data, function (index, value) {
+            //    var Column_Name = value.Column_Name;
+            //    var DataType = value.Data_Type;
+            //    $('#' + selRowID + '_Target_Column_Name').append($('<option>').text(Column_Name).val(Column_Name).attr("key", DataType));
+            //});
+
+            ///Assigning Data type value on column change.
+            if (DefaultValue != '' && DefaultValue != 'Ignore') {
+
+                var obj = data.filter(function (data) { return data.label.toLowerCase() == DefaultValue.toLowerCase() });
+
+                if (obj != null & obj != "" & obj.length > 0) {
+                    $('#' + selRowID + '_Target_Column_Name').val(DefaultValue);
+                    if (automap == true) {
+                        var dataType = obj[0].value == 'Ignore' ? '' : obj[0].value;
+                        $("#SourcetableGrid").jqGrid('setCell', selRowID, 'Target_Data_Type', dataType);
+                    }
+                }
+                else
+                    $('#' + selRowID + '_Target_Column_Name').val('Ignore');
+                //if (automap == true) {
+                //    var optionValue = $('#' + selRowID + '_Target_Column_Name').val();
+                //    var dataType = $('#' + selRowID + '_Target_Column_Name').val(optionValue).find("option[value=" + optionValue + "]").attr('key');
+                //    $("#SourcetableGrid").jqGrid('setCell', selRowID, 'Target_Data_Type', dataType);
+                //}
+
+            }
+            else {
+                $('#' + selRowID + '_Target_Column_Name').val('Ignore');
+                $("#SourcetableGrid").jqGrid('setCell', selRowID, 'Target_Data_Type', ' ');
+            }
+        }
+
+        function InitializingTransformationGrid(TemplateID, TemplateName) {
+
+            $("#TransformListtable").GridUnload();
+            var TransformatiomServiceUrl = baseUrl + "api/AutomatAPI/GetTransTemplateList";
+
+            $grid = jQuery("#TransformListtable").jqGrid({
+                mytype: 'POST',
+                datatype: 'json',
+                url: TransformatiomServiceUrl,
+                height: 150,
+                width: 1250,
+                autowidth: true,
+                shrinkToFit: false,
+                rowNum: 1000,
+                rowList: [10, 20, 30],
+                postData: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), TemplateName: TemplateID },
+                colNames: ['Trans Order', 'Trans Type', 'Trans Description', 'Trans Rule', 'Trans Table', 'Trans Column', 'Data Type', 'Length', 'Trans_ID'],
+                colModel: [
+                    { name: 'Trans_Order', index: 'Trans_Order', width: 100, editable: true },
+                    { name: 'Trans_Type', index: 'Trans_Type', width: 150 },
+                    { name: 'Trans_Name', index: 'Trans_Name', width: 350 },
+                    { name: 'Trans_Rule', index: 'Trans_Rule', width: 350 },
+                    { name: 'Table_Name', index: 'Table_Name', width: 150, },
+                    { name: 'Field_Name', index: 'Field_Name', width: 150 },
+                    { name: 'Field_Data_Type', index: 'Field_Data_Type', width: 80, hidden: true },
+                    { name: 'Field_Length', index: 'Field_Length', width: 50, hidden: true },
+                    { name: 'Trans_ID', index: 'Trans_ID', width: 20, hidden: true }],
+                multiselect: false,
+                pager: '#pager_transformdatatable',
+                viewrecords: true,
+                loadonce: true,
+                gridview: true,
+                //scrollOffset: 0,
+                reloadAfterSubmit: true,
+                showButtonPanel: true,
+                loadui: "disable",
+                loadComplete: function () {
+                },
+                onSelectRow: function (rowId) {
+                    //var rowData = $('#TransformListtable').jqGrid('getRowData', rowId);
+                    //jQuery('#TransformListtable').jqGrid('editRow', rowId, true);
+                },
+                gridComplete: function () {
+                    $(this).prop('p').loadui = 'enable';
+                },
+                caption: 'Transformation'
+            });
+
+            jQuery("#TransformListtable").jqGrid('navGrid', '#pager_transformdatatable', {
+                edit: true, add: false, del: false, search: false, refresh: false,
+                edittext: 'Edit',
+                deltext: 'Delete',
+                editfunc: function (rowid) {
+                     
+                    $("#hdnTransformationID").val($.trim($grid.jqGrid('getCell', rowid, 'Trans_ID')));
+                    $("#txttrans").val($.trim($grid.jqGrid('getCell', rowid, 'Trans_Name')));
+                    $("#selecttransformation").val($.trim($grid.jqGrid('getCell', rowid, 'Trans_Type')));
+                    $("#txtTransRule").val($.trim($grid.jqGrid('getCell', rowid, 'Trans_Rule')));
+                    $("#hdnFieldName").val($.trim($grid.jqGrid('getCell', rowid, 'Field_Name')));
+                    $("#selectTranstable option:contains(" + $.trim($grid.jqGrid('getCell', rowid, 'Table_Name')) + ")").attr('selected', true).trigger("change");
+                    $("#txtTransOrder").val($.trim($grid.jqGrid('getCell', rowid, 'Trans_Order')));
+                    $("#txttrans").focus();
+                    $("#btnaddtrans").attr('value', 'Update');
+                    $("#btnCanceltrans").attr('value', 'Cancel');
+                }
+            },
+                   {
+                       closeOnEscape: true,
+                       closeAfterEdit: true,
+                       afterComplete: function (response) {
+                           if (response.responseText) {
+                               alert(response.responseText);
+                           }
+                       },
+                       afterSubmit: function () {
+                           $(this).jqGrid("setGridParam", { datatype: 'json' });
+                           return [true];
+                       }
+                   },
+                   {
+                       closeOnEscape: true,
+                       closeAfterEdit: true,
+                       afterComplete: function (response) {
+
+                           if (response.responseText) {
+                               alert(response.responseText);
+                           }
+                       }
+                   },
+                   {
+                       closeOnEscape: true,
+                       closeAfterEdit: true,
+                       recreateForm: true,
+                       afterComplete: function (response) {
+                           if (response.responseText) {
+                               if (response.responseText == 'Deleted successfully.')
+                                   ShowMessage(response.responseText, 'success');
+                               else ShowMessage(response.responseText, 'failed');
+                           }
+                       }
+                   });
+
+        }
+
+        $("#btnCanceltrans").click(function () {
+            $('#hdnTransformationID').val("");
+            $('#txttrans').val("");
+            $('#txtTransRule').val("");
+            $('#txtTransOrder').val("");
+            $("#btnaddtrans").attr('value', 'Save');
+            $("#btnCanceltrans").attr('value', 'Clear');
+        });
+
+
+        function Reset() {
+            $('#hdntemplateid').val('');
+            $('#txttemplate').val('');
+            $('#txtTransRule').val('');
+            $('#txttrans').val('');
+            $('#Sourcetable').empty();
+            $('#Targetable').empty();
+
+
+            $('#Targetable').multipleSelect("refresh");
+            $('#Sourcetable').multipleSelect("refresh");
+
+
+            $('#selectTranstable').empty();
+            $('#selecttranscolumn').empty();
+
+            $('#chksource').prop('checked', true);
+            $('#chklookup').prop('checked', false);
+            $('#selectConnection').val('Select');
+            $('#TargetConnection').val('Select');
+            $('#select_existing_Template').val('Select');
+
+            $("#divSourcetable").show();
+            $("#divTransformListtable").show();
+
+            InitializingGrid(0, '');
+
+            $("#divSourcetable").hide();
+            $("#divTransformListtable").hide();
+
+
+            $('#hdnTransformationID').val("");
+            $('#txttrans').val("");
+            $('#txtTransRule').val("");
+            $('#txtTransOrder').val("");
+            $("#btnaddtrans").attr('value', 'Save');
+            $("#btnCanceltrans").attr('value', 'Clear');
+
+        }
+
+        function ShowProgress() {
+            setTimeout(function () {
+                var modal = $('<div />');
+                modal.addClass("modal");
+                var loading = $(".loadingprogress");
+                loading.show();
+                var top = Math.max($(window).height() / 2 - loading[0].offsetHeight / 2, 0);
+                var left = Math.max($(window).width() / 2 - loading[0].offsetWidth / 2, 0);
+                loading.css({ top: top, left: left });
+            }, 200);
+        }
+
+        function HideProgress() {
+            setTimeout(function () {
+                var modal = $('<div />');
+                modal.addClass("modal");
+                var loading = $(".loadingprogress");
+                loading.hide();
+                var top = Math.max($(window).height() / 2 - loading[0].offsetHeight / 2, 0);
+                var left = Math.max($(window).width() / 2 - loading[0].offsetWidth / 2, 0);
+                loading.css({ top: top, left: left });
+            }, 200);
+        }
+
+
+        $('#btnaddParameter').click(function () {
+            var baseUrl = '@Url.Content("~/")';
+
+            var TemplateName = $('#txttemplate').val();
+            if ($('#hdnMode').val() == "Edit") {
+                TemplateName = $('#select_existing_Template option:selected').text();
+            }
+
+            if (TemplateName == '') {
+                alert('Please enter template name');
+                return;
+            }
+
+            if ($('#hdntemplateid').val() == '') {
+                alert('Please Save Template');
+                return;
+            }
+
+
+            if ($('#ddlparameterName').val() == '') {
+                alert('Please enter Parameter name');
+                return;
+            }
+
+            if ($('#txtParameterValue').val() == '') {
+                alert('Please enter Parameter Value');
+                return;
+            }
+
+
+            var ParameterAdd = {
+                Parameter_ID: $("#hdnParameterID").val(),
+                Client_ID: $("#hdnClientId").val(),
+                Project_ID: $("#hdnProjectId").val(),
+                Template_Name: TemplateName,
+                Template_ID: $('#hdntemplateid').val(),
+                Parameter_Name: $('#ddlparameterName').val(),
+                Parameter_Value: $('#txtParameterValue').val(),
+                Created_By: '@ViewData["UserName"]',
+                Tool_ID: $("#hdnToolID").val()
+            };
+
+            $.ajax({
+                type: "POST",
+                url: baseUrl + "Api/AutomatAPI/SaveParameter",
+                data: JSON.stringify(ParameterAdd),
+                dataType: "json",
+                contentType: "application/json",
+                success: function (data) {
+                    alert('Successfully added Parameter Values');
+                    LoadParameterList();
+                    //$('#txtParameterName').val("");
+                    $('#txtParameterValue').val("");
+                    $('#hdnParameterID').val("");
+
+                }
+            });
+
+
+        });
+
+
+        function LoadParameterList() {
+
+            var tablename = this.value;
+            var baseUrl = '@Url.Content("~/")';
+            var ServiceUrl = baseUrl + "api/AutomatAPI/GetTemplateParameterData";
+
+            var TemplateName = $('#txttemplate').val();
+            if ($('#hdnMode').val() == "Edit") {
+                TemplateName = $('#select_existing_Template option:selected').text();
+            }
+
+
+            $('#ParameterListtable').show();
+            $("#ParameterListtable").GridUnload();
+            $grid = jQuery("#ParameterListtable").jqGrid({
+                mytype: 'POST',
+                datatype: 'json',
+                url: ServiceUrl,
+                height: 150,
+                width: 550,
+                autowidth: true,
+                shrinkToFit: true,
+                editurl: baseUrl + 'Automaton/ParameterUpdate',
+                rowNum: 10,
+                rowList: [10, 20, 30],
+                prmNames: { id: "Parameter_ID" },
+                postData: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), TemplateName: TemplateName },
+                colNames: ['Parameter_ID', 'Parameter Name', 'Parameter Value'],
+                colModel: [
+                     { name: 'Parameter_ID', index: 'Parameter_ID', width: 150, key: true, hidden: true },
+                { name: 'Parameter_Name', index: 'Parameter_Name', width: 100 },
+                { name: 'Parameter_Value', index: 'Parameter_Value', width: 250 }
+                ],
+                multiselect: false,
+                pager: '#pager_ParameterListtable',
+                viewrecords: true,
+                loadonce: true,
+                gridview: true,
+                scrollOffset: 0,
+                reloadAfterSubmit: true,
+                showButtonPanel: true,
+                pginput: true,
+                pgbuttons: true,
+                loadui: "disable",
+                loadComplete: function () {
+                },
+                gridComplete: function () {
+                    $(this).prop('p').loadui = 'enable';
+                },
+                caption: 'Parameters'
+            });
+
+            jQuery("#ParameterListtable").jqGrid('navGrid', '#pager_ParameterListtable', {
+                edit: true, add: false, del: true, search: false, refresh: false,
+                edittext: 'Edit',
+                deltext: 'Delete',
+                editfunc: function (rowid) {
+
+                    //var _txtParameterName = $("#txtParameterName");
+                    var _txtParameterValue = $("#txtParameterValue");
+                    //_txtParameterName.val($.trim($grid.jqGrid('getCell', rowid, 'Parameter_Name')));
+
+                    $("#ddlparameterName").val($grid.jqGrid('getCell', rowid, 'Parameter_Name'));
+                    _txtParameterValue.val($.trim($grid.jqGrid('getCell', rowid, 'Parameter_Value')));
+                    $("#hdnParameterID").val(rowid);
+                    //_txtParameterName.focus();
+                }
+            },
+           {
+               closeOnEscape: true,
+               closeAfterEdit: true,
+               afterComplete: function (response) {
+                   if (response.responseText) {
+                       alert(response.responseText);
+                   }
+               },
+               afterSubmit: function () {
+                   $(this).jqGrid("setGridParam", { datatype: 'json' });
+                   return [true];
+               }
+           },
+           {
+               closeOnEscape: true,
+               closeAfterEdit: true,
+               afterComplete: function (response) {
+
+                   if (response.responseText) {
+                       alert(response.responseText);
+                   }
+               }
+           },
+           {
+               closeOnEscape: true,
+               closeAfterEdit: true,
+               recreateForm: true,
+               afterComplete: function (response) {
+                   if (response.responseText) {
+                       if (response.responseText == 'Deleted successfully.')
+                           ShowMessage(response.responseText, 'success');
+                       else ShowMessage(response.responseText, 'failed');
+                   }
+               }
+           });
+
+        }
+
+        $("#dialog").dialog({
+            autoOpen: false,
+            modal: true,
+            width: 900,
+            height: 450,
+            beforeClose: function (event, ui) {
+                $('#hdnParameterID').val("");
+            }
+        });
+
+        $("#btnTemplateParameters").click(function () {
+            var TemplateName = $('#txttemplate').val();
+            if ($('#hdnMode').val() == "Edit") {
+                TemplateName = $('#select_existing_Template option:selected').text();
+            }
+            $("#txtParameterTemplateName").val(TemplateName);
+            $("#dialog").dialog("open");
+            LoadParameterList();
+        });
+
+        $("#btnCancelParameter").click(function () {
+
+
+            //$('#txtParameterName').val("");
+            $('#txtParameterValue').val("");
+            $('#hdnParameterID').val("");
+            //$("#dialog").dialog('close');
+        });
+
+    });
+
+
+    //Source Grid Binding
+
+    function AddTableToSourceGrid(tablename) {
+         
+        var FieldType = ""; // field type set empty. based on table selection the type will be append.
+
+        $('#hdnsrcconnectionid').val($('#selectConnection option:selected').val());
+        var databaseIP = $('#selectConnection option:selected').text().split(':')[0];
+        var connection_id = $('#hdnsrcconnectionid').val();
+        var baseUrl = '@Url.Content("~/")';
+        var ServiceUrl = baseUrl + "api/AutomatAPI/GetTableDataDetailTrans";
+
+        var grid = jQuery("#SourcetableGrid");
+        var reccount = grid.getGridParam("reccount")
+        $("#divSourcetable").show();
+        $.ajax({
+            type: "GET",
+            url: ServiceUrl,
+            data: {
+                client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), Database_IP: databaseIP, Table_Name: tablename,
+                connectionid: connection_id, Field_Type: FieldType, Recordcount: reccount, tgtConnectionid: $('#selectConnection option:selected').val()
+            },
+            dataType: "json",
+            contentType: "application/json",
+            success: function (data) {
+                 
+                var grid = jQuery("#SourcetableGrid");
+                var reccount = grid.getGridParam("reccount") + 1;
+
+                for (i = 0; i < data.length; i++) {
+                    grid.jqGrid('addRowData', reccount + i, data[i], "last");
+                }
+
+                $("#sp_1_pager_datatable").text("1");
+
+            }
+        });
+    }
+
+    function BindTransTableList() {
+         
+        $('#selectTranstable').empty();
+        $('#selectTranstable').append($('<option>').text('Select').val('Select'));
+
+
+
+        var SourcetableList = $("#Sourcetable").multipleSelect("getSelects");
+        $.each(SourcetableList, function (key, value) {
+            $('#selectTranstable').append($('<option>').text(value).val($('#selectConnection option:selected').val()));
+            SourceTargetSelected = true;
+        });
+
+        var SourceTargetSelected = false;
+        var TargetTableList = $("#Targetable").multipleSelect("getSelects");
+        $.each(TargetTableList, function (key, value) {
+            $('#selectTranstable').append($('<option>').text(value).val($('#TargetConnection option:selected').val()));
+            SourceTargetSelected = true;
+        });
+
+
+
+
+        if (SourceTargetSelected == false) {
+
+
+            var TemplateName = $('#txttemplate').val();
+            if ($('#hdnMode').val() == "Edit") {
+                TemplateName = $('#select_existing_Template option:selected').text();
+            }
+
+            if (TemplateName == "") {
+                return;
+            }
+
+            $.ajax({
+                type: "GET",
+                url: baseUrl + "api/AutomatAPI/GetTemplateSrcTgtTableNames",
+                data: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), Template_Id: $('#hdntemplateid').val(), Template_Name: TemplateName, SourceConnectionID: $('#selectConnection option:selected').val(), TargetConnectionID: $('#TargetConnection option:selected').val() },
+                dataType: 'json',
+                success: function (data) {
+                     
+                    $.each(data, function (index, value) {
+                        $('#selectTranstable').append($('<option>').text(value.TableName).val(value.SourceConnectionID));
+                    });
+                }
+            });
+
+        }
+    }
+
+
+</script>
+
+
+<div class="table-div">
+    <div class="loadingprogress" align="center">
+        <span id="lodingMessage" style="display:none;">Generating xml.</span> Please wait.<br />
+        <br />
+        <img src="../Images/loader.gif" alt=" " />
+    </div>
+    <table style="border:thick;">
+        <tr>
+            <td class="table-div-page1-cl1">
+                <span id="labeltable" class="fontstyle">Template Name</span>
+            </td>
+            <td class="table-div-page1-cl2">
+                <div id="divdbl">
+                    <input id="txttemplate" type="text" style="width:84%" class="textbox" />
+                    <select id="select_existing_Template" class="dropdown" style="width:90%;"></select>
+                </div>
+            </td>
+            <td class="table-div-page2-cl1"></td>
+            <td class="table-div-page2-cl2"> </td>
+        </tr>
+        <tr>
+            <td class="table-div-page1-cl1">
+                <label for="tablename" id="labelcol" class="fontstyle">Target Connection</label>
+            </td>
+            <td class="table-div-page1-cl2">
+                <select id="selectConnection" class="dropdown">
+                    <option style="margin:20px;" value="area1">Select</option>
+                </select>
+            </td>
+            <td class="table-div-page2-cl1"><span id="labeltable" class="fontstyle">Target Table</span></td>
+            <td class="table-div-page2-cl1">
+                <select id="Sourcetable" style="width: 99%;" tabindex="24" multiple="multiple"></select>
+            </td>
+        </tr>
+        <tr>
+            <td class="table-div-page1-cl1">
+                <span id="labeltable" class="fontstyle">Source Connection</span>
+            </td>
+            <td class="table-div-page1-cl2">
+                <select id="TargetConnection" class="dropdown"><option style="margin:20px;" value="area1">Select</option> </select>
+            </td>
+            <td class="table-div-page2-cl1">
+                <span class="fontstyle">
+                    <input type="radio" id="chksource" name="rdb" value="Source" /><span>Source</span>
+                    <input type="radio" id="chklookup" name="rdb" value="Lookup" class="fontstyle" /><span>Lookup</span>
+                </span>
+            </td>
+            <td class="table-div-page2-cl1">
+                <div style="width: 90%; white-space: nowrap;">
+                    <select id="Targetable" tabindex="24" multiple="multiple"></select>
+                    <input type="checkbox" id="automaticallocate" />
+                </div>
+            </td>
+        </tr>
+
+    </table>
+    <table>
+        <tr>
+            <td>
+                <div id="divSourcetable">
+                    <table id="SourcetableGrid" class="scroll" align='center'></table>
+                    <div id="pager_datatable" class="scroll"></div>
+                </div>
+            </td>
+        </tr>
+        <tr><td colspan="4" style="text-align:right"><input type="button" id="btnsavesource" value="Save" class="button btn-width-150"></td></tr>
+    </table>
+
+    <table>
+        <tr>
+            <td class="table-div-page1-cl1"><span id="labeltable" class="fontstyle">Transformation Description</span></td>
+
+            <td class="table-div-page1-cl2" colspan="4"><input type="text" id="txttrans" class="textbox" /></td>
+
+        </tr>
+        <tr>
+            <td class="table-div-page1-cl1"><label for="tablename" id="labelcol" class="fontstyle">Transformation Type</label></td>
+
+            <td class="table-div-page1-cl2"><select id="selecttransformation" class="dropdown"></select></td>
+            <td class="table-div-page2-cl1">
+                <span id="labeltable" class="fontstyle">Trans Rule</span>
+            </td>
+            <td class="table-div-page2-cl2">
+                <input type="text" id="txtTransRule" class="textbox" style="width:75%" /><input type="button" id="btnrulehower" class="button" value="?" />
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td class="table-div-page1-cl1">
+                <span id="labeltable" class="fontstyle">Table</span>
+            </td>
+            <td class="table-div-page1-cl2">
+                <select id="selectTranstable" class="dropdown">
+                    <option style="margin:20px;" value="area1">Select</option>
+                </select>
+            </td>
+            <td class="table-div-page2-cl1">
+                <label for="tablename" id="labelcol" class="fontstyle">Column</label>
+            </td>
+            <td class="table-div-page2-cl2">
+                <select id="selecttranscolumn" class="dropdown"><option style="margin:20px;" value="area1">Select</option></select>
+            </td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td class="table-div-page1-cl1"><span id="labeltable" class="fontstyle">Transformation Order</span></td>
+            <td class="table-div-page1-cl2"><input type="text" id="txtTransOrder" class="textbox" width="100" /></td>
+            <td class="table-div-page1-cl1"></td>
+            <td class="table-div-page1-cl2" colspan="2">
+                <div style="float:right;">
+                    <input type="button" id="btnaddtrans" value="Save" class="button btn-width-150" />
+                    <input type="button" id="btnCanceltrans" value="Clear" class="button btn-width-150" />
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <td>
+                <div id="divTransformListtable">
+                    <table id="TransformListtable" class="scroll" align='center'></table>
+                    <div id="pager_transformdatatable" class="scroll"></div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4" style="text-align:left;">
+                <div class="form-btn-row" style="margin: 28px; text-align:right;">
+                    <input type="button" id="btnTemplateParameters" value="Define Parameters" class="button btn" />
+                    <input type="button" id="btngeneratexml" value="Generate XML" class="button btn-width-150" />
+                    <input type="button" id="btnreset" value="Reset" class="button btn-width-150" />
+                    <br />
+                    <span id="lbldisplaypath" class="fontstyle"></span>
+
+                    <input type="hidden" id="hdntemplateid" />
+                    <input type="hidden" id="hdnsrcconnectionid" />
+                    <input type="hidden" id="hdntrtconnectionid" />
+                    <input type="hidden" id="hdnTargetTables" />
+                    <input type="hidden" id="hdnSourceTables" />
+                    <input type="hidden" id="hdnLookUpTables" />
+                    <input type="hidden" id="hdnMode" value="New" />
+                    <input type="hidden" id="hdnType" />
+
+                    <input type="hidden" value="@ViewData["ClientID"]" id="hdnClientId" />
+                    <input type="hidden" value="@ViewData["ProjectID"]" id="hdnProjectId" />
+                    <input type="hidden" value="@ViewData["ConfigID"]" id="hdnConfigID" />
+                    <input type="hidden" value="@ViewData["ToolID"]" id="hdnToolID" />
+
+                    <input type="hidden" id="hdnTransformationID" />
+
+                    <input type="hidden" id="hdnFieldName" />
+                </div>
+
+            </td>
+        </tr>
+    </table>
+
+    <div id="divHiddenDataSourceColumn"></div>
+    <div id="divHiddenDataTargetColumn"></div>
+
+</div>
+<script>
+    $(function () {
+
+        $('#Targetable').change(function () {
+            console.log($(this).val());
+            $("#automaticallocate").attr('checked', false);
+
+        }).multipleSelect({
+            width: '100%',
+            position: 'bottom',
+            filter: true,
+            selectAll: false,
+            onClick: function (view) {
+                 
+                if (view.checked) {
+
+                    var FieldType = "SOURCE";
+
+                    if ($("#chklookup").prop('checked') == true) {
+                        FieldType = "LOOKUP";
+                    }
+
+                    localStorage.setItem(view.value, FieldType);
+                }
+
+                BindTransTableList();
+            }
+        });
+
+
+        $('#Sourcetable').change(function () {
+            console.log($(this).val());
+            $("#automaticallocate").attr('checked', false);
+        }).multipleSelect({
+            width: '100%',
+            position: 'bottom',
+            filter: true,
+            selectAll: false,
+            onClick: function (view) {
+                 
+                if (view.checked) {
+
+                    AddTableToSourceGrid(view.value);
+                }
+
+                BindTransTableList();
+                /*
+                view.label: the text of the checkbox item
+                view.checked: the checked of the checkbox item
+                */
+            }
+        });
+
+    });
+</script>
+
+
+<div id="dialog" title="Define Parameters" style="display: none; font-size: 12px">
+    <table>
+        <tr>
+            <td colspan="4"><b>Template Name</b> &nbsp; <input type="text" id="txtParameterTemplateName" style="width:580px" class="textbox" disabled /></td>
+        </tr>
+        <tr>
+            <td><b>Parameter Name</b> </td>
+            <td>
+                @*<input type="text" id="txtParameterName" class="textbox" />*@
+                <select id="ddlparameterName" class="dropdown">
+                    <option value="SRC_Query">Source Query </option>
+                    <option value="SRC_Query2">Join Query</option>
+                    <option value="LKP_Query">Lookup Query </option>
+                    <option value="LKP_Columns">Lookup Columns</option>
+                    <option value="Variables">Variables</option>
+                </select>
+            </td>
+            <td><b>Parameter Value</b> </td>
+            <td>
+                <textarea name="txtParameterValue" id="txtParameterValue" style="width:300px" class="textbox"></textarea>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="3"></td>
+            <td>
+                <div style="float:right">
+                    <input type="button" id="btnaddParameter" value="Save" class="button btn" />
+                    <input type="button" id="btnCancelParameter" value="Clear" class="button btn" />
+                    <input type="hidden" value="" id="hdnParameterID" />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+    </table>
+
+    <table id="ParameterListtable" align='center'></table>
+    <div id="pager_ParameterListtable" class="scroll"></div>
+</div>

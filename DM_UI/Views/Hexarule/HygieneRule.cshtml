@@ -1,0 +1,202 @@
+﻿@{
+    ViewBag.Title = "HygieneRule";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var message = TempData["AlertMsg"] ?? string.Empty;
+
+}
+<script type="text/javascript">
+    $(function () {
+        var baseUrl = '@Url.Content("~/")';
+        var client_ID = $("#hdnClientId").val();
+        var project_ID = $("#hdnProjectId").val();
+        var ConfigID = $("#hdnConfigId").val();
+        var DatabaseIP = $("#hdnDatabaseIP").val();
+        var SourceTarget = $("#hdnSourceTarget").val();
+        var DatabaseName = $("#hdnDatabaseName").val();
+
+
+        $("#btnViewData").hide();
+        $("#btnSave").hide();
+
+
+        $.ajax({
+            type: "GET",
+            url: baseUrl + "api/HXRRuleAPI/MetaDataTable",
+            data: { client_ID: client_ID, project_ID: project_ID, config_ID: ConfigID },
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (index, value) {
+                    $('#ddlTables').append($('<option>').text(value).val(value));
+                });
+                $('#ddlTables').change();
+            },
+            error: function (xhr) {
+                alert(xhr.statusText);
+            }
+        });
+
+
+
+        $("#ddlTables").change(function () {
+            $("#btnViewData").show();
+            $("#btnSave").show();
+
+            var selected = $("#ddlTables option:selected").text();
+
+            var mydata = [];
+            var _Results =
+                    $.ajax({
+                        url: baseUrl + "api/HXRRuleAPI/GetMetaDataColumnByTableName",
+                        type: "GET",
+                        contentType: "application/json; charset=utf-8",
+                        data: {
+                            client_ID: client_ID,
+                            project_ID: project_ID,
+                            database_IP: DatabaseIP,
+                            source_Target: SourceTarget,
+                            database_Name: DatabaseName,
+                            Config_Id: ConfigID,
+                            Table_Name: selected
+                        },
+                        dataType: "json",
+                        async: false,
+                        success: function (data, result) {
+                            if (!result) alert('Failure to retrieve columns.');
+
+                        },
+                        error: function (xhr) {
+                            alert("Failed");
+                        }
+                    }).responseText;
+            _Results = JSON.parse(_Results);
+            //for (var i = 0; i < _Results.rows.length; i++) {
+            $.each(_Results, function (index, item) {
+                var val = item.split(":");
+                mydata.push(
+                    {
+                        id: index,
+                        columnname: val[0],
+                        datatype: val[1]
+                    });
+            });
+
+            $("#grdHygiene").GridUnload();
+            $grid = jQuery("#grdHygiene").jqGrid({
+                data: mydata,
+                datatype: 'local',
+                height: 240,
+                rowNum: 10,
+                search: { caption: 'Search Record' },
+                rowList: [5, 10, 20, 50],
+                colNames: ['Column Name', 'Data Type'],
+                colModel: [
+                    { name: 'columnname', index: 'columnname', width: 30, align: 'left', editable: false },
+                    { name: 'datatype', index: 'datatype', width: 30, align: 'left', editable: false }
+                ],
+                pager: '#pgrHygiene',
+                viewrecords: true,
+                sortable: true,
+                autowidth: true,
+                showButtonPanel: true,
+                closeAfterEdit: true,
+                caption: 'Column details',
+                loadui: "block",
+                loadtext: "Loading...",
+                rownumbers: true,
+                multiselect: true
+            }).navGrid('#pgrHygiene', { edit: false, add: false, del: false, search: false, refresh: false });
+
+
+        });
+
+
+        $("#btnViewData").click(function () {
+
+        });
+        $("#btnSave").click(function () {
+
+            if (confirm('Are you applying selected Hygiene Rule for selected column?')) {
+
+                //Functionality
+
+                if (response.responseText == 'Saved successfully.')
+                    ShowMessage(response.responseText, 'success');
+                else ShowMessage(response.responseText, 'failed');
+            }
+
+        });
+
+
+
+        var message = '@message'
+        if (message) {
+            //alert(message);
+            var _class;
+            if (message == 'Saved successfully.') {
+                _class = 'success';
+            }
+            else {
+                _class = 'failed';
+            }
+            ShowMessage(message, _class);
+        }
+        else
+            HideMessage();
+
+    });
+    function ShowMessage(message, cssclass) {
+        $("#msgbox").show();
+        $("#msgbox span").text(message);
+
+        $("#msgbox span").removeClass();
+        $("#msgbox span").addClass(cssclass);
+    }
+    function HideMessage() {
+        $("#msgbox").hide();
+    }
+</script>
+<div class="content-body" style="width:100%;">
+    <div class="group">
+        <div class="form-group width-per-100 fL" style="width: 80%;margin: auto;float: none;">
+            <div class="col-40" style="width: 50%;">
+                <span class="control-label">Select rule</span>
+                <select id="ddlhygieneRule" class="dropdown" style="width:100%;"></select>
+            </div>
+            <div class="col-40" style="width: 48%; padding-right: 0; ">
+                <label class="control-label">Select table</label>
+                <select id="ddlTables" class="dropdown" style="width:100%;"></select>
+            </div>
+        </div>
+    </div>
+    <div style="width:80%;margin:auto;">
+        <div class="group">
+            <div class="form-group width-per-100">
+                <table id="grdHygiene" class="width-per-100"></table>
+                <div id="pgrHygiene" class="scroll"></div>
+            </div>
+        </div>
+    </div>
+    <div style="width:80%;margin:auto;">
+        <div class="group">
+            <div class="form-group width-per-100">
+                <table id="grdData" class="width-per-100"></table>
+                <div id="pgrData" class="scroll"></div>
+            </div>
+        </div>
+    </div>
+    <div id="msgbox" class="group text-align-center">
+        <span class="success">Saved Successfully.</span>
+    </div>
+    <div class="group">
+        <div class="form-group text-align-center form-group-btn width-per-100">
+            <input class="form-button" type="button" value="View Data" id="btnViewData">
+            <input class="form-button" type="button" value="Save" id="btnSave">
+        </div>
+    </div>
+</div>
+<input type="hidden" value="@ViewData["ClientID"]" id="hdnClientId" />
+<input type="hidden" value="@ViewData["ProjectID"]" id="hdnProjectId" />
+<input type="hidden" value="@ViewData["ConfigID"]" id="hdnConfigId" />
+<input type="hidden" value="@ViewData["DatabaseIP"]" id="hdnDatabaseIP" />
+<input type="hidden" value="@ViewData["SourceTarget"]" id="hdnSourceTarget" />
+<input type="hidden" value="@ViewData["DatabaseName"]" id="hdnDatabaseName" />

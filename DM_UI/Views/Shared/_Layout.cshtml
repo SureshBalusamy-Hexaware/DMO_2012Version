@@ -1,0 +1,58 @@
+﻿@using Resources
+
+
+@{
+    //ViewBag.Title = "_Layout";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+<div class="content">
+    <!-- Body start -->
+    @if (ViewBag.Menu != null)
+    {
+        <div class="content_mid contact">
+            <div class="ui-tabs">
+                <ul class="ui-tabs-nav">
+                    @foreach (var m in ((List<DM_UI.Models.Menu>)ViewBag.Menu).Where(r => r.ParentMenuId == 0))
+                    {
+                        <li class="@((@m.HtmlAttribute.Selected) ? "ui-state-default ui-corner-top ui-tabs-selected shadow" : "ui-state-default ui-corner-top shadow")" style="@(@m.HtmlAttribute.Style)">
+
+                            @if (((List<DM_UI.Models.Menu>)ViewBag.Menu).Count(r => r.ParentMenuId == m.MenuId) > 0)
+                            {
+                                <a href="#">@m.MenuName</a>
+                                <ul style="padding: 0px;width:100%;" class="shadow">
+                                    @foreach (var n in ((List<DM_UI.Models.Menu>)ViewBag.Menu).Where(r => r.ParentMenuId == m.MenuId).OrderBy(f=>f.MenuOrderId))
+                                    {
+                                        <li class="@((@n.HtmlAttribute.Selected) ? "ui-state-default ui-corner-top ui-tabs-selected shadow" : "ui-state-default ui-corner")" style="@(@n.HtmlAttribute.Style)">
+                                            @Html.ActionLink(n.MenuName, n.Action, n.Controller, null, new { @style = "padding-Left: 8px !important;width: 96% !important;" })
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                            else
+                            {
+                                if (m.Controller == null)
+                                {
+                                    <a href="@m.Action">@m.MenuName</a>
+                                }
+                                else
+                                {
+                                    @Html.ActionLink(m.MenuName, m.Action, m.Controller)
+                                }
+                            }
+                        </li>
+                        
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+    @RenderBody()
+    @*<div class="form-load-img">
+            <asp:Image ID="Loadinglbl" ClientIDMode="Static" runat="server" ImageUrl="~/DMO_Style/images/load5.gif" Style="visibility: hidden;" />
+        </div>*@
+    @Html.Partial("__Processing")
+    <!-- Body end -->
+</div>
+@*@Scripts.Render("~/bundles/jquery")*@
+@RenderSection("Scripts", false)

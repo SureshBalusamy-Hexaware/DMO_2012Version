@@ -1,0 +1,328 @@
+﻿@{
+    ViewBag.Title = "Downloads";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    @*$(function () {
+       var baseUrl = '@Url.Content("~/")';
+        var client_ID = $("#hdnClientId").val();
+        var project_ID = $("#hdnProjectId").val();
+        var Config_ID = $("#hdntgtConfigId").val();
+
+        $grid = jQuery("#grdTables").jqGrid({
+            mytype: 'GET',
+            url: baseUrl + "api/AutomatAPI/GetTableToDownload",
+            postData: { client_ID: client_ID, project_ID: project_ID, config_ID: Config_ID },
+            datatype: 'json',
+            height: 200,
+            rowNum: 10,
+            rowList: [5, 10, 20, 50],
+            colNames: ['Tables', 'Format', 'Action'],
+            colModel: [
+                { name: 'Tables', search: false, sortable: true, editable: false, align: 'center', width: 20 },
+                {
+                    name: 'Format', search: false, sortable: true, editable: false, align: 'center', width: 20,
+                    formatter: function (cellValue, option) {
+                        return '<input type="radio" value="xls" name="radio_' + option.rowId + '" /><label style="padding: 0 10px 0 0;">xls</label><input type="radio" value="xlsx" name="radio_' + option.rowId + '" /><label style="padding: 0 10px 0 0;">xlsx</label><input type="radio" value="csv" name="radio_' + option.rowId + '"/><label style="padding: 0 10px 0 0;">csv</label><input type="radio" value="xml" name="radio_' + option.rowId + '"/><label style="padding: 0 10px 0 0;">xml</label>';
+                    }
+                },
+                { name: 'Action', search: false, sortable: false, editable: false, align: 'center', width: 20, formatter: lnkDownload }
+            ],
+            pager: '#pgrTables',
+            viewrecords: true,
+            sortable: true,
+            autowidth: true,
+            showButtonPanel: true,
+            closeAfterEdit: true,
+            caption: 'Target Tables',
+            scrollOffset: 0,
+            onSelectRow: function (rowId) {
+            },
+        }).navGrid('#pgrTables', { edit: false, add: false, del: false, search: false });
+    });
+    function lnkDownload(cellvalue, options, rowObject) {
+        var _rowId = options.rowId;
+        var _TableName = rowObject[0];
+        return "<input class='form-button' type='button' name='" + _TableName + "' value='Dwonload' id='" + _rowId + "'onclick='download(this)'>";
+    }
+    function download(cntrl)
+    {
+        var id = "#radio_" + cntrl.id + " :radio:checked + label";
+        var selected = $("input[type='radio'][name='radio_" + cntrl.id + "']:checked");
+
+        if (selected.length > 0) {
+            window.location.href = "@( @Url.Action("DownloadFile", "Automaton") )?TableName=" + cntrl.name + "&type=" + selected.val() + "";
+        }
+        else {
+            alert("select type");
+            return false;
+        }
+    }
+    function CallDownload(cntrl) {
+        debugger;
+        var _rowId = cntrl.id;
+        var _TableName = cntrl.name;
+        $.ajax({
+            type: "GET",
+            //url: baseUrl + "api/AutomatAPI/GetMetaDataTableNameList",
+            //data: { Client_ID: $("#hdnClientId").val(), Project_ID: $("#hdnProjectId").val(), Source_Target: servername, Tool_Id: $("#hdnToolID").val(), },
+            url: baseUrl + "api/AutomatAPI/GetMetaDataTableNames",
+            data: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), config_ID: $("#TargetConnection option:selected").val(), },
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (index, value) {
+                    var name = value.split(':');
+                    var tablename = name[0];
+                    var databasename = name[1];
+                    $('#Targetable').append($('<option>').text(tablename).val(tablename));
+                });
+
+            }
+        });
+    }*@
+    var baseUrl = '@Url.Content("~/")';
+
+    var _Status_Y = "Y";
+    var _Status_N = "N";
+    var _Status_P = "P";
+    var _Status_Y_Completed = "Completed";
+    var _Status_N_Yet_To_Start = "Yet to Start";
+    var _Status_P_Progress = "In Progress";
+
+
+    $(function () {
+
+
+        var client_ID = $("#hdnClientId").val();
+        var project_ID = $("#hdnProjectId").val();
+        var Config_ID = $("#hdntgtConfigId").val();
+
+
+        $('#ddlConnection').html('');
+        $('#ddlConnection').append($('<option>').text('Select').val('Select'));
+
+        $.ajax({
+            type: "GET",
+            url: baseUrl + "api/AutomatAPI/GetMetaDataSourceAndTargetConnectionList",
+            data: { Client_ID: $("#hdnClientId").val(), Project_ID: $("#hdnProjectId").val(), Tool_ID: $("#hdnToolId").val() },
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (index, value) {
+                    var name = value.split(',');
+                    var ServerName = name[0];
+                    var ConfigId = name[1];
+                    $('#ddlConnection').append($('<option>').text(ServerName).val(ConfigId));
+                });
+            }
+        });
+
+        $('#ddlConnection').change(function () {
+            loadDownloadTables();
+        });
+
+
+        function loadDownloadTables() {
+            $("#grdTables").GridUnload();
+            $grid = jQuery("#grdTables").jqGrid({
+                mytype: 'GET',
+                url: baseUrl + "api/AutomatAPI/GetTableToDownload",
+                postData: { client_ID: client_ID, project_ID: project_ID, config_ID: $('#ddlConnection option:selected').val() },
+                datatype: 'json',
+                width: 980,
+                height: 200,
+                rowNum: 10,
+                rowList: [5, 10, 20, 50],
+                colNames: ['Tables', 'xls', 'xlsx', 'csv', 'xml', 'ID', 'Folder_Path', 'File_Name'],
+                colModel: [
+                    {
+                        name: 'Tables',
+                        search: false,
+                        sortable: true,
+                        editable: false,
+                        align: 'left',
+                        width: 20
+                    },
+                    {
+                        name: 'xls',
+                        search: false,
+                        sortable: true,
+                        editable: false,
+                        align: 'center',
+                        width: 20,
+                        formatter: DownloadStatus
+                    },
+                    {
+                        name: 'xlsx',
+                        search: false,
+                        sortable: true,
+                        editable: false,
+                        align: 'center',
+                        width: 20,
+                        formatter: DownloadStatus
+                    },
+                    {
+                        name: 'csv',
+                        search: false,
+                        sortable: true,
+                        editable: false,
+                        align: 'center',
+                        width: 20,
+                        formatter: DownloadStatus
+                    },
+                    {
+                        name: 'xml',
+                        search: false,
+                        sortable: true,
+                        editable: false,
+                        align: 'center',
+                        width: 20,
+                        formatter: DownloadStatus
+                    },
+                    //, {
+                    //    name: 'Action',
+                    //    search: false,
+                    //    sortable: true,
+                    //    editable: false,
+                    //    align: 'center',
+                    //    width: 20,
+                    //    formatter: function (cellvalue, options, rowObject) {
+                    //        var _rowId = options.rowId;
+                    //        var _TableName = rowObject[0];
+                    //        return "<input class='form-button' type='button' name='" + _TableName + "' value='Request' id='" + _rowId + "' onclick='DownloadRequest(this);' outputtype='xml'>";
+
+                    //    }
+                    //}
+                    //{
+                    //    name: 'Format', search: false, sortable: true, editable: false, align: 'center', width: 20, formatter: function (cellValue, option) {
+                    //        return '<input type="radio" name="radio_' + option.rowId + '" /><label style="padding: 0 10px 0 0;">xls</label><input type="radio" name="radio_' + option.rowId + '" /><label style="padding: 0 10px 0 0;">xlsx</label><input type="radio" name="radio_' + option.rowId + '"/><label style="padding: 0 10px 0 0;">csv</label><input type="radio" name="radio_' + option.rowId + '"/><label style="padding: 0 10px 0 0;">xml</label>';
+                    //    }
+                    //},
+                    //{ name: 'Action', search: false, sortable: false, editable: false, align: 'center', width: 20, formatter: lnkDownload }
+                    { name: 'ID', hidden: true },
+                    { name: 'Folder_Path', hidden: true },
+                    { name: 'File_Name', hidden: true }
+                ],
+                pager: '#pgrTables',
+                viewrecords: true,
+                sortable: true,
+                autowidth: true,
+                showButtonPanel: true,
+                closeAfterEdit: true,
+                caption: 'Target Tables',
+                //scrollOffset: 0,
+                //loadonce: true,
+                onSelectRow: function (rowId) {
+                },
+                loadComplete: function (data) {
+                    //alert('loadComplete');
+                    var _FileNotFound = '@(ViewBag.FileNotFound)';
+                    if (_FileNotFound == "Yes") {
+                        alert('File not found!. Raise a request again.');
+                    }
+                }
+            }).navGrid('#pgrTables', { edit: false, add: false, del: false, search: false, refreshtext: "Refresh", refreshtitle: "Click here to view status change." });
+            $grid.jqGrid('setGroupHeaders', {
+                useColSpanStyle: true,
+                groupHeaders: [
+                    { startColumnName: 'xls', numberOfColumns: 4, titleText: 'File Format' },
+                    //{ startColumnName: 'closed', numberOfColumns: 2, titleText: 'Shiping' }
+                ]
+            });
+        }
+
+    });
+    function lnkDownload(cellvalue, options, rowObject) {
+        var _rowId = options.rowId;
+        var _TableName = rowObject[0];
+        return "<input class='form-button' type='button' name='" + _TableName + "' value='Dwonload' id='" + _rowId + "'>";
+    }
+    function DownloadStatus(cellvalue, options, rowObject) {
+        var _rowId = options.rowId;
+        var _TableName = rowObject[0];
+
+        switch (cellvalue) {
+            case _Status_Y:
+                return "<input class='status-button' style='width: 50%;border: 1px solid #75b008;background-color:#75b008;color:#000;float: left;margin: 2px 2px 2px 0px;' type='button' value='Download' name='" + _TableName.replace(".", "_") + "' id='" + _rowId + "' fid='" + rowObject[5] + "'  onclick='DownloadFile(this);'  outputtype='" + options.colModel.name + "'><input class='status-button' style='border: 1px solid #ccc;background-color:#eee;color:#000;margin: 2px 0px;width: 49%;' type='button' name='" + _TableName + "' value='Refresh' id='" + _rowId + "' onclick='RaiseDownloadRequest(this);' outputtype='" + options.colModel.name + "'>";
+                break;
+            case _Status_N:
+                return "<input class='status-button' style='border: 1px solid #ccc;background-color:#eee;color:#000;margin:3px;width: 98%;' type='button' name='" + _TableName + "' value='Request' id='" + _rowId + "' onclick='RaiseDownloadRequest(this);' outputtype='" + options.colModel.name + "'>";
+                break;
+            case _Status_P:
+                return "<input class='status-button' style='border: 1px solid #FDB813;background-color:#efce7e;color:#000;margin:3px;width: 98%;' type='button' value='" + _Status_P_Progress + "'>";
+                break;
+            default:
+                return null;
+                break;
+        }
+    }
+    function RaiseDownloadRequest(cntrl) {
+        var _outputtype = $(cntrl).attr("outputtype");
+        var _TableName = cntrl.name;
+        $.ajax({
+            type: "GET",
+            url: baseUrl + "api/AutomatAPI/SubmitDownloadRequest",
+            data: { TableName: _TableName, OutputFormat: _outputtype, Config_ID: $('#ddlConnection option:selected').val() },
+            dataType: 'json',
+            success: function (data) {
+                $('#grdTables').trigger('reloadGrid');
+            }
+        });
+    }
+    function DownloadFile(cntrl) {
+        var fId = $(cntrl).attr("fid");
+        var fName = cntrl.name;
+        var fFormat = $(cntrl).attr("outputtype");
+
+        if (window.location.hostname == 'localhost')
+            baseUrl = "http://" + window.location.host;
+
+        window.location.href = baseUrl + "/Automaton/Download?fId=" + fId + "&fName=" + fName + "&fFormat=" + fFormat + "";        
+    }
+
+    function CallDownload(cntrl) {
+        debugger;
+        var _rowId = cntrl.id;
+        var _TableName = cntrl.name;
+        $.ajax({
+            type: "GET",
+            //url: baseUrl + "api/AutomatAPI/GetMetaDataTableNameList",
+            //data: { Client_ID: $("#hdnClientId").val(), Project_ID: $("#hdnProjectId").val(), Source_Target: servername, Tool_Id: $("#hdnToolID").val(), },
+            url: baseUrl + "api/AutomatAPI/GetMetaDataTableNames",
+            data: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), config_ID: $("#TargetConnection option:selected").val(), },
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (index, value) {
+                    var name = value.split(':');
+                    var tablename = name[0];
+                    var databasename = name[1];
+                    $('#Targetable').append($('<option>').text(tablename).val(tablename));
+                });
+
+            }
+        });
+    }
+
+</script>
+
+
+<div style="width:90%;margin:auto;">
+    <div class="group">
+        <div class="form-group width-per-100 fL">
+            <div class="col-40">
+                <span class="control-label">Connection</span>
+                <select id="ddlConnection" class="dropdown" style="width:100%;"></select>
+            </div>
+        </div>
+    </div>
+    <div class="group">
+        <div class="form-group width-per-100" style="width:100%;">
+            <table id="grdTables" class="scroll"></table>
+            <div id="pgrTables" class="scroll"></div>
+        </div>
+    </div>
+    <input type="hidden" value="@ViewData["ClientID"]" id="hdnClientId" />
+    <input type="hidden" value="@ViewData["ProjectID"]" id="hdnProjectId" />
+    <input type="hidden" value="@ViewData["tgtConfigID"]" id="hdntgtConfigId" />
+    <input type="hidden" value="@ViewData["ToolID"]" id="hdnToolId" />
+</div>

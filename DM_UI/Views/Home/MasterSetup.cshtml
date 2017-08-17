@@ -1,0 +1,535 @@
+﻿@model DMOClientEntitiy
+
+@{
+    ViewBag.Title = "MasterSetup";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+<script lang="ja" type="text/javascript">
+    var baseUrl = '@Url.Content("~/")';
+    var _SelectedProjectId = '';
+    $(document).ready(function () {
+        var ServiceUrl = baseUrl + "Home/GetProjectDetail";
+        var EditURL = baseUrl + "Home/SaveProject";
+        var _UserName = $("#hdnUserName").val()
+
+        $("#grdprojectdetails").GridUnload();
+        
+        $grid = jQuery("#grdprojectdetails").jqGrid({
+            postData: { Client_ID: $("#Client_ID").val(), UserName: $("#hdnUserName").val() },
+            mytype: 'GET',
+            datatype: 'json',
+            url: ServiceUrl,
+            editurl: EditURL,
+            colModel: [
+                        { label: 'ID', name: 'ID', key: true, editable: true, hidden: true },
+                        { label: 'Project Code', name: 'Project_ID', width: 25, editable: true, editrules: { required: true } },
+                        { label: 'Project Description', name: 'Project_Description', width: 75, editable: true, editrules: { required: true } },
+                        {
+                            label: 'Active Flag', name: 'Active_Flag', width: 25, align: 'center',
+                            formatter: function (cellvalue, options, rowObject) {
+                                if (cellvalue == "1") {
+                                    return "<input type='checkbox' name='" + $("#Client_ID").val() + "' value='" + cellvalue + "' id='" + rowObject[1] + "' checked='checked' onchange='ActivateProject(this);'  />";
+                                } else {
+                                    return "<input type='checkbox' name='" + $("#Client_ID").val() + "' value='" + cellvalue + "' id='" + rowObject[1] + "' onchange='ActivateProject(this);' />";
+                                }
+                            }
+                        },
+                        { label: 'Action', name: 'Action', width: 25, align: 'center' }
+            ],
+            sortname: 'ID',
+            sortorder: 'asc',
+            //loadonce: true,
+            viewrecords: true,
+            width: 980,
+            height: 100,
+            autowidth: true,
+            //scrollOffset: 0,
+            reloadAfterSubmit: true,
+            pginput: false,
+            pgbuttons: false,
+            rowNum: -1,
+            pager: "#pager1",
+            caption: 'Projects',
+            gridComplete: function () {
+
+                var ids = jQuery("#grdprojectdetails").jqGrid('getDataIDs');
+
+                for (var i = 0; i < ids.length; i++) {
+                    var cl = ids[i];
+                    var rowData = jQuery('#grdprojectdetails').jqGrid('getRowData', cl);
+
+                    editbutton = "<a style='height:22px;width:20px;text-decoration: underline;cursor: pointer;'  onclick=\"ReloadUserGrid('" + rowData["Project_ID"] + "');\"  >View Users<a/>";
+                    jQuery("#grdprojectdetails").jqGrid('setRowData', ids[i], { Action: editbutton });
+                }
+            }
+        });
+
+
+        $('#grdprojectdetails').navGrid('#pager1',
+                  // the buttons to appear on the toolbar of the grid
+                  { edit: false, add: true, del: false, search: false, addtext: 'Add Project', refresh: true, view: false, position: "left", cloneToTop: false },
+                  // options for the Edit Dialog
+                  {
+                      editCaption: "Edit Project",
+                      recreateForm: true,
+                      checkOnUpdate: true,
+                      checkOnSubmit: true,
+                      closeAfterEdit: true,
+                      errorTextFormat: function (data) {
+                          return 'Error: ' + data.responseText
+                      }
+                  },
+                  // options for the Add Dialog
+                  {
+                      addCaption: "Add Project",
+                      closeAfterAdd: true,
+                      recreateForm: true,
+                      errorTextFormat: function (data) {
+                          alert(data.responseText);
+                          return 'Error: ' + data.responseText
+                      },
+                      afterComplete: function (response) {
+                          if (response.responseText) {
+                              alert(response.responseText);
+                              $("#grdprojectdetails").jqGrid('setGridParam', { datatype: 'json' }).trigger('reloadGrid');
+                          }
+                      }
+
+                  },
+                  // options for the Delete Dailog
+                  {
+                      errorTextFormat: function (data) {
+                          return 'Error: ' + data.responseText
+                      }
+                  });
+
+
+
+
+        ServiceUrl = baseUrl + "Home/GetUserDetail";
+        EditURL = baseUrl + "Home/SaveUsers";
+        $("#grdUserdetails").GridUnload();
+        $grid = jQuery("#grdUserdetails").jqGrid({
+            postData: { Client_ID: $("#Client_ID").val(), Project_ID: $("#hdnProjectID").val() },
+            mytype: 'GET',
+            datatype: 'json',
+            url: ServiceUrl,
+            editurl: EditURL,
+            ajaxSelectOptions: { cache: false },
+            colModel: [
+                        {
+                            label: 'User_ID',
+                            name: 'User_ID',
+                            width: 75,
+                            key: true,
+                            editable: true,
+                            hidden: true
+                        },
+                        {
+                            label: 'Project Code',
+                            name: 'Project_ID',
+                            width: 50,
+                            editable: true,
+                            editrules: { required: true },
+                            edittype: "select",                            
+                            //editoptions: { value: projects }
+                            //editoptions: { dataUrl: baseUrl + "Home/GetAllProjectDetail?Client_ID = " + $("#Client_ID").val() }//+ "&UserName = " + _UserName }
+                            editoptions: {
+                                dataInit: function (elem) {                                    
+                                },
+                                dataUrl: baseUrl + "Home/GetAllProjectDetail?Client_ID=" + $("#Client_ID").val() + "&SelectedProectId="
+                                    + _SelectedProjectId + "&UserName=" + _UserName
+                            } //+ $("#Client_ID").val() }//+ "&UserName = " + _UserName }
+                            //hidden: true
+
+                        },
+                         {
+                             label: 'User Name',
+                             name: 'User_name',
+                             width: 75,
+                             editable: true,
+                             editrules: { required: true }
+                         },
+                         {
+                             label: 'Email ID',
+                             name: 'email_ID',
+                             width: 75,
+                             editable: true,
+                             editrules: { required: true }
+                         },
+                          {
+                              label: 'Role',
+                              name: 'ROLE_NAME',
+                              width: 75,
+                              editable: true,
+                              editrules: { required: true },
+                              edittype: 'select',
+                              //editoptions: { value: "ADMIN:ADMIN;USER:USER" }
+                              editoptions: { dataUrl: baseUrl + "Home/ddlRoles?Client_ID=" + $("#Client_ID").val() + "&Project_ID=" + $("#hdnProjectID").val() } //+ $("#Client_ID").val() }//+ "&UserName = " + _UserName }
+
+                          },
+                            {
+                                label: 'Active Flag',
+                                name: 'Active_Flag',
+                                width: 25,
+                                editable: true,
+                                edittype: 'checkbox',
+                                formatter: 'checkbox',
+                                editoptions: { value: "1:0", defaultValue:"1" },
+                                formatoptions: { disabled: false },
+                                align: 'center',
+                                formatter: function (cellvalue, options, rowObject) {
+                                    var _ClientId = $("#Client_ID").val();
+                                    
+                                    var _UserId = rowObject[0];
+                                    var _ProjectId = rowObject[1];
+                                    var _UserName = rowObject[2];
+                                    var _EmailId = rowObject[3];
+                                    var _RoleName = rowObject[4];
+                                    var _fun = '';
+
+                                    if (cellvalue == "1") {
+                                        _fun = '<input name="' + rowObject[0] + '" id="' + rowObject[0] + '" onchange=\'UpdateUserStatus("' + _ProjectId + '","' + _UserId + '","' + _UserName + '","' + _EmailId + '","' + _RoleName + '",this);\' type="checkbox" value="' + cellvalue + '" checked="checked" />';
+                                    }
+                                    else {
+                                        _fun = '<input name="' + rowObject[0] + '" id="' + rowObject[0] + '" onchange=\'UpdateUserStatus("' + _ProjectId + '","' + _UserId + '","' + _UserName + '","' + _EmailId + '","' + _RoleName + '",this);\' type="checkbox" value="' + cellvalue + '"    />';
+
+                                    }
+                                    return _fun;
+                                }
+                            },
+                            {
+                                label: 'Tool Permission',
+                                name: 'Action',
+                                width: 25,
+                                align: 'center'
+                            }
+
+            ],
+            sortname: 'User_ID',
+            sortorder: 'asc',
+            //loadonce: true,
+            viewrecords: true,
+            width: 980,
+            height: 150,
+            autowidth: true,
+            //scrollOffset: 0,
+            reloadAfterSubmit: true,
+            rowNum: -1,
+            pginput: false,
+            pgbuttons: false,
+            pager: "#pager2",
+            caption: 'User',
+            gridComplete: function () {                
+                var ids = jQuery("#grdUserdetails").jqGrid('getDataIDs');
+                for (var i = 0; i < ids.length; i++) {
+                    var cl = ids[i];
+                    var rowData = jQuery('#grdUserdetails').jqGrid('getRowData', cl);
+                    editbutton = "<a style='height:22px;width:20px;text-decoration: underline;cursor: pointer;'  onclick=\"LoadUserTools('" + rowData["Project_ID"] + "','" + rowData["User_name"] + "');\"  >Edit permission<a/>";
+                    jQuery("#grdUserdetails").jqGrid('setRowData', ids[i], { Action: editbutton });
+                    _SelectedProjectId=rowData.Project_ID;
+                }
+                jQuery('#grdUserdetails')
+                    .setColProp('Project_ID', {
+                    editoptions: { dataUrl: baseUrl + "Home/GetAllProjectDetail?Client_ID=" + $("#Client_ID").val() + "&SelectedProectId="
+                                            + _SelectedProjectId + "&UserName=" + _UserName } })
+                    .setColProp('ROLE_NAME', {
+                        editoptions: { dataUrl: baseUrl + "Home/ddlRoles?Client_ID=" + $("#Client_ID").val() + "&Project_ID=" + _SelectedProjectId }//+ "&Project_ID=" + $("#hdnProjectID").val() }
+                    });
+            },
+        });
+
+        $('#grdUserdetails').navGrid('#pager2',
+             // the buttons to appear on the toolbar of the grid
+             { edit: true, add: true, del: false, search: false, addtext: 'Add User', edittext: 'Edit User', refresh: false, view: false, position: "left", cloneToTop: false },
+             // options for the Edit Dialog
+             {
+                 editCaption: "Edit User",
+                 recreateForm: true,
+                 checkOnUpdate: true,
+                 checkOnSubmit: true,
+                 closeAfterEdit: true,
+                 errorTextFormat: function (data) {
+                     return 'Error: ' + data.responseText
+                 },
+                 afterComplete: function (response) {
+                     if (response.responseText) {
+                         alert(response.responseText);
+                         $("#grdUserdetails").jqGrid('setGridParam', { datatype: 'json' }).trigger('reloadGrid');
+                     }
+                 }
+             },
+             // options for the Add Dialog
+             {
+                 addCaption: "Add User",
+                 closeAfterAdd: true,
+                 recreateForm: true,
+                 beforeShowForm: function (form) {
+                 },
+                 afterShowForm: function (form) {
+                 },
+                 errorTextFormat: function (data) {
+                     alert(data.responseText);
+                     return 'Error: ' + data.responseText
+                 },
+                 afterComplete: function (response) {
+                     if (response.responseText) {
+                         alert(response.responseText);
+                         $("#grdUserdetails").jqGrid('setGridParam', { datatype: 'json' }).trigger('reloadGrid');
+                     }
+                 }
+             },
+             // options for the Delete Dailog
+             {
+                 errorTextFormat: function (data) {
+                     return 'Error: ' + data.responseText
+                 }
+             });
+
+        $("#btnCancel").click(function () {
+            $("#dvUserTools").hide();
+            $("#grdUserTools").GridUnload();
+        });
+
+        $("#btnSavePermission").click(function () {
+            var grid = $('#grdUserTools');
+            var rows = grid.jqGrid('getDataIDs');
+            var UserTools = [];
+            $.each(rows, function (i, l) {
+                var rowData = grid.jqGrid('getRowData', rows[i]);
+                UserTools.push({
+                    Active_Flag: rowData['Active_Flag'],
+                    ID: rowData['ID']
+                });
+
+            });
+
+            $.ajax({
+                type: "POST",
+                data: JSON.stringify(UserTools),
+                url: baseUrl + "Home/SaveUserTools",
+                dataType: "json",
+                contentType: "application/json",
+                success: function (data) {
+                    alert('Saved Successfully');
+                    $("#dvUserTools").hide();
+                }
+            });
+
+        });
+
+    });
+    function ReloadUserGrid(Project_Code) {
+        var postData = $("#grdUserdetails").jqGrid("getGridParam", "postData");
+        postData.Project_ID = Project_Code;
+        _SelectedProjectId = Project_Code;
+        $('#grdUserdetails').trigger('reloadGrid');
+    }
+    function ActivateProject(obj) {
+        var _Client_Id = obj.name;
+        var _Project_Id = obj.id;
+
+        var DMOProjectEntitiy = {
+            ID: 0,
+            Project_ID: _Project_Id,
+            Client_ID: _Client_Id,
+            Project_Description: '',
+            Active_Flag: obj.checked ? 1 : 0,
+            Create_date: null,
+            Modified_date: null,
+            Modified_By: null
+        };
+
+        $.ajax({
+            type: "POST",
+            data: JSON.stringify(DMOProjectEntitiy),
+            url: baseUrl + "Home/ActivateProject",
+            dataType: "text",
+            contentType: "application/json",
+            success: function (data) {
+                $('#grdprojectdetails').trigger('reloadGrid');
+                //$('#grdUserdetails').trigger('reloadGrid');
+            },
+            error: function (xhr) {
+
+            }
+        });
+    }
+    function UpdateUserStatus(_ProjectId, _UserId, _UserName, _EmailId, _RoleName, cntrl) {
+        var UserEntry = {
+            User_ID: _UserId,
+            Client_ID: $("#Client_ID"),
+            User_name: _UserName,
+            email_ID: _EmailId,
+            Project_ID: _ProjectId,
+            Active_Flag: cntrl.checked ? 1 : 0,
+            ROLE_NAME: _RoleName,
+            Last_Modified_By: null,
+            Password: null
+        };
+
+        $.ajax({
+            type: "POST",
+            data: JSON.stringify(UserEntry),
+            url: baseUrl + "Home/SaveUsers",
+            dataType: "text",
+            contentType: "application/json",
+            success: function (data) {
+                $('#grdUserdetails').trigger('reloadGrid');
+                //alert('Updated Successfully');
+            },
+            error: function (xhr) {
+            }
+        });
+    }
+    function LoadUserTools(_Project_ID, _UserName) {
+
+        $("#dvUserTools").show();
+        $("#lblusername").text(_UserName);
+
+        var ServiceUrl = baseUrl + "Home/GetUserTools";
+        $("#grdUserTools").GridUnload();
+
+        $grid = jQuery("#grdUserTools").jqGrid({
+            postData: { Client_ID: $("#hdnClientId").val(), Project_ID: _Project_ID, UserName: _UserName },
+            mytype: 'GET',
+            datatype: 'json',
+            url: ServiceUrl,
+            colModel: [
+                        {
+                            //label: 'USER T',
+                            name: 'ID',
+                            width: 75,
+                            key: true,
+                            hidden: true
+                        },
+                         {
+                             label: 'Tool Name',
+                             name: 'Tool_Name',
+                             width: 75
+                         },
+                         {
+                             label: 'Tool Description',
+                             name: 'Tool_Description',
+                             width: 75,
+                             editable: true,
+                             editrules: { required: true }
+                         },
+                        {
+                            label: 'Active Flag',
+                            name: 'Active_Flag',
+                            width: 10,
+                            editable: true,
+                            edittype: 'checkbox',
+                            formatter: 'checkbox',
+                            editoptions: { value: "1:0" },
+                            formatoptions: { disabled: false },
+                            align: 'center'
+                        }
+
+            ],
+            sortname: 'ID',
+            sortorder: 'asc',
+            loadonce: true,
+            viewrecords: true,
+            width: 980,
+            height: 250,
+            autowidth: true,
+            //scrollOffset: 0,
+            reloadAfterSubmit: true,
+            rowNum: 10,
+            caption: 'Tool Selection'
+        });
+    }
+
+</script>
+
+<input type="hidden" value="@(Convert.ToString(DM_UI.App_Start.UIProperties.Sessions.Client.Client_ID))" id="hdnClientId" />
+<input type="hidden" value="@(Convert.ToString(DM_UI.App_Start.UIProperties.Sessions.Client.project_ID))" id="hdnProjectID" />
+<input type="hidden" value="@(Convert.ToString(DM_UI.App_Start.UIProperties.Sessions.UserName))" id="hdnUserName" />
+<input type="hidden" value="" name="SelectedProectId" id="SelectedProectId" />
+<div class=" content-body width-per-100">
+    <div style="width:95%;margin:auto;">
+        @*@Html.ActionLink("Home", "Index", "Home")
+            <br />
+            <br />*@
+        @using (Html.BeginForm("SaveClient", "Home", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            string displayMode = (string.IsNullOrWhiteSpace(Model.Client_Name)) ? "inline" : "none";
+            string enalbledisabe = (string.IsNullOrWhiteSpace(Model.Client_Name)) ? "" : "disabled";
+
+            <div class="group">
+                <div class="div-header">
+                    <span class="control-label label-bold">Customer Registration</span>
+                </div>
+                <div class="col-40">
+                    <div class="form-group width-per-100">
+                        Customer Name
+                        @Html.TextBoxFor(r => r.Client_Name, new { @class = "form-control", @tabindex = "1", @readonly = (string.IsNullOrWhiteSpace(Model.Client_Name)) ? false : true })
+                    </div>
+                </div>
+                <div class="col-40">
+                    <div class="form-group width-per-100">
+                        Customer ID
+                        @Html.TextBoxFor(r => r.Client_ID, new { @class = "form-control", @tabindex = "2", @readonly = true })
+                    </div>
+                </div>
+                <div class="col-10" style="padding-top: 20px;">
+                    <input value="Save" id="btnSave" class="button" name="Command" type="submit" tabindex="3" @enalbledisabe />
+                </div>
+            </div>
+        }
+
+        <div class="group">
+            <div class="div-header">
+                <span class="control-label label-bold">Project Registration</span>
+            </div>
+        </div>
+
+
+        <div class="group">
+            <div id="grddiv" class="form-group width-per-100">
+                <table id="grdprojectdetails"></table>
+                <div id="pager1" class="scroll"></div>
+            </div>
+        </div>
+
+        <div class="group">
+            <div class="div-header">
+                <span class="control-label label-bold">User Setup</span>
+            </div>
+        </div>
+
+        <div class="group">
+            <div id="grddiv" class="form-group width-per-100">
+                <table id="grdUserdetails"></table>
+                <div id="pager2" class="scroll"></div>
+            </div>
+        </div>
+
+        <div class="group" id="dvUserTools" style="display:none">
+            <div class="div-header">
+                <span class="control-label label-bold">Tool Selection : <label id="lblusername"></label></span>
+            </div>
+            <div id="grddiv" class="form-group width-per-100">
+                <table id="grdUserTools"></table>
+            </div>
+            <div class="col-10" style="padding-top: 20px;">
+                <div style="float:right">
+                    <input value="Save" id="btnSavePermission" class="button" name="Save" type="submit" />
+                    <input value="Cancel" id="btnCancel" class="button" name="Cancel" type="submit" />
+                    <br />
+                    <br />
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+

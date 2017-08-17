@@ -1,0 +1,1281 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="2/2/2017 12:15:44 PM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="CCH1WTDMP01"
+  DTS:CreatorName="CORP\31312"
+  DTS:DTSID="{CB632FD1-C8F0-4098-A4BD-060D42A17DFF}"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.2100.60"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="{CB632FD1-C8F0-4098-A4BD-060D42A17DFF}"
+  DTS:VersionGUID="{B1BC8E33-595F-4333-AFC4-E103EB9681A5}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[OLEDB Destination]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{5FD524AE-CD6E-48A9-AA90-FEC173ED68A1}"
+      DTS:ObjectName="OLEDB Destination">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=172.25.164.63;User ID=sa;Initial Catalog=poc_target;Provider=SQLOLEDB.1;Trusted_Connection = False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAh9TalfIL2UKs0sK+wGwqaQAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADG+Ko7LSlbB9jNBcaS8ZvxAAAAAASAAACgAAAAEAAAAN6B2y/pUzPTFdmAaB3+vKMYAAAAyJZDs6Fl4nqiuFtSZVRPxPy2w+ucI4oBFAAAAKIXW3w8eFCI9sCbJlIAQ0PJqpVN</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[OLEDB Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{C557D3E0-BAD4-447F-AD18-6AFFB5234CB1}"
+      DTS:ObjectName="OLEDB Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=172.25.164.63;User ID=sa;Initial Catalog=poc_data;Provider=SQLOLEDB.1;Trusted_Connection = False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAh9TalfIL2UKs0sK+wGwqaQAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAC8ciaADli1PBH5IpueAjTuAAAAAASAAACgAAAAEAAAAMHnJhp4ikdQJmD8RvnXQ+QYAAAA0kvXAZd3roBLgfGwNN79Gokb4gU4boNCFAAAABLQgkyaOe3X5aoZaczaE1LbWWbs</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{2F9F183B-058A-43AB-96EE-243DAE5A9521}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="V_SourceProductName">
+      <DTS:VariableValue
+        DTS:DataType="8">TESTING</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Sequence Container"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{CF5E7D74-E43E-4283-BC4F-23859D4D52F7}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:FailPackageOnFailure="True"
+      DTS:FailParentOnFailure="True"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Sequence Container">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container\DFT_CUSTOMER_test"
+          DTS:CreationName="SSIS.Pipeline.3"
+          DTS:DTSID="{FC3B8D61-E594-4EDF-9F58-AF22EACC2AAF}"
+          DTS:ExecutableType="SSIS.Pipeline.3"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="DFT_CUSTOMER_test"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0"
+                  componentClassID="{62B1106C-7DB8-4EC8-ADD6-4C664DFFC54A}"
+                  contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Data Conversion Component"
+                  name="DataConvert Component_0"
+                  usesDispositions="true">
+                  <inputs>
+                    <input
+                      refId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Inputs[Data Conversion Input]"
+                      name="Data Conversion Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Inputs[Data Conversion Input].Columns[cust_code]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="cust_code"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[cust_code]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Inputs[Data Conversion Input].Columns[first_name]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="first_name"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[first_name]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Inputs[Data Conversion Input].Columns[last_name]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="last_name"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[last_name]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Inputs[Data Conversion Input].Columns[full_name]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="full_name"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\DerivedColTransform_0.Outputs[Derived Column Output].Columns[full_name]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Inputs[Data Conversion Input].Columns[company_name]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="company_name"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[company_name]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Inputs[Data Conversion Input].Columns[address]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="address"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[address]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Inputs[Data Conversion Input].Columns[city]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="city"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[city]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Inputs[Data Conversion Input].Columns[county]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="county"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[county]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Inputs[Data Conversion Input].Columns[state_cd]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="state_cd"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[state_cd]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Inputs[Data Conversion Input].Columns[zip_Code]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="zip_Code"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[zip_Code]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Inputs[Data Conversion Input].Columns[phone1]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="phone1"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[phone1]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Inputs[Data Conversion Input].Columns[phone2]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="phone2"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[phone2]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Inputs[Data Conversion Input].Columns[email]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="email"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[email]" />
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output]"
+                      exclusionGroup="1"
+                      name="Data Conversion Output"
+                      synchronousInputId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Inputs[Data Conversion Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[email]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[email]"
+                          mappedColumnId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Error Output]"
+                          name="email"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the input column used as the source of data for the conversion."
+                              name="SourceInputColumnLineageID">#{Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[email]}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[phone2]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[phone2]"
+                          mappedColumnId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output]"
+                          name="phone2"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the input column used as the source of data for the conversion."
+                              name="SourceInputColumnLineageID">#{Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[phone2]}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[phone1]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[phone1]"
+                          mappedColumnId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Connections[OleDbConnection]"
+                          name="phone1"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the input column used as the source of data for the conversion."
+                              name="SourceInputColumnLineageID">#{Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[phone1]}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[zip_Code]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[zip_Code]"
+                          mappedColumnId="Package\Sequence Container\DFT_CUSTOMER_test\9:invalid"
+                          name="zip_Code"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the input column used as the source of data for the conversion."
+                              name="SourceInputColumnLineageID">#{Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[zip_Code]}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[state_cd]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[state_cd]"
+                          mappedColumnId="Package\Sequence Container\DFT_CUSTOMER_test\8:invalid"
+                          name="state_cd"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the input column used as the source of data for the conversion."
+                              name="SourceInputColumnLineageID">#{Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[state_cd]}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[county]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[county]"
+                          mappedColumnId="Package\Sequence Container\DFT_CUSTOMER_test\7:invalid"
+                          name="county"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the input column used as the source of data for the conversion."
+                              name="SourceInputColumnLineageID">#{Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[county]}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[city]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[city]"
+                          mappedColumnId="Package\Sequence Container\DFT_CUSTOMER_test\6:invalid"
+                          name="city"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the input column used as the source of data for the conversion."
+                              name="SourceInputColumnLineageID">#{Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[city]}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[address]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[address]"
+                          mappedColumnId="Package\Sequence Container\DFT_CUSTOMER_test\5:invalid"
+                          name="address"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the input column used as the source of data for the conversion."
+                              name="SourceInputColumnLineageID">#{Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[address]}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[company_name]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[company_name]"
+                          mappedColumnId="Package\Sequence Container\DFT_CUSTOMER_test\4:invalid"
+                          name="company_name"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the input column used as the source of data for the conversion."
+                              name="SourceInputColumnLineageID">#{Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[company_name]}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[full_name]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          length="500"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[full_name]"
+                          mappedColumnId="Package\Sequence Container\DFT_CUSTOMER_test\3:invalid"
+                          name="full_name"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the input column used as the source of data for the conversion."
+                              name="SourceInputColumnLineageID">#{Package\Sequence Container\DFT_CUSTOMER_test\DerivedColTransform_0.Outputs[Derived Column Output].Columns[full_name]}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[last_name]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[last_name]"
+                          mappedColumnId="Package\Sequence Container\DFT_CUSTOMER_test\2:invalid"
+                          name="last_name"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the input column used as the source of data for the conversion."
+                              name="SourceInputColumnLineageID">#{Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[last_name]}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[first_name]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[first_name]"
+                          mappedColumnId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource"
+                          name="first_name"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the input column used as the source of data for the conversion."
+                              name="SourceInputColumnLineageID">#{Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[first_name]}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[cust_code]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[cust_code]"
+                          name="cust_code"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the input column used as the source of data for the conversion."
+                              name="SourceInputColumnLineageID">#{Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[cust_code]}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Data Conversion Error Output"
+                      synchronousInputId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Inputs[Data Conversion Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Sequence Container\DFT_CUSTOMER_test\DerivedColTransform_0"
+                  componentClassID="{49928E82-9C4E-49F0-AABE-3812B82707EC}"
+                  contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+                  name="DerivedColTransform_0"
+                  usesDispositions="true">
+                  <inputs>
+                    <input
+                      refId="Package\Sequence Container\DFT_CUSTOMER_test\DerivedColTransform_0.Inputs[Derived Column Input]"
+                      description="Input to the Derived Column Transformation"
+                      name="Derived Column Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DerivedColTransform_0.Inputs[Derived Column Input].Columns[address]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="address"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[address]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DerivedColTransform_0.Inputs[Derived Column Input].Columns[city]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="city"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[city]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DerivedColTransform_0.Inputs[Derived Column Input].Columns[company_name]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="company_name"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[company_name]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DerivedColTransform_0.Inputs[Derived Column Input].Columns[county]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="county"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[county]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DerivedColTransform_0.Inputs[Derived Column Input].Columns[cust_code]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="cust_code"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[cust_code]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DerivedColTransform_0.Inputs[Derived Column Input].Columns[email]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="email"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[email]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DerivedColTransform_0.Inputs[Derived Column Input].Columns[first_name]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="first_name"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[first_name]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DerivedColTransform_0.Inputs[Derived Column Input].Columns[last_name]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="last_name"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[last_name]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DerivedColTransform_0.Inputs[Derived Column Input].Columns[phone1]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="phone1"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[phone1]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DerivedColTransform_0.Inputs[Derived Column Input].Columns[phone2]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="phone2"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[phone2]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DerivedColTransform_0.Inputs[Derived Column Input].Columns[state_cd]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="state_cd"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[state_cd]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DerivedColTransform_0.Inputs[Derived Column Input].Columns[zip_Code]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="zip_Code"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[zip_Code]" />
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Sequence Container\DFT_CUSTOMER_test\DerivedColTransform_0.Outputs[Derived Column Output]"
+                      description="Default Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      name="Derived Column Output"
+                      synchronousInputId="Package\Sequence Container\DFT_CUSTOMER_test\DerivedColTransform_0.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DerivedColTransform_0.Outputs[Derived Column Output].Columns[full_name]"
+                          dataType="wstr"
+                          errorRowDisposition="FailComponent"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\DerivedColTransform_0.Outputs[Derived Column Output].Columns[full_name]"
+                          name="full_name"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              name="Expression">first_name+"_"+last_name</property>
+                            <property
+                              dataType="System.String"
+                              name="FriendlyExpression">first_name+"_"+last_name</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Sequence Container\DFT_CUSTOMER_test\DerivedColTransform_0.Outputs[Derived Column Error Output]"
+                      description="Error Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Derived Column Error Output"
+                      synchronousInputId="Package\Sequence Container\DFT_CUSTOMER_test\DerivedColTransform_0.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DerivedColTransform_0.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\DerivedColTransform_0.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\DerivedColTransform_0.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\DerivedColTransform_0.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test"
+                  componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="OLEDBDestination_CUSTOMER_test"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">CUSTOMER_test</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[OLEDB Destination]"
+                      connectionManagerRefId="Package.ConnectionManagers[OLEDB Destination]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].Columns[email]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="email"
+                          externalMetadataColumnId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].ExternalColumns[email]"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[email]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].Columns[phone2]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="phone2"
+                          externalMetadataColumnId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].ExternalColumns[phone2]"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[phone2]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].Columns[phone1]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="phone1"
+                          externalMetadataColumnId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].ExternalColumns[phone1]"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[phone1]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].Columns[zip_Code]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="zip_Code"
+                          externalMetadataColumnId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].ExternalColumns[zip_Code]"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[zip_Code]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].Columns[state_cd]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="state_cd"
+                          externalMetadataColumnId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].ExternalColumns[state_cd]"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[state_cd]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].Columns[county]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="county"
+                          externalMetadataColumnId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].ExternalColumns[county]"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[county]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].Columns[city]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="city"
+                          externalMetadataColumnId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].ExternalColumns[city]"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[city]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].Columns[address]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="address"
+                          externalMetadataColumnId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].ExternalColumns[address]"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[address]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].Columns[company_name]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="company_name"
+                          externalMetadataColumnId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].ExternalColumns[company_name]"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[company_name]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].Columns[full_name]"
+                          cachedDataType="wstr"
+                          cachedLength="500"
+                          cachedName="full_name"
+                          externalMetadataColumnId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].ExternalColumns[full_name]"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[full_name]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].Columns[last_name]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="last_name"
+                          externalMetadataColumnId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].ExternalColumns[last_name]"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[last_name]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].Columns[first_name]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="first_name"
+                          externalMetadataColumnId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].ExternalColumns[first_name]"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[first_name]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].Columns[cust_code]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="cust_code"
+                          externalMetadataColumnId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].ExternalColumns[cust_code]"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output].Columns[cust_code]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].ExternalColumns[cust_code]"
+                          dataType="wstr"
+                          length="255"
+                          name="cust_code" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].ExternalColumns[first_name]"
+                          dataType="wstr"
+                          length="255"
+                          name="first_name" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].ExternalColumns[last_name]"
+                          dataType="wstr"
+                          length="255"
+                          name="last_name" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].ExternalColumns[full_name]"
+                          dataType="wstr"
+                          length="500"
+                          name="full_name" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].ExternalColumns[company_name]"
+                          dataType="wstr"
+                          length="255"
+                          name="company_name" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].ExternalColumns[address]"
+                          dataType="wstr"
+                          length="255"
+                          name="address" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].ExternalColumns[city]"
+                          dataType="wstr"
+                          length="255"
+                          name="city" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].ExternalColumns[county]"
+                          dataType="wstr"
+                          length="255"
+                          name="county" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].ExternalColumns[state_cd]"
+                          dataType="wstr"
+                          length="255"
+                          name="state_cd" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].ExternalColumns[zip_Code]"
+                          dataType="wstr"
+                          length="255"
+                          name="zip_Code" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].ExternalColumns[phone1]"
+                          dataType="wstr"
+                          length="255"
+                          name="phone1" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].ExternalColumns[phone2]"
+                          dataType="wstr"
+                          length="255"
+                          name="phone2" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].ExternalColumns[email]"
+                          dataType="wstr"
+                          length="255"
+                          name="email" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].ExternalColumns[Batch_ID]"
+                          dataType="i4"
+                          name="Batch_ID" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].ExternalColumns[ZZ_STATUS_CODE]"
+                          dataType="wstr"
+                          length="1"
+                          name="ZZ_STATUS_CODE" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].ExternalColumns[ROW_ID]"
+                          dataType="i4"
+                          name="ROW_ID" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input].ExternalColumns[valid_company]"
+                          dataType="wstr"
+                          length="10"
+                          name="valid_company" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource"
+                  componentClassID="{165A526D-D5DE-47FF-96A6-F8274C19826B}"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLEDBSource"
+                  name="OLEDBSource"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset"></property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT [address] AS [address] , [city] AS [city] , [company_name] AS [company_name] , [county] AS [county] , [cust_code] AS [cust_code] , [email] AS [email] , [first_name] AS [first_name] , [last_name] AS [last_name] , [phone1] AS [phone1] , [phone2] AS [phone2] , [state_cd] AS [state_cd] , [zip_Code] AS [zip_Code] FROM [CUSTOMER] WHERE ISNULL(ZZ_STATUS_CODE,'') != 'I'</property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">2</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[OLEDB Source]"
+                      connectionManagerRefId="Package.ConnectionManagers[OLEDB Source]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[address]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].ExternalColumns[address]"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[address]"
+                          name="address"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[city]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].ExternalColumns[city]"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[city]"
+                          name="city"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[company_name]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].ExternalColumns[company_name]"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[company_name]"
+                          name="company_name"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[county]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].ExternalColumns[county]"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[county]"
+                          name="county"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[cust_code]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].ExternalColumns[cust_code]"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[cust_code]"
+                          name="cust_code"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[email]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].ExternalColumns[email]"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[email]"
+                          name="email"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[first_name]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].ExternalColumns[first_name]"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[first_name]"
+                          name="first_name"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[last_name]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].ExternalColumns[last_name]"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[last_name]"
+                          name="last_name"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[phone1]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].ExternalColumns[phone1]"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[phone1]"
+                          name="phone1"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[phone2]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].ExternalColumns[phone2]"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[phone2]"
+                          name="phone2"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[state_cd]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].ExternalColumns[state_cd]"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[state_cd]"
+                          name="state_cd"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[zip_Code]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].ExternalColumns[zip_Code]"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].Columns[zip_Code]"
+                          name="zip_Code"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].ExternalColumns[address]"
+                          dataType="wstr"
+                          length="255"
+                          name="address" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].ExternalColumns[city]"
+                          dataType="wstr"
+                          length="255"
+                          name="city" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].ExternalColumns[company_name]"
+                          dataType="wstr"
+                          length="255"
+                          name="company_name" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].ExternalColumns[county]"
+                          dataType="wstr"
+                          length="255"
+                          name="county" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].ExternalColumns[cust_code]"
+                          dataType="wstr"
+                          length="255"
+                          name="cust_code" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].ExternalColumns[email]"
+                          dataType="wstr"
+                          length="255"
+                          name="email" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].ExternalColumns[first_name]"
+                          dataType="wstr"
+                          length="255"
+                          name="first_name" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].ExternalColumns[last_name]"
+                          dataType="wstr"
+                          length="255"
+                          name="last_name" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].ExternalColumns[phone1]"
+                          dataType="wstr"
+                          length="255"
+                          name="phone1" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].ExternalColumns[phone2]"
+                          dataType="wstr"
+                          length="255"
+                          name="phone2" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].ExternalColumns[state_cd]"
+                          dataType="wstr"
+                          length="255"
+                          name="state_cd" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output].ExternalColumns[zip_Code]"
+                          dataType="wstr"
+                          length="255"
+                          name="zip_Code" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Error Output].Columns[address]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Error Output].Columns[address]"
+                          name="address" />
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Error Output].Columns[city]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Error Output].Columns[city]"
+                          name="city" />
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Error Output].Columns[company_name]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Error Output].Columns[company_name]"
+                          name="company_name" />
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Error Output].Columns[county]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Error Output].Columns[county]"
+                          name="county" />
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Error Output].Columns[cust_code]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Error Output].Columns[cust_code]"
+                          name="cust_code" />
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Error Output].Columns[email]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Error Output].Columns[email]"
+                          name="email" />
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Error Output].Columns[first_name]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Error Output].Columns[first_name]"
+                          name="first_name" />
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Error Output].Columns[last_name]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Error Output].Columns[last_name]"
+                          name="last_name" />
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Error Output].Columns[phone1]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Error Output].Columns[phone1]"
+                          name="phone1" />
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Error Output].Columns[phone2]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Error Output].Columns[phone2]"
+                          name="phone2" />
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Error Output].Columns[state_cd]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Error Output].Columns[state_cd]"
+                          name="state_cd" />
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Error Output].Columns[zip_Code]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Error Output].Columns[zip_Code]"
+                          name="zip_Code" />
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Sequence Container\DFT_CUSTOMER_test.Paths[Data Conversion Output]"
+                  endId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBDestination_CUSTOMER_test.Inputs[OLE DB Destination Input]"
+                  name="Data Conversion Output"
+                  startId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Outputs[Data Conversion Output]" />
+                <path
+                  refId="Package\Sequence Container\DFT_CUSTOMER_test.Paths[Derived Column Output]"
+                  endId="Package\Sequence Container\DFT_CUSTOMER_test\DataConvert Component_0.Inputs[Data Conversion Input]"
+                  name="Derived Column Output"
+                  startId="Package\Sequence Container\DFT_CUSTOMER_test\DerivedColTransform_0.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Sequence Container\DFT_CUSTOMER_test.Paths[OLE DB Source Output]"
+                  endId="Package\Sequence Container\DFT_CUSTOMER_test\DerivedColTransform_0.Inputs[Derived Column Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\Sequence Container\DFT_CUSTOMER_test\OLEDBSource.Outputs[OLE DB Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:Executable>
+  </DTS:Executables>
+</DTS:Executable>
