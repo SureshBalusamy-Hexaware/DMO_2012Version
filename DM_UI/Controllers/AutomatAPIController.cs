@@ -22,19 +22,14 @@ namespace DM_UI.Controllers
             _autoMS = new HXRAutomatonService();
         }
 
-        [HttpGet]
-        public List<string> GetMetaDataConnectionList(string Client_ID, string Project_ID, long Tool_ID, string Sourcetarget)
-        {
-            string StatusCode = string.Empty, Message = string.Empty;
-
-            return _autoMS.GetMetaDataConnectionList(Client_ID, Project_ID, Tool_ID, UIProperties.Sessions.Client.Role_ID, Sourcetarget, ref StatusCode, ref Message);
-        }
+      
 
         [HttpGet]
-        public List<string> GetMetaDataSourceAndTargetConnectionList(string Client_ID, string Project_ID, int Tool_ID, long? RoleId)
+        public List<string> GetMetaDataSourceAndTargetConnectionList(string Client_ID, string Project_ID, int Tool_ID)
         {
             string StatusCode = string.Empty, Message = string.Empty;
             //int Tool_ID = (int)UIProperties.Tools.Automaton;
+            long? RoleId = UIProperties.Sessions.Client.Role_ID;
             var lst = new List<string>();
             lst.AddRange(_autoMS.GetMetaDataConnectionList(Client_ID, Project_ID, Tool_ID, RoleId, "Source", ref StatusCode, ref Message));
             lst.AddRange(_autoMS.GetMetaDataConnectionList(Client_ID, Project_ID, Tool_ID, RoleId, "Target", ref StatusCode, ref Message));
@@ -68,8 +63,6 @@ namespace DM_UI.Controllers
 
 
         }
-
-
 
         private DataTable GetMaskColumns()
         {
@@ -108,7 +101,7 @@ namespace DM_UI.Controllers
                     row = new Dictionary<string, object>();
                     foreach (DataColumn col in dtRecord.Columns)
                     {
-                        row.Add(col.ColumnName, dr[col]);
+                       row.Add(col.ColumnName, dr[col]);
                     }
                     rows.Add(row);
                 }
@@ -167,29 +160,7 @@ namespace DM_UI.Controllers
                 return ex.Message;
             }
         }
-
-
-        [ActionName("GetMetaDataTableNames")]
-        public List<string> Get(string client_ID, string project_ID, string config_ID)
-        {
-            string StatusCode = string.Empty, Message = string.Empty;
-
-            return _autoMS.GetMetaDataTableNames(client_ID, project_ID, config_ID, ref StatusCode, ref Message);
-
-
-        }
-        [HttpGet]
-        public List<string> GetTransformationType(string Client_ID, string Project_ID, long Tool_ID)
-        {
-            string StatusCode = string.Empty, Message = string.Empty;
-            return _autoMS.GetTransformationDesc(Client_ID, Project_ID, Tool_ID, ref StatusCode, ref Message);
-        }
-        [HttpGet]
-        public List<string> GetSourceTargetTable(string Client_ID, string Project_ID, long Tool_ID, string TemplateName, string type)
-        {
-            string StatusCode = string.Empty, Message = string.Empty;
-            return _autoMS.GetTransSuorceTargetTable(Client_ID, Project_ID, Tool_ID, TemplateName, type, ref StatusCode, ref Message);
-        }
+       
         [HttpGet]
         public List<string> GetMetaDataTableNameList(string Client_ID, string Project_ID, string Source_Target, long Tool_Id)
         {
@@ -197,13 +168,10 @@ namespace DM_UI.Controllers
 
             return _autoMS.GetMetaDataTableNameList(Client_ID, Project_ID, Source_Target, Tool_Id, UIProperties.Sessions.Client.Role_ID, ref StatusCode, ref Message);
         }
-        [HttpGet]
-        public List<string> GetSourceTargetColumnsByTableName(string Client_ID, string Project_ID, long Tool_ID, string TemplateName, string TableName, string type)
-        {
-            string StatusCode = string.Empty, Message = string.Empty;
+        
 
-            return _autoMS.GetSourceTargetColumnsByTableName(Client_ID, Project_ID, Tool_ID, TemplateName, TableName, type, ref StatusCode, ref Message);
-        }
+        #region  Common
+
         [HttpGet]
         public List<string> GetTemplateList(string client_id, string Type, string Project_id)
         {
@@ -211,251 +179,22 @@ namespace DM_UI.Controllers
             return _autoMS.GetTemplateList(client_id, Project_id, Type, ref StatusCode, ref Message);
         }
         [HttpGet]
-        public dynamic GetTemplateNameList(string client_id, string Project_id, string Type)
+        public List<string> GetMetaDataConnectionList(string Client_ID, string Project_ID, long Tool_ID, string Sourcetarget)
         {
             string StatusCode = string.Empty, Message = string.Empty;
 
-            var mlist = _autoMS.GetTemplateNameList(client_id, Project_id, Type, ref StatusCode, ref Message) as IEnumerable<TemplateList>;
-
-            var rows = new
-            {
-                rows = (
-                    from auto in mlist
-                    select new
-                    {
-                        i = auto.Template_ID,
-                        cell = new string[] {
-                             Convert.ToString(auto.Template_ID),
-                            auto.Template_Name
-                           
-
-                      }
-                    }).ToArray()
-            };
-
-            return rows;
+            return _autoMS.GetMetaDataConnectionList(Client_ID, Project_ID, Tool_ID, UIProperties.Sessions.Client.Role_ID, Sourcetarget, ref StatusCode, ref Message);
         }
         [HttpGet]
-        public dynamic GetTemplateNameListForScheduler(string client_id, string Project_id, string Type)
+        public List<string> GetTransformationType(string Client_ID, string Project_ID, long Tool_ID)
         {
             string StatusCode = string.Empty, Message = string.Empty;
-
-            var mlist = _autoMS.GetTemplateNameList(client_id, Project_id, Type, ref StatusCode, ref Message) as IEnumerable<TemplateList>;
-
-            var rows = (from auto in mlist
-                        select new
-                        {
-                            label = auto.Template_Name,
-                            value = Convert.ToString(auto.Template_ID)
-                        }).ToArray();
-
-
-            return rows;
-        }
-        [HttpGet]
-        public List<string> GetTemplateSourceTableList(string client_id, string Project_id, string Templatename)
-        {
-            string StatusCode = string.Empty, Message = string.Empty;
-            return _autoMS.GetTemplateSourceTableList(client_id, Project_id, Templatename, ref StatusCode, ref Message);
-        }
-        [HttpGet]
-        public List<string> GetTemplateTargetTableList(string client_id, string Project_id, string Templatename, string type)
-        {
-            string StatusCode = string.Empty, Message = string.Empty;
-            return _autoMS.GetTemplateTargetTableList(client_id, Project_id, Templatename, type, ref StatusCode, ref Message);
-        }
-        [HttpGet]
-        public object GetSrcList(string client_ID, string project_ID, string Templatename)
-        {
-            string StatusCode = string.Empty, Message = string.Empty;
-            List<string> SrcList = _autoMS.GetTemplateSourceTableList(client_ID, project_ID, Templatename, ref StatusCode, ref Message);
-            return SrcList;
-        }
-        [HttpGet]
-        public object GettargetList(string client_ID, string project_ID, string Templatename, string type)
-        {
-            string StatusCode = string.Empty, Message = string.Empty;
-            List<string> SrcList = _autoMS.GetTemplateTargetTableList(client_ID, project_ID, Templatename, type, ref StatusCode, ref Message);
-            return SrcList;
-        }
-        [HttpGet]
-        public object GettransList(string client_ID, string project_ID, string Templatename, string type)
-        {
-            string StatusCode = string.Empty, Message = string.Empty;
-            List<string> SrcList = _autoMS.GetTemplateTransTableList(client_ID, project_ID, Templatename, type, ref StatusCode, ref Message);
-            return SrcList;
-        }
-        [HttpPost]
-        public string SaveSourceGrid(List<SourceEntity> SourceEntity)
-        {
-            string StatusCode = string.Empty, Message = string.Empty, TemplateID = string.Empty;
-            if (SourceEntity.Count <= 0)
-            {
-                return "0";
-            }
-
-            var Client_ID = SourceEntity[0].Client_ID;
-            var Project_ID = SourceEntity[0].Project_ID;
-            var TemplateName = SourceEntity[0].Template_Name;
-            var Created_By = SourceEntity[0].Created_By;
-
-            long Template_ID = _autoMS.InsertTemplate(Client_ID, Project_ID, TemplateName, Created_By, "DataType");
-
-            foreach (var obj in SourceEntity)
-            {
-                obj.Template_ID = Convert.ToString(Template_ID);
-            }
-            _autoMS.SaveSourceGrid(SourceEntity, ref StatusCode, ref Message);
-
-            return Template_ID.ToString();
-
-        }
-        [HttpPost]
-        public void SaveTargetGrid(List<TargetEntity> TargetEntity)
-        {
-            string StatusCode = string.Empty, Message = string.Empty;
-
-            if (TargetEntity.Count <= 0)
-            {
-                return;
-            }
-
-            var Client_ID = TargetEntity[0].Client_ID;
-            var Project_ID = TargetEntity[0].Project_ID;
-            var TemplateName = TargetEntity[0].Template_Name;
-            var Created_By = TargetEntity[0].Created_By;
-
-            long Template_ID = _autoMS.InsertTemplate(Client_ID, Project_ID, TemplateName, Created_By, "DataType");
-
-            foreach (var obj in TargetEntity)
-            {
-                obj.Template_ID = Convert.ToString(Template_ID);
-            }
-
-            _autoMS.SaveTargetGrid(TargetEntity, ref StatusCode, ref Message);
-
-        }
-        [HttpPost]
-        public void SaveTransformGrid(List<TransformEntity> TransEntity)
-        {
-            string StatusCode = string.Empty, Message = string.Empty;
-            _autoMS.SaveTransGrid(TransEntity, ref StatusCode, ref Message);
-
-        }
-        [HttpPost]
-        public void ModifySourceGrid(List<SourceEntity> SourceEntity)
-        {
-            string StatusCode = string.Empty, Message = string.Empty;
-            _autoMS.ModifySourceGrid(SourceEntity, ref StatusCode, ref Message);
-        }
-        [HttpPost]
-        public void ModifyTargetGrid(List<TargetEntity> TargetEntity)
-        {
-            string StatusCode = string.Empty, Message = string.Empty;
-            _autoMS.ModifyTargetGrid(TargetEntity, ref StatusCode, ref Message);
-        }
-        [HttpPost]
-        public void ModifyTransGrid(List<TransformEntity> TransEntity)
-        {
-            string StatusCode = string.Empty, Message = string.Empty;
-            _autoMS.ModifyTransGrid(TransEntity, ref StatusCode, ref Message);
+            return _autoMS.GetTransformationDesc(Client_ID, Project_ID, Tool_ID, ref StatusCode, ref Message);
         }
 
-        [HttpGet]
-        public dynamic GetTemplateTargetRecords(string client_ID, string project_ID, string Template_Id, string Template_Name, string sourceTargettype)
-        {
-            string StatusCode = string.Empty, Message = string.Empty;
+        #endregion 
 
-            var SourceTemplate = _autoMS.GetTargetTemplateList(client_ID, project_ID, Template_Id, Template_Name, sourceTargettype, ref  StatusCode, ref Message) as IEnumerable<TemplateSourceTargetEntity>;
-            var rows = new
-            {
-                rows = (
-                    from auto in SourceTemplate
-                    select new
-                    {
-                        i = auto.Field_Seq_No,
-                        cell = new string[] { 
-                            auto.Field_Seq_No,
-                            auto.Field_Type,
-                            auto.Field_Name,
-                            auto.Field_Data_Type,
-                            auto.Field_Prec,
-                            auto.Field_Scale,
-                            auto.Field_Data,
-                            auto.Field_Key,
-                            auto.Table_Name ,
-                            auto.Row_ID
-                            
-                      }
-                    }).ToArray()
-
-
-            };
-            return rows;
-        }
-        [HttpGet]
-        public dynamic GetTemplateSourceRecords(string client_ID, string project_ID, string Template_Id, string Template_Name, string sourceTargettype)
-        {
-
-            string StatusCode = string.Empty, Message = string.Empty;
-            var SourceTemplate = _autoMS.GetTemplateSourceTargetTableList(client_ID, project_ID, Template_Id, ref  StatusCode, ref Message) as IEnumerable<TemplateSourceTargetEntity>;
-            var rows = new
-            {
-
-                rows = (
-                   from auto in SourceTemplate
-                   select new
-                   {
-                       i = auto.Field_Seq_No,
-                       cell = new string[] {
-                            auto.Field_Seq_No,                                                                                
-                            auto.Table_Name,
-                            auto.Field_Name,
-                            auto.Field_Data_Type,
-                            auto.Target_Table_Name,
-                            auto.Target_Field_Name,
-                            auto.Target_Data_Type,
-                             auto.Field_Type,
-                            auto.Row_ID,
-                           auto.Target_Row_ID 
-                            
-                      }
-                   }).ToArray()
-            };
-            return rows;
-        }
-
-
-
-        [HttpGet]
-        public dynamic GetTransTemplateList(string client_ID, string project_ID, string TemplateName)
-        {
-            string StatusCode = string.Empty, Message = string.Empty;
-
-            var AutomatonAttributes = _autoMS.GetTransTemplateList(client_ID, project_ID, TemplateName, ref  StatusCode, ref Message) as IEnumerable<TransformEntity>;
-            var rows = new
-            {
-                rows = (
-                    from auto in AutomatonAttributes
-                    select new
-                    {
-                        i = auto.Trans_Order,
-                        cell = new string[] {
-                            auto.Trans_Order,
-                            auto.Trans_Type,
-                            auto.Trans_Name,
-                            auto.Trans_Rule,
-                            auto.Table_Name,
-                            auto.Trans_Field,
-                            auto.Field_Type,
-                            auto.Field_Length,                            
-                            auto.Trans_ID 
-                      }
-                    }).ToArray()
-            };
-
-            return rows;
-        }
+        #region DataType Template
 
         [HttpGet]
         public dynamic GetTableDataDetail(string client_ID, string project_ID, string Database_IP, string Table_name, string connectionid, string Field_Type, long Recordcount, string tgtConnectionid)
@@ -525,19 +264,182 @@ namespace DM_UI.Controllers
                               Target_Table_Name = (from auto_busniness in mtargetrows
                                                    where auto_busniness.Field_Seq_No == auto.Field_Seq_No
                                                    select auto_busniness.Table_Name).FirstOrDefault<string>(),
-                              Target_Data_Type = auto.Data_Type,
+                              //Target_Data_Type = auto.Data_Type,
+                              Target_Data_Type = (from auto_busniness in mtargetrows
+                                                  where auto_busniness.Field_Seq_No == auto.Field_Seq_No
+                                                  select auto_busniness.Data_Type).FirstOrDefault<string>(),
                               Target_Precision = auto.Data_Precision
                           }).ToList();
 
             return result;
         }
+        [HttpGet]
+        public List<string> GetSourceTargetTable(string Client_ID, string Project_ID, long Tool_ID, string TemplateName, string type)
+        {
+            string StatusCode = string.Empty, Message = string.Empty;
+            return _autoMS.GetTransSuorceTargetTable(Client_ID, Project_ID, Tool_ID, TemplateName, type, ref StatusCode, ref Message);
+        }
+        [HttpGet]
+        public List<string> GetSourceTargetColumnsByTableName(string Client_ID, string Project_ID, long Tool_ID, string TemplateName, string TableName, string type)
+        {
+            string StatusCode = string.Empty, Message = string.Empty;
+
+            return _autoMS.GetSourceTargetColumnsByTableName(Client_ID, Project_ID, Tool_ID, TemplateName, TableName, type, ref StatusCode, ref Message);
+        }
+        [HttpGet]
+        public dynamic GetTemplateSourceRecords(string client_ID, string project_ID, string Template_Id, string Template_Name, string sourceTargettype)
+        {
+            string StatusCode = string.Empty, Message = string.Empty;
+            var SourceTemplate = _autoMS.GetTemplateSourceTargetTableList(client_ID, project_ID, Template_Id, ref  StatusCode, ref Message) as IEnumerable<TemplateSourceTargetEntity>;
+
+            var rows = new
+            {
+
+                rows = (
+                   from auto in SourceTemplate
+                   select new
+                   {
+                       i = auto.Field_Seq_No,
+                       cell = new string[] {
+                            auto.Field_Seq_No,                                                                                
+                            auto.Table_Name,
+                            auto.Field_Name,
+                            auto.Field_Data_Type,
+                            auto.Field_Scale,
+                            auto.Source_Precision,
+                            auto.Target_Table_Name,
+                            auto.Target_Field_Name,
+                            auto.Target_Data_Type,
+                             auto.Field_Type,
+                            auto.Row_ID,
+                           auto.Target_Row_ID 
+                            
+                      }
+                   }).ToArray()
+            };
+            return rows;
+        }
+        [HttpPost]
+        public string SaveSourceGrid(List<SourceEntity> SourceEntity)
+        {
+            string StatusCode = string.Empty, Message = string.Empty, TemplateID = string.Empty;
+            if (SourceEntity.Count <= 0)
+            {
+                return "0";
+            }
+
+            var Client_ID = SourceEntity[0].Client_ID;
+            var Project_ID = SourceEntity[0].Project_ID;
+            var TemplateName = SourceEntity[0].Template_Name;
+            var Created_By = SourceEntity[0].Created_By;
+
+            long Template_ID = _autoMS.InsertTemplate(Client_ID, Project_ID, TemplateName, Created_By, "DataType");
+
+            foreach (var obj in SourceEntity)
+            {
+                obj.Template_ID = Convert.ToString(Template_ID);
+            }
+            _autoMS.SaveSourceGrid(SourceEntity, ref StatusCode, ref Message);
+
+            return Template_ID.ToString();
+
+        }
+        [HttpPost]
+        public void SaveTargetGrid(List<TargetEntity> TargetEntity)
+        {
+            string StatusCode = string.Empty, Message = string.Empty;
+
+            if (TargetEntity.Count <= 0)
+            {
+                return;
+            }
+
+            var Client_ID = TargetEntity[0].Client_ID;
+            var Project_ID = TargetEntity[0].Project_ID;
+            var TemplateName = TargetEntity[0].Template_Name;
+            var Created_By = TargetEntity[0].Created_By;
+
+            long Template_ID = _autoMS.InsertTemplate(Client_ID, Project_ID, TemplateName, Created_By, "DataType");
+
+            foreach (var obj in TargetEntity)
+            {
+                obj.Template_ID = Convert.ToString(Template_ID);
+            }
+
+            _autoMS.SaveTargetGrid(TargetEntity, ref StatusCode, ref Message);
+
+        }
+
+        #endregion 
+
+        #region Transformation Template
+
+        [HttpGet]
+        public dynamic GetTemplateSourceTargetRecords(string client_ID, string project_ID, string Template_Id)
+        {
+
+            string StatusCode = string.Empty, Message = string.Empty;
+            var SourceTemplate = _autoMS.GetTemplateSourceTargetTableList(client_ID, project_ID, Template_Id, ref  StatusCode, ref Message) as IEnumerable<TemplateSourceTargetEntity>;
+            var rows = new
+            {
+                rows = (
+                    from auto in SourceTemplate
+                    select new
+                    {
+                        i = auto.Field_Seq_No,
+                        cell = new string[] {
+                            auto.Field_Seq_No,                                                    
+                            auto.Target_Table_Name,
+                            auto.Target_Field_Name,
+                            auto.Target_Data_Type,
+                            auto.Table_Name,
+                            auto.Field_Name,
+                            auto.Field_Data_Type,
+                             auto.Field_Type,
+                            auto.Row_ID,
+                           auto.Target_Row_ID 
+                            
+                      }
+                    }).ToArray()
+            };
+            return rows;
+
+        }
+        [ActionName("GetMetaDataTableNames")]
+        public List<string> Get(string client_ID, string project_ID, string config_ID)
+        {
+            string StatusCode = string.Empty, Message = string.Empty;
+
+            return _autoMS.GetMetaDataTableNames(client_ID, project_ID, config_ID, ref StatusCode, ref Message);
 
 
+        }
+        [HttpGet]
+        public dynamic GetTableDataDetailTrans(string client_ID, string project_ID, string Database_IP, string Table_name, string connectionid, string Field_Type, long Recordcount, string tgtConnectionid)
+        {
+            string StatusCode = string.Empty, Message = string.Empty;
+            var lst = _autoMS.GetMetaDataTableDetail(client_ID, project_ID, Table_name, connectionid, ref  StatusCode, ref Message) as IEnumerable<AutomatonSourceEntity>;
+            var targetRecordCount = Recordcount;
+            var totalTransactions = Recordcount == 0 ? 1 : Recordcount + 1;
 
+            totalTransactions = Recordcount == 0 ? 1 : Recordcount + 1;
 
-
-
-
+            var mrows = (from auto in lst
+                         select new AutomatonSourceEntity()
+                         {
+                             Field_Seq_No = Convert.ToString(totalTransactions++),
+                             Field_Type = Field_Type,
+                             Column_Name = auto.Column_Name,
+                             Data_Type = auto.Data_Type,
+                             Data_Precision = auto.Data_Precision,
+                             Data_Scale = auto.Data_Scale,
+                             Field_Data = auto.Field_Data,
+                             Key_column = auto.Key_column,
+                             Table_Name = auto.Table_Name,
+                             Row_ID = "0"
+                         }).ToList();
+            return mrows;
+        }
         [HttpGet]
         public dynamic GetTableColumnDetail(string client_ID, string project_ID, string Table_name, string connectionid)
         {
@@ -555,7 +457,158 @@ namespace DM_UI.Controllers
 
 
         }
+        [HttpGet]
+        public dynamic GetTableDataDetailAutomatic(string client_ID, string project_ID, string Database_IP, string trtTable_Name, string trtConnectionid,
+        string Template_ID, string Template_Name,string sourceTable_Name, string srcconnectionid, string Field_Type, long Recordcount, string tgtConnectionid)
+        {
+            string StatusCode = string.Empty, Message = string.Empty;
 
+            List<TemplateSourceTargetEntity> Tempsrctrt = new List<TemplateSourceTargetEntity>();
+            if (Template_ID != "Select")
+            {
+                Tempsrctrt = _autoMS.GetSourceTemplateList(client_ID, project_ID, Template_ID, Template_Name, null, ref  StatusCode, ref Message);
+            }
+
+
+            string[] targettables = sourceTable_Name.Split(',').Select(sValue => sValue.Trim()).ToArray();
+            List<AutomatonSourceEntity> joinTargetTableslist = new List<AutomatonSourceEntity>();
+            var sourceRecordCount = Recordcount;
+            var sorceTransactions = Recordcount == 0 ? 1 : Recordcount + 1;
+            if (Template_ID == "Select")
+            {
+                //return;
+            }
+
+            foreach (var item in targettables)
+            {
+                foreach (var target in _autoMS.GetMetaDataTableDetailAutomatic(client_ID, project_ID, Template_ID == "Select" ? 0 : (long)Convert.ToDouble(Template_ID), UIProperties.Sessions.Client.Role_ID,
+                   item, "Target", trtConnectionid, ref  StatusCode, ref Message))
+                {
+                    AutomatonSourceEntity ase = new AutomatonSourceEntity();
+                    ase.Field_Seq_No = Convert.ToString(sorceTransactions++);
+                    ase.Table_Name = target.Table_Name;
+                    ase.Column_Name = target.Column_Name;
+                    ase.Field_Type = Field_Type;
+                    ase.Data_Type = target.Data_Type;
+                    ase.Data_Scale = target.Data_Scale;
+                    ase.Data_Precision = target.Data_Precision;
+                    ase.Row_ID = target.Row_ID;
+                    joinTargetTableslist.Add(ase);
+                }
+            }
+
+
+            var targetRecordCount = Recordcount;
+            var totalTransactions = Recordcount == 0 ? 1 : Recordcount + 1;
+
+            string[] sourcetables = trtTable_Name.Split(',').Select(sValue => sValue.Trim()).ToArray();
+            List<AutomatonSourceEntity> joinSourceTableslist = new List<AutomatonSourceEntity>();
+            foreach (var item in sourcetables)
+            {
+                foreach (var source in _autoMS.GetMetaDataTableDetailAutomatic(client_ID, project_ID, Template_ID == "Select" ? 0 : (long)Convert.ToDouble(Template_ID), UIProperties.Sessions.Client.Role_ID,
+                    item, "SOURCE", trtConnectionid, ref  StatusCode, ref Message))
+                {
+                    AutomatonSourceEntity ase = new AutomatonSourceEntity();
+                    ase.Field_Seq_No = Convert.ToString(totalTransactions++);
+                    ase.Table_Name = source.Table_Name;
+                    ase.Column_Name = source.Column_Name;
+                    ase.Field_Type = Field_Type;
+                    ase.Data_Type = source.Data_Type;
+                    ase.Data_Scale = source.Data_Scale;
+                    ase.Data_Precision = source.Data_Precision;
+                    ase.Row_ID = source.Row_ID;
+                    joinSourceTableslist.Add(ase);
+                }
+            }
+
+            totalTransactions = targetRecordCount == 0 ? 1 : targetRecordCount + 1;
+            totalTransactions = Recordcount == 0 ? 1 : Recordcount + 1;
+
+            List<TemplateSourceTargetEntity> ListASE = new List<TemplateSourceTargetEntity>();
+            foreach (var auto in joinTargetTableslist)
+            {
+                string flag = String.Empty;
+                TemplateSourceTargetEntity ASE = new TemplateSourceTargetEntity();
+
+                ASE.Target_Row_ID = auto.Row_ID;
+                ASE.Field_Seq_No = auto.Field_Seq_No;
+                ASE.Table_Name = auto.Table_Name;
+                ASE.Column_Name = auto.Column_Name;
+                ASE.Data_Type = auto.Data_Type;
+
+                foreach (var item in Tempsrctrt)
+                {
+
+                    if (item.Field_Seq_No == auto.Field_Seq_No)
+                    {
+                        ASE.Row_ID = item.Row_ID;
+                        ASE.Target_Table_Name = item.Table_Name;
+                        ASE.Target_Column_Name = item.Field_Name;
+                        ASE.Target_Data_Type = item.Field_Data_Type;
+                        ASE.Field_Type = item.Field_Type;
+                        ASE.Row_ID = item.Row_ID;
+                        flag = "Exists";
+                    }
+                }
+                if (flag != "Exists")
+                {
+                    ASE.Row_ID = (from auto_busniness in joinSourceTableslist
+                                  where auto_busniness.Column_Name.ToLower() == auto.Column_Name.ToLower()
+                                  select auto_busniness.Row_ID).FirstOrDefault<string>();
+                    ASE.Target_Table_Name = (from auto_busniness in joinSourceTableslist
+                                             where auto_busniness.Column_Name.ToLower() == auto.Column_Name.ToLower()
+                                             select auto_busniness.Table_Name).FirstOrDefault<string>();
+                    ASE.Target_Column_Name = (from auto_busniness in joinSourceTableslist
+                                              where auto_busniness.Column_Name.ToLower() == auto.Column_Name.ToLower()
+                                              select auto_busniness.Column_Name).FirstOrDefault<string>();
+                    ASE.Field_Type = Field_Type;
+                    ASE.Target_Data_Type = (from auto_busniness in joinSourceTableslist
+                                            where auto_busniness.Column_Name.ToLower() == auto.Column_Name.ToLower()
+                                            select auto_busniness.Data_Type).FirstOrDefault<string>();
+                }
+                ListASE.Add(ASE);
+            }
+            var result = ListASE;
+            return result;
+
+
+
+        }
+      
+        [HttpGet]
+        public dynamic GetTemplateSourceTargetTableName(string client_ID, string project_ID, string Template_Id, string Type)
+        {
+
+            string StatusCode = string.Empty, Message = string.Empty;
+            var SourceTemplate = _autoMS.GetTemplateSourceTargetTableList(client_ID, project_ID, Template_Id, ref  StatusCode, ref Message) as IEnumerable<TemplateSourceTargetEntity>;
+
+            if (Type.ToLower() == "target")
+            {
+                var TargetTablerows = (
+                from auto in SourceTemplate
+                select new string[] 
+                {
+                    auto.Target_Table_Name
+                }
+                ).Distinct().ToList().ToArray();
+
+                return TargetTablerows;
+            }
+            else
+            {
+                var SourceRows = (
+                   from auto in SourceTemplate
+                   select new string[] 
+                   {
+                       auto.Table_Name
+                   }
+                   ).Distinct().ToList().ToArray();
+
+                return SourceRows;
+            }
+
+        }
+     
         [HttpGet]
         public dynamic GetTableColumnDetailForAutoComplete(string client_ID, string project_ID, string Table_name, string connectionid)
         {
@@ -572,58 +625,130 @@ namespace DM_UI.Controllers
             return mrows;
 
         }
-
-        [HttpPost]
-        public dynamic GetTransformationTableData(TransitionAdd transEntity)
+        [HttpGet]
+        public dynamic GetTemplateSrcTgtTableNames(string client_ID, string project_ID, string Template_Id, string Template_Name, string SourceConnectionID, string TargetConnectionID)
         {
             string StatusCode = string.Empty, Message = string.Empty;
 
+            var SourceTemplate = _autoMS.GetTargetTemplateList(client_ID, project_ID, Template_Id, Template_Name, "SOURCE", ref  StatusCode, ref Message) as IEnumerable<TemplateSourceTargetEntity>;
+            var TargetTemplate = _autoMS.GetSourceTemplateList(client_ID, project_ID, Template_Id, Template_Name, "TARGET", ref  StatusCode, ref Message) as IEnumerable<TemplateSourceTargetEntity>;
 
-            var trans = new TransformEntity();
 
-            trans.Table_Name = transEntity.TableName;
-            trans.Field_Name = transEntity.ColumnName;
-            trans.Trans_Name = transEntity.TransName;
-            trans.Trans_Order = transEntity.TransOrder;
-            trans.Trans_Rule = transEntity.TransRule;
-            trans.Trans_Type = transEntity.TransType;
+            List<TransitionAdd> rows = (
+                                   from values in SourceTemplate.Select(db => db.Table_Name).Distinct()
+                                   select new TransitionAdd
+                                   {
+                                       TableName = values.ToString()
+                                   }).ToList();
 
-            //var lst = _autoMS.GetColumnDetail(transEntity.Client_ID, transEntity.Project_Id, transEntity.TemplateName, transEntity.TableName, transEntity.ColumnName, ref  StatusCode, ref Message) as List<TransformEntity>;
+            rows.ForEach(db => db.SourceConnectionID = SourceConnectionID);
+            var row1 = (from values in TargetTemplate.Select(db => db.Table_Name).Distinct()
+                        select new TransitionAdd
+                        {
+                            TableName = values.ToString()
+                        }).ToList();
+            row1.ForEach(db => db.SourceConnectionID = TargetConnectionID);
+            rows.AddRange(row1);
+            return rows;
+        }
+        [HttpPost]
+        public string SaveSourceTargetGrid(List<SourceEntity> SourceEntityList)
+        {
+            string StatusCode = string.Empty, Message = string.Empty, TemplateID = string.Empty;
 
-            //if (lst != null && lst.Count > 0)
-            //{
-            //    trans.Field_Data_Type = lst[0].Field_Data_Type;
-            //    trans.Field_Length = lst[0].Field_Prec;
-            //}
 
-            var lstTable = new List<AutomatonSourceEntity>();
-            lstTable = _autoMS.GetMetaDataTableDetail(transEntity.Client_ID, transEntity.Project_Id, transEntity.TableName, transEntity.SourceConnectionID, ref  StatusCode, ref Message) as List<AutomatonSourceEntity>;
-            if (lstTable.Count > 0)
+            if (SourceEntityList.Count <= 0)
             {
-                var ls = lstTable.Where(DB => DB.Column_Name == transEntity.ColumnName).FirstOrDefault();
-
-                if (ls != null)
-                {
-                    trans.Field_Data_Type = ls.Data_Type;
-                    trans.Field_Length = ls.Data_Precision;
-                }
-            }
-            else
-            {
-                lstTable = _autoMS.GetMetaDataTableDetail(transEntity.Client_ID, transEntity.Project_Id, transEntity.TableName, transEntity.TargetConnectionID, ref  StatusCode, ref Message) as List<AutomatonSourceEntity>;
-                var ls1 = lstTable.Where(DB => DB.Column_Name == transEntity.ColumnName).FirstOrDefault();
-
-                if (ls1 != null)
-                {
-                    trans.Field_Data_Type = ls1.Data_Type;
-                    trans.Field_Length = ls1.Data_Precision;
-                }
+                return "0";
             }
 
+            var Client_ID = SourceEntityList[0].Client_ID;
+            var Project_ID = SourceEntityList[0].Project_ID;
+            var TemplateName = SourceEntityList[0].Template_Name;
+            var Created_By = SourceEntityList[0].Created_By;
 
-            trans.Trans_ID = "0";
+            long Template_ID = _autoMS.InsertTemplate(Client_ID, Project_ID, TemplateName, Created_By, "Transformation");
 
-            return trans;
+            foreach (var obj in SourceEntityList)
+            {
+                obj.Template_ID = Convert.ToString(Template_ID);
+            }
+
+
+            var lists = SourceEntityList.Where(a => a.Field_Name != null && a.Field_Name != "").ToList();
+
+            //Save Source Records to Table 
+            _autoMS.SaveSourceGrid(lists, ref StatusCode, ref Message);
+
+            //Save Target Records To Table 
+            var TargetEntity = new List<TargetEntity>();
+
+            foreach (var mobject in SourceEntityList)
+            {
+                var mlocalobj = new TargetEntity();
+                mlocalobj.Client_ID = mobject.Client_ID;
+                mlocalobj.Project_ID = mobject.Project_ID;
+                mlocalobj.Connection_ID = mobject.Target_Connection_ID;
+
+                if (string.IsNullOrWhiteSpace(mobject.Target_Table_Name))
+                {
+                    mlocalobj.Field_Name = "Ignore";
+                }
+                else
+                {
+                    mlocalobj.Field_Name = mobject.Target_Field_Name;
+                }
+
+
+                if (string.IsNullOrWhiteSpace(mobject.Template_ID))
+                {
+                    mlocalobj.Template_ID = Template_ID.ToString();
+                }
+                else
+                {
+                    mlocalobj.Template_ID = mobject.Template_ID;
+                }
+                mlocalobj.Table_Name = mobject.Target_Table_Name;
+                mlocalobj.Template_Name = mobject.Template_Name;
+                mlocalobj.Field_Type = "Target";
+                mlocalobj.Field_Seq_No = mobject.Field_Seq_No;
+
+                mlocalobj.Field_Data_Type = mobject.Target_Data_Type;
+                mlocalobj.Row_ID = mobject.Target_Row_ID == "" ? "0" : mobject.Target_Row_ID;
+                mlocalobj.Create_Date = mobject.Create_Date;
+                mlocalobj.Modified_Date = mobject.Modified_Date;
+                mlocalobj.Created_By = mobject.Created_By;
+
+                TargetEntity.Add(mlocalobj);
+           }
+            _autoMS.SaveTargetGrid(TargetEntity, ref StatusCode, ref Message);
+
+            return Template_ID.ToString();
+
+        }
+
+
+        #endregion 
+
+        #region Copy Template
+
+        [HttpPost]
+        public void ModifySourceGrid(List<SourceEntity> SourceEntity)
+        {
+            string StatusCode = string.Empty, Message = string.Empty;
+            _autoMS.ModifySourceGrid(SourceEntity, ref StatusCode, ref Message);
+        }
+        [HttpPost]
+        public void ModifyTargetGrid(List<TargetEntity> TargetEntity)
+        {
+            string StatusCode = string.Empty, Message = string.Empty;
+            _autoMS.ModifyTargetGrid(TargetEntity, ref StatusCode, ref Message);
+        }
+        [HttpPost]
+        public void ModifyTransGrid(List<TransformEntity> TransEntity)
+        {
+            string StatusCode = string.Empty, Message = string.Empty;
+            _autoMS.ModifyTransGrid(TransEntity, ref StatusCode, ref Message);
         }
         [HttpGet]
         public dynamic GetSourceTemplateList(string client_ID, string project_ID, string Template_Id, string Template_Name, string sourceTargettype)
@@ -684,10 +809,249 @@ namespace DM_UI.Controllers
                     }).ToArray()
 
 
+           };
+            return rows;
+        }
+        [HttpGet]
+        public dynamic GetTransTemplateList(string client_ID, string project_ID, string TemplateName)
+        {
+            string StatusCode = string.Empty, Message = string.Empty;
+
+            var AutomatonAttributes = _autoMS.GetTransTemplateList(client_ID, project_ID, TemplateName, ref  StatusCode, ref Message) as IEnumerable<TransformEntity>;
+            var rows = new
+            {
+                rows = (
+                    from auto in AutomatonAttributes
+                    select new
+                    {
+                        i = auto.Trans_Order,
+                        cell = new string[] {
+                            auto.Trans_Order,
+                            auto.Trans_Type,
+                            auto.Trans_Name,
+                            auto.Trans_Rule,
+                            auto.Table_Name,
+                            auto.Trans_Field,
+                            auto.Field_Type,
+                            auto.Field_Length,                            
+                            auto.Trans_ID 
+                      }
+                    }).ToArray()
             };
+
             return rows;
         }
 
+        #endregion 
+
+        #region Review and Generate
+
+        [HttpGet]
+        public dynamic GetTemplateNameList(string client_id, string Project_id, string Type)
+        {
+            string StatusCode = string.Empty, Message = string.Empty;
+
+            var mlist = _autoMS.GetTemplateNameList(client_id, Project_id, Type, ref StatusCode, ref Message) as IEnumerable<TemplateList>;
+
+            var rows = new
+            {
+                rows = (
+                    from auto in mlist
+                    select new
+                    {
+                        i = auto.Template_ID,
+                        cell = new string[] {
+                             Convert.ToString(auto.Template_ID),
+                            auto.Template_Name
+                           
+
+                      }
+                    }).ToArray()
+            };
+
+            return rows;
+        }
+        [HttpGet]
+        public dynamic GetAutomatonBatchStatus(string client_ID, string project_ID, string Tool_ID)
+        {
+            DataTable dt = _autoMS.GetAutomatonBatchStatus(client_ID, project_ID, Convert.ToInt64(Tool_ID));
+
+            string json = JsonConvert.SerializeObject(dt, new DataTableConverter());
+
+            var rows = new
+            {
+                rows = (
+                from DataRow dr in dt.Rows
+                select new
+                {
+                    cell = new string[] {
+                        Convert.ToString(dr["Template_Name"]),
+                        Convert.ToString(dr["Run_Status"]),
+                        Convert.ToString(dr["Start_Time"]),
+                        Convert.ToString(dr["End_Time"])
+                   }
+
+                }).ToArray()
+            };
+
+            return rows;
+        }
+
+
+
+        #endregion 
+
+
+
+        #region Not Used 
+
+        [HttpPost]
+        public dynamic GetTransformationTableData(TransitionAdd transEntity)
+        {
+            string StatusCode = string.Empty, Message = string.Empty;
+
+
+            var trans = new TransformEntity();
+
+            trans.Table_Name = transEntity.TableName;
+            trans.Field_Name = transEntity.ColumnName;
+            trans.Trans_Name = transEntity.TransName;
+            trans.Trans_Order = transEntity.TransOrder;
+            trans.Trans_Rule = transEntity.TransRule;
+            trans.Trans_Type = transEntity.TransType;
+
+            //var lst = _autoMS.GetColumnDetail(transEntity.Client_ID, transEntity.Project_Id, transEntity.TemplateName, transEntity.TableName, transEntity.ColumnName, ref  StatusCode, ref Message) as List<TransformEntity>;
+
+            //if (lst != null && lst.Count > 0)
+            //{
+            //    trans.Field_Data_Type = lst[0].Field_Data_Type;
+            //    trans.Field_Length = lst[0].Field_Prec;
+            //}
+
+            var lstTable = new List<AutomatonSourceEntity>();
+            lstTable = _autoMS.GetMetaDataTableDetail(transEntity.Client_ID, transEntity.Project_Id, transEntity.TableName, transEntity.SourceConnectionID, ref  StatusCode, ref Message) as List<AutomatonSourceEntity>;
+            if (lstTable.Count > 0)
+            {
+                var ls = lstTable.Where(DB => DB.Column_Name == transEntity.ColumnName).FirstOrDefault();
+
+                if (ls != null)
+                {
+                    trans.Field_Data_Type = ls.Data_Type;
+                    trans.Field_Length = ls.Data_Precision;
+                }
+            }
+            else
+            {
+                lstTable = _autoMS.GetMetaDataTableDetail(transEntity.Client_ID, transEntity.Project_Id, transEntity.TableName, transEntity.TargetConnectionID, ref  StatusCode, ref Message) as List<AutomatonSourceEntity>;
+                var ls1 = lstTable.Where(DB => DB.Column_Name == transEntity.ColumnName).FirstOrDefault();
+
+                if (ls1 != null)
+                {
+                    trans.Field_Data_Type = ls1.Data_Type;
+                    trans.Field_Length = ls1.Data_Precision;
+                }
+            }
+
+
+            trans.Trans_ID = "0";
+
+            return trans;
+        }
+        [HttpGet]
+        public object GetSrcList(string client_ID, string project_ID, string Templatename)
+        {
+            string StatusCode = string.Empty, Message = string.Empty;
+            List<string> SrcList = _autoMS.GetTemplateSourceTableList(client_ID, project_ID, Templatename, ref StatusCode, ref Message);
+            return SrcList;
+        }
+        [HttpGet]
+        public object GettargetList(string client_ID, string project_ID, string Templatename, string type)
+        {
+            string StatusCode = string.Empty, Message = string.Empty;
+            List<string> SrcList = _autoMS.GetTemplateTargetTableList(client_ID, project_ID, Templatename, type, ref StatusCode, ref Message);
+            return SrcList;
+        }
+        [HttpGet]
+        public object GettransList(string client_ID, string project_ID, string Templatename, string type)
+        {
+            string StatusCode = string.Empty, Message = string.Empty;
+            List<string> SrcList = _autoMS.GetTemplateTransTableList(client_ID, project_ID, Templatename, type, ref StatusCode, ref Message);
+            return SrcList;
+        }
+        [HttpPost]
+
+        #endregion 
+
+      
+        [HttpGet]
+        public dynamic GetTemplateNameListForScheduler(string client_id, string Project_id, string Type)
+        {
+            string StatusCode = string.Empty, Message = string.Empty;
+
+            var mlist = _autoMS.GetTemplateNameList(client_id, Project_id, Type, ref StatusCode, ref Message) as IEnumerable<TemplateList>;
+
+            var rows = (from auto in mlist
+                        select new
+                        {
+                            label = auto.Template_Name,
+                            value = Convert.ToString(auto.Template_ID)
+                        }).ToArray();
+
+
+            return rows;
+        }
+        [HttpGet]
+        public List<string> GetTemplateSourceTableList(string client_id, string Project_id, string Templatename)
+        {
+            string StatusCode = string.Empty, Message = string.Empty;
+            return _autoMS.GetTemplateSourceTableList(client_id, Project_id, Templatename, ref StatusCode, ref Message);
+        }
+        [HttpGet]
+        public List<string> GetTemplateTargetTableList(string client_id, string Project_id, string Templatename, string type)
+        {
+            string StatusCode = string.Empty, Message = string.Empty;
+            return _autoMS.GetTemplateTargetTableList(client_id, Project_id, Templatename, type, ref StatusCode, ref Message);
+        }
+        
+        public void SaveTransformGrid(List<TransformEntity> TransEntity)
+        {
+            string StatusCode = string.Empty, Message = string.Empty;
+            _autoMS.SaveTransGrid(TransEntity, ref StatusCode, ref Message);
+
+        }
+        [HttpGet]
+        public dynamic GetTemplateTargetRecords(string client_ID, string project_ID, string Template_Id, string Template_Name, string sourceTargettype)
+        {
+            string StatusCode = string.Empty, Message = string.Empty;
+
+            var SourceTemplate = _autoMS.GetTargetTemplateList(client_ID, project_ID, Template_Id, Template_Name, sourceTargettype, ref  StatusCode, ref Message) as IEnumerable<TemplateSourceTargetEntity>;
+            var rows = new
+            {
+                rows = (
+                    from auto in SourceTemplate
+                    select new
+                    {
+                        i = auto.Field_Seq_No,
+                        cell = new string[] { 
+                            auto.Field_Seq_No,
+                            auto.Field_Type,
+                            auto.Field_Name,
+                            auto.Field_Data_Type,
+                            auto.Field_Prec,
+                            auto.Field_Scale,
+                            auto.Field_Data,
+                            auto.Field_Key,
+                            auto.Table_Name ,
+                            auto.Row_ID
+                            
+                      }
+                    }).ToArray()
+
+
+            };
+            return rows;
+        }
+        
         public object GetBatchData(string client_ID, string project_ID, long? config_ID, string table_name, string BatchID, string SheetName, string FileName)
         {
             try
@@ -804,114 +1168,6 @@ namespace DM_UI.Controllers
             }
         }
 
-        [HttpPost]
-        public string SaveSourceTargetGrid(List<SourceEntity> SourceEntityList)
-        {
-            string StatusCode = string.Empty, Message = string.Empty, TemplateID = string.Empty;
-
-
-            if (SourceEntityList.Count <= 0)
-            {
-                return "0";
-            }
-
-            var Client_ID = SourceEntityList[0].Client_ID;
-            var Project_ID = SourceEntityList[0].Project_ID;
-            var TemplateName = SourceEntityList[0].Template_Name;
-            var Created_By = SourceEntityList[0].Created_By;
-
-            long Template_ID = _autoMS.InsertTemplate(Client_ID, Project_ID, TemplateName, Created_By, "Transformation");
-
-            foreach (var obj in SourceEntityList)
-            {
-                obj.Template_ID = Convert.ToString(Template_ID);
-            }
-
-
-            var lists = SourceEntityList.Where(a => a.Field_Name != null && a.Field_Name != "").ToList();
-
-            //Save Source Records to Table 
-            _autoMS.SaveSourceGrid(lists, ref StatusCode, ref Message);
-
-            //Save Target Records To Table 
-            var TargetEntity = new List<TargetEntity>();
-
-            foreach (var mobject in SourceEntityList)
-            {
-                var mlocalobj = new TargetEntity();
-                mlocalobj.Client_ID = mobject.Client_ID;
-                mlocalobj.Project_ID = mobject.Project_ID;
-                mlocalobj.Connection_ID = mobject.Target_Connection_ID;
-
-                if (string.IsNullOrWhiteSpace(mobject.Target_Table_Name))
-                {
-                    mlocalobj.Field_Name = "Ignore";
-                }
-                else
-                {
-                    mlocalobj.Field_Name = mobject.Target_Field_Name;
-                }
-
-
-                if (string.IsNullOrWhiteSpace(mobject.Template_ID))
-                {
-                    mlocalobj.Template_ID = Template_ID.ToString();
-                }
-                else
-                {
-                    mlocalobj.Template_ID = mobject.Template_ID;
-                }
-                mlocalobj.Table_Name = mobject.Target_Table_Name;
-                mlocalobj.Template_Name = mobject.Template_Name;
-                mlocalobj.Field_Type = "Target";
-                mlocalobj.Field_Seq_No = mobject.Field_Seq_No;
-
-                mlocalobj.Field_Data_Type = mobject.Target_Data_Type;
-                mlocalobj.Row_ID = mobject.Target_Row_ID == "" ? "0" : mobject.Target_Row_ID;
-                mlocalobj.Create_Date = mobject.Create_Date;
-                mlocalobj.Modified_Date = mobject.Modified_Date;
-                mlocalobj.Created_By = mobject.Created_By;
-
-                TargetEntity.Add(mlocalobj);
-            }
-            _autoMS.SaveTargetGrid(TargetEntity, ref StatusCode, ref Message);
-
-            return Template_ID.ToString();
-
-        }
-
-        [HttpGet]
-        public dynamic GetTemplateSourceTargetRecords(string client_ID, string project_ID, string Template_Id)
-        {
-
-            string StatusCode = string.Empty, Message = string.Empty;
-            var SourceTemplate = _autoMS.GetTemplateSourceTargetTableList(client_ID, project_ID, Template_Id, ref  StatusCode, ref Message) as IEnumerable<TemplateSourceTargetEntity>;
-            var rows = new
-            {
-                rows = (
-                    from auto in SourceTemplate
-                    select new
-                    {
-                        i = auto.Field_Seq_No,
-                        cell = new string[] {
-                            auto.Field_Seq_No,                                                    
-                            auto.Target_Table_Name,
-                            auto.Target_Field_Name,
-                            auto.Target_Data_Type,
-                            auto.Table_Name,
-                            auto.Field_Name,
-                            auto.Field_Data_Type,
-                             auto.Field_Type,
-                            auto.Row_ID,
-                           auto.Target_Row_ID 
-                            
-                      }
-                    }).ToArray()
-            };
-            return rows;
-
-        }
-
         [HttpGet]
         public dynamic GetEntityList(string client_ID, string project_ID, long Config_ID)
         {
@@ -949,7 +1205,6 @@ namespace DM_UI.Controllers
 
 
         }
-
         [HttpGet]
         public dynamic GetEntityColList(string client_ID, string project_ID, long Entity_Id, long Config_ID)
         {
@@ -980,7 +1235,6 @@ namespace DM_UI.Controllers
 
 
         }
-
         [HttpGet]
         public dynamic GetEntityNameList(string client_ID, string project_ID, long Config_ID)
         {
@@ -988,8 +1242,6 @@ namespace DM_UI.Controllers
             var _Entities = _autoMS.GetEntityList(client_ID, project_ID, Config_ID, ref StatusCode, ref Message);
             return _Entities;
         }
-
-
         [HttpPost]
         public string SaveEntityList(List<BusinessNameEntity> mobject)
         {
@@ -1054,40 +1306,7 @@ namespace DM_UI.Controllers
             {
                 return ex.Message;
             }
-        }
-        [HttpGet]
-        public dynamic GetTemplateSourceTargetTableName(string client_ID, string project_ID, string Template_Id, string Type)
-        {
-
-            string StatusCode = string.Empty, Message = string.Empty;
-            var SourceTemplate = _autoMS.GetTemplateSourceTargetTableList(client_ID, project_ID, Template_Id, ref  StatusCode, ref Message) as IEnumerable<TemplateSourceTargetEntity>;
-
-            if (Type.ToLower() == "target")
-            {
-                var TargetTablerows = (
-                from auto in SourceTemplate
-                select new string[] 
-                {
-                    auto.Target_Table_Name
-                }
-                ).Distinct().ToList().ToArray();
-
-                return TargetTablerows;
-            }
-            else
-            {
-                var SourceRows = (
-                   from auto in SourceTemplate
-                   select new string[] 
-                   {
-                       auto.Table_Name
-                   }
-                   ).Distinct().ToList().ToArray();
-
-                return SourceRows;
-            }
-
-        }
+        }     
 
         [HttpGet]
         public dynamic GetTableToDownload(string client_ID, string project_ID, long config_ID)
@@ -1181,34 +1400,11 @@ namespace DM_UI.Controllers
             _autoMS.SaveParameter(Entity, ref StatusCode, ref Message);
         }
 
-        [HttpGet]
-        public dynamic GetAutomatonBatchStatus(string client_ID, string project_ID, string Tool_ID)
-        {
-            DataTable dt = _autoMS.GetAutomatonBatchStatus(client_ID, project_ID, Convert.ToInt64(Tool_ID));
-
-            string json = JsonConvert.SerializeObject(dt, new DataTableConverter());
-
-            var rows = new
-            {
-                rows = (
-                from DataRow dr in dt.Rows
-                select new
-                {
-                    cell = new string[] {
-                        Convert.ToString(dr["Template_Name"]),
-                        Convert.ToString(dr["Run_Status"]),
-                        Convert.ToString(dr["Start_Time"]),
-                        Convert.ToString(dr["End_Time"])
-                   }
-
-                }).ToArray()
-            };
-
-            return rows;
-        }
+      
 
         [HttpGet]
-        public dynamic GetMetaDataTableBusinessName(string client_ID, string project_ID, string Database_IP, string Table_name, string connectionid, string Field_Type, long Recordcount)
+        public dynamic GetMetaDataTableBusinessName(string client_ID, string project_ID, string Database_IP,
+            string Table_name, string connectionid, string Field_Type, long Recordcount)
         {
             string StatusCode = string.Empty, Message = string.Empty;
             var lst = _autoMS.GetMetaDataTableBusinessName(client_ID, project_ID, Table_name, connectionid, ref  StatusCode, ref Message) as IEnumerable<AutomatonSourceEntity>;
@@ -1289,32 +1485,7 @@ namespace DM_UI.Controllers
             return _Result;
         }
 
-        [HttpGet]
-        public dynamic GetTemplateSrcTgtTableNames(string client_ID, string project_ID, string Template_Id, string Template_Name, string SourceConnectionID, string TargetConnectionID)
-        {
-            string StatusCode = string.Empty, Message = string.Empty;
-
-            var SourceTemplate = _autoMS.GetTargetTemplateList(client_ID, project_ID, Template_Id, Template_Name, "SOURCE", ref  StatusCode, ref Message) as IEnumerable<TemplateSourceTargetEntity>;
-            var TargetTemplate = _autoMS.GetSourceTemplateList(client_ID, project_ID, Template_Id, Template_Name, "TARGET", ref  StatusCode, ref Message) as IEnumerable<TemplateSourceTargetEntity>;
-
-
-            List<TransitionAdd> rows = (
-                                   from values in SourceTemplate.Select(db => db.Table_Name).Distinct()
-                                   select new TransitionAdd
-                                   {
-                                       TableName = values.ToString()
-                                   }).ToList();
-
-            rows.ForEach(db => db.SourceConnectionID = SourceConnectionID);
-            var row1 = (from values in TargetTemplate.Select(db => db.Table_Name).Distinct()
-                        select new TransitionAdd
-                        {
-                            TableName = values.ToString()
-                        }).ToList();
-            row1.ForEach(db => db.SourceConnectionID = TargetConnectionID);
-            rows.AddRange(row1);
-            return rows;
-        }
+       
 
         [HttpGet]
         public dynamic GetEntitySuggestedAttr(string client_ID, string project_ID, string table_name, string column_name)
@@ -1389,7 +1560,7 @@ namespace DM_UI.Controllers
                             auto.Run_Status,
                             auto.Schedule_Date.ToString("MM-dd-yyyy HH:mm"),
                             Convert.ToString(auto.Start_Time),
-                            Convert.ToString(auto.End_Time)
+                           Convert.ToString(auto.End_Time)
                       }
                     }).ToArray()
             };
@@ -1435,157 +1606,6 @@ namespace DM_UI.Controllers
             return data;
         }
 
-
-        #region Tranformation Logic
-
-        public dynamic GetTableDataDetailAutomatic(string client_ID, string project_ID, string Database_IP, string trtTable_Name, string trtConnectionid,
-            string Template_ID, string Template_Name,
-              string sourceTable_Name, string srcconnectionid, string Field_Type, long Recordcount, string tgtConnectionid)
-        {
-            string StatusCode = string.Empty, Message = string.Empty;
-
-            List<TemplateSourceTargetEntity> Tempsrctrt = new List<TemplateSourceTargetEntity>();
-            if (Template_ID != "Select")
-            {
-                Tempsrctrt = _autoMS.GetSourceTemplateList(client_ID, project_ID, Template_ID, Template_Name, null, ref  StatusCode, ref Message);
-            }
-
-
-            string[] targettables = sourceTable_Name.Split(',').Select(sValue => sValue.Trim()).ToArray();
-            List<AutomatonSourceEntity> joinTargetTableslist = new List<AutomatonSourceEntity>();
-            var sourceRecordCount = Recordcount;
-            var sorceTransactions = Recordcount == 0 ? 1 : Recordcount + 1;
-            if (Template_ID == "Select")
-            {
-
-            }
-
-            foreach (var item in targettables)
-            {
-                // foreach (var target in _autoMS.GetMetaDataTableDetail(client_ID, project_ID, item, trtConnectionid, ref  StatusCode, ref Message))
-                foreach (var target in _autoMS.GetMetaDataTableDetailAutomatic(client_ID, project_ID, Template_ID == "Select" ? 0 : (long)Convert.ToDouble(Template_ID), UIProperties.Sessions.Client.Role_ID,
-                   item, "SOURCE", trtConnectionid, ref  StatusCode, ref Message))
-                {
-                    AutomatonSourceEntity ase = new AutomatonSourceEntity();
-                    ase.Field_Seq_No = Convert.ToString(sorceTransactions++);
-                    ase.Table_Name = target.Table_Name;
-                    ase.Column_Name = target.Column_Name;
-                    ase.Field_Type = Field_Type;
-                    ase.Data_Type = target.Data_Type;
-                    ase.Data_Scale = target.Data_Scale;
-                    ase.Data_Precision = target.Data_Precision;
-                    ase.Row_ID = target.Row_ID;
-                    joinTargetTableslist.Add(ase);
-                }
-            }
-
-
-            var targetRecordCount = Recordcount;
-            var totalTransactions = Recordcount == 0 ? 1 : Recordcount + 1;
-
-            string[] sourcetables = trtTable_Name.Split(',').Select(sValue => sValue.Trim()).ToArray();
-            List<AutomatonSourceEntity> joinSourceTableslist = new List<AutomatonSourceEntity>();
-            foreach (var item in sourcetables)
-            {
-                foreach (var target in _autoMS.GetMetaDataTableDetailAutomatic(client_ID, project_ID, Template_ID == "Select" ? 0 : (long)Convert.ToDouble(Template_ID), UIProperties.Sessions.Client.Role_ID,
-                    item, "SOURCE", trtConnectionid, ref  StatusCode, ref Message))
-                //foreach (var target in _autoMS.GetMetaDataTableDetail(client_ID, project_ID, item, trtConnectionid, ref  StatusCode, ref Message))
-                {
-                    AutomatonSourceEntity ase = new AutomatonSourceEntity();
-                    ase.Field_Seq_No = Convert.ToString(totalTransactions++);
-                    ase.Table_Name = target.Table_Name;
-                    ase.Column_Name = target.Column_Name;
-                    ase.Field_Type = Field_Type;
-                    ase.Data_Type = target.Data_Type;
-                    ase.Data_Scale = target.Data_Scale;
-                    ase.Data_Precision = target.Data_Precision;
-                    ase.Row_ID = target.Row_ID;
-                    joinSourceTableslist.Add(ase);
-                }
-            }
-
-            totalTransactions = targetRecordCount == 0 ? 1 : targetRecordCount + 1;
-            totalTransactions = Recordcount == 0 ? 1 : Recordcount + 1;
-
-            List<TemplateSourceTargetEntity> ListASE = new List<TemplateSourceTargetEntity>();
-            foreach (var auto in joinTargetTableslist)
-            {
-                string flag = String.Empty;
-                TemplateSourceTargetEntity ASE = new TemplateSourceTargetEntity();
-                ASE.Field_Seq_No = auto.Field_Seq_No;
-                ASE.Table_Name = auto.Table_Name;
-                ASE.Column_Name = auto.Column_Name;
-                ASE.Data_Type = auto.Data_Type;
-                ASE.Row_ID = "0";
-                foreach (var item in Tempsrctrt)
-                {
-
-                    if (item.Field_Seq_No == auto.Field_Seq_No)
-                    {
-
-                        ASE.Target_Table_Name = item.Table_Name;
-                        ASE.Target_Column_Name = item.Field_Name;
-                        ASE.Target_Data_Type = item.Field_Data_Type;
-                        ASE.Field_Type = item.Field_Type;
-                        flag = "Exists";
-                    }
-                }
-                if (flag != "Exists")
-                {
-                    ASE.Target_Field_Name = (from auto_busniness in joinSourceTableslist
-                                             where auto_busniness.Column_Name.ToLower() == auto.Column_Name.ToLower()
-                                             select auto_busniness.Column_Name).FirstOrDefault<string>();
-                    ASE.Target_Table_Name = (from auto_busniness in joinSourceTableslist
-                                             where auto_busniness.Column_Name.ToLower() == auto.Column_Name.ToLower()
-                                             select auto_busniness.Table_Name).FirstOrDefault<string>();
-                    ASE.Target_Column_Name = (from auto_busniness in joinSourceTableslist
-                                              where auto_busniness.Column_Name.ToLower() == auto.Column_Name.ToLower()
-                                              select auto_busniness.Column_Name).FirstOrDefault<string>();
-                    ASE.Target_Data_Type = (from auto_busniness in joinSourceTableslist
-                                            where auto_busniness.Column_Name.ToLower() == auto.Column_Name.ToLower()
-                                            select auto_busniness.Data_Type).FirstOrDefault<string>();
-                    ASE.Field_Type = (from auto_busniness in joinSourceTableslist
-                                      where auto_busniness.Column_Name.ToLower() == auto.Column_Name.ToLower()
-                                      select auto_busniness.Field_Type).FirstOrDefault<string>();
-                }
-                ListASE.Add(ASE);
-            }
-            var result = ListASE;
-            return result;
-
-
-
-        }
-
-
-        public dynamic GetTableDataDetailTrans(string client_ID, string project_ID, string Database_IP, string Table_name, string connectionid, string Field_Type, long Recordcount, string tgtConnectionid)
-        {
-            string StatusCode = string.Empty, Message = string.Empty;
-            var lst = _autoMS.GetMetaDataTableDetail(client_ID, project_ID, Table_name, connectionid, ref  StatusCode, ref Message) as IEnumerable<AutomatonSourceEntity>;
-            var targetRecordCount = Recordcount;
-            var totalTransactions = Recordcount == 0 ? 1 : Recordcount + 1;
-
-            totalTransactions = Recordcount == 0 ? 1 : Recordcount + 1;
-
-            var mrows = (from auto in lst
-                         select new AutomatonSourceEntity()
-                         {
-                             Field_Seq_No = Convert.ToString(totalTransactions++),
-                             Field_Type = Field_Type,
-                             Column_Name = auto.Column_Name,
-                             Data_Type = auto.Data_Type,
-                             Data_Precision = auto.Data_Precision,
-                             Data_Scale = auto.Data_Scale,
-                             Field_Data = auto.Field_Data,
-                             Key_column = auto.Key_column,
-                             Table_Name = auto.Table_Name,
-                             Row_ID = "0"
-                         }).ToList();
-            return mrows;
-        }
-
-        #endregion
-
         [HttpPost]
         public dynamic GenerateReconcile(string Template_ID)
         {
@@ -1602,3 +1622,6 @@ namespace DM_UI.Controllers
 
     }
 }
+
+
+

@@ -93,10 +93,53 @@
             track: true,
         });
 
+
+
+
+
+        LoadDataTemplate('Transformation', function (data) {
+            $('#select_existing_Template').html('');
+            $('#select_existing_Template').append($('<option>').text("Select"));
+            $.each(data, function (index, value) {
+                var template = value.split(':');
+                var tempname = template[0];
+                var tempid = template[1];
+                 if (tempname != '')
+                $('#select_existing_Template').append($('<option>').text(tempname).val(tempid));
+            });
+        });
+        LoadSourceTarget('SOURCE', function (data) {
+            $('#TargetConnection').html('');
+            $('#TargetConnection').append($('<option>').text('Select').val('Select'));
+            $.each(data, function (index, value) {
+                var name = value.split(',');
+                var ServerName = name[0];
+                var ConfigId = name[1];
+                $('#TargetConnection').append($('<option>').text(ServerName).val(ConfigId));
+            });
+        });
+        LoadSourceTarget('TARGET', function (data) {
+            $('#selectConnection').html('');
+            $('#selectConnection').append($('<option>').text('Select').val('Select'));
+            $.each(data, function (index, value) {
+                var name = value.split(',');
+                var ServerName = name[0];
+                var ConfigId = name[1];
+                $('#selectConnection').append($('<option>').text(ServerName).val(ConfigId));
+            });
+        });
+        GetTransformationType();
+
         $('#select_existing_Template').on('change', function (e) {
-             
+
             var optionSelected = $("option:selected", this);
             var valueSelected = this.value;
+
+            if (valueSelected == 'Select') {
+                Reset();
+                return;
+            }
+
             $('#hdntemplateid').val(valueSelected);
             $("#divSourcetable").show();
             $("#divTransformListtable").show();
@@ -124,141 +167,61 @@
             bindTableList("Sourcetable", $("#selectConnection option:selected").val(), true);
 
 
+            $("#selectConnection").prop("disabled", true);
+            $("#TargetConnection").prop("disabled", true);
+
+
+
+
         });
 
+        $('#Targetable').change(function () {
+            console.log($(this).val());
+            $("#automaticallocate").attr('checked', false);
 
-        LoadDataTemplate('Transformation', function (data) {
-            $('#select_existing_Template').html('');
-            $('#select_existing_Template').append($('<option>').text("Select"));
-            $.each(data, function (index, value) {
-                var template = value.split(':');
-                var tempname = template[0];
-                var tempid = template[1];
-                // if (tempname != '')
-                $('#select_existing_Template').append($('<option>').text(tempname).val(tempid));
-            });
-        });
+        }).multipleSelect({
+            width: '100%',
+            position: 'bottom',
+            filter: true,
+            selectAll: false,
+            onClick: function (view) {
 
-        GetTransformationType();
+                if (view.checked) {
 
-        LoadSourceTarget('SOURCE', function (data) {
-            $('#TargetConnection').html('');
-            $('#TargetConnection').append($('<option>').text('Select').val('Select'));
-            $.each(data, function (index, value) {
-                var name = value.split(',');
-                var ServerName = name[0];
-                var ConfigId = name[1];
-                $('#TargetConnection').append($('<option>').text(ServerName).val(ConfigId));
-            });
-        });
-        LoadSourceTarget('TARGET', function (data) {
-            $('#selectConnection').html('');
-            $('#selectConnection').append($('<option>').text('Select').val('Select'));
-            $.each(data, function (index, value) {
-                var name = value.split(',');
-                var ServerName = name[0];
-                var ConfigId = name[1];
-                $('#selectConnection').append($('<option>').text(ServerName).val(ConfigId));
-            });
-        });
+                    var FieldType = "SOURCE";
 
-
-        $("#automaticallocate").click(function () {
-
-             
-
-            var TemplateID = $('#select_existing_Template option:selected').val();
-            var TemplateName = $('#select_existing_Template option:selected').text();
-
-            if ($('#automaticallocate').is(':checked')) {
-
-                if ($("#Sourcetable").val() == null) {
-                    alert("Please Select TargetTable")
-                    $("#automaticallocate").attr('checked', false);
-                    return;
-                }
-
-                if ($("#Targetable").val() == null) {
-                    alert("Please Select Source Table")
-                    $("#automaticallocate").attr('checked', false);
-                    return;
-                }
-                 
-                var TargetTableList = $("#Targetable").multipleSelect("getSelects");
-                if (TargetTableList.length > 1)
-                {
-                    var TargetTables = ""; var i = 0;
-                    $.each(TargetTableList, function (key, value) {
-                        if (i == 0) {
-                            TargetTables = value;i++;}
-                        else { TargetTables = TargetTables + "," + value; }
-                    });
-                }
-                else
-                {
-                    TargetTables = $('#Targetable').val();
-                }
-
-                var SourceTableList = $("#Sourcetable").multipleSelect("getSelects");
-                if (SourceTableList.length > 1) {
-                    var SourceTables = ""; var i = 0;
-                    $.each(SourceTableList, function (key, value) {
-                        if (i == 0) {
-                            SourceTables = value; i++;
-                        }
-                        else { SourceTables = SourceTables + "," + value; }
-                    });
-                }
-                else {
-                    SourceTables = $('#Sourcetable').val();
-                }
-
-
-
-
-                var databaseIP = $('#selectConnection option:selected').text().split(':')[0];
-                var baseUrl = '@Url.Content("~/")';
-                var ServiceUrl = baseUrl + "api/AutomatAPI/GetTableDataDetailAutomatic";
-                jQuery("#SourcetableGrid").jqGrid("clearGridData");
-                var grid = jQuery("#SourcetableGrid");
-                var reccount = grid.getGridParam("reccount")
-                $("#divSourcetable").show();
-                $.ajax({
-                    type: "GET",
-                    url: ServiceUrl,
-                    data: {
-                        client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), Database_IP: databaseIP,
-                        Template_ID: TemplateID,Template_Name:TemplateName,
-                        sourceTable_Name: SourceTables, srcconnectionid: $('#selectConnection option:selected').val(),
-                        trtTable_Name: TargetTables, trtConnectionid: $('#TargetConnection option:selected').val(),
-                        Field_Type: $("input[name='rdb']:checked").val(), Recordcount: reccount, tgtConnectionid: $('#selectConnection option:selected').val()
-                    },
-                    dataType: "json",
-                    contentType: "application/json",
-                    success: function (data) {
-                         
-                        var grid = jQuery("#SourcetableGrid");
-                        var reccount = grid.getGridParam("reccount") + 1;
-
-                        for (i = 0; i < data.length; i++) {
-                            grid.jqGrid('addRowData', reccount + i, data[i], "last");
-                        }
-
-                        $("#sp_1_pager_datatable").text("1");
-
+                    if ($("#chklookup").prop('checked') == true) {
+                        FieldType = "LOOKUP";
                     }
-                });
+                    localStorage.setItem(view.value, FieldType);
+                }
+                BindTransTableList();
             }
 
-
         });
 
 
+        $('#Sourcetable').change(function () {
+            console.log($(this).val());
+            $("#automaticallocate").attr('checked', false);
+        }).multipleSelect({
+            width: '100%',
+            position: 'bottom',
+            filter: true,
+            selectAll: false,
+            onClick: function (view) {
+                debugger;
+
+                if (view.checked) {
+                    AddTableToSourceGrid(view.value);
+                }
+                BindTransTableList();
+            }
+        });
 
         $('#selecttransformation').on('change', function () {
             $("#btnrulehower").attr("title", $('#selecttransformation option:selected').attr("Key"));
         });
-
         $('#TargetConnection').on('change', function () {
 
             var TemplateName = $('#txttemplate').val();
@@ -279,7 +242,6 @@
             bindTableList("Targetable", $("#TargetConnection option:selected").val(), false);
 
         });
-
         $('#selectConnection').on('change', function () {
 
             var TemplateName = $('#txttemplate').val();
@@ -302,12 +264,9 @@
 
 
         });
-
-
-        //Trans table column
         $('#selectTranstable').on('change', function () {
 
-            var baseUrl = '@Url.Content("~/")';
+
             $('#selecttranscolumn').html('');
 
             var TemplateName = $('#txttemplate').val();
@@ -331,13 +290,91 @@
                     $("#selecttranscolumn").val($('#hdnFieldName').val());
                 }
             });
-
         });
 
-        //Save Source
-        $('#btnsavesource').click(function () {
 
-            var baseUrl = '@Url.Content("~/")';
+        $("#automaticallocate").click(function () {
+
+            var TemplateID = $('#select_existing_Template option:selected').val();
+            var TemplateName = $('#select_existing_Template option:selected').text();
+
+            if ($('#automaticallocate').is(':checked')) {
+
+                if ($("#Sourcetable").val() == null) {
+                    alert("Please Select TargetTable")
+                    $("#automaticallocate").attr('checked', false);
+                    return;
+                }
+
+                if ($("#Targetable").val() == null) {
+                    alert("Please Select Source Table")
+                    $("#automaticallocate").attr('checked', false);
+                    return;
+                }
+
+                var TargetTableList = $("#Targetable").multipleSelect("getSelects");
+                if (TargetTableList.length > 1) {
+                    var TargetTables = ""; var i = 0;
+                    $.each(TargetTableList, function (key, value) {
+                        if (i == 0) {
+                            TargetTables = value; i++;
+                        }
+                        else { TargetTables = TargetTables + "," + value; }
+                    });
+                }
+                else {
+                    TargetTables = $('#Targetable').val();
+                }
+
+                var SourceTableList = $("#Sourcetable").multipleSelect("getSelects");
+                if (SourceTableList.length > 1) {
+                    var SourceTables = ""; var i = 0;
+                    $.each(SourceTableList, function (key, value) {
+                        if (i == 0) {
+                            SourceTables = value; i++;
+                        }
+                        else { SourceTables = SourceTables + "," + value; }
+                    });
+                }
+                else {
+                    SourceTables = $('#Sourcetable').val();
+                }
+
+                var databaseIP = $('#selectConnection option:selected').text().split(':')[0];
+
+                var ServiceUrl = baseUrl + "api/AutomatAPI/GetTableDataDetailAutomatic";
+                jQuery("#SourcetableGrid").jqGrid("clearGridData");
+                var grid = jQuery("#SourcetableGrid");
+                var reccount = grid.getGridParam("reccount")
+                $("#divSourcetable").show();
+                $.ajax({
+                    type: "GET",
+                    url: ServiceUrl,
+                    data: {
+                        client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), Database_IP: databaseIP,
+                        Template_ID: TemplateID, Template_Name: TemplateName,
+                        sourceTable_Name: SourceTables, srcconnectionid: $('#selectConnection option:selected').val(),
+                        trtTable_Name: TargetTables, trtConnectionid: $('#TargetConnection option:selected').val(),
+                        Field_Type: $("input[name='rdb']:checked").val(), Recordcount: reccount, tgtConnectionid: $('#selectConnection option:selected').val()
+                    },
+                    dataType: "json",
+                    contentType: "application/json",
+                    success: function (data) {
+
+                        var grid = jQuery("#SourcetableGrid");
+                        var reccount = grid.getGridParam("reccount") + 1;
+
+                        for (i = 0; i < data.length; i++) {
+                            grid.jqGrid('addRowData', reccount + i, data[i], "last");
+                        }
+
+                        $("#sp_1_pager_datatable").text("1");
+
+                    }
+                });
+            }
+        });
+        $('#btnsavesource').click(function () {
 
             var TemplateName = $('#txttemplate').val();
             var TemplateID = $('#hdntemplateid').val();
@@ -403,36 +440,18 @@
                 SourceEntity.push({
                     Client_ID: $("#hdnClientId").val(),
                     Project_ID: $("#hdnProjectId").val(),
-
-                    //Connection_ID: $('#selectConnection option:selected').val(),
                     Connection_ID: $('#TargetConnection option:selected').val(),
-
-                    //Target_Connection_ID: $('#TargetConnection option:selected').val(),
                     Target_Connection_ID: $('#selectConnection option:selected').val(),
-
                     Template_Id: $('#hdntemplateid').val(),
-
-                    //Table_Name: sourceTableName,
-                    //Field_Name: SourceFieldName,
-                    //Target_Table_Name: TargetTableName,
-                    //Target_Field_Name: TargetFieldName,
-
                     Target_Table_Name: sourceTableName,
                     Target_Field_Name: SourceFieldName,
                     Table_Name: TargetTableName,
                     Field_Name: TargetFieldName,
-
-                    //Target_Data_Type: rowData['Target_Data_Type'],
-                    //Field_Data_Type: rowData['Data_Type'],
                     Field_Data_Type: rowData['Target_Data_Type'],
                     Target_Data_Type: rowData['Data_Type'],
-
                     Template_Name: TemplateName,
-
                     Field_Seq_No: seqno,
-
                     Field_Type: rowData['Field_Type'],
-
                     Row_ID: rowData['Row_ID'],
                     Target_Row_ID: rowData['Target_Row_ID'],
                     Create_Date: Date.now(),
@@ -456,6 +475,7 @@
                     if ($('#hdntemplateid').val() == "") {
                         if ($('#hdnMode').val() == 'New') {
                             $('#hdntemplateid').val(data);
+                            $('#select_existing_Template').append($('<option>').text(TemplateName).val(data));
                         }
                     }
                     InitializingSourceGrid($('#hdntemplateid').val(), TemplateName);
@@ -473,7 +493,6 @@
 
         $('#btnaddtrans').click(function () {
 
-            var baseUrl = '@Url.Content("~/")';
             $('#TransformListtable').show();
 
             var TemplateName = $('#txttemplate').val();
@@ -564,7 +583,6 @@
             });
         });
 
-
         $('#btnreset').click(function () {
             Reset();
         });
@@ -607,7 +625,7 @@
         });
 
         function bindTableList(_ControlID, _Config_ID, Setvalue) {
-             
+
             $('#' + _ControlID).empty();
             //$('#' + _ControlID).append($('<option>').text('Select').val('Select'));
             $.ajax({
@@ -622,8 +640,6 @@
                         var databasename = name[1];
                         $('#' + _ControlID).append($('<option>').text(tablename).val(tablename));
                         $('#' + _ControlID).multipleSelect("refresh");
-
-
                     });
 
                     if (Setvalue) {
@@ -690,7 +706,11 @@
 
         function InitializingSourceGrid(TemplateID, TemplateName) {
 
+            var FieldType = "SOURCE";
 
+            if ($("#chklookup").prop('checked') == true) {
+                FieldType = "LOOKUP";
+            }
             $("#SourcetableGrid").GridUnload();
             var ServiceUrl = baseUrl + "api/AutomatAPI/GetTemplateSourceTargetRecords";
             $grid = jQuery("#SourcetableGrid").jqGrid({
@@ -704,7 +724,7 @@
                 rowNum: 1000,
                 rowList: [10, 20, 30],
                 postData: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), Template_Id: TemplateID },
-                colNames: ['Seq No', 'Table Name', 'Field Name', 'Data Type', 'Table Name', 'Column Name', 'DataType', 'Field Type', 'Row ID', 'Target Row ID'],
+                colNames: ['Seq No', 'Table Name', 'Field Name', 'Data Type', 'Table Name', 'Column Name', 'DataType', FieldType, 'Row ID', 'Target Row ID'],
                 colModel: [
                { name: 'Field_Seq_No', index: 'Field_Seq_No', type: 'long', width: 8, sorttype: 'long', search: true, editable: true },
                 {
@@ -802,7 +822,7 @@
                 },
                 onSelectRow: function (rowId, iRow, iCol, e) {
 
-                     
+
                     var sourceTableName = '';
                     var SourceFieldName = '';
 
@@ -884,7 +904,7 @@
                             dataEvents: [{
                                 type: 'change',
                                 fn: function (e) {
-                                     
+
                                     var row = $(e.target).closest('tr.jqgrow');
                                     var rowid = row.attr('id');
 
@@ -896,7 +916,7 @@
                             }]
                         }
                     });
-                     
+
                     jQuery("#SourcetableGrid").jqGrid('editRow', rowId, true);
 
                     if (rowId && rowId !== lastSel) {
@@ -955,7 +975,7 @@
             jQuery("#SourcetableGrid").jqGrid("filterToolbar", { stringResult: true, searchOnEnter: false, defaultSearch: "cn", clearSearch: true, groupOp: "OR" });
 
             var sourceBgColor = "#24b3b5";
-            var targetBgColor = "#1C94C6";
+           var targetBgColor = "#1C94C6";
             var GroupHeaderHeight = "36px";
             var RowColumntargetHeight = "32px";
 
@@ -1027,7 +1047,7 @@
         }
 
         function InitializingSourceColumnName(SelectedValue, selRowID, DefaultValue) {
-             
+
             var jsonSourceData = $("#divHiddenDataSourceColumn").data(SelectedValue);
 
             if (jQuery.type(jsonSourceData) === "undefined") {
@@ -1050,7 +1070,7 @@
         }
 
         function ProcessSourceDataColumn(data, selRowID, DefaultValue) {
-             
+
             $('#' + selRowID + '_Column_Name').empty();
 
             $('#' + selRowID + '_Column_Name').append($('<option>').text("Ignore").val("Ignore"));
@@ -1065,18 +1085,18 @@
         }
 
         function InitializingTargetColumnName(SelectedValue, selRowID, DefaultValue, automap) {
-             
+
             //Data get loaded from the hidden field if already get from server for a table.<Avoiding Multiple call for same table>
             var jsonTargetData = $("#divHiddenDataTargetColumn").data(SelectedValue);
             if (jQuery.type(jsonTargetData) === "undefined") {
 
                 $.ajax({
-                    type: "GET",
+                   type: "GET",
                     url: baseUrl + "api/AutomatAPI/GetTableColumnDetailForAutoComplete",
                     data: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), Table_Name: SelectedValue, connectionid: $('#TargetConnection option:selected').val() },
                     dataType: 'json',
                     success: function (data) {
-                         
+
                         data.unshift({ label: 'Ignore', value: 'Ignore' }); //Adding Ignore option in clollection on very first
                         $('#' + selRowID + '_Target_Column_Name').autocomplete(); //Initializing autocomplete for input control
                         $('#' + selRowID + '_Target_Column_Name').autocomplete('option', 'source', data); //Loading value on table change
@@ -1091,7 +1111,7 @@
         }
 
         function ProcessTargetDataColumn(data, selRowID, DefaultValue, automap) {
-             
+
             //$('#' + selRowID + '_Target_Column_Name').empty();
             $('#' + selRowID + '_Target_Column_Name').autocomplete();
             $('#' + selRowID + '_Target_Column_Name').autocomplete('option', 'source', data);
@@ -1183,7 +1203,7 @@
                 edittext: 'Edit',
                 deltext: 'Delete',
                 editfunc: function (rowid) {
-                     
+
                     $("#hdnTransformationID").val($.trim($grid.jqGrid('getCell', rowid, 'Trans_ID')));
                     $("#txttrans").val($.trim($grid.jqGrid('getCell', rowid, 'Trans_Name')));
                     $("#selecttransformation").val($.trim($grid.jqGrid('getCell', rowid, 'Trans_Type')));
@@ -1310,7 +1330,6 @@
 
 
         $('#btnaddParameter').click(function () {
-            var baseUrl = '@Url.Content("~/")';
 
             var TemplateName = $('#txttemplate').val();
             if ($('#hdnMode').val() == "Edit") {
@@ -1363,7 +1382,6 @@
                     //$('#txtParameterName').val("");
                     $('#txtParameterValue').val("");
                     $('#hdnParameterID').val("");
-
                 }
             });
 
@@ -1374,7 +1392,6 @@
         function LoadParameterList() {
 
             var tablename = this.value;
-            var baseUrl = '@Url.Content("~/")';
             var ServiceUrl = baseUrl + "api/AutomatAPI/GetTemplateParameterData";
 
             var TemplateName = $('#txttemplate').val();
@@ -1428,15 +1445,10 @@
                 edittext: 'Edit',
                 deltext: 'Delete',
                 editfunc: function (rowid) {
-
-                    //var _txtParameterName = $("#txtParameterName");
                     var _txtParameterValue = $("#txtParameterValue");
-                    //_txtParameterName.val($.trim($grid.jqGrid('getCell', rowid, 'Parameter_Name')));
-
                     $("#ddlparameterName").val($grid.jqGrid('getCell', rowid, 'Parameter_Name'));
                     _txtParameterValue.val($.trim($grid.jqGrid('getCell', rowid, 'Parameter_Value')));
                     $("#hdnParameterID").val(rowid);
-                    //_txtParameterName.focus();
                 }
             },
            {
@@ -1498,12 +1510,8 @@
         });
 
         $("#btnCancelParameter").click(function () {
-
-
-            //$('#txtParameterName').val("");
             $('#txtParameterValue').val("");
             $('#hdnParameterID').val("");
-            //$("#dialog").dialog('close');
         });
 
     });
@@ -1512,13 +1520,13 @@
     //Source Grid Binding
 
     function AddTableToSourceGrid(tablename) {
-         
+
         var FieldType = ""; // field type set empty. based on table selection the type will be append.
 
         $('#hdnsrcconnectionid').val($('#selectConnection option:selected').val());
         var databaseIP = $('#selectConnection option:selected').text().split(':')[0];
         var connection_id = $('#hdnsrcconnectionid').val();
-        var baseUrl = '@Url.Content("~/")';
+
         var ServiceUrl = baseUrl + "api/AutomatAPI/GetTableDataDetailTrans";
 
         var grid = jQuery("#SourcetableGrid");
@@ -1534,7 +1542,7 @@
             dataType: "json",
             contentType: "application/json",
             success: function (data) {
-                 
+
                 var grid = jQuery("#SourcetableGrid");
                 var reccount = grid.getGridParam("reccount") + 1;
 
@@ -1549,7 +1557,7 @@
     }
 
     function BindTransTableList() {
-         
+
         $('#selectTranstable').empty();
         $('#selectTranstable').append($('<option>').text('Select').val('Select'));
 
@@ -1567,9 +1575,6 @@
             $('#selectTranstable').append($('<option>').text(value).val($('#TargetConnection option:selected').val()));
             SourceTargetSelected = true;
         });
-
-
-
 
         if (SourceTargetSelected == false) {
 
@@ -1589,7 +1594,7 @@
                 data: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), Template_Id: $('#hdntemplateid').val(), Template_Name: TemplateName, SourceConnectionID: $('#selectConnection option:selected').val(), TargetConnectionID: $('#TargetConnection option:selected').val() },
                 dataType: 'json',
                 success: function (data) {
-                     
+
                     $.each(data, function (index, value) {
                         $('#selectTranstable').append($('<option>').text(value.TableName).val(value.SourceConnectionID));
                     });
@@ -1766,62 +1771,6 @@
     <div id="divHiddenDataTargetColumn"></div>
 
 </div>
-<script>
-    $(function () {
-
-        $('#Targetable').change(function () {
-            console.log($(this).val());
-            $("#automaticallocate").attr('checked', false);
-
-        }).multipleSelect({
-            width: '100%',
-            position: 'bottom',
-            filter: true,
-            selectAll: false,
-            onClick: function (view) {
-                 
-                if (view.checked) {
-
-                    var FieldType = "SOURCE";
-
-                    if ($("#chklookup").prop('checked') == true) {
-                        FieldType = "LOOKUP";
-                    }
-
-                    localStorage.setItem(view.value, FieldType);
-                }
-
-                BindTransTableList();
-            }
-        });
-
-
-        $('#Sourcetable').change(function () {
-            console.log($(this).val());
-            $("#automaticallocate").attr('checked', false);
-        }).multipleSelect({
-            width: '100%',
-            position: 'bottom',
-            filter: true,
-            selectAll: false,
-            onClick: function (view) {
-                 
-                if (view.checked) {
-
-                    AddTableToSourceGrid(view.value);
-                }
-
-                BindTransTableList();
-                /*
-                view.label: the text of the checkbox item
-                view.checked: the checked of the checkbox item
-                */
-            }
-        });
-
-    });
-</script>
-
 
 <div id="dialog" title="Define Parameters" style="display: none; font-size: 12px">
     <table>
@@ -1831,7 +1780,6 @@
         <tr>
             <td><b>Parameter Name</b> </td>
             <td>
-                @*<input type="text" id="txtParameterName" class="textbox" />*@
                 <select id="ddlparameterName" class="dropdown">
                     <option value="SRC_Query">Source Query </option>
                     <option value="SRC_Query2">Join Query</option>
@@ -1864,3 +1812,5 @@
     <table id="ParameterListtable" align='center'></table>
     <div id="pager_ParameterListtable" class="scroll"></div>
 </div>
+
+

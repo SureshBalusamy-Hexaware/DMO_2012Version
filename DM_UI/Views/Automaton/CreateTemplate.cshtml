@@ -48,13 +48,19 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
+
         baseUrl = '@Url.Content("~/")';
 
         $("#hdnClientId").val('@ViewData["ClientID"]');
         $("#hdnProjectId").val('@ViewData["ProjectID"]');
         $("#hdnToolID").val('@ViewData["ToolID"]');
+
         $('#TransformListtable').hide();
         $('#btngeneratexml').hide();
+
+        $("#transdesc").hide();
+        $("#translist").hide();
+
         $('#selecttransformation').attr('trigger', 'change');
 
         InitializingGrid(0, '');
@@ -62,7 +68,6 @@
         $("#select_existing_Template").hide();
         $("#divSourcetable").hide();
         $("#divTransformListtable").hide();
-        $("#divTargetListtable").hide();
 
         var $radios = $('input:radio[name=rdb]');
         if ($radios.is(':checked') === false) {
@@ -88,41 +93,6 @@
                 $("#txttemplate").show();
                 $("#hdnMode").val("New");
             }
-        });
-
-        $('#select_existing_Template').on('change', function (e) {
-            var optionSelected = $("option:selected", this);
-            var valueSelected = this.value;
-
-            if (valueSelected == 'Select') {
-                Reset();
-                return;
-            }
-
-            $('#hdntemplateid').val(valueSelected);
-            $("#divSourcetable").show();
-            $("#divTargetListtable").show();
-            $("#divTransformListtable").show();
-
-            var TemplateID = $('#select_existing_Template option:selected').val();
-            var TemplateName = $('#select_existing_Template option:selected').text();
-
-            if (TemplateName == "Select" || TemplateName == "") {
-                TemplateName = '';
-                TemplateID = 0;
-            }
-
-            InitializingGrid(TemplateID, TemplateName);
-
-            $("#sourceConnection")[0].selectedIndex = 1;
-            $("#TargetConnection")[0].selectedIndex = 0;
-
-            GetTransTableList()
-
-            bindTableList("Targetable", $("#TargetConnection option:selected").val(), true);
-            bindTableList("Sourcetable", $("#sourceConnection option:selected").val(), true);
-
-
         });
 
 
@@ -158,11 +128,48 @@
         });
         GetTransformationType();
 
+        $('#select_existing_Template').on('change', function (e) {
+            var optionSelected = $("option:selected", this);
+            var valueSelected = this.value;
 
+            if (valueSelected == 'Select') {
+                Reset();
+                return;
+            }
+
+            $('#hdntemplateid').val(valueSelected);
+            $("#divSourcetable").show();
+            $("#divTransformListtable").show();
+
+            var TemplateID = $('#select_existing_Template option:selected').val();
+            var TemplateName = $('#select_existing_Template option:selected').text();
+
+            if (TemplateName == "Select" || TemplateName == "") {
+                TemplateName = '';
+                TemplateID = 0;
+            }
+
+            InitializingGrid(TemplateID, TemplateName);
+
+            $("#sourceConnection")[0].selectedIndex = 1;
+            $("#TargetConnection")[0].selectedIndex = 0;
+
+            GetTransTableList()
+
+            bindTableList("Targetable", $("#TargetConnection option:selected").val(), true);
+            bindTableList("Sourcetable", $("#sourceConnection option:selected").val(), true);
+
+            $("#Sourcetable").prop("disabled", true);
+            $("#sourceConnection").prop("disabled", true);
+            $("#TargetConnection").prop("disabled", true);
+
+            $("#transdesc").show();
+            $("#translist").show();
+
+        });
         $('#selecttransformation').on('change', function () {
             $("#btnrulehower").attr("title", $('#selecttransformation option:selected').attr("Key"));
         });
-
         $('#sourceConnection').on('change', function () {
             var TemplateName = $('#select_existing_Template').is(':visible') ? $('#select_existing_Template option:selected').text() : $('#txttemplate').val();
             TemplateName = TemplateName.toUpperCase() == 'SELECT' ? '' : TemplateName;
@@ -177,8 +184,6 @@
 
             bindTableList("Sourcetable", $("#sourceConnection option:selected").val());
         });
-
-        //Trans table column
         $('#selectTranstable').on('change', function () {
 
             $('#selecttranscolumn').html('');
@@ -207,8 +212,6 @@
         });
 
 
-        //Source Grid Binding
-
         $('#Sourcetable').on('change', function () {
             var tablename = this.value;
             var FieldType = "SOURCE"
@@ -216,20 +219,20 @@
 
             var databaseIP = $('#sourceConnection option:selected').text().split(':')[0];
             var connection_id = $('#hdnsrcconnectionid').val();
-           // var baseUrl = '@Url.Content("~/")';
             var ServiceUrl = baseUrl + "api/AutomatAPI/GetTableDataDetail";
             $("#divSourcetable").show();
             $('#SourcetableGrid').jqGrid('clearGridData');
-            $('#TargetListtable').jqGrid('clearGridData');
-
             var grid = jQuery("#SourcetableGrid");
-            var reccount = grid.getGridParam("reccount")
+            var reccount = 0;//grid.getGridParam("reccount")
 
             $('#txtTargetable').val('');
             $.ajax({
                 type: "GET",
                 url: ServiceUrl,
-                data: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), Database_IP: databaseIP, Table_Name: tablename, connectionid: connection_id, Field_Type: FieldType, Recordcount: reccount, tgtConnectionid: $('#TargetConnection option:selected').val() },
+                data: {
+                    client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), Database_IP: databaseIP, Table_Name: tablename,
+                    connectionid: connection_id, Field_Type: FieldType, Recordcount: reccount, tgtConnectionid: $('#TargetConnection option:selected').val()
+                },
                 dataType: "json",
                 contentType: "application/json",
                 success: function (data) {
@@ -251,6 +254,7 @@
 
         //Save Source
         $('#btnsavesource').click(function () {
+            ShowProgress();
 
             var TemplateName = $('#select_existing_Template').is(':visible') ? $('#select_existing_Template option:selected').text() : $('#txttemplate').val();
             TemplateName = TemplateName.toUpperCase() == 'SELECT' ? '' : TemplateName;
@@ -267,7 +271,7 @@
             }
 
             $("#lodingMessage").hide();
-            ShowProgress();
+
 
             var data = {};
             var grid = $("#SourcetableGrid");
@@ -318,6 +322,7 @@
                     if ($('#hdntemplateid').val() == "") {
                         if ($('#hdnMode').val() == 'New') {
                             $('#hdntemplateid').val(data);
+                            $('#select_existing_Template').append($('<option>').text(TemplateName).val(data));
                         }
                     }
                 }
@@ -331,10 +336,12 @@
             HideProgress();
 
 
+
+            $("#Sourcetable").prop("disabled", true);
+            $("#sourceConnection").prop("disabled", true);
+            $("#TargetConnection").prop("disabled", true);
+
         });
-
-
-        //Save Target
 
         function SaveTargetGrid() {
 
@@ -342,7 +349,7 @@
             TemplateName = TemplateName.toUpperCase() == 'SELECT' ? '' : TemplateName;
             var TemplateID = $('#hdntemplateid').val();
             $("#lodingMessage").hide();
-            ShowProgress();
+
 
             var data = {};
             var grid = $('#SourcetableGrid');
@@ -369,7 +376,7 @@
                     Field_Seq_No: seqno,
                     Field_Type: "TARGET",
                     Field_Name: rowData['Target_Column_Name'],
-                    Field_Data_Type: rowData['Data_Type'],
+                    Field_Data_Type: rowData['Target_Data_Type'],
                     Field_Prec: rowData['Data_Precision'],
                     Field_Scale: rowData['Data_Scale'],
                     Field_Data: rowData['Field_Data'],
@@ -381,8 +388,6 @@
                 });
             });
 
-
-
             $.ajax({
                 type: "POST",
                 data: JSON.stringify(SourceEntity),
@@ -393,6 +398,8 @@
                 success: function (data) {
                 }
             });
+            $("#transdesc").show();
+            $("#translist").show();
         }
 
 
@@ -479,8 +486,6 @@
                 }
             });
         });
-
-
         $("#btnCanceltrans").click(function () {
             $('#hdnTransformationID').val("");
             $('#txttrans').val("");
@@ -489,14 +494,24 @@
             $("#btnaddtrans").attr('value', 'Save');
             $("#btnCanceltrans").attr('value', 'Clear');
         });
-
         $('#btnreset').click(function () {
             Reset();
         });
-
+        $("#btnTemplateParameters").click(function () {
+            var TemplateName = $('#select_existing_Template').is(':visible') ? $('#select_existing_Template option:selected').text() : $('#txttemplate').val();
+            TemplateName = TemplateName.toUpperCase() == 'SELECT' ? '' : TemplateName;
+            $("#txtParameterTemplateName").val(TemplateName);
+            $("#dialog").dialog("open");
+            LoadParameterList();
+        });
+        $("#btnCancelParameter").click(function () {
+            $('#ddlparameterName').val("");
+            $('#txtParameterValue').val("");
+            $('#hdnParameterID').val("");
+            //$("#dialog").dialog('close');
+        });
 
         $('#btngeneratexml').click(function () {
-            debugger;
             $("#lodingMessage").show();
             ShowProgress();
             $.ajax({
@@ -540,7 +555,6 @@
                 }
             });
         }
-
         function bindTableList(_ControlID, _Config_ID, _setValue) {
 
             $('#' + _ControlID).empty();
@@ -579,12 +593,11 @@
                 }
             });
         }
-
         function InitializingGrid(TemplateID, TemplateName) {
+
             InitializingSourceGrid(TemplateID, TemplateName);
             InitializingTransformationGrid(TemplateID, TemplateName);
         }
-
         function InitializingSourceGrid(TemplateID, TemplateName) {
 
             $("#SourcetableGrid").GridUnload();
@@ -603,12 +616,14 @@
                     client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), Template_Id: TemplateID,
                     Template_Name: TemplateName, SourceTargetType: 'SOURCE'
                 },
-                colNames: ['Seq No', 'Table Name', 'Field Name', 'Data Type','Table Name', 'Column Name', 'DataType', 'Field Type','Row ID', 'Target Row ID'],
+                colNames: ['Seq No', 'Table Name', 'Field Name', 'Data Type', 'Precision','Scale', 'Table Name', 'Column Name', 'DataType', 'Field Type', 'Row ID', 'Target Row ID'],
                 colModel: [
                { name: 'Field_Seq_No', index: 'Field_Seq_No', type: 'long', width: 8, sorttype: 'long', search: true, editable: true },
                { name: 'Table_Name', index: 'Table_Name', width: 20, search: true },
                { name: 'Column_Name', index: 'Column_Name', width: 20, search: true },
                { name: 'Data_Type', index: 'Data_Type', width: 20, search: true },
+               { name: 'Data_Precision', index: 'Data_Precision', width: 20, search: false ,hidden:true },
+               { name: 'Data_Scale', index: 'Data_Scale', width: 20, search: false, hidden: true },
                { name: 'Target_Table_Name', index: 'Target_Table_Name', width: 20, search: true },
                { name: 'Target_Column_Name', index: 'Target_Column_Name', width: 20, search: true },
                { name: 'Target_Data_Type', index: 'Target_Data_Type', width: 20, search: true },
@@ -717,7 +732,6 @@
                 }
             });
         }
-
         function InitializingTransformationGrid(TemplateID, TemplateName) {
             $("#TransformListtable").GridUnload();
             var TransformatiomServiceUrl = baseUrl + "api/AutomatAPI/GetTransTemplateList";
@@ -823,7 +837,6 @@
            });
 
         }
-
         function Reset() {
 
 
@@ -837,16 +850,13 @@
             $('#selecttranscolumn').empty();
 
             $('#sourceConnection').val('Select');
-
             $("#divSourcetable").show();
             $("#divTransformListtable").show();
-            $("#divTargetListtable").show();
 
             InitializingGrid(0, '');
 
             $("#divSourcetable").hide();
             $("#divTransformListtable").hide();
-            $("#divTargetListtable").hide();
             $("#select_existing_Template").prop('selectedIndex', 0);
 
             $('#hdnTransformationID').val("");
@@ -857,7 +867,6 @@
             $("#btnCanceltrans").attr('value', 'Clear');
             localStorage.setItem("transclmn", "");
         }
-
         function ShowProgress() {
             setTimeout(function () {
                 var modal = $('<div />');
@@ -880,7 +889,6 @@
                 loading.css({ top: top, left: left });
             }, 200);
         }
-
 
         $('#btnaddParameter').click(function () {
 
@@ -1049,21 +1057,6 @@
                 $('#hdnParameterID').val("");
             }
         });
-
-        $("#btnTemplateParameters").click(function () {
-            var TemplateName = $('#select_existing_Template').is(':visible') ? $('#select_existing_Template option:selected').text() : $('#txttemplate').val();
-            TemplateName = TemplateName.toUpperCase() == 'SELECT' ? '' : TemplateName;
-            $("#txtParameterTemplateName").val(TemplateName);
-            $("#dialog").dialog("open");
-            LoadParameterList();
-        });
-
-        $("#btnCancelParameter").click(function () {
-            $('#ddlparameterName').val("");
-            $('#txtParameterValue').val("");
-            $('#hdnParameterID').val("");
-            //$("#dialog").dialog('close');
-        });
     });
 
 </script>
@@ -1075,6 +1068,15 @@
         <img src="../Images/loader.gif" alt=" " />
     </div>
     <table style="border:thick;">
+        @*<tr>
+                <td >
+                    <div class="group">
+                        <div class="div-header">
+                            <span class="control-label label-bold">DataType Template</span>
+                        </div>
+                    </div>
+                </td>
+            </tr>*@
         <tr>
             <td class="table-div-page1-cl1">
                 <span id="labeltable" class="fontstyle">Template Name</span>
@@ -1133,14 +1135,6 @@
 
     <table>
         <tr>
-            <td>
-                <div id="divTargetListtable">
-                    <table id="TargetListtable" class="scroll" align='center'></table>
-                    <div id="pager_targetdatatable" class="scroll"></div>
-                </div>
-            </td>
-        </tr>
-        <tr>
             <td colspan="4" style="text-align:right">
                 <div>
                     <input type="button" id="btnsavesource" value="Save" class="button btn-width-150">
@@ -1148,7 +1142,7 @@
             </td>
         </tr>
     </table>
-    <table>
+    <table id="transdesc">
         <tr>
             <td class="table-div-page1-cl1"><span id="labeltable" class="fontstyle">Transformation Description</span></td>
             <td class="table-div-page1-cl2" colspan="4"><input type="text" id="txttrans" class="textbox" /></td>
@@ -1195,7 +1189,7 @@
             </td>
         </tr>
     </table>
-    <table>
+    <table id="translist">
         <tr>
             <td>
                 <div id="divTransformListtable">
@@ -1273,3 +1267,6 @@
     <table id="ParameterListtable" align='center'></table>
     <div id="pager_ParameterListtable" class="scroll"></div>
 </div>
+
+
+

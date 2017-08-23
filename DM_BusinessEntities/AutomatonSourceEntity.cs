@@ -73,6 +73,11 @@ namespace DM_BusinessEntities
         public string Target_Column_Name { get; set; }
         public string Target_Field_Name { get; set; }
         public string Target_Data_Type { get; set; }
+        public string Source_Field_Scale { get; set; }
+        public string Source_Precision { get; set; }
+        public string Target_Scale { get; set; }
+        public string Target_Precision { get; set; }
+
     }
 
 

@@ -52,102 +52,53 @@
 
         InitializingGrid();
 
+        var BusinessCol = function (entityId) {
+            // var _entityColDataType = { '1': 'nvarchar', '2': 'varchar' };
 
-        function InitializingGrid() {
-            $("#grdBusinessName").GridUnload();
 
-            var tgtEntityName = $.ajax({
-                url: baseUrl + "api/AutomatAPI/GetEntityNameList",
-                data: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), Config_ID: $("#hdnSourceConfigID").val() },
+            var _entityColDataType = $.ajax({
+                url: baseUrl + "api/AutomatAPI/GetTargetDBDataTypes",
+                data: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), config_ID: $("#hdnSourceConfigID").val() },
                 async: false,
                 dataType: 'json',
                 success: function (data, result) {
                     if (!result) alert('Failure to retrieve record.');
                 }
             }).responseText;
-
-            var tgtEntityList = JSON.parse(tgtEntityName);
-
-            var selectStr = "Select:Select";
-            $.each(tgtEntityList, function (key, value) {
-                selectStr = selectStr + ";" + value.Entity_ID + ":" + value.Entity_Name;
-            });
-
-
-
-            var lob = $.ajax({
-                url: baseUrl + "api/HXRRuleAPI/GetRuleType",
-                // data: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val() },
-                async: false,
-                dataType: 'json',
-                success: function (data, result) {
-                    if (!result) alert('Failure to retrieve record.');
-                }
-            }).responseText;
-
-            var lobList = JSON.parse(lob);
-
-            var lobStr = "Select:Select";
-            $.each(lobList, function (key, value) {
-                lobStr = lobStr + ";" + value.RuleType_ID + ":" + value.RuleType_Name;
-            });
-
-            function myValidate(id) {
-                var t = $("#rowed5").jqGrid("getCell", id, 'note');
-                if (t.length > 5) {
-                    $("#rowed5")
-                        .jqGrid('resetSelection')
-                        .jqGrid('setSelection', id, false);
-                    alert('note is too long, max 5 char');
-
-                    return false;
-                }
-                return true;
+            var _ar = new Array();
+            var jsonobj = $.parseJSON(_entityColDataType);
+            for (i = 0; i < jsonobj.length; i++) {
+                _ar.push(jsonobj[i].DataType + ":" + jsonobj[i].DataType);
             }
+            jsonobj = _ar.join("; ");
 
-            var ServiceUrl = baseUrl + "api/AutomatAPI/GetEntityList";
-            var lastsel;
-            $grid = jQuery("#grdBusinessName").jqGrid({
+            var ServiceUrl = baseUrl + "api/AutomatAPI/GetEntityColList";
+            $("#grdBusinessCol").GridUnload();
+            $grid1 = jQuery("#grdBusinessCol").jqGrid({
                 mytype: 'POST',
                 datatype: 'json',
                 url: ServiceUrl,
-                height: 200,
+                height: 250,
                 width: 1250,
                 autowidth: false,
-                shrinkToFit: false,
+                shrinkToFit: true,
                 rowNum: -1,
                 //rowList: [10, 20, 30],
-                postData: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), Config_ID: $("#hdnSourceConfigID").val() },
-                colNames: ['Entity ID', 'Entity Name', 'Business Name', 'Description', 'Legacy Appl Name', 'Ordinal Pos', 'Input Type', 'LOB', 'Parent Entity'],
+                postData: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), Entity_Id: entityId, Config_ID: $("#hdnSourceConfigID").val() },
+                colNames: ['Id', 'EntityId', 'Name', 'Business Name', 'Data Type', 'Data Precision', 'Description', '', 'Suggested Type', 'Status', 'statuscode'],
                 colModel: [
-                    { name: 'Entity_ID', index: 'Entity_ID', width: 150, key: true, hidden: true },
-                    { name: 'Entity_Name', index: 'Entity_Name', sortable: true, width: 180 },
+                    { name: 'ID', index: 'ID', width: 10, hidden: true, key: true },
+                    { name: 'EntityId', index: 'EntityId', width: 10, hidden: true },
+                    { name: 'Column_Name', index: 'Column_Name', width: 200 },
                     {
-                        name: 'Entity_Business_Name', index: 'Entity_Business_Name', width: 200, editable: true,
+                        name: 'Attribute_Business_Name', index: 'Attribute_Business_Name', width: 200, editable: true,
                         editoptions: {
                             maxlength: 128,
                             dataEvents: [
-                                //{
-                                //    type: 'blur',
-                                //    fn: function (e) {
-                                //        var newCodeValue = $(e.target).val();
-                                //        //debugger;
-                                //        alert(newCodeValue);
-                                //    }
-                                //},
-                                //{
-                                //    type: 'keyup',
-                                //    fn: function (e) {
-                                //        var oldVal = $(this).val();
-                                //        var newVal = oldVal.replace(/,/, '.');
-                                //        if (oldVal !== newVal) {
-                                //            $(this).val(newVal);
-                                //        }
-                                //    }
-                                //},
                                 {
                                     type: 'keypress',
                                     fn: function (e) {
+
                                         var regex = new RegExp("^[a-zA-Z0-9_]+$");
                                         var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
                                         if (regex.test(str)) {
@@ -160,30 +111,118 @@
                             ]
                         }
                     },
-                    { name: 'entity_description', index: 'entity_description', width: 150, editable: true },
-                    { name: 'legacy_appl_name', index: 'legacy_appl_name', width: 110, editable: true },
                     {
-                        name: 'ordinal_position', index: 'ordinal_position', width: 80, editable: true
+                        //name: 'Attribute_Business_Data_Type', index: 'Attribute_Business_Data_Type', width: 120, editable: true
+                        name: 'Attribute_Business_Data_Type', index: 'Attribute_Business_Data_Type', width: 100, editable: true, edittype: "select", formatter: 'select',
+                        editoptions: {
+                            value: jsonobj,
+                            dataEvents: [{
+                                type: 'change',
+                                fn: function (e) {
+                                    var selectedVal = this.value;
+                                    var row = $(e.target).closest('tr.jqgrow');
+                                    var rowId = row.attr('id');
+                                    var rowData = $grid1.jqGrid('getRowData', rowId);
+                                    var msg = '<ul style="margin:0;"><li>Valid</li></ul>';
+                                    if (selectedVal.trim() != "DATE" && selectedVal.trim() != "DATETIME") {
+                                        // first change the cell in the visible part of grid
+                                        $grid1.jqGrid('setCell', rowId, 'Error', msg);
+                                        $grid1.jqGrid('setCell', rowId, 'statuscode', '1');
+
+
+                                        // now change the internal local data
+                                        $grid1.jqGrid('getLocalRow', rowId).Comments = 'Valid';
+                                        $grid1.jqGrid('getLocalRow', rowId).statuscode = 'Valid';
+                                        return false;
+                                    }
+
+                                    var _validateDate = $.ajax({
+                                        url: baseUrl + "api/AutomatAPI/DateColumnCheck",
+                                        data: {
+                                            client_id: '' + $("#hdnClientId").val() + '',
+                                            project_id: '' + $("#hdnProjectId").val() + '',
+                                            table_Name: '' + $("#hdnTableName").val() + '',
+                                            column_name: rowData.Column_Name,
+                                            config_ID: '' + $("#hdnSourceConfigID").val() + '',
+                                            columnType: '' + selectedVal + ''
+                                        },
+                                        async: false,
+                                        dataType: 'json',
+                                        success: function (data, result) {
+                                            if (!result) alert('Failure to retrieve record.');
+                                        },
+                                        error: function (xhr) {
+                                            alert(xhr.responseText);
+                                        }
+                                    }).responseText;
+                                    _validateDate = $.parseJSON(_validateDate);
+                                    var procMsg = "<ul style='margin:0;color:red;padding-left: 12px;'><li>" + _validateDate.Message + "</li></ul>";
+                                    var procValidMsg = "<ul style='margin:0;padding-left: 12px;'><li>" + _validateDate.Message + "</li></ul>";
+                                    //The data type you have chosen does not match with the data.
+                                    if (_validateDate.StatusCode == 'HEX111') {
+
+                                        // first change the cell in the visible part of grid
+                                        $grid1.jqGrid('setCell', rowId, 'Error', procMsg);
+                                        $grid1.jqGrid('setCell', rowId, 'statuscode', _validateDate.StatusCode);
+
+
+                                        // now change the internal local data
+                                        $grid1.jqGrid('getLocalRow', rowId).Comments = _validateDate.Message;
+                                        $grid1.jqGrid('getLocalRow', rowId).statuscode = _validateDate.Message;
+                                        alert(_validateDate.Message);
+
+                                    }
+                                    else if (_validateDate.StatusCode == "1") {
+                                        // first change the cell in the visible part of grid
+                                        $grid1.jqGrid('setCell', rowId, 'Error', procValidMsg);
+                                        $grid1.jqGrid('setCell', rowId, 'statuscode', _validateDate.StatusCode);
+
+
+                                        // now change the internal local data
+                                        $grid1.jqGrid('getLocalRow', rowId).Comments = _validateDate.Message;
+                                        $grid1.jqGrid('getLocalRow', rowId).statuscode = _validateDate.Message;
+
+                                    }
+                                    else {
+                                        // first change the cell in the visible part of grid
+                                        $grid1.jqGrid('setCell', rowId, 'Error', procMsg);
+                                        $grid1.jqGrid('setCell', rowId, 'statuscode', _validateDate.StatusCode);
+
+
+                                        // now change the internal local data
+                                        $grid1.jqGrid('getLocalRow', rowId).Comments = _validateDate.Message;
+                                        $grid1.jqGrid('getLocalRow', rowId).statuscode = _validateDate.Message;
+                                        alert(_validateDate.Message);
+                                    }
+                                }
+                            }]
+                        }
+
                     },
-                    { name: 'input_type', index: 'input_type', width: 80, editable: true },
+                    { name: 'Attribute_Business_Data_precision', index: 'Attribute_Business_Data_precision', width: 60, editable: true },
                     {
-                        name: 'lob', index: 'lob', width: 80,
-                        editable: true,
-                        edittype: "select",
-                        editoptions: { value: lobStr },
-                        editrules: { required: true }
+                        name: 'Attribute_Desscription', index: 'Attribute_Desscription', width: 300, editable: true,
+                        editoption: {
+                            dataEvents: [{
+                                type: 'blur',
+                                fn: function (e) {
+
+                                }
+                            }]
+                        }
                     },
+                    { name: 'sugBtn', search: false, sortable: false, align: 'Left', width: 20, formatter: FormatterActionColumn },
+                    { name: 'sugTxt', search: false, sortable: false, align: 'Left', width: 150 },
                     {
-                        name: 'parent_entity_id', index: 'parent_entity_id', width: 240,
-                        editable: true,
-                        edittype: "select",
-                        editoptions: { value: selectStr },
-                        editrules: { required: true }
-                    }
+                        name: 'Error', search: false, sortable: false, align: 'Left', width: 200, cellattr: function (rowId, tv, rawObject, cm, rdata) {
+                            return 'style="white-space: normal;"';
+                        }
+                    },
+                    { name: 'statuscode', index: 'statuscode', width: 10, hidden: true }
 
                 ],
                 multiselect: false,
-                pager: '#pager_BusinessName',
+                pager: '#pager_BusinessCol',
                 viewrecords: true,
                 loadonce: true,
                 gridview: true,
@@ -192,13 +231,8 @@
                 scrollOffset: 0,
                 reloadAfterSubmit: true,
                 showButtonPanel: true,
-                //loadui: "disable",
+                loadui: "disable",
                 onSelectRow: function (rowId) {
-
-                    var rowData = $(this).jqGrid('getRowData', rowId);
-                    $("#hdnTableName").val(rowData.Entity_Name);
-                    BusinessCol(rowData.Entity_ID);
-
                 },
                 gridComplete: function () {
                     $(this).prop('p').loadui = 'enable';
@@ -209,13 +243,78 @@
                         $this.jqGrid('editRow', ids[i], true);
                     }
                     $($this.jqGrid()[0].grid.bDiv)[0].scrollTop = 0;
+
+                    if (_Validate() > 0) {
+                        alert('Please review Validation Status.');
+                        return false;
+                    }
                 },
-                caption: 'Entity Details'
+                caption: ''
             });
+
         }
 
-        $("#btnsave").click(function () {
+        var _Validate = function () {
+            var grid = $('#grdBusinessCol');
+            var rows = grid.jqGrid('getDataIDs');
+            var _validationPass = true;
+            var entityBusinessNameValid = true;
+            var _errorMsg;
+            var ErrorRowCount = 0;
+            var regex = new RegExp("^[a-zA-Z0-9_]+$");
+            $.each(rows, function (i, l) {
+                _validationPass = true;
+                entityBusinessNameValid = true;
+                var rowData = grid.jqGrid('getRowData', rows[i]);
+                var ID = rowData['ID'];
+                var _validationStatus = rowData["Error"];
+                var _statusCode = rowData["statuscode"];
+                var Desscription = rowData['Attribute_Desscription'];
+                _errorMsg = '';
+                var ddl = jQuery('#' + (l) + '_Attribute_Business_Data_Type')[0];
+                var selectedOption = ddl.options[ddl.selectedIndex];
+                var dataType = selectedOption.text;
 
+                var Attribute_Business_Name = rowData['Attribute_Business_Name'];
+                if (Attribute_Business_Name.indexOf("input") != -1) {
+                    Attribute_Business_Name = jQuery('#' + (l) + '_Attribute_Business_Name').val();
+                }
+                if (Desscription.indexOf("input") != -1) {
+                    Desscription = jQuery('#' + (l) + '_Attribute_Desscription').val();
+                }
+
+                _errorMsg = "<ul style='margin:0;color:red;padding-left: 12px;'>";                
+                if (!regex.test(Attribute_Business_Name)) {
+                    entityBusinessNameValid = false;
+                    _errorMsg += "<li>Business Name: Special character/Space is not allowed.</li> ";
+
+                }
+                if (Attribute_Business_Name == '') {
+                    entityBusinessNameValid = false;
+                    _errorMsg += "<li>Business Name should not be empty.</li> ";
+                }
+                if ((dataType == "DATE" || dataType == "DATETIME") && (Desscription == undefined || Desscription == '')) {
+                    //grid.jqGrid('setCell', ID, 'Error', "<span style='color:red;'>Description should not be blank. Provide source date format.</span>");
+                    _errorMsg += "<li>Description should not be blank. Provide source date format</li>";
+                    _validationPass = false;
+                }
+                if (entityBusinessNameValid && _validationPass) {
+                    _errorMsg = "<ul style='margin:0;padding-left: 12px;'>";
+                    _errorMsg += "<li>Valid</li>";
+                    _errorMsg += "</ul>";
+
+                }
+                else {
+                    _errorMsg += "</ul>";
+                    ErrorRowCount++;
+                }
+
+                grid.jqGrid('setCell', ID, 'Error', _errorMsg);
+            });
+
+            return ErrorRowCount;
+        }
+        $("#btnsave").click(function () {
 
             var baseUrl = '@Url.Content("~/")';
             $("#lodingMessage").hide();
@@ -335,68 +434,184 @@
                 }
             });
 
-
         });
+        function InitializingGrid() {
+            $("#grdBusinessName").GridUnload();
+
+            var tgtEntityName = $.ajax({
+                url: baseUrl + "api/AutomatAPI/GetEntityNameList",
+                data: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), Config_ID: $("#hdnSourceConfigID").val() },
+                async: false,
+                dataType: 'json',
+                success: function (data, result) {
+                    if (!result) alert('Failure to retrieve record.');
+                }
+            }).responseText;
+
+            var tgtEntityList = JSON.parse(tgtEntityName);
+
+            var selectStr = "Select:Select";
+            $.each(tgtEntityList, function (key, value) {
+                selectStr = selectStr + ";" + value.Entity_ID + ":" + value.Entity_Name;
+            });
+
+
+
+            var lob = $.ajax({
+                url: baseUrl + "api/HXRRuleAPI/GetRuleType",
+                // data: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val() },
+                async: false,
+                dataType: 'json',
+                success: function (data, result) {
+                    if (!result) alert('Failure to retrieve record.');
+                }
+            }).responseText;
+
+            var lobList = JSON.parse(lob);
+
+            var lobStr = "Select:Select";
+            $.each(lobList, function (key, value) {
+                lobStr = lobStr + ";" + value.RuleType_ID + ":" + value.RuleType_Name;
+            });
+
+            function myValidate(id) {
+                var t = $("#rowed5").jqGrid("getCell", id, 'note');
+                if (t.length > 5) {
+                    $("#rowed5")
+                        .jqGrid('resetSelection')
+                        .jqGrid('setSelection', id, false);
+                    alert('note is too long, max 5 char');
+
+                    return false;
+                }
+                return true;
+            }
+
+            var ServiceUrl = baseUrl + "api/AutomatAPI/GetEntityList";
+            var lastsel;
+            $grid = jQuery("#grdBusinessName").jqGrid({
+                mytype: 'POST',
+                datatype: 'json',
+                url: ServiceUrl,
+                height: 100,
+                width: 1250,
+                autowidth: false,
+                shrinkToFit: false,
+                rowNum: -1,
+                //rowList: [10, 20, 30],
+                postData: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), Config_ID: $("#hdnSourceConfigID").val() },
+                colNames: ['Entity ID', 'Entity Name', 'Business Name', 'Description', 'Legacy Appl Name', 'Ordinal Pos', 'Input Type', 'LOB', 'Parent Entity'],
+                colModel: [
+                    { name: 'Entity_ID', index: 'Entity_ID', width: 150, key: true, hidden: true },
+                    { name: 'Entity_Name', index: 'Entity_Name', sortable: true, width: 180 },
+                    {
+                        name: 'Entity_Business_Name', index: 'Entity_Business_Name', width: 200, editable: true,
+                        editoptions: {
+                            maxlength: 128,
+                            dataEvents: [
+                                //{
+                                //    type: 'blur',
+                                //    fn: function (e) {
+                                //        var newCodeValue = $(e.target).val();
+                                //        //debugger;
+                                //        alert(newCodeValue);
+                                //    }
+                                //},
+                                //{
+                                //    type: 'keyup',
+                                //    fn: function (e) {
+                                //        var oldVal = $(this).val();
+                                //        var newVal = oldVal.replace(/,/, '.');
+                                //        if (oldVal !== newVal) {
+                                //            $(this).val(newVal);
+                                //        }
+                                //    }
+                                //},
+                                {
+                                    type: 'keypress',
+                                    fn: function (e) {
+                                        var regex = new RegExp("^[a-zA-Z0-9_]+$");
+                                        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+                                        if (regex.test(str)) {
+                                            return true;
+                                        }
+                                        e.preventDefault();
+                                        return false;
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    { name: 'entity_description', index: 'entity_description', width: 150, editable: true },
+                    { name: 'legacy_appl_name', index: 'legacy_appl_name', width: 110, editable: true },
+                    {
+                        name: 'ordinal_position', index: 'ordinal_position', width: 80, editable: true
+                    },
+                    { name: 'input_type', index: 'input_type', width: 80, editable: true },
+                    {
+                        name: 'lob', index: 'lob', width: 80,
+                        editable: true,
+                        edittype: "select",
+                        editoptions: { value: lobStr },
+                        editrules: { required: true }
+                    },
+                    {
+                        name: 'parent_entity_id', index: 'parent_entity_id', width: 240,
+                        editable: true,
+                        edittype: "select",
+                        editoptions: { value: selectStr },
+                        editrules: { required: true }
+                    }
+
+                ],
+                multiselect: false,
+                pager: '#pager_BusinessName',
+                viewrecords: true,
+                loadonce: true,
+                gridview: true,
+                pginput: false,
+                pgbuttons: false,
+                scrollOffset: 0,
+                reloadAfterSubmit: true,
+                showButtonPanel: true,
+                //loadui: "disable",
+                onSelectRow: function (rowId) {
+
+                    var rowData = $(this).jqGrid('getRowData', rowId);
+                    $("#hdnTableName").val(rowData.Entity_Name);
+                    BusinessCol(rowData.Entity_ID);
+
+                },
+                gridComplete: function () {
+                    $(this).prop('p').loadui = 'enable';
+                },
+                loadComplete: function () {
+                    var $this = $(this), ids = $this.jqGrid('getDataIDs'), i, l = ids.length;
+                    for (i = 0; i < l; i++) {
+                        $this.jqGrid('editRow', ids[i], true);
+                    }
+                    $($this.jqGrid()[0].grid.bDiv)[0].scrollTop = 0;
+                },
+                caption: 'Entity Details'
+            });
+        }
+
 
         $("#btnsaveBusinessCol").click(function () {
+
+
 
             var baseUrl = '@Url.Content("~/")';
             $("#lodingMessage").hide();
 
-
-            var data = {};
+            //var data = {};
             var grid = $('#grdBusinessCol');
             var rows = grid.jqGrid('getDataIDs');
             var SourceEntity = [];
-            var _validationPass = true;
-            var entityBusinessNameValid = true;
-            var _errorMsg;
-            var ErrorRowCount = 0;
-            $.each(rows, function (i, l) {
-                _validationPass = true;
-                entityBusinessNameValid = true;
-                var rowData = grid.jqGrid('getRowData', rows[i]);
-                var ID = rowData['ID'];
-                var _validationStatus = rowData["Error"];
-                var _statusCode = rowData["statuscode"];
-                var Desscription = rowData['Attribute_Desscription'];
-                _errorMsg = '';
-                var ddl = jQuery('#' + (l) + '_Attribute_Business_Data_Type')[0];
-                var selectedOption = ddl.options[ddl.selectedIndex];
-                var dataType = selectedOption.text;
 
-                var Attribute_Business_Name = rowData['Attribute_Business_Name'];
-                if (Attribute_Business_Name.indexOf("input") != -1) {
-                    Attribute_Business_Name = jQuery('#' + (l) + '_Attribute_Business_Name').val();
-                }
-                if (Desscription.indexOf("input") != -1) {
-                    Desscription = jQuery('#' + (l) + '_Attribute_Desscription').val();
-                }
-                _errorMsg = "<ul style='margin:0;color:red;padding-left: 12px;'>";
-                if (Attribute_Business_Name == '') {
-                    entityBusinessNameValid = false;
-                    _errorMsg += "<li>Business Name should not be empty.</li> ";
-                }
-                if ((dataType == "DATE" || dataType == "DATETIME") && (Desscription == undefined || Desscription == '')) {                    
-                    //grid.jqGrid('setCell', ID, 'Error', "<span style='color:red;'>Description should not be blank. Provide source date format.</span>");
-                    _errorMsg += "<li>Description should not be blank. Provide source date format</li>";
-                    _validationPass = false;
-                }                
-                if (entityBusinessNameValid && _validationPass) {
-                    _errorMsg = "<ul style='margin:0;padding-left: 12px;'>";
-                    _errorMsg += "<li>Valid</li>";
-                    _errorMsg += "</ul>";
 
-                }
-                else {
-                    _errorMsg += "</ul>";
-                    ErrorRowCount++;
-                }
-
-                grid.jqGrid('setCell', ID, 'Error', _errorMsg);
-            });
-            
-            if (ErrorRowCount > 0) {
+            //if (ErrorRowCount > 0) {
+            if (_Validate() > 0) {
                 alert('Please review Validation Status.');
                 return false;
             }
@@ -470,6 +685,7 @@
             });
 
 
+
         });
 
 
@@ -511,202 +727,7 @@
 
     });
 
-    function BusinessCol(entityId) {
-        // var _entityColDataType = { '1': 'nvarchar', '2': 'varchar' };
 
-
-        var _entityColDataType = $.ajax({
-            url: baseUrl + "api/AutomatAPI/GetTargetDBDataTypes",
-            data: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), config_ID: $("#hdnSourceConfigID").val() },
-            async: false,
-            dataType: 'json',
-            success: function (data, result) {
-                if (!result) alert('Failure to retrieve record.');
-            }
-        }).responseText;
-        var _ar = new Array();
-        var jsonobj = $.parseJSON(_entityColDataType);
-        for (i = 0; i < jsonobj.length; i++) {
-            _ar.push(jsonobj[i].DataType + ":" + jsonobj[i].DataType);
-        }
-        jsonobj = _ar.join("; ");
-
-        var ServiceUrl = baseUrl + "api/AutomatAPI/GetEntityColList";
-        $("#grdBusinessCol").GridUnload();
-        $grid1 = jQuery("#grdBusinessCol").jqGrid({
-            mytype: 'POST',
-            datatype: 'json',
-            url: ServiceUrl,
-            height: 150,
-            width: 1250,
-            autowidth: false,
-            shrinkToFit: true,
-            rowNum: -1,
-            //rowList: [10, 20, 30],
-            postData: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), Entity_Id: entityId, Config_ID: $("#hdnSourceConfigID").val() },
-            colNames: ['Id', 'EntityId', 'Name', 'Business Name', 'Data Type', 'Data Precision', 'Description', '', 'Suggested Type', 'Validation Status', 'statuscode'],
-            colModel: [
-                { name: 'ID', index: 'ID', width: 10, hidden: true, key: true },
-                { name: 'EntityId', index: 'EntityId', width: 10, hidden: true },
-                { name: 'Column_Name', index: 'Column_Name', width: 200 },
-                {
-                    name: 'Attribute_Business_Name', index: 'Attribute_Business_Name', width: 200, editable: true,
-                    editoptions: {
-                        maxlength: 128,
-                        dataEvents: [
-                            {
-                                type: 'keypress',
-                                fn: function (e) {
-
-                                    var regex = new RegExp("^[a-zA-Z0-9_]+$");
-                                    var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
-                                    if (regex.test(str)) {
-                                        return true;
-                                    }
-                                    e.preventDefault();
-                                    return false;
-                                }
-                            }
-                        ]
-                    }
-                },
-                {
-                    //name: 'Attribute_Business_Data_Type', index: 'Attribute_Business_Data_Type', width: 120, editable: true
-                    name: 'Attribute_Business_Data_Type', index: 'Attribute_Business_Data_Type', width: 100, editable: true, edittype: "select", formatter: 'select',
-                    editoptions: {
-                        value: jsonobj,
-                        dataEvents: [{
-                            type: 'change',
-                            fn: function (e) {
-                                var selectedVal = this.value;
-                                var row = $(e.target).closest('tr.jqgrow');
-                                var rowId = row.attr('id');
-                                var rowData = $grid1.jqGrid('getRowData', rowId);
-                                var msg = '<ul style="margin:0;"><li>Valid</li></ul>';
-                                if (selectedVal.trim() != "DATE" && selectedVal.trim() != "DATETIME") {
-                                    // first change the cell in the visible part of grid
-                                    $grid1.jqGrid('setCell', rowId, 'Error', msg);
-                                    $grid1.jqGrid('setCell', rowId, 'statuscode', '1');
-
-
-                                    // now change the internal local data
-                                    $grid1.jqGrid('getLocalRow', rowId).Comments = 'Valid';
-                                    $grid1.jqGrid('getLocalRow', rowId).statuscode = 'Valid';
-                                    return false;
-                                }
-
-                                var _validateDate = $.ajax({
-                                    url: baseUrl + "api/AutomatAPI/DateColumnCheck",
-                                    data: {
-                                        client_id: '' + $("#hdnClientId").val() + '',
-                                        project_id: '' + $("#hdnProjectId").val() + '',
-                                        table_Name: '' + $("#hdnTableName").val() + '',
-                                        column_name: rowData.Column_Name,
-                                        config_ID: '' + $("#hdnSourceConfigID").val() + '',
-                                        columnType: '' + selectedVal + ''
-                                    },
-                                    async: false,
-                                    dataType: 'json',
-                                    success: function (data, result) {
-                                        if (!result) alert('Failure to retrieve record.');
-                                    },
-                                    error: function (xhr) {
-                                        alert(xhr.responseText);
-                                    }
-                                }).responseText;
-                                _validateDate = $.parseJSON(_validateDate);
-                                var procMsg = "<ul style='margin:0;color:red;padding-left: 12px;'><li>" + _validateDate.Message + "</li></ul>";
-                                var procValidMsg = "<ul style='margin:0;padding-left: 12px;'><li>" + _validateDate.Message + "</li></ul>";
-                                //The data type you have chosen does not match with the data.
-                                if (_validateDate.StatusCode == 'HEX111') {
-
-                                    // first change the cell in the visible part of grid
-                                    $grid1.jqGrid('setCell', rowId, 'Error', procMsg);
-                                    $grid1.jqGrid('setCell', rowId, 'statuscode', _validateDate.StatusCode);
-
-
-                                    // now change the internal local data
-                                    $grid1.jqGrid('getLocalRow', rowId).Comments = _validateDate.Message;
-                                    $grid1.jqGrid('getLocalRow', rowId).statuscode = _validateDate.Message;
-                                    alert(_validateDate.Message);
-
-                                }
-                                else if (_validateDate.StatusCode == "1") {
-                                    // first change the cell in the visible part of grid
-                                    $grid1.jqGrid('setCell', rowId, 'Error', procValidMsg);
-                                    $grid1.jqGrid('setCell', rowId, 'statuscode', _validateDate.StatusCode);
-
-
-                                    // now change the internal local data
-                                    $grid1.jqGrid('getLocalRow', rowId).Comments = _validateDate.Message;
-                                    $grid1.jqGrid('getLocalRow', rowId).statuscode = _validateDate.Message;
-
-                                }
-                                else {
-                                    // first change the cell in the visible part of grid
-                                    $grid1.jqGrid('setCell', rowId, 'Error', procMsg);
-                                    $grid1.jqGrid('setCell', rowId, 'statuscode', _validateDate.StatusCode);
-
-
-                                    // now change the internal local data
-                                    $grid1.jqGrid('getLocalRow', rowId).Comments = _validateDate.Message;
-                                    $grid1.jqGrid('getLocalRow', rowId).statuscode = _validateDate.Message;
-                                    alert(_validateDate.Message);
-                                }
-                            }
-                        }]
-                    }
-
-                },
-                { name: 'Attribute_Business_Data_precision', index: 'Attribute_Business_Data_precision', width: 60, editable: true },
-                {
-                    name: 'Attribute_Desscription', index: 'Attribute_Desscription', width: 300, editable: true,
-                    editoption: {
-                        dataEvents: [{
-                            type: 'blur',
-                            fn: function (e) {
-
-                            }
-                        }]
-                    }
-                },
-                { name: 'sugBtn', search: false, sortable: false, align: 'Left', width: 30, formatter: FormatterActionColumn },
-                { name: 'sugTxt', search: false, sortable: false, align: 'Left', width: 150 },
-                {
-                    name: 'Error', search: false, sortable: false, align: 'Left', width: 200, cellattr: function (rowId, tv, rawObject, cm, rdata) {
-                        return 'style="white-space: normal;"';
-                    }
-                },
-                { name: 'statuscode', index: 'statuscode', width: 10, hidden: true }
-
-            ],
-            multiselect: false,
-            pager: '#pager_BusinessCol',
-            viewrecords: true,
-            loadonce: true,
-            gridview: true,
-            pginput: false,
-            pgbuttons: false,
-            scrollOffset: 0,
-            reloadAfterSubmit: true,
-            showButtonPanel: true,
-            loadui: "disable",
-            onSelectRow: function (rowId) {
-            },
-            gridComplete: function () {
-                $(this).prop('p').loadui = 'enable';
-            },
-            loadComplete: function () {
-                var $this = $(this), ids = $this.jqGrid('getDataIDs'), i, l = ids.length;
-                for (i = 0; i < l; i++) {
-                    $this.jqGrid('editRow', ids[i], true);
-                }
-                $($this.jqGrid()[0].grid.bDiv)[0].scrollTop = 0;
-            },
-            caption: ''
-        });
-
-    }
 
     function FormatterActionColumn(cellvalue, options, rowObject) {
         var _tablename = $("#hdnTableName").val();
@@ -718,7 +739,7 @@
             _ID = rowObject.ID;
             _Column_Name = rowObject.Column_Name;
         }
-        return '<div style="padding:4px;"><img src="../images/suggestion.png" width="25px" height="25px" onclick="Suggestion(' + _ID + ',' + _rowId + ',\'' + _tablename + '\',\'' + _Column_Name + '\')" /> <div>';
+        return '<div><img src="../images/suggestion.png" width="20px" height="20px" onclick="Suggestion(' + _ID + ',' + _rowId + ',\'' + _tablename + '\',\'' + _Column_Name + '\')" /> <div>';
     }
 
     function Suggestion(ID, rowId, tablename, columnName) {
@@ -785,33 +806,33 @@
             <br />
             <img src="../Images/loader.gif" alt=" " />
         </div>
-        <div class="group">
-            <div class="div-header">
+        <div class="group" style="margin-bottom:0;">
+            <div class="div-header" style="margin-bottom:5px;">
                 <span class="control-label label-bold">Table Entities</span>
             </div>
         </div>
         <div id="divBusinessName" class="group">
-            <div class="form-group width-per-100">
+            <div class="form-group width-per-100" style="margin-bottom:0;">
                 <table id="grdBusinessName" class="scroll"></table>
                 <div id="pager_BusinessName" class="scroll"></div>
             </div>
         </div>
-        <div class="group text-align-right">
-            <input type="button" id="btnsave" value="Save" class="button btn-width-150">
+        <div class="group text-align-right" style="margin-bottom:0;width:97.5%;">
+            <input type="button" id="btnsave" value="Save" class="form-button">
         </div>
-        <div class="group">
-            <div class="div-header">
+        <div class="group" style="margin-bottom:0;">
+            <div class="div-header" style="margin-bottom:5px;">
                 <span class="control-label label-bold">Attributes</span>
             </div>
         </div>
-        <div id="divBusinessCol" class="group">
-            <div class="form-group width-per-100">
+        <div id="divBusinessCol" class="group" >
+            <div class="form-group width-per-100" style="margin-bottom:0;">
                 <table id="grdBusinessCol" class="scroll"></table>
                 <div id="pager_BusinessCol" class="scroll"></div>
             </div>
         </div>
-        <div class="group text-align-right">
-            <input type="button" id="btnsaveBusinessCol" value="Save" class="button btn-width-150">
+        <div class="group text-align-right" style="margin-bottom:0;width:97.5%;">
+            <input type="button" id="btnsaveBusinessCol" value="Save" class="form-button">
         </div>
         <div class="group" id="dialog">
             <div class="form-group">

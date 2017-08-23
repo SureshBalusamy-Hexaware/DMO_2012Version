@@ -62,3 +62,4 @@ D:\2012Version\DM_BusinessEntities\bin\Release\DM_BusinessEntities.dll
 D:\2012Version\DM_BusinessEntities\bin\Release\DM_BusinessEntities.pdb
 D:\2012Version\DM_BusinessEntities\obj\Release\DM_BusinessEntities.dll
 D:\2012Version\DM_BusinessEntities\obj\Release\DM_BusinessEntities.pdb
+D:\2012Version\DM_BusinessEntities\obj\Release\DM_BusinessEntities.csprojResolveAssemblyReference.cache

@@ -259,6 +259,7 @@ namespace DM_UI.Controllers
                 item.ClientId = _ClientID;
                 item.ProjectId = _ProjectID;
                 item.Tool_ID = ((int)UIProperties.Tools.DIMAPLUS);
+                item.RoleId = UIProperties.Sessions.Client.Role_ID;
                 _dimaplus.PurgeData(item, ref StatusCode, ref Message);
 
                 if (StatusCode != "0")

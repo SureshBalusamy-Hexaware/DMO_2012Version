@@ -138,6 +138,7 @@ namespace DM_DataModel.UnitOfWork
         }
         public void SaveMaskingTemplate(DataTable Masking, ref string StatusCode, ref string Message)
         {
+            UnitOfWork u = new UnitOfWork();
             string Proc = "[DASM_INS_MASKING_TEMPLATE_SP]";
             try
             {
@@ -163,7 +164,8 @@ namespace DM_DataModel.UnitOfWork
             }
             catch (Exception e)
             {
-
+                u.WriteErrorLog(e);
+                Message = e.Message;
             }
         }
 

@@ -388,7 +388,7 @@
 
                     // $('#btnGenerateMap').show();
                     //alert("Import Meta Data completed successfully.");
-                    alert(data);
+                    //alert(data);
                 },
                 error: function (xhr) {
                     HideProgress();
@@ -449,7 +449,8 @@
             type: 'GET',
             dataType: "json",
             success: function (data) {
-                LoadSchemaTablesDropDown();
+                //LoadSchemaTablesDropDown();
+                $('#btnSave').prop('disabled', false);
                 alert(data);
             },
             error: function (xhr) {

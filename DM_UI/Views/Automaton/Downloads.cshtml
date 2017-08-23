@@ -265,6 +265,7 @@
             data: { TableName: _TableName, OutputFormat: _outputtype, Config_ID: $('#ddlConnection option:selected').val() },
             dataType: 'json',
             success: function (data) {
+                alert(data);
                 $('#grdTables').trigger('reloadGrid');
             }
         });
@@ -273,11 +274,13 @@
         var fId = $(cntrl).attr("fid");
         var fName = cntrl.name;
         var fFormat = $(cntrl).attr("outputtype");
+        var url = window.location.href;
 
         if (window.location.hostname == 'localhost')
             baseUrl = "http://" + window.location.host;
-
-        window.location.href = baseUrl + "/Automaton/Download?fId=" + fId + "&fName=" + fName + "&fFormat=" + fFormat + "";        
+        url = baseUrl + "/Automaton/Download?fId=" + fId + "&fName=" + fName + "&fFormat=" + fFormat + "";
+        //window.location.href = baseUrl + "/Automaton/Download?fId=" + fId + "&fName=" + fName + "&fFormat=" + fFormat + "";        
+        window.location.href = url;
     }
 
     function CallDownload(cntrl) {

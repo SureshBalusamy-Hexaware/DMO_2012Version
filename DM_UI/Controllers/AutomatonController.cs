@@ -276,6 +276,7 @@ namespace DM_UI.Controllers
             string contentType = "application/" + fFormat;
             string fldrPath = UIProperties.DownloadPath;
             string filePath = fldrPath + fId + "_" + fName + "." + fFormat;
+        
             if (!System.IO.File.Exists(filePath))
             {
                 ViewBag.FileNotFound = "Yes";
