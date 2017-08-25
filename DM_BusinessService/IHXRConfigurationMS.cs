@@ -15,5 +15,7 @@ namespace DM_BusinessService
         void SaveConfiguration(HXRConfigurationMSEntity ConfigMs, ref string StatusCode, ref string Message);
         void ImportMetaData(ImportMetaDataEntity ImportMetaData, ref string StatusCode, ref string Message, ref int GenerateMap);
         void ImportGenerateMap(ImportMetaDataEntity ImportMetaData, ref long tableCount, ref string StatusCode, ref string Message);
+        void GenerateMapping(string client_id, string project_id, string config_id, string tableNameList, string profiledBy, ref string status_Code, ref string message);
+
     }
 }

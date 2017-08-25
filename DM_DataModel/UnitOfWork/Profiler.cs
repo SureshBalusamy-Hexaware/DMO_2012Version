@@ -1054,7 +1054,7 @@ namespace DM_DataModel.UnitOfWork
             //    throw _e;
             //}        
         }
-
+        
         #region Implementing IDiosposable...
         #region private dispose variable declaration...
         private bool disposed = false;

@@ -14,7 +14,7 @@ namespace DM_BusinessService
         //JA:20170313
         List<DASEMTemplateEntity> GetAllMaskingTemplates(string client_ID, string project_ID,long? RoleId, ref string status_Code, ref string message);
         //List<DASEMTemplateEntity> GetAllMaskingTemplateDetails(string client_ID, string project_ID, string Template_ID, string Tool_ID, ref string status_Code, ref string message);
-        void SaveMaskingTemplate(DataTable Masking, ref string StatusCode, ref string Message);
+        void SaveMaskingTemplate(DataTable Masking, long? RoleId, ref string StatusCode, ref string Message);
 
         List<string> GetSlicingColumns(string client_ID, string project_ID, string constraint_Type, long config_ID, ref string status_Code, ref string message);
         List<string> GetSlicingColumnValues(string client_ID, string project_ID, string Column_name, int Config_ID, ref string StatusCode, ref string Message);

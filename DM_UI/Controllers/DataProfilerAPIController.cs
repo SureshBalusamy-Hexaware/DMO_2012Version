@@ -292,7 +292,9 @@ namespace DM_UI.Controllers
             string StatusCode = string.Empty, Message = string.Empty;
 
             List<string> _codeList = _profiler.GetTableCodeColumnList(client_ID, project_ID, config_ID, ref StatusCode, ref Message);
-            return _codeList;
+
+
+            return new { _codeList = _codeList, statuscode = StatusCode, message = Message };
         }
 
         [HttpGet] //api/DataProfilerAPI/GetColumnCodeValue

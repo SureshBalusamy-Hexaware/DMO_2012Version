@@ -165,9 +165,9 @@ namespace DM_BusinessService
             return _lst;
         }
 
-        public void SaveMaskingTemplate(DataTable Masking, ref string StatusCode, ref string Message)
+        public void SaveMaskingTemplate(DataTable Masking, long? RoleId, ref string StatusCode, ref string Message)
         {
-            _dimaplus.SaveMaskingTemplate(Masking, ref StatusCode, ref Message);
+            _dimaplus.SaveMaskingTemplate(Masking, RoleId,ref StatusCode, ref Message);
         }
 
         public void SaveTemplate(DataTable Criteria, ref string StatusCode, ref string Message)

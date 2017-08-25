@@ -846,8 +846,10 @@
                 alert(StatusCode);*@
                 if (ToolID != 1) {
                     HideProgress();
-                    alert("Auto Template created.");// for 13 tables");
+                    //  alert("Auto Template created.");// for 13 tables");
+                    alert(data.message);
                 }
+
             },
             error: function (xhr) {
                 HideProgress();

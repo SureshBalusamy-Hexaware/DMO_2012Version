@@ -68,7 +68,7 @@ $(function () {
         setMultipleSelect();
     });
     $(_criteria_btnSearch).click(function () {
-        //debugger;
+         
         if ($(_criteria_txtTemplateName).val().trim() == null
             || $(_criteria_txtTemplateName).val().trim() == '' && !$(_criteria_ddlTemplateName).is(':visible')) {
             alert('Please enter template name');
@@ -109,10 +109,10 @@ $(function () {
                 SlicingColumnValues = data;
                 ddlSlicingColumnValues();
                 setMultipleSelect();
-
+                
                 //Set slicing value for selected template.
-                if (selectedSlicingVal != '' || selectedSlicingVal != undefined) {
-                    $(_criteria_ddlSlicingFieldValue).val(selectedSlicingVal);
+                if (selectedSlicingVal != '' || selectedSlicingVal != undefined) {                
+                    $(_criteria_ddlSlicingFieldValue).multipleSelect("setSelects", [selectedSlicingVal]);
                 }
             },
             error: function (xhr) {
@@ -214,7 +214,8 @@ $(function () {
     $(_criteria_ddlTemplateName).change(function () {
         var _Template_Name = $(this).find("option:selected").text();
         GetTemplateDetails(client_ID, project_ID, 'NA', _Template_Name, ConfigID, 'NA');
-        var dataFromTheRow = jQuery('#grdCriteria').jqGrid('getRowData', 1);
+
+        //var dataFromTheRow = jQuery('#grdCriteria').jqGrid('getRowData', 1);
 
     });
 
@@ -308,7 +309,7 @@ function GetTemplateDetails(_ClientId, _ProjectId, _ObjType, _Template_Name, Con
                         value: "Yes:No", defaultValue: "Yes"
                     },
                     cellattr: function (rowId, value, rawObject, cm, rdata) {
-                        //debugger;
+                        
                         if (rawObject[9] == "Y")
                             cm.formatoptions.disabled = true;
 
@@ -463,7 +464,7 @@ function PopulateTemplates(baseUrl, client_ID, project_ID) {
             alert(err.statusText);
         }
     }).responseText;
-    //debugger;
+     
     var tempNamelist = jQuery.parseJSON(templateNames);
     $(_criteria_ddlTemplateName).find('option').remove();
     for (i = 0; i < tempNamelist.length; i++) {
@@ -478,6 +479,7 @@ function ddlSlicingColumnValues() {
         $('<option>').text(value).val(value).appendTo(ddl);
     });
     $(_criteria_divSlicingFieldValue).html(ddl);
+     
 }
 function setMultipleSelect() {
     var isSingle = $(_criteria_ddlOperator).val() != 'IN' ? true : false;    

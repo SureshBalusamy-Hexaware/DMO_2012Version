@@ -214,7 +214,7 @@ namespace DM_UI.Controllers
             string StatusCode = string.Empty, Message = string.Empty;
             string _ClientID = UIProperties.Sessions.Client.Client_ID;
             string _ProjectID = UIProperties.Sessions.Client.project_ID;
-
+            long? RoleId = UIProperties.Sessions.Client.Role_ID;
 
             DataTable dtMaskingMS = GetMaskingMS();
 
@@ -235,7 +235,7 @@ namespace DM_UI.Controllers
 
                 dtMaskingMS.Rows.Add(row);
             }
-            _dimaplus.SaveMaskingTemplate(dtMaskingMS, ref StatusCode, ref Message);
+            _dimaplus.SaveMaskingTemplate(dtMaskingMS, RoleId, ref StatusCode, ref Message);
 
             return Message;
         }
@@ -402,8 +402,8 @@ namespace DM_UI.Controllers
             long? template_ID = Convert.ToInt32(data.Get("TemplateId"));
             string message = string.Empty;
             string status_code = string.Empty;
-            
-            bool mResult = _dimaplus.CopySlicedData(Client_ID, project_ID, ToolID, template_ID, UIProperties.Sessions.Client.Role_ID, 
+
+            bool mResult = _dimaplus.CopySlicedData(Client_ID, project_ID, ToolID, template_ID, UIProperties.Sessions.Client.Role_ID,
                 UIProperties.Sessions.UserName, ref message, ref status_code);
             if (mResult)
             {
@@ -424,7 +424,7 @@ namespace DM_UI.Controllers
             string _ClientID = UIProperties.Sessions.Client.Client_ID;
             string _ProjectID = UIProperties.Sessions.Client.project_ID;
 
-            List<DIMAPLUSCriteriaEntity> _Purge = _dimaplus.GetDeleteList(page, rows, _ClientID, _ProjectID, Convert.ToInt32(TemplateId), 
+            List<DIMAPLUSCriteriaEntity> _Purge = _dimaplus.GetDeleteList(page, rows, _ClientID, _ProjectID, Convert.ToInt32(TemplateId),
                 Convert.ToInt32(Run_ID), ref StatusCode, ref Message);
             if (_Purge.Count <= 0) return null;
             var result = new

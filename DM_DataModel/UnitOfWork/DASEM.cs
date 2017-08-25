@@ -136,7 +136,7 @@ namespace DM_DataModel.UnitOfWork
                 throw e;
             }
         }
-        public void SaveMaskingTemplate(DataTable Masking, ref string StatusCode, ref string Message)
+        public void SaveMaskingTemplate(DataTable Masking, long? RoleId, ref string StatusCode, ref string Message)
         {
             UnitOfWork u = new UnitOfWork();
             string Proc = "[DASM_INS_MASKING_TEMPLATE_SP]";
@@ -148,6 +148,7 @@ namespace DM_DataModel.UnitOfWork
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@Temptable", Masking);
+                        cmd.Parameters.AddWithValue("@Role_ID", RoleId);
                         cmd.Parameters.Add("@Template_ID_out", SqlDbType.VarChar, 10).Direction = System.Data.ParameterDirection.Output;
                         cmd.Parameters.Add("@Status_code", SqlDbType.VarChar, 10).Direction = System.Data.ParameterDirection.Output;
                         cmd.Parameters.Add("@Message", SqlDbType.VarChar, 255).Direction = ParameterDirection.Output;

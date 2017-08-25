@@ -113,14 +113,14 @@ namespace DM_UI.Controllers
                 _configMS.SaveConfiguration(hxrconfigms[1], ref StatusCode, ref Message);
                 hxrconfigms[1].LastModifiedBy = UIProperties.Sessions.UserName;
             }
-            
+
 
             //Refersh the session Object Start Code
             string mStatusCode = string.Empty, mMessage = string.Empty;
             string ClientID = UIProperties.Sessions.Client.Client_ID;
             string ProjectID = UIProperties.Sessions.Client.project_ID;
             int ToolID = Convert.ToInt16(UIProperties.Sessions.ToolID);
-           // int? RoleId = UIProperties.Sessions.Client.Role_ID;// Convert.ToInt16(UIProperties.Sessions.Client.Role_ID);
+            // int? RoleId = UIProperties.Sessions.Client.Role_ID;// Convert.ToInt16(UIProperties.Sessions.Client.Role_ID);
             int? RoleId = hxrconfigms[0].RoleId;
 
             HXRConfigurationMSEntity _configEntity = _configMS.GetConfigurationByType(ClientID, ProjectID, "SOURCE", ToolID, RoleId, ref mStatusCode, ref mMessage);
@@ -164,7 +164,10 @@ namespace DM_UI.Controllers
             string StatusCode = string.Empty, Message = string.Empty;
             long tableCount = 0;
             ImportMetaData.LastModifiedBy = UIProperties.Sessions.UserName;
-            _configMS.ImportGenerateMap(ImportMetaData, ref  tableCount, ref  StatusCode, ref  Message);
+            //_configMS.ImportGenerateMap(ImportMetaData, ref  tableCount, ref  StatusCode, ref  Message);
+
+            _configMS.GenerateMapping(ImportMetaData.ClientID, ImportMetaData.ProjectID, ImportMetaData.config_ID, ImportMetaData.TablenameList,
+                UIProperties.Sessions.UserName, ref StatusCode, ref  Message);
 
             var data = new
             {
