@@ -507,6 +507,12 @@
     <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
     <Parameter Name="Message" Type="varchar" Mode="InOut" />
   </Function>
+  <Function Name="DASM_INS_MASKING_TEMPLATE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Role_ID" Type="bigint" Mode="In" />
+    <Parameter Name="Template_ID_out" Type="bigint" Mode="InOut" />
+    <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
+    <Parameter Name="Message" Type="varchar" Mode="InOut" />
+  </Function>
   <Function Name="DASM_INSERT_AUDIT_LOG_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Client_ID" Type="varchar" Mode="In" />
     <Parameter Name="Project_ID" Type="varchar" Mode="In" />

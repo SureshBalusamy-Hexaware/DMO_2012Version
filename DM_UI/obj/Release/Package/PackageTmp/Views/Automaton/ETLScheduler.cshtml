@@ -1,0 +1,399 @@
+﻿@{
+    ViewBag.Title = "ETL Scheduler";
+}
+
+
+<link href="~/Content/foundation-datepicker.min.css" rel="stylesheet" />
+<link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
+<script src="~/Scripts/foundation-datepicker.js"></script>
+
+<style type="text/css">
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: #aaaaaa 50% 50% repeat-x;
+        z-index: 10000 !important;
+        opacity: 0.5 !important;
+        filter: alpha(opacity=50) !important;
+        min-height: 100%;
+        width: 100%;
+    }
+
+    .myLoadingProgress {
+        z-index: 9999 !important;
+        margin: 300px auto;
+        padding: 10px;
+        width: 200px;
+        background-color: White;
+        border: 5px solid #67CFF5;
+        /*border-radius: 10px;*/
+        filter: alpha(opacity=100);
+        opacity: 1;
+        -moz-opacity: 1;
+    }
+
+    .ui-dialog {
+        z-index: 998;
+    }
+
+    .ui-widget select, .ui-widget input {
+        font-family: "open_sansregular", "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 13px;
+    }
+
+    .myDialogClass .ui-widget-header {
+        font-family: "open_sansregular", "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        margin-bottom: 5px;
+        font-size: 13px;
+        letter-spacing: 0.3px !important;
+        font-weight: bold;
+    }
+
+    .dialog-buttonpane {
+        text-align: left;
+        border-width: 1px 0 0 0;
+        background-image: none;
+        margin-top: .5em;
+        padding: .3em 1em .5em .4em;
+        border-color: #a6c9e2;
+        border-style: solid;
+    }
+
+    .ui-autocomplete {
+        cursor: pointer;
+        height: 200px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        font-size: 13px;
+        line-height: 20px;
+        font-family: "Open Sans",sans-serif;
+        background-image: none;
+        z-index: 1000;
+    }
+
+        .ui-autocomplete.ui-widget {
+            font-family: "Open Sans",sans-serif;
+            font-size: 12px;
+        }
+
+    input[readonly], select[readonly], textarea[readonly] {
+        cursor: pointer;
+        background-color: #eeeeee;
+    }
+</style>
+
+<script type="text/javascript">
+
+    $(document).ajaxStart(function () {
+        $('.modal').show();
+    }).ajaxStop(function () {
+        $('.modal').hide();
+    });
+
+    $(document).ready(function () {
+        var dialog,
+
+        baseUrl = '@Url.Content("~/")';
+
+        $("#hdnClientId").val('@ViewData["ClientID"]');
+        $("#hdnProjectId").val('@ViewData["ProjectID"]');
+        $("#hdnToolID").val('@ViewData["ToolID"]');
+
+        LoadScheduledInformation();
+        LoadTemplateName();
+
+        //dialog = $("#dialog").dialog({
+        //    autoOpen: false,
+        //    height: 400,
+        //    width: 350,
+        //    modal: true,
+        //    dialogClass: "myDialogClass",
+        //    title: "Create ETL Schedule"
+        //});
+
+        //var coeff = 1000 * 60 * 5;
+        //var newDate = new Date(Math.round(date.getTime() / coeff) * coeff)
+        var date = new Date();
+        date.setMinutes(date.getMinutes() + 10); ///The ETL job already scheduled to run for every 5 min. So added 10 mins in time, so the job will pick the transformation correctly.
+
+        $('#txtDateTimePicker').fdatepicker({
+            format: 'mm-dd-yyyy hh:ii',
+            pickTime: 1,
+            todayHighlight: 1,
+            startDate: date,
+            disableDblClickSelection: true
+        });
+
+        $('#ddlTempType').change(function () {            
+            LoadScheduledInformation();
+            LoadTemplateName();
+        });        
+
+        $('#btnCreate').click(function () {   
+            if ($('#txtTemplate').val() == "") { alert("Select Template"); return; }
+            if ($('#txtDateTimePicker').val() == "") { alert("Select Schedule date"); return; }            
+
+            if ($('#btnCreate').val() == 'Create') {
+                $.ajax({
+                    type: 'GET',
+                    url: baseUrl + "api/AutomatAPI/InsertScheduleInformation",
+                    dataType: 'json',
+                    data: { TemplateName: $('#txtTemplate').val(), ScheduledDate: $('#txtDateTimePicker').val() },
+                    success: function (data) {                        
+                        alert(data);
+                        LoadScheduledInformation();
+                    },
+                    error: function (xhr) {                        
+                        alert(xhr.responseText);
+                    }
+                });
+            }
+            else {
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("UpdateScheduleTransformation")',
+                    dataType: 'json',
+                    data: { Job_ID: $("#hdnJobId").val(), schedule_Date: $('#txtDateTimePicker').val(), isDelete: 'N' },
+                    success: function (data) {
+                        data = data.toLowerCase() == 'success' ? "Record updated successfully" : data;
+                        alert(data);
+                        LoadScheduledInformation();
+                    },
+                    error: function (xhr) {
+                        alert(xhr.responseText);                        
+                    }
+                });
+            }
+            
+        });
+
+        $('#btnCancel').click(function () {
+            clearData();            
+        });        
+
+        function LoadScheduledInformation() {
+
+            clearData();
+            $("#grdTemplate").GridUnload();
+
+            $grid = jQuery("#grdTemplate").jqGrid({
+                mytype: 'GET',
+                url: baseUrl + "api/AutomatAPI/GetScheduledTransformation",
+                postData: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), Tool_ID: $("#hdnToolID").val(), trans_type: $('#ddlTempType option:selected').val() },
+                editurl: baseUrl + 'Automaton/UpdateSchedule',
+                jsonReader: { id: "Job_ID" },
+                prmNames: { id: "Job_ID" },
+                datatype: 'json',
+                height: 200,
+                width: 1150,
+                autoWidth: true,
+                shrinkToFit: true,
+                rowNum: 50,
+                rowList: [5, 10, 20, 50],
+                colNames: ['Job_ID', 'Template Name', 'Status', 'Scheduled Time', 'Start Time', 'End Time'],
+                colModel: [
+                    { name: 'Job_ID', search: false, sortable: false, align: 'Left', width: 10, hidden: true, key: true },
+                    { name: 'Template_Name', search: false, sortable: false, align: 'Left', width: 258 },
+                    { name: 'status', search: false, sortable: false, align: 'Left', width: 250 },
+                    { name: 'ScheduledTime', search: false, sortable: false, align: 'Left', width: 200 },
+                    { name: 'StartTime', search: false, sortable: false, align: 'Left', width: 200 },
+                    { name: 'EndTime', search: false, sortable: false, align: 'Left', width: 200 }
+                ],
+                pager: '#pgrTemplate',
+                viewrecords: true,
+                loadonce: true,
+                gridview: true,
+                scrollOffset: 0,
+                sortable: false,
+                sortname: 'Template_Name',
+                sortorder: 'desc',
+                reloadAfterSubmit: true,
+                showButtonPanel: true,
+                loadui: "disable",
+                caption: 'Scheduled Transformation',
+                beforeSelectRow: function (rowid, e) {
+                    if ($grid.jqGrid('getCell', rowid, 'status').toLowerCase() != 'scheduled') {
+                        //alert("Only scheduled record can be modified");
+                        return false;
+                    }
+                    else
+                        return true;
+                },
+                onSelectRow: function (rowId) {
+                },
+                gridComplete: function () {
+                    $(this).prop('p').loadui = 'enable';
+                },
+            });
+
+            jQuery("#grdTemplate").jqGrid(
+            'navGrid', '#pgrTemplate', {
+                edit: true, add: false, del: true, search: false, refresh: false,
+                edittext: 'Edit',
+                deltext: 'Delete',
+                editfunc: function (rowid) {
+
+                    $('#txtTemplate').val($grid.jqGrid('getCell', rowid, 'Template_Name'));
+                    $('#txtDateTimePicker').val($grid.jqGrid('getCell', rowid, 'ScheduledTime'));
+
+                    $("#btnCreate").val('Update');
+
+                    $("#hdnJobId").val($grid.jqGrid('getCell', rowid, 'Job_ID'));
+
+                }
+            },
+            {
+                closeOnEscape: true,
+                closeAfterEdit: true,
+                afterComplete: function (response) {
+                    if (response.responseText) {
+                        alert(response.responseText);
+                    }
+                },
+                afterSubmit: function () {
+                    $(this).jqGrid("setGridParam", { datatype: 'json' });
+                    return [true];
+                }
+            },
+            {
+                closeOnEscape: true,
+                closeAfterEdit: true,
+                afterComplete: function (response) {
+                    if (response.responseText) {
+                        alert(response.responseText);
+                    }
+                }
+            },
+            {
+                closeOnEscape: true,
+                closeAfterEdit: true,
+                recreateForm: true,
+                afterComplete: function (response) {
+                    if (response.responseText) {
+                        alert(response.responseText);                        
+                    }
+                }
+            });
+        }
+
+        function LoadTemplateName() {
+            $.ajax({
+                type: "GET",
+                url: baseUrl + "api/AutomatAPI/GetTemplateNameListForScheduler",
+                data: { client_Id: $("#hdnClientId").val(), Project_Id: $("#hdnProjectId").val(), Type: $('#ddlTempType option:selected').val() },
+                dataType: 'json',
+                success: function (data) {
+
+                    $('#txtTemplate').autocomplete({
+                        source: data,
+                        minLength: 0,
+                        scroll: true,
+                        select: function (event, ui) {
+                            $(this).val(ui.item.label);
+                            return false;
+                        },
+                        change: function (event, ui) {
+                            if (ui.item == null || ui.item == undefined) {
+                                $('#txtTemplate').val('');
+                            }
+                        }
+                    }).focus(function () {
+                        $(this).autocomplete("search", "");
+                    });
+                },
+                error: function (xhr) {
+                    alert(xhr.statusText);
+                }
+            });
+        }
+
+        function clearData() {
+            $('#txtTemplate').val('');
+            $('#txtDateTimePicker').val('');
+            $('#btnCreate').val('Create')
+        }
+    });
+
+
+</script>
+
+<div class="content-body width-per-100">
+    <div style="width: 85%; margin: auto;">
+        <div class="group">
+            <div style="margin-bottom: 20px;"></div>
+            <div class="col-40" style="width: 25%;padding: 0;">
+                <div class="form-group width-per-100">
+                    <span class="control-label">Template Type</span>
+                    <select id="ddlTempType" class="dropdown"><option value="Transformation">Transformation</option> <option value="DataType">DataType</option> </select>
+                </div>
+            </div>
+            <div class="col-40" style="width: 25%;padding: 0;">
+                <div class="form-group width-per-100">
+                    <span id="lblTemplate" class="control-label">Template</span>
+                    <input type="text" class="textbox" id="txtTemplate" />
+                </div>
+            </div>
+            <div class="col-40" style="width: 25%;padding: 0;">
+                <div class="form-group width-per-100">
+                    <span id="lblTemplate" class="control-label">Schedule Date</span>
+                    <input type="text" class="textbox" id="txtDateTimePicker" readonly />
+                </div>
+            </div>
+            <div class="col-40" style="padding-top: 22px; text-align: right; width: 25%; padding-right: 0px;">
+                <div class="form-group width-per-100">
+                    <input class="button" type="button" value="Create" id="btnCreate">
+                    <input class="button" type="button" value="Cancel" id="btnCancel">
+                </div>
+            </div>
+        </div>
+        @*<div class="table-div">
+                <span style="font-size: 12px; font-family: arial; font-weight: bold;"> Template Type:</span>
+                <select id="ddlTempType" class="dropdown" style="width: 20%;"><option value="Transformation">Transformation</option> <option value="DataType">DataType</option> </select>
+            </div>*@
+        <br />
+        <div class="group">
+            <div class="form-group width-per-100">
+                <table id="grdTemplate" class="scroll" align='center'></table>
+                <div id="pgrTemplate" class="scroll"></div>
+            </div>
+        </div>
+        <br />
+        @*<div class="table-div" style="float:right; padding-right:113px;">
+                <input class="form-button" type="button" value="New Schedule" id="btnSchedule">
+            </div>*@
+        <br />
+    </div>
+    @*<div id="dialog">
+            <span id="lblType" class="control-label">Template Type</span>
+            <select id="ddlTempType1" class="dropdown" style="width: 90%;">
+                <option value="Transformation">Transformation</option>
+                <option value="DataType">DataType</option>
+            </select>
+            <span id="lblTemplate" class="control-label">Select Template</span>
+            <input type="text" class="textbox" id="txtTemplate" style="width: 83%;" />
+            <span id="lblTemplate" class="control-label">Schedule Date</span>
+            <input type="text" class="textbox" id="txtDateTimePicker" style="width: 83%;" readonly />
+            <br /> <br />
+            <div style="text-align: right;" class="dialog-buttonpane">
+                <input class="form-button" style="font-size:12px" type="button" value="Create Schedule" id="btnCreate">
+                <input class="form-button" style="font-size:12px" type="button" value="Cancel" id="btnCancel">
+            </div>
+        </div>*@
+</div>
+<div class="modal" style="display: none">
+    <div class="myLoadingProgress" align="center">
+        Processing. Please wait.<br /><br />
+        <img alt="" src="~/Images/loader.gif" />
+    </div>
+</div>
+<input type="hidden" value="" id="hdnTableName" />
+<input type="hidden" value="@ViewData["ClientID"]" id="hdnClientId" />
+<input type="hidden" value="@ViewData["ProjectID"]" id="hdnProjectId" />
+<input type="hidden" value="@ViewData["ToolID"]" id="hdnToolID" />
+<input type="hidden" value="@ViewData["SourceConfigID"]" id="hdnSourceConfigID" />
+<input type="hidden" value="" id="hdnJobId" />
+
+
+

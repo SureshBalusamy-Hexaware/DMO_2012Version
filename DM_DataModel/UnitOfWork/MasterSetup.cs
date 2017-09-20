@@ -291,13 +291,13 @@ namespace DM_DataModel.UnitOfWork
         }
 
 
-        public List<CMN_GET_ROLE_SP_Result> GetRoleList(string clientid, string projectid, string roleid, ref string StatusCode, ref string Message)
+        public List<CMN_GET_ROLE_SP_Result1> GetRoleList(string clientid, string projectid, string roleid, ref string StatusCode, ref string Message)
         {
 
             var OutPut_status_Code = new ObjectParameter("status_Code", typeof(string));
             var OutPut_message = new ObjectParameter("message", typeof(string));
 
-            var result = _context.CMN_GET_ROLE_SP(clientid, projectid, null, OutPut_status_Code, OutPut_message).ToList<CMN_GET_ROLE_SP_Result>();
+            var result = _context.CMN_GET_ROLE_SP(clientid, projectid, null, OutPut_status_Code, OutPut_message).ToList<CMN_GET_ROLE_SP_Result1>();
 
             StatusCode = OutPut_status_Code.Value.ToString();
             Message = OutPut_message.Value.ToString();

@@ -1,0 +1,218 @@
+﻿@{
+    ViewBag.Title = "DBDeployment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<style type="text/css">
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: black;
+            z-index: 99;
+            opacity: 0.8;
+            filter: alpha(opacity=80);
+            -moz-opacity: 0.8;
+            min-height: 100%;
+            width: 100%;
+        }
+
+        .loading {
+            font-family: Arial;
+            font-size: 10pt;
+            border: 5px solid #67CFF5;
+            width: 200px;
+            height: 100px;
+            display: none;
+            position: fixed;
+            background-color: White;
+            z-index: 999;
+        }
+
+        .morelink {
+            display: block;
+            cursor: pointer;
+            text-align: right;
+        }
+
+            .morelink:hover {
+                color: #1779dd;
+            }
+
+        .more {
+            display: none;
+        }
+
+        input[type=button]:disabled {
+            background: #ddd;
+            cursor: default !important;
+        }
+
+        .button1 {
+            background: #3498db;
+            font-family: "open_sansregular","Segoe UI","Helvetica Neue",Helvetica,Arial,sans-serif;
+            background: #3498DB linear-gradient(to bottom, #3498DB, #2980B9) repeat scroll 0% 0%;
+            border: medium none;
+            border-radius: 3px;
+            color: #FFF;
+            cursor: pointer;
+            font-size: 14px;
+            height: 32px;
+            line-height: 19px;
+            outline: 0px none !important;
+            text-align: center;
+            transition: all 0.3s ease 0s;
+        }
+
+        input[type=button]:disabled {
+            background: #ddd;
+            cursor: default !important;
+        }
+    </style>*@
+<script>
+    $(document).ready(function () {
+        var userName = $("#userName").val();
+        if (userName == "Hexaware") {
+            $("#scriptfiletable").show();
+        } else {
+            $("#scriptfiletable").hide();
+        }
+
+        @*$("#Upload").click(function () {
+                var baseUrl = '@Url.Content("~/")';
+
+                var filename = $("#fileexcel").val();
+                var opmlFile = $('#fileexcel')[0];
+                var file = opmlFile.files[0].name;
+                var filepath = "D:\\WorkspaceSQLSERVER_15122016\\DBDeploy\\" + file;
+                $.ajax({
+                    url: 'EncrypedFile',
+                    type: 'POST',
+                    async: false,
+                    data: { filepath: filepath },
+                    success: function (result) {
+                        alert("encrypted file created successfully");
+                    }
+                });
+
+            });*@
+        $("#filesql").on('change', function () {
+            var opmlFile = $('#filesql')[0];
+            var file = opmlFile.files[0].name;
+            var extension = file.substr((file.lastIndexOf('.') + 1));
+            var formData = new FormData();
+            formData.append("opmlFile", opmlFile.files[0]);
+
+            $.ajax({
+                url: '@Url.Action("ReadSqlFile")',
+                type: 'POST',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+
+
+
+
+                },
+                error: function (jqXHR) {
+                    alert(jqXHR.responseText);
+                }
+
+            });
+
+        });
+        $("#Deploy").click(function () {
+            var baseUrl = '@Url.Content("~/")';
+
+            var schemaname = $("#schemaname").val();
+            var schemapass = $("#schemapass").val();
+            var serverip = $("#serverip").val();
+            var serverport = $("#serverport").val();
+            var dbuser = $("#dbuser").val();
+            var dbpass = $("#dbpass").val();
+            var dbtype = $("#dbtype option:selected").val();
+            var DBDeployment = {
+                SchemaName: schemaname,
+                SchemaPassword: schemapass,
+                ServerIP: serverip,
+                ServerPort: serverport,
+                DBUser: dbuser,
+                DBPassword: dbpass,
+                DBType: dbtype
+            };
+            $.ajax({
+                url: baseUrl + 'api/HomeAPI/Post/',
+                type: 'POST',
+                data: JSON.stringify(DBDeployment),
+                dataType: "json",
+                contentType: "application/json",
+                success: function (result) {
+                    if (result == "Success") {
+                        alert("Action completed.");
+                        return true;
+                    }
+                    alert(result);
+                },
+                error: function (err) {
+                    alert(err.responseText);
+                }
+            });
+
+
+
+        });
+    });
+    //<%-- Loading user tools end functionality --%>
+</script>
+<div class="content-body width-per-100">
+    <!-- Body start -->
+    <div style="width:95%;margin:auto;">
+        <div class="group">
+            <div class="col-40" style="width:30%;">
+                <div class="form-group width-per-100" style="display:none;">
+                    Select Script File
+                    <input type="file" id="filesql" name="filesql" accept=".txt,.sql" />
+                    <input type="button" value="Upload" id="Upload" name="Upload" class="button1" tabindex="3">
+                </div>
+                <div class="form-group width-per-100">
+                    Server Name/IP
+                    <input type="text" id="serverip" name="serverip" class="form-control" />
+                </div>
+                <div class="form-group width-per-100">
+                    Server User Name
+                    <input type="text" id="dbuser" name="dbuser" class="form-control" />
+                </div>
+                <div class="form-group width-per-100">
+                    Server Password
+                    <input type="password" id="dbpass" class="form-control" value="" />
+                </div>
+                <div class="form-group width-per-100">
+                    Schema Name
+                    <input type="text" id="schemaname" class="form-control" value=" " />
+                </div>
+                <div class="form-group width-per-100" style="display:none;">
+                    Schema Password
+                    <input type="password" id="schemapass" class="form-control" value="" />
+                </div>
+                <div class="form-group width-per-100" style="display:none;">
+                    Server Port
+                    <input type="text" id="serverport" name="serverport" class="form-control" />
+                </div>
+                <div class="form-group width-per-100" style="display:none;">
+                    DB Type
+                    <select id="dbtype" name="dbtype" class="dropdown" style="width: 97%;">
+                        <option value="SQL SERVER">SQL SERVER</option>
+                        <option value="ORACLE">ORACLE</option>
+                    </select>
+                </div>
+                <div class="form-group width-per-100">
+                    <input type="button" id="Deploy" value="Deploy" class="button" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" name="userName" id="userName" value="${userName}">
+<input type="hidden" name="hdnToolID" id="hdnToolID" value="${Tool_ID}" />

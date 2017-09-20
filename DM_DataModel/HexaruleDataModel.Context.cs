@@ -5857,28 +5857,6 @@ public partial class DM_MetaDataEntities : DbContext
     }
 
 
-    public virtual ObjectResult<CMN_GET_ROLE_SP_Result> CMN_GET_ROLE_SP(string client_ID, string project_ID, Nullable<long> role_ID, ObjectParameter status_code, ObjectParameter message)
-    {
-
-        var client_IDParameter = client_ID != null ?
-            new ObjectParameter("Client_ID", client_ID) :
-            new ObjectParameter("Client_ID", typeof(string));
-
-
-        var project_IDParameter = project_ID != null ?
-            new ObjectParameter("Project_ID", project_ID) :
-            new ObjectParameter("Project_ID", typeof(string));
-
-
-        var role_IDParameter = role_ID.HasValue ?
-            new ObjectParameter("Role_ID", role_ID) :
-            new ObjectParameter("Role_ID", typeof(long));
-
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CMN_GET_ROLE_SP_Result>("CMN_GET_ROLE_SP", client_IDParameter, project_IDParameter, role_IDParameter, status_code, message);
-    }
-
-
     public virtual int CMN_INSERT_ROLE_SP(string client_ID, string project_ID, string role_Name, string role_Description, string active_Flag, string sys_Admin, ObjectParameter status_code, ObjectParameter message)
     {
 
@@ -6115,6 +6093,40 @@ public partial class DM_MetaDataEntities : DbContext
 
 
         return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<HXR_GET_RULE_ERROR_SUMMARY_SP_Result>("HXR_GET_RULE_ERROR_SUMMARY_SP", client_IDParameter, project_IDParameter, table_NameParameter, run_NumberParameter, rule_Category_IDParameter, rule_IDParameter, status_Code, message);
+    }
+
+
+    public virtual int DASM_INS_MASKING_TEMPLATE_SP1(Nullable<long> role_ID, ObjectParameter template_ID_out, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var role_IDParameter = role_ID.HasValue ?
+            new ObjectParameter("Role_ID", role_ID) :
+            new ObjectParameter("Role_ID", typeof(long));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DASM_INS_MASKING_TEMPLATE_SP1", role_IDParameter, template_ID_out, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<CMN_GET_ROLE_SP_Result1> CMN_GET_ROLE_SP(string client_ID, string project_ID, Nullable<long> role_ID, ObjectParameter status_code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var role_IDParameter = role_ID.HasValue ?
+            new ObjectParameter("Role_ID", role_ID) :
+            new ObjectParameter("Role_ID", typeof(long));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CMN_GET_ROLE_SP_Result1>("CMN_GET_ROLE_SP", client_IDParameter, project_IDParameter, role_IDParameter, status_code, message);
     }
 
 }

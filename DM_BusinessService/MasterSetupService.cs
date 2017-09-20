@@ -239,8 +239,8 @@ namespace DM_BusinessService
 
             if (listRole != null)
             {
-                Mapper.CreateMap<CMN_GET_ROLE_SP_Result, RoleEntity>();
-                var _roleroleItem = Mapper.Map<List<CMN_GET_ROLE_SP_Result>, List<RoleEntity>>(listRole);
+                Mapper.CreateMap<CMN_GET_ROLE_SP_Result1, RoleEntity>();
+                var _roleroleItem = Mapper.Map<List<CMN_GET_ROLE_SP_Result1>, List<RoleEntity>>(listRole);
                 return _roleroleItem;
             }
             return null;

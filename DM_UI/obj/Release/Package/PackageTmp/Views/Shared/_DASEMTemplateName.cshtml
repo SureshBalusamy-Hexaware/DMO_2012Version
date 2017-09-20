@@ -1,0 +1,32 @@
+﻿<script type="text/javascript">
+    $(function () {        
+        var baseUrl = '@Url.Content("~/")';
+        var client_ID = "@ViewData["clientId"]";
+        var project_ID = "@ViewData["projectId"]";
+        var _copy_ddlTemplateName = "#ddlTemplateName";
+
+        //Fill TemplateName field dropdown
+        var templateNames = $.ajax({
+            url: baseUrl + "api/DIMAPLUSAPI/GetAllTemplates",
+            data: { client_ID: client_ID
+                , project_ID:  project_ID},
+            async: false,
+            success: function (data, result) {
+                if (!result)
+                    alert('Failure to retrieve the existing template names.');
+            },
+            error: function (err) {
+                alert(err.statusText);
+            }
+        }).responseText;
+        //debugger;
+        var tempNamelist = jQuery.parseJSON(templateNames);
+
+        for (i = 0; i < tempNamelist.length; i++) {
+            $(_copy_ddlTemplateName).append($('<option>').text(tempNamelist[i].Template_Name).val(tempNamelist[i].Template_ID));
+        }
+    });
+</script>
+<span class="control-label">Template</span>
+<select id="ddlTemplateName" class="dropdown" style="width:100%;">    
+</select>

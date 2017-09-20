@@ -16,6 +16,8 @@ namespace DM_BusinessEntities
         public Nullable<decimal> Rec_Fail_Percent { get; set; }
         public Nullable<long> Warnings { get; set; }
         public string Rule_Name { get; set; }
+        public Nullable<long> Rule_ID { get; set; }
+        public Nullable<long> RuleCategory_ID { get; set; }
 
     }
 

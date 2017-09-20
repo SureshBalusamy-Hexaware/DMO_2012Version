@@ -1274,8 +1274,12 @@
           <ScalarProperty Name="Rec_Fail_Percent" ColumnName="Rec_Fail_Percent" />
           <ScalarProperty Name="Warnings" ColumnName="Warnings" />
           <ScalarProperty Name="Rule_Name" ColumnName="Rule_Name" />
+          <ScalarProperty Name="RuleCategory_ID" ColumnName="RuleCategory_ID" />
+          <ScalarProperty Name="Rule_ID" ColumnName="Rule_ID" />
+          <ScalarProperty Name="Run_Number" ColumnName="Run_Number" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="DASM_INS_MASKING_TEMPLATE_SP1" FunctionName="DM_MetaDataModel.Store.DASM_INS_MASKING_TEMPLATE_SP" />
   </EntityContainerMapping>
 </Mapping>

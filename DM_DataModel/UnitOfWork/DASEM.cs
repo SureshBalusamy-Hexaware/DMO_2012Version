@@ -170,6 +170,7 @@ namespace DM_DataModel.UnitOfWork
             }
         }
 
+
         public List<string> GetSlicingColumns(string client_ID, string project_ID, string constraint_Type, long config_ID, ref string status_Code, ref string message)
         {
             var OutPut_status_Code = new ObjectParameter("status_Code", typeof(string));
@@ -739,25 +740,25 @@ namespace DM_DataModel.UnitOfWork
             //var lst1 = new List<DASM_FX_GET_CRITERIAMASTER_SP_Result>();
 
             var lst = dt.AsEnumerable().Select(r => new DASM_FX_GET_CRITERIAMASTER_Res()
-          {
-              Object_Type = r["Object_Type"].ToString(),
-              Object_Name = r["Object_Name"].ToString(),
-              Slicing_Field = r["Slicing_Field"].ToString(),
-              Slicing_Value = r["Slicing_Value"].ToString(),
-              Sx_Flag = Convert.ToInt16(r["Sx_Flag"].ToString()),
-              Tx_Flag = Convert.ToInt16(r["Tx_Flag"].ToString()),
-              Fx_Flag = Convert.ToInt16(r["Fx_Flag"].ToString()),
-              Source_Rec_Count = Convert.ToInt64(r["Source_Rec_Count"].ToString()),
-              Target_Rec_Count = Convert.ToInt64(r["Target_Rec_Count"].ToString()),
-              Create_Date = Convert.ToDateTime(r["Create_Date"].ToString()),
-              ExtractionDate = Convert.ToDateTime(r["ExtractionDate"].ToString()),
-              Template_ID = Convert.ToInt64(r["Template_ID"].ToString()),
-              Criteria_ID = Convert.ToInt64(r["Criteria_ID"]),
-              Client_ID = r["Client_ID"].ToString(),
-              Project_ID = r["Project_ID"].ToString(),
-              Expression_Code = r["Expression_Code"].ToString(),
-              SQL_STMT = r["SQL_STMT"].ToString()
-          }).ToList();
+            {
+                Object_Type = r["Object_Type"].ToString(),
+                Object_Name = r["Object_Name"].ToString(),
+                Slicing_Field = r["Slicing_Field"].ToString(),
+                Slicing_Value = r["Slicing_Value"].ToString(),
+                Sx_Flag = Convert.ToInt16(r["Sx_Flag"].ToString()),
+                Tx_Flag = Convert.ToInt16(r["Tx_Flag"].ToString()),
+                Fx_Flag = Convert.ToInt16(r["Fx_Flag"].ToString()),
+                Source_Rec_Count = Convert.ToInt64(r["Source_Rec_Count"].ToString()),
+                Target_Rec_Count = Convert.ToInt64(r["Target_Rec_Count"].ToString()),
+                Create_Date = Convert.ToDateTime(r["Create_Date"].ToString()),
+                ExtractionDate = Convert.ToDateTime(r["ExtractionDate"].ToString()),
+                Template_ID = Convert.ToInt64(r["Template_ID"].ToString()),
+                Criteria_ID = Convert.ToInt64(r["Criteria_ID"]),
+                Client_ID = r["Client_ID"].ToString(),
+                Project_ID = r["Project_ID"].ToString(),
+                Expression_Code = r["Expression_Code"].ToString(),
+                SQL_STMT = r["SQL_STMT"].ToString()
+            }).ToList();
 
 
 
@@ -1186,6 +1187,8 @@ namespace DM_DataModel.UnitOfWork
             status_Code = OutPut_status_Code.Value.ToString();
             message = OutPut_message.Value.ToString();
         }
+
+
 
         #endregion
 

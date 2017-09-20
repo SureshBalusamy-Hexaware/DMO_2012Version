@@ -1,11 +1,8 @@
 ﻿using DM_DataModel.GenericRepository;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity.Core.EntityClient;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Validation;
-using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -250,47 +247,6 @@ namespace DM_DataModel.UnitOfWork
                 System.IO.File.AppendAllLines(@"C:\errors.txt", outputLines);
 
                 throw e;
-            }
-        }
-
-        public void GenerateMapping(string client_id, string project_id, string config_id, string tableNameList, string profiledBy, ref string status_Code, ref string message)
-        {
-            string dynamicProc = "[PROFILER_PROFILE_ALL_TABLES_SP]";
-
-            var builder = new EntityConnectionStringBuilder(System.Configuration
-                .ConfigurationManager
-                .ConnectionStrings["DM_MetaDataEntities"]
-                .ConnectionString.ToString());
-            string providerConnectionString = builder.ProviderConnectionString;
-
-            try
-            {
-                using (SqlConnection con = new SqlConnection(providerConnectionString))
-                {
-                    using (SqlCommand cmd = new SqlCommand(dynamicProc, con))
-                    {
-                        if (con.State != ConnectionState.Open) con.Open();
-                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@Client_ID", client_id);
-                        cmd.Parameters.AddWithValue("@Project_ID", project_id);
-                        cmd.Parameters.AddWithValue("@Config_ID", config_id);
-                        cmd.Parameters.AddWithValue("@Table_name_list", tableNameList);
-                        cmd.Parameters.AddWithValue("@Profiled_By", profiledBy);
-
-                        cmd.Parameters.Add("@Status_Code", SqlDbType.VarChar, 10).Direction = ParameterDirection.Output;
-                        cmd.Parameters.Add("@Message", SqlDbType.VarChar, 255).Direction = ParameterDirection.Output;
-
-                        cmd.ExecuteNonQuery();
-
-                        status_Code = Convert.ToString(cmd.Parameters["@Status_Code"].Value);
-                        message = Convert.ToString(cmd.Parameters["@Message"].Value);
-                    }
-                    if (con.State != ConnectionState.Closed) con.Close();
-                }
-            }
-            catch (Exception _e)
-            {
-                throw _e;
             }
         }
 

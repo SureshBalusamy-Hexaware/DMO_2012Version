@@ -33,6 +33,12 @@ public partial class HXR_GET_RULE_ERROR_SUMMARY_SP_Result
 
     public string Rule_Name { get; set; }
 
+    public Nullable<long> RuleCategory_ID { get; set; }
+
+    public Nullable<long> Rule_ID { get; set; }
+
+    public string Run_Number { get; set; }
+
 }
 
 }

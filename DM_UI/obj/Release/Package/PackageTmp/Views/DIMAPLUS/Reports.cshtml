@@ -1,0 +1,132 @@
+﻿@{
+    ViewBag.Title = "Reports";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script lang="ja" type="text/javascript">
+    var baseUrl = '@Url.Content("~/")';
+
+    $(document).ready(function () {
+
+        var client_ID = $("#hdnClientId").val();
+        var project_ID = $("#hdnProjectID").val();
+        var _reports_ddlTemplateName = "#ddlTemplateName";
+
+        //Fill TemplateName field dropdown
+        var templateNames = $.ajax({
+            url: baseUrl + "api/DIMAPLUSAPI/GetAllTemplates",
+            data: {
+                client_ID: client_ID
+                , project_ID: project_ID
+            },
+            async: false,
+            success: function (data, result) {
+                if (!result)
+                    alert('Failure to retrieve the existing template names.');
+            },
+            error: function (err) {
+                alert(err.statusText);
+            }
+        }).responseText;
+        //debugger;
+        var tempNamelist = jQuery.parseJSON(templateNames);
+
+        for (i = 0; i < tempNamelist.length; i++) {
+            $(_reports_ddlTemplateName).append($('<option>').text(tempNamelist[i].Template_Name).val(tempNamelist[i].Template_ID));
+        }
+
+        $(_reports_ddlTemplateName).change(function () {
+
+
+            $("#grddetails").GridUnload();
+            $grid = jQuery("#grddetails").jqGrid({
+                postData: { Client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectID").val(), Template_ID: $(_reports_ddlTemplateName).val() },
+                mytype: 'GET',
+                datatype: 'json',
+                url: baseUrl + "api/DIMAPLUSAPI/GetAuditReport",
+                colModel: [
+                    //{
+                    //    label: 'Template ID',
+                    //    name: 'Template_ID',
+                    //    width: 75,
+                    //    visible: false
+                    //},
+                    {
+                        label: 'Run Id',
+                        name: 'Run_ID',
+                        width: 50,
+                        editable: true,
+                        formatter: returnHyperLink
+                    },
+                             {
+                                 label: 'Object Type',
+                                 name: 'Object_Type',
+                                 width: 75
+                             },
+                             {
+                                 label: 'Source Object Count',
+                                 name: 'Source_Object_Count',
+                                 width: 75
+
+                             },
+                             {
+                                 label: 'Target Object Count',
+                                 name: 'Target_Object_Count',
+                                 width: 75
+                             }
+                ],
+                sortname: 'Object_Type',
+                sortorder: 'asc',
+                //loadonce: true,
+                viewrecords: true,
+                width: 980,
+                height: 90,
+                autowidth: true,
+                //scrollOffset: 0,
+                reloadAfterSubmit: true,
+                rowNum: 10,
+                rowList: [5, 10, 20, 50],
+                pager: "#pager1",
+                caption: 'Reports'
+            });
+
+
+        });
+        $(_reports_ddlTemplateName).change();
+
+        //custom formatter function where you can put your own logic to prepare hyperlink 
+        function returnHyperLink(cellValue, options, rowdata, action) {
+            return "<a href='./ReportRunIDDetail?TemplateID=" + rowdata[4] + "&RunID=" + rowdata[0] + "'>" + rowdata[0] + "</a>";
+        }
+
+    });
+
+</script>
+<input type="hidden" value="@(Convert.ToString(DM_UI.App_Start.UIProperties.Sessions.Client.Client_ID))" id="hdnClientId" />
+<input type="hidden" value="@(Convert.ToString(DM_UI.App_Start.UIProperties.Sessions.Client.project_ID))" id="hdnProjectID" />
+<input type="hidden" value="TestRun2" id="hdnTemplateId" />
+<br />
+<div class="content-body width-per-100">
+    <div style="width:80%;margin:auto;">
+        <div class="group" style="width:40%;">
+            <div class="form-group width-per-100">
+                @*@Html.Partial("_DASEMTemplateName", new ViewDataDictionary { { "clientId", Convert.ToString(DM_UI.App_Start.UIProperties.Sessions.Client.Client_ID) },
+                    { "projectId", Convert.ToString(DM_UI.App_Start.UIProperties.Sessions.Client.project_ID) } })*@
+                <span class="control-label">Template</span>
+                <select id="ddlTemplateName" class="dropdown" style="width:100%;"></select>
+            </div>
+        </div>
+        <div class="group">
+            <div class="div-header">
+                <span class="control-label label-bold">Report</span>
+            </div>
+        </div>
+        <div class="group">
+            <div id="grddiv" class="form-group width-per-100">
+                <table id="grddetails" ></table>
+                <div id="pager1" class="scroll"></div>
+            </div>
+            @Html.ActionLink("Click to Detail", "ReportDetail")
+        </div>
+    </div>
+</div>
+

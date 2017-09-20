@@ -1,0 +1,30 @@
+﻿@*<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>*@
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<style type="text/css">
+    .dropdown-menu > li > a:hover {
+        background-color: #0088cc;
+        color: #ffffff;
+        /*border-radius: 4px;*/
+    }
+</style>
+<div class="btn-group">
+    <button type="button" class="btn btn-default">@(Convert.ToString(Session["userid"]))</button>
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="caret"></span>
+        <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <ul class="dropdown-menu pull-right">
+        <li>
+            @Html.ActionLink("Change My Password", "ChangePassword", "Home", new { @class = "dropdown-item" })
+        </li>
+        <li>
+            @Html.ActionLink("Sign out", "Logout", "Home", new { @class = "dropdown-item" })
+        </li>
+
+    </ul>
+</div>
+

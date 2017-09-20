@@ -1,0 +1,53 @@
+﻿@{
+    ViewBag.Title = "Result";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+
+<div class="content-body width-per-100">
+    <div style="width:30%;margin:auto;">
+        <div class="div-header">
+            <span class="control-label label-bold">@ViewBag.Heading</span>
+        </div>
+        @if (ViewBag.StatusCode == "0")
+        {
+            <div style="background-color: #E1F9DF; padding: 15px; margin-bottom: 20px; border: 1px solid #B7E7AD; border-radius: 4px;">
+                <p style="text-align: center; margin: 5px 0px;">
+                    <span class="control-label" style="color: @ViewBag.color; font-weight: 600;font-size: 15px;">@ViewBag.Response</span>
+                </p>
+            </div>
+            <p style="border-top: 1px solid #eee;">
+                @Html.ActionLink("Click here", "Logout", null, new { @style = "color:#00ADEF;", @class = "control-label" })
+                <span class="control-label"> to Sign in with New Password.</span>
+            </p>
+
+        }
+        else if (ViewBag.StatusCode == "1")
+        {
+            <div style="background-color: #F9E0DF; padding: 15px; margin-bottom: 20px; border: 1px solid #F1C0BC; border-radius: 4px;  ">
+                <p style="text-align: center; margin: 5px 0px;">
+                    <span class="control-label" style="color: @ViewBag.color; font-weight: 600;font-size: 15px;">@ViewBag.Response</span>
+                </p>
+            </div>
+            <p style="border-top: 1px solid #eee;">
+                @if (ViewBag.heading == "Forgot Password")
+                {
+                    @Html.ActionLink("Click here", "ForgotPassword", null, new { @style = "color:#00ADEF;", @class = "control-label" })
+
+                }
+                else
+                {
+                    @Html.ActionLink("Click here", "ChangePassword", null, new { @style = "color:#00ADEF;", @class = "control-label" })
+                }
+                <span class="control-label"> to Change the password again.</span>
+            </p>
+        }
+        else
+        {
+            <p style="border-top: 1px solid #eee;">
+                @Html.ActionLink("Click here", "Logout", null, new { @style = "color:#00ADEF;", @class = "control-label" })
+                <span class="control-label"> to Sign in.</span>
+            </p>
+        }
+
+    </div>
+</div>

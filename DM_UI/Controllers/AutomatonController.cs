@@ -269,38 +269,7 @@ namespace DM_UI.Controllers
             return RedirectToAction("Downloads");
         }
 
-        [ActionName("Download")]
-        public ActionResult DownloadFile(string fId, string fName, string fFormat)
-        {
-            int _ToolId = 0;
-            string contentType = "application/" + fFormat;
-            string fldrPath = UIProperties.DownloadPath;
-            string filePath = fldrPath + fId + "_" + fName + "." + fFormat;
-        
-            if (!System.IO.File.Exists(filePath))
-            {
-                ViewBag.FileNotFound = "Yes";
-                ViewDatas();
-                _ToolId = Convert.ToInt16(UIProperties.Sessions.ToolID);
 
-                if (_ToolId == (int)UIProperties.Tools.DIMAPLUS)
-                    ViewBags(UIProperties.DIMAPLUSMenu.Download);
-                else
-                    ViewBags(UIProperties.AutomatonMenu.Download);
-
-                if (UIProperties.Sessions.TargetConfigEntity == null) return View();
-                ViewData["tgtConfigID"] = UIProperties.Sessions.TargetConfigEntity.Config_ID.ToString();
-
-
-                //return View("Downloads");
-                if (_ToolId == (int)UIProperties.Tools.DIMAPLUS)
-                    return RedirectToAction("Downloads", new { ToolName = "DASEM" });
-                else
-                    return RedirectToAction("Downloads", "Automaton", new { ToolName = "Automaton" });
-
-            }
-            return File(filePath, contentType, fName + "." + fFormat);
-        }
 
 
         [HttpPost]
@@ -378,7 +347,7 @@ namespace DM_UI.Controllers
                 pkg.Variables["Generated_SSIS_PkgLocation"].Value = Generatexml_Save_PkgLocation; //  AutomatonSSISpath;                
                 pkg.Variables["MetaDataConn"].Value = CommonHelper.GetADOConnectionString();
                 pkg.Variables["Template_ID"].Value = Template_ID;
-
+                pkg.Variables["Role_ID"].Value = UIProperties.Sessions.Client.Role_ID;
                 //pkg.Connections[0].ConnectionString = CommonHelper.GetCurrentConnectionString();
                 pkgResults = pkg.Execute();
                 if (pkgResults == DTSExecResult.Success)
@@ -429,6 +398,8 @@ namespace DM_UI.Controllers
                 pkg.Variables["Template_Id"].Value = Template_ID;
                 pkg.Variables["PackageSaveLocation"].Value = Generatexml_Save_PkgLocation;
                 pkg.Variables["MetaDataConn"].Value = CommonHelper.GetADOConnectionString();
+                pkg.Variables["Role_ID"].Value = UIProperties.Sessions.Client.Role_ID;
+
                 pkgResults = pkg.Execute();
                 if (pkgResults == DTSExecResult.Success)
                     msg[0] = "Xml generated successfully.";
@@ -1032,7 +1003,7 @@ namespace DM_UI.Controllers
 
 
                 _autoMS.LogExcelRunAudit(Client_ID, project_ID, ToolID, Source_TableName, Source_Column_Count, TotalRecords, null, "i", Target_TableName, UserName, null,
-                    ref RunID, UIProperties.Sessions.Client.Role_ID,ref StatusCode, ref Message);
+                    ref RunID, UIProperties.Sessions.Client.Role_ID, ref StatusCode, ref Message);
 
                 pkgResults = pkg.Execute();
                 if (pkgResults == DTSExecResult.Failure)
@@ -1178,9 +1149,8 @@ namespace DM_UI.Controllers
         [ActionName("DownloadPackage")]
         public ActionResult DownloadPackage(string TemplateID, string TemplateName)
         {
-
             string filePath = Path.Combine(ConfigurationManager.AppSettings["Generatexml_Save_PkgLocation"], TemplateName + ".dtsx");
-            string contentType = "application/xml";
+            var fname = Path.GetFileName(filePath);
             if (!System.IO.File.Exists(filePath))
             {
                 ViewBag.FileNotFound = "Yes";
@@ -1188,10 +1158,40 @@ namespace DM_UI.Controllers
                 ViewBags(UIProperties.AutomatonMenu.ReviewAndExecute);
                 return View("ReviewAndGenerate");
             }
-            var fname = Path.GetFileName(filePath);
-            return File(filePath, contentType, fname);
-        }
+            return File(filePath, "application/dtsx", fname);
 
+        }
+        [ActionName("Download")]
+        public ActionResult DownloadFile(string fId, string fName, string fFormat)
+        {
+            int _ToolId = 0;
+            string contentType = "application/" + fFormat;
+            string fldrPath = UIProperties.DownloadPath;
+            string filePath = fldrPath + fId + "_" + fName + "." + fFormat;
+            if (!System.IO.File.Exists(filePath))
+            {
+                ViewBag.FileNotFound = "Yes";
+                ViewDatas();
+                _ToolId = Convert.ToInt16(UIProperties.Sessions.ToolID);
+
+                if (_ToolId == (int)UIProperties.Tools.DIMAPLUS)
+                    ViewBags(UIProperties.DIMAPLUSMenu.Download);
+                else
+                    ViewBags(UIProperties.AutomatonMenu.Download);
+
+                if (UIProperties.Sessions.TargetConfigEntity == null) return View();
+                ViewData["tgtConfigID"] = UIProperties.Sessions.TargetConfigEntity.Config_ID.ToString();
+
+
+                //return View("Downloads");
+                if (_ToolId == (int)UIProperties.Tools.DIMAPLUS)
+                    return RedirectToAction("Downloads", new { ToolName = "DASEM" });
+                else
+                    return RedirectToAction("Downloads", "Automaton", new { ToolName = "Automaton" });
+
+            }
+            return File(filePath, contentType, fName + "." + fFormat);
+        }
         [ActionName("DownloadDocument")]
         public ActionResult DownloadDocument(string TemplateID, string TemplateName)
         {

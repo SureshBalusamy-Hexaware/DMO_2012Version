@@ -99,7 +99,13 @@
     <Compile Include="CMN_GET_ROLE_MENU_ITEMS_SP_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="CMN_GET_ROLE_SP1_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="CMN_GET_ROLE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CMN_GET_ROLE_SP_Result1.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="CMN_GET_SCHEDULED_JOBS_SP_Result.cs">

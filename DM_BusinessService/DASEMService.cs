@@ -167,8 +167,9 @@ namespace DM_BusinessService
 
         public void SaveMaskingTemplate(DataTable Masking, long? RoleId, ref string StatusCode, ref string Message)
         {
-            _dimaplus.SaveMaskingTemplate(Masking, RoleId,ref StatusCode, ref Message);
+            _dimaplus.SaveMaskingTemplate(Masking, RoleId, ref StatusCode, ref Message);
         }
+
 
         public void SaveTemplate(DataTable Criteria, ref string StatusCode, ref string Message)
         {
@@ -191,5 +192,7 @@ namespace DM_BusinessService
         {
             _dimaplus.CheckCopyCount(client_ID, project_ID, template_ID, ref message, ref status_Code);
         }
+
+
     }
 }

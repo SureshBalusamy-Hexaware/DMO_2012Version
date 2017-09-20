@@ -107,10 +107,6 @@ namespace DM_BusinessService
             }
             return null;
         }
-        public void GenerateMapping(string client_id, string project_id, string config_id, string tableNameList, string profiledBy, ref string status_Code, ref string message)
-        {
-            _ConfigMS.GenerateMapping(client_id, project_id, config_id, tableNameList, profiledBy, ref status_Code, ref  message);
-        }
     }
     /// <summary>
     /// Testing Database connectivity

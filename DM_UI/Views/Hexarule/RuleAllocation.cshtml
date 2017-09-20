@@ -3,6 +3,11 @@
     ViewBag.Title = @DM_en_US.TabhdrRuleAllocation;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="loadingprogress" align="center">
+    Please wait.<br />
+    <br />
+    <img src="../Images/loader.gif" alt=" " />
+</div>
 <div class="content-body" style="width:100%;">
     <div style="width:98%;margin:auto;">
         <div class="group">
@@ -38,6 +43,44 @@
 <input type="hidden" value="@ViewData["SourceTarget"]" id="hdnSourceTarget" />
 <input type="hidden" value="@ViewData["DatabaseName"]" id="hdnDatabaseName" />
 <input type="hidden" value="@ViewData["ConfigID"]" id="hdnConfigID" />
+<style type="text/css">
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: black;
+        z-index: 99;
+        opacity: 0.8;
+        filter: alpha(opacity=80);
+        -moz-opacity: 0.8;
+        min-height: 100%;
+        width: 100%;
+    }
+
+    .loadingprogress {
+        font-family: Arial;
+        font-size: 10pt;
+        border: 5px solid #67CFF5;
+        width: 200px;
+        height: 100px;
+        display: none;
+        position: fixed;
+        background-color: White;
+        z-index: 999;
+    }
+
+    .myDialogClass .ui-widget-header {
+        font-family: "open_sansregular", "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        margin-bottom: 5px;
+        font-size: 13px;
+        letter-spacing: 0.3px !important;
+        font-weight: normal;
+    }
+
+    .myDialogClass .ui-widget-content {
+        background-color: #F3F3F3;
+    }
+</style>
 <script type="text/javascript">
     var _ddlTables = "#ddlTables";
     var _grdRules = "#grdRules";
@@ -62,6 +105,29 @@
     var DatabaseName = $(_hdnDatabaseName).val();
     var ConfigID = $(_hdnConfigID).val();
     var ServiceUrl;
+    function ShowProgress() {
+        setTimeout(function () {
+            var modal = $('<div />');
+            modal.addClass("modal");
+            var loading = $(".loadingprogress");
+            loading.show();
+            var top = Math.max($(window).height() / 2 - loading[0].offsetHeight / 2, 0);
+            var left = Math.max($(window).width() / 2 - loading[0].offsetWidth / 2, 0);
+            loading.css({ top: top, left: left });
+        }, 200);
+    }
+
+    function HideProgress() {
+        setTimeout(function () {
+            var modal = $('<div />');
+            modal.addClass("modal");
+            var loading = $(".loadingprogress");
+            loading.hide();
+            var top = Math.max($(window).height() / 2 - loading[0].offsetHeight / 2, 0);
+            var left = Math.max($(window).width() / 2 - loading[0].offsetWidth / 2, 0);
+            loading.css({ top: top, left: left });
+        }, 200);
+    }
 
     $(function () {
 
@@ -89,10 +155,6 @@
 
 
         $(_ddlTables).change(function () {
-
-
-
-
             GetTableRules();
         });
         $(_btnSaveAllocation).click(function () {
@@ -148,25 +210,25 @@
         $(_btnGenerate).click(function () {
 
             var TableName = $(_ddlTables + " option:selected").text();
-
+            ShowProgress();
             $.ajax({
                 type: "GET",
                 url: baseUrl + "api/HXRRuleAPI/GenerateObjects",
                 dataType: 'json',
                 data: { client_ID: client_ID, project_ID: project_ID, table_name: TableName, ConfigId: ConfigID },
-                success: function (data) {                    
+                success: function (data) {
                     if (data == "Success")
                         alert("Code generated successfully.");
                     else
                         alert(data);
-
+                    HideProgress();
                 },
                 error: function (xhr) {
                     alert(xhr.statusText);
+                    HideProgress();
                 }
             });
         });
-
 
     });
     function GetTableRules() {
@@ -181,7 +243,7 @@
         var statuscode, msg;
 
         ServiceUrl = baseUrl + "api/HXRRuleAPI/CheckKeyColumn";
-        var result = $.ajax({         
+        var result = $.ajax({
             url: ServiceUrl,
             data: { client_ID: client_ID, project_ID: project_ID, table_Name: TableName, config_Id: ConfigID },
             async: false,
@@ -212,8 +274,8 @@
             width: 900,
             autowidth: true,
             shrinkToFit: true,
-            rowNum: 10,
-            rowList: [10, 20, 30],
+            rowNum: 1000,
+            rowList: [1000, 3000, 10000],
             postData: { client_ID: client_ID, project_ID: project_ID, Table_Name: TableName, Column_Name: Column_Name, Rule_TypeID: Rule_TypeID },
             colNames: ['Rule_ID', 'Column Name', '@DM_en_US.lblRuleCategory', '@DM_en_US.lblRuleType', 'Rule', 'Rule Desc', 'Rule Condition', 'Error Description', 'Status',
                 'Version_No', 'Start Date', 'End Date'],
@@ -226,7 +288,7 @@
             { name: 'ruledesc', index: 'ruledesc', width: 100, hidden: true },
             { name: 'rulecondition', index: 'rulecondition', width: 100 },
             { name: 'errordesc', index: 'errordesc', width: 100 },
-            { name: 'status', index: 'status', width: 100 },
+            { name: 'status', index: 'status', width: 40 },
             { name: 'versionno', index: 'versionno', width: 100 },
             { name: 'startdate', index: 'startdate', width: 100, formatter: 'date', formatoptions: { srcformat: 'm/d/Y', newformat: 'm/d/Y' } },
             { name: 'enddate', index: 'enddate', width: 100, formatter: 'date', formatoptions: { srcformat: 'm/d/Y', newformat: 'm/d/Y' } }
@@ -238,7 +300,7 @@
             scrollOffset: 0,
             reloadAfterSubmit: true,
             showButtonPanel: true,
-            loadui: "disable",
+            //loadui: "disable",
             loadComplete: function () {
                 var rows = $(_grdRules).jqGrid('getDataIDs');
                 for (i = 0; i < rows.length; i++) {

@@ -506,7 +506,7 @@ namespace DM_UI.Controllers
                       }
                     }).ToArray()
             };
-            return _rows;
+            return _rows;   
 
             //return _ruleMS.GetRuleAttributes(client_ID, project_ID, Table_Name, Column_Name, Rule_TypeID, ref  StatusCode, ref Message);
 
@@ -682,6 +682,41 @@ namespace DM_UI.Controllers
 
         }
 
+
+        #region Correction & Reprocess
+
+        [HttpGet]
+        public dynamic GetRuleErrorSummary(string client_ID, string project_ID, string config_ID, string table_name, string run_ID, long? Rule_cateogry_ID, long? Rule_name)
+        {
+
+            string StatusCode = string.Empty, Message = string.Empty;
+            List<HXRRuleErrorSummary> _Rule = _ruleMS.GetRuleErrorSummary(client_ID, project_ID, table_name, run_ID, Rule_cateogry_ID, Rule_name, ref  StatusCode, ref  Message);
+
+            var totalRecords = 0;
+            var rows = new
+            {
+                total = 0,
+                page = 0,
+                records = 0,
+                rows = (
+                    from rule in _Rule
+                    select new
+                    {
+                        i = totalRecords++,
+                        cell = new string[] {
+                         rule.RuleCategory_Name,
+                         rule.Rule_Name,
+                         rule.Re.ToString(),
+                         rule.Rec_Pass_Percent.ToString(),
+                         rule.Rec_Fail_Percent.ToString() ,
+                         rule.Record_Fail_Count.ToString(),
+                         rule.Rule_ID.ToString(),
+                         rule.RuleCategory_ID.ToString()
+                      }
+                    }).ToArray()
+            };
+            return rows;
+        }
         public object GetRuleValidationErrorData(string client_ID, string project_ID, long? config_ID, string table_name, string run_ID)
         {
             try
@@ -724,6 +759,55 @@ namespace DM_UI.Controllers
                 return _ex.Message;
             }
         }
+        public object GetRuleValidationErrorData_Paging(int page, int rows, string client_ID, string project_ID, string Table_Name, int config_ID, string run_ID,
+            string Rule_cateogry_ID, string Rule_name)
+        {
+            try
+            {
+                string StatusCode = string.Empty, Message = string.Empty;
+
+                long TotalCount = 0;
+                DataTable _dtErrorData = _ruleMS.GetRuleValidationErrorData(client_ID, project_ID, config_ID, Table_Name, page, rows, run_ID, Rule_cateogry_ID,
+                    Rule_name, ref StatusCode, ref Message, ref TotalCount);
+
+                int _ColumnCount = _dtErrorData.Columns.Count;
+
+                var jstr = new _JSON();
+                jstr.total = Math.Ceiling(Convert.ToDouble(TotalCount) / rows).ToString();
+                jstr.page = page.ToString();
+                jstr.records = TotalCount.ToString();
+                jstr.rows = new List<DM_BusinessEntities.rows>();
+
+                int _rowIndex = 1;
+                _dtErrorData.Rows.Cast<DataRow>().ToList().ForEach(datarow =>
+                {
+                    string[] _r = new string[_ColumnCount];
+                    int _colIndex = 0;
+                    rows r = new DM_BusinessEntities.rows();
+
+                    _dtErrorData.Columns.Cast<DataColumn>().ToList().ForEach(column =>
+                    {
+                        _r[_colIndex] = datarow[column].ToString();
+                        _colIndex++;
+                    });
+                    r.id = _rowIndex.ToString();
+                    //r.cell = new List<string[]>();                   
+
+                    r.cell = _r;
+
+                    jstr.rows.Add(r);
+                    _rowIndex++;
+                });
+                return jstr;
+            }
+            catch (Exception _ex)
+            {
+                return _ex.Message;
+            }
+        }
+
+        #endregion 
+
         public object GetRuleValidationErrorDataColumns(string client_ID, string project_ID, long? config_ID, string table_name, string run_ID, string Rule_cateogry_ID,
             string Rule_name)
         {
@@ -850,54 +934,8 @@ namespace DM_UI.Controllers
         }
 
 
-        //[HttpGet]
-        // [JsonConverter(typeof(DataTableConverter))]        
-        public object GetRuleValidationErrorData_Paging(int page, int rows, string client_ID, string project_ID, string Table_Name, int config_ID, string run_ID,
-            string Rule_cateogry_ID, string Rule_name)
-        {
-            try
-            {
-                string StatusCode = string.Empty, Message = string.Empty;
-
-                long TotalCount = 0;
-                DataTable _dtErrorData = _ruleMS.GetRuleValidationErrorData(client_ID, project_ID, config_ID, Table_Name, page, rows, run_ID, Rule_cateogry_ID,
-                    Rule_name, ref StatusCode, ref Message, ref TotalCount);
-
-                int _ColumnCount = _dtErrorData.Columns.Count;
-
-                var jstr = new _JSON();
-                jstr.total = Math.Ceiling(Convert.ToDouble(TotalCount) / rows).ToString();
-                jstr.page = page.ToString();
-                jstr.records = TotalCount.ToString();
-                jstr.rows = new List<DM_BusinessEntities.rows>();
-
-                int _rowIndex = 1;
-                _dtErrorData.Rows.Cast<DataRow>().ToList().ForEach(datarow =>
-                {
-                    string[] _r = new string[_ColumnCount];
-                    int _colIndex = 0;
-                    rows r = new DM_BusinessEntities.rows();
-
-                    _dtErrorData.Columns.Cast<DataColumn>().ToList().ForEach(column =>
-                    {
-                        _r[_colIndex] = datarow[column].ToString();
-                        _colIndex++;
-                    });
-                    r.id = _rowIndex.ToString();
-                    //r.cell = new List<string[]>();                   
-
-                    r.cell = _r;
-
-                    jstr.rows.Add(r);
-                    _rowIndex++;
-                });
-                return jstr;
-            }
-            catch (Exception _ex)
-            {
-                return _ex.Message;
-            }
-        }
+              
+        
 
         [HttpPost]
         public string UpdateSourceTable(HXRSourceTable srcTbl)
@@ -1090,37 +1128,8 @@ namespace DM_UI.Controllers
             };
             return data;
         }
-        [HttpGet]
-        public dynamic GetRuleErrorSummary(string client_ID, string project_ID, string config_ID, string table_name, string run_ID, long? Rule_cateogry_ID, long? Rule_name)
-        {
 
-            string StatusCode = string.Empty, Message = string.Empty;
-            List<HXRRuleErrorSummary> _Rule = _ruleMS.GetRuleErrorSummary(client_ID, project_ID, table_name, run_ID, Rule_cateogry_ID, Rule_name, ref  StatusCode, ref  Message);
-
-            var totalRecords = 0;
-            var rows = new
-            {
-                total = 0,
-                page = 0,
-                records = 0,
-                rows = (
-                    from rule in _Rule
-                    select new
-                    {
-                        i = totalRecords++,
-                        cell = new string[] {
-                         //rule.SNO,
-                         rule.RuleCategory_Name,
-                         rule.Rule_Name,
-                         rule.Re.ToString(),
-                         rule.Rec_Pass_Percent.ToString(),
-                         rule.Rec_Fail_Percent.ToString() ,
-                         rule.Record_Fail_Count.ToString(),
-                      }
-                    }).ToArray()
-            };
-            return rows;
-        }
+       
 
     }
 }

@@ -1699,6 +1699,12 @@
       <Parameter Name="Status_Code" Mode="InOut" Type="String" />
       <Parameter Name="Message" Mode="InOut" Type="String" />
     </FunctionImport>
+    <FunctionImport Name="DASM_INS_MASKING_TEMPLATE_SP1">
+      <Parameter Name="Role_ID" Mode="In" Type="Int64" />
+      <Parameter Name="Template_ID_out" Mode="InOut" Type="Int64" />
+      <Parameter Name="Status_Code" Mode="InOut" Type="String" />
+      <Parameter Name="Message" Mode="InOut" Type="String" />
+    </FunctionImport>
   </EntityContainer>
   <ComplexType Name="HXR_GET_CLIENT_SP_Result">
     <Property Type="Int64" Name="ID" Nullable="false" />
@@ -2832,5 +2838,8 @@
     <Property Type="Decimal" Name="Rec_Fail_Percent" Nullable="true" Precision="10" Scale="2" />
     <Property Type="Int64" Name="Warnings" Nullable="true" />
     <Property Type="String" Name="Rule_Name" Nullable="false" MaxLength="255" />
+    <Property Type="Int64" Name="RuleCategory_ID" Nullable="true" />
+    <Property Type="Int64" Name="Rule_ID" Nullable="true" />
+    <Property Type="String" Name="Run_Number" Nullable="true" MaxLength="100" />
   </ComplexType>
 </Schema>

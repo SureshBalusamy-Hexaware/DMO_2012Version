@@ -1,0 +1,36 @@
+﻿@using System.Configuration
+@{
+    ViewBag.Title = "Purge";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Scripts.Render("~/Scripts/ProgressBar.js")
+@Scripts.Render("~/Scripts/Purge.js")
+<input type="hidden" value="@(Convert.ToString(DM_UI.App_Start.UIProperties.Sessions.Client.Client_ID))" id="hdnClientId" />
+<input type="hidden" value="@(Convert.ToString(DM_UI.App_Start.UIProperties.Sessions.Client.project_ID))" id="hdnProjectID" />
+<div style="width: 80%; margin: auto;">
+    <div class="group">
+        <div class="form-group width-per-100 fL">
+            @*@Html.Partial("_DASEMTemplateName", new ViewDataDictionary { { "clientId", Convert.ToString(DM_UI.App_Start.UIProperties.Sessions.Client.Client_ID) },
+                { "projectId", Convert.ToString(DM_UI.App_Start.UIProperties.Sessions.Client.project_ID) } })*@
+            <div class="col-40" >
+                <span class="control-label">Template</span>
+                <select id="ddlTemplateName" class="dropdown" style="width:100%;"></select>
+            </div>
+            <div class="col-40">
+                <span class="control-label">RunID</span>
+                <select id="ddlRunId" class="dropdown" style="width:100%;"></select>
+            </div>
+
+        </div>
+    </div>
+    <div class="group">
+        <div class="form-group width-per-100" style="width:100%;">
+            <table id="grdPurge" class="scroll"></table>
+            <div id="pgrPurge" class="scroll"></div>
+        </div>
+        <div class="form-group text-align-center form-group-btn width-per-100">
+            <input class="form-button" type="button" value="Start Processing" id="btnProcess" />
+        </div>
+    </div>
+</div>
+<input type="hidden" value='@ViewContext.RouteData.Values["controller"]' id="hdnfldVirtualDir" />

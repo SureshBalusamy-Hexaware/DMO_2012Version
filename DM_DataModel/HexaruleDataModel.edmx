@@ -512,6 +512,12 @@
           <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
           <Parameter Name="Message" Type="varchar" Mode="InOut" />
         </Function>
+        <Function Name="DASM_INS_MASKING_TEMPLATE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Role_ID" Type="bigint" Mode="In" />
+          <Parameter Name="Template_ID_out" Type="bigint" Mode="InOut" />
+          <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
+          <Parameter Name="Message" Type="varchar" Mode="InOut" />
+        </Function>
         <Function Name="DASM_INSERT_AUDIT_LOG_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Client_ID" Type="varchar" Mode="In" />
           <Parameter Name="Project_ID" Type="varchar" Mode="In" />
@@ -1058,428 +1064,6 @@
           <Parameter Name="Run_ID" Type="bigint" Mode="In" />
           <Parameter Name="Rule_category_ID" Type="bigint" Mode="In" />
           <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="HXR_GET_OBJECTNAME_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-          <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="HXR_GET_PARAMETERCOUNT_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="varchar" Mode="In" />
-          <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-          <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="HXR_GET_PROJECT_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="varchar" Mode="In" />
-          <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="HXR_GET_RULE_ATTRIBUTE_FOR_DISPLAY_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Table_name" Type="nvarchar" Mode="In" />
-          <Parameter Name="Column_Name" Type="nvarchar" Mode="In" />
-          <Parameter Name="Rule_Type_ID" Type="bigint" Mode="In" />
-          <Parameter Name="PageNo" Type="int" Mode="In" />
-          <Parameter Name="RecordsPerPage" Type="int" Mode="In" />
-          <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-          <Parameter Name="TotalCount" Type="bigint" Mode="InOut" />
-        </Function>
-        <Function Name="HXR_GET_RULE_CATEGORY_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="RuleCategory_ID" Type="bigint" Mode="In" />
-          <Parameter Name="RuleCategory_Name" Type="varchar" Mode="In" />
-          <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="HXR_GET_RULE_ERROR_SUMMARY_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-          <Parameter Name="Table_Name" Type="varchar" Mode="In" />
-          <Parameter Name="Run_Number" Type="varchar" Mode="In" />
-          <Parameter Name="Rule_Category_ID" Type="bigint" Mode="In" />
-          <Parameter Name="Rule_ID" Type="bigint" Mode="In" />
-          <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="HXR_GET_RULE_FUNCTION_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Data_type" Type="varchar" Mode="In" />
-          <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="HXR_GET_RULE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-          <Parameter Name="Rule_Id" Type="bigint" Mode="In" />
-          <Parameter Name="Rule_Name" Type="varchar" Mode="In" />
-          <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="HXR_GET_RULE_TYPE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-          <Parameter Name="RuleType_ID" Type="bigint" Mode="In" />
-          <Parameter Name="RuleType_Name" Type="varchar" Mode="In" />
-          <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="HXR_GET_RULE_VALIDATION_ERROR_DATA_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Table_Name" Type="nvarchar" Mode="In" />
-          <Parameter Name="Rule_cateogry_ID" Type="bigint" Mode="In" />
-          <Parameter Name="Rule_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Config_ID" Type="bigint" Mode="In" />
-          <Parameter Name="PageNo" Type="int" Mode="In" />
-          <Parameter Name="RecordsPerPage" Type="int" Mode="In" />
-          <Parameter Name="Run_ID" Type="bigint" Mode="In" />
-          <Parameter Name="Status_code" Type="nvarchar" Mode="InOut" />
-          <Parameter Name="Message" Type="nvarchar" Mode="InOut" />
-          <Parameter Name="TotalCount" Type="bigint" Mode="InOut" />
-        </Function>
-        <Function Name="HXR_GET_RULE_VALIDATION_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="varchar" Mode="In" />
-          <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-          <Parameter Name="Tool_ID" Type="bigint" Mode="In" />
-          <Parameter Name="Role_ID" Type="bigint" Mode="In" />
-          <Parameter Name="Tablename" Type="varchar" Mode="In" />
-          <Parameter Name="Query" Type="varchar(max)" Mode="In" />
-          <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="HXR_GET_RUN_ID_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_Id" Type="varchar" Mode="In" />
-          <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-          <Parameter Name="Table_name" Type="varchar" Mode="In" />
-          <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="HXR_GET_TABLE_COLUMN_LIST_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Database_IP" Type="nvarchar" Mode="In" />
-          <Parameter Name="Source_Target" Type="nvarchar" Mode="In" />
-          <Parameter Name="Database_Name" Type="nvarchar" Mode="In" />
-          <Parameter Name="Table_Name" Type="nvarchar" Mode="In" />
-          <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="HXR_GET_TABLES_LIST_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Database_IP" Type="nvarchar" Mode="In" />
-          <Parameter Name="Source_Target" Type="nvarchar" Mode="In" />
-          <Parameter Name="Database_Name" Type="nvarchar" Mode="In" />
-          <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="HXR_INSERT_CLIENT_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="varchar" Mode="In" />
-          <Parameter Name="Client_Name" Type="varchar" Mode="In" />
-          <Parameter Name="Created_By" Type="varchar" Mode="In" />
-          <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="HXR_INSERT_ERROR_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="varchar" Mode="In" />
-          <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-          <Parameter Name="Error_Code" Type="varchar" Mode="In" />
-          <Parameter Name="Error_Description" Type="nvarchar" Mode="In" />
-          <Parameter Name="Last_Modified_By" Type="varchar" Mode="In" />
-          <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="HXR_INSERT_METADATA_INFO_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="varchar" Mode="In" />
-          <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-          <Parameter Name="IP_Address" Type="nvarchar" Mode="In" />
-          <Parameter Name="Database_Name" Type="varchar" Mode="In" />
-          <Parameter Name="Source_Target" Type="varchar" Mode="In" />
-          <Parameter Name="Config_ID" Type="varchar" Mode="In" />
-          <Parameter Name="Last_Modified_By" Type="varchar" Mode="In" />
-          <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="HXR_INSERT_RULE_ATTRIBUTE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Rule_ID" Type="bigint" Mode="In" />
-          <Parameter Name="RuleType_ID" Type="bigint" Mode="In" />
-          <Parameter Name="Error_Code" Type="nvarchar" Mode="In" />
-          <Parameter Name="RuleCategory_ID" Type="bigint" Mode="In" />
-          <Parameter Name="Table_name" Type="nvarchar" Mode="In" />
-          <Parameter Name="Column_Name" Type="nvarchar" Mode="In" />
-          <Parameter Name="Default_value" Type="nvarchar" Mode="In" />
-          <Parameter Name="Conditional_Clause" Type="nvarchar" Mode="In" />
-          <Parameter Name="Rule_Description" Type="nvarchar" Mode="In" />
-          <Parameter Name="Priority" Type="nvarchar" Mode="In" />
-          <Parameter Name="Reference_Table" Type="nvarchar" Mode="In" />
-          <Parameter Name="Reference_Column" Type="nvarchar" Mode="In" />
-          <Parameter Name="Reference_Cond" Type="nvarchar" Mode="In" />
-          <Parameter Name="Data_Steward" Type="nvarchar" Mode="In" />
-          <Parameter Name="Last_Modified_By" Type="nvarchar" Mode="In" />
-          <Parameter Name="Status_code" Type="nvarchar" Mode="InOut" />
-          <Parameter Name="Message" Type="nvarchar" Mode="InOut" />
-        </Function>
-        <Function Name="HXR_INSERT_RULE_CATEGORY_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="RuleCategory_Name" Type="varchar" Mode="In" />
-          <Parameter Name="RuleCategory_Desc" Type="varchar" Mode="In" />
-          <Parameter Name="Inserted_by" Type="varchar" Mode="In" />
-          <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="HXR_INSERT_RULE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="varchar" Mode="In" />
-          <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-          <Parameter Name="Rule_Name" Type="varchar" Mode="In" />
-          <Parameter Name="Rule_Description" Type="varchar" Mode="In" />
-          <Parameter Name="Start_Date" Type="datetime" Mode="In" />
-          <Parameter Name="End_Date" Type="datetime" Mode="In" />
-          <Parameter Name="Conditional_Clause" Type="varchar" Mode="In" />
-          <Parameter Name="Default_value" Type="varchar" Mode="In" />
-          <Parameter Name="Last_Modified_By" Type="varchar" Mode="In" />
-          <Parameter Name="Rule_ID" Type="bigint" Mode="InOut" />
-          <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="HXR_INSERT_RULE_TYPE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-          <Parameter Name="RuleType_Name" Type="varchar" Mode="In" />
-          <Parameter Name="RuleType_Desc" Type="varchar" Mode="In" />
-          <Parameter Name="Inserted_by" Type="varchar" Mode="In" />
-          <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="HXR_UPDATE_ERROR_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="varchar" Mode="In" />
-          <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-          <Parameter Name="Error_Code" Type="varchar" Mode="In" />
-          <Parameter Name="Error_Description" Type="varchar" Mode="In" />
-          <Parameter Name="Active_Flag" Type="bigint" Mode="In" />
-          <Parameter Name="Last_Modified_By" Type="varchar" Mode="In" />
-          <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="HXR_UPDATE_RULE_ATTRIBUTE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="varchar" Mode="In" />
-          <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-          <Parameter Name="Attribute_Rule_ID" Type="bigint" Mode="In" />
-          <Parameter Name="Rule_ID" Type="varchar" Mode="In" />
-          <Parameter Name="RuleType_ID" Type="bigint" Mode="In" />
-          <Parameter Name="IS_Predefined" Type="char" Mode="In" />
-          <Parameter Name="Error_Code" Type="varchar" Mode="In" />
-          <Parameter Name="RuleCategory_ID" Type="bigint" Mode="In" />
-          <Parameter Name="Column_Name" Type="varchar" Mode="In" />
-          <Parameter Name="Default_value" Type="varchar" Mode="In" />
-          <Parameter Name="Conditional_Clause" Type="nvarchar(max)" Mode="In" />
-          <Parameter Name="Rule_Description" Type="nvarchar" Mode="In" />
-          <Parameter Name="Priority" Type="varchar" Mode="In" />
-          <Parameter Name="Data_Steward" Type="varchar" Mode="In" />
-          <Parameter Name="Last_Modified_By" Type="varchar" Mode="In" />
-          <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="HXR_UPDATE_RULE_CATEGORY_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="RuleCategory_ID" Type="bigint" Mode="In" />
-          <Parameter Name="RuleCategory_Name" Type="varchar" Mode="In" />
-          <Parameter Name="RuleCategory_Desc" Type="varchar" Mode="In" />
-          <Parameter Name="Active_Flag" Type="bigint" Mode="In" />
-          <Parameter Name="Last_Modified_By" Type="varchar" Mode="In" />
-          <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="HXR_UPDATE_RULE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="varchar" Mode="In" />
-          <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-          <Parameter Name="Rule_ID" Type="bigint" Mode="In" />
-          <Parameter Name="Rule_Name" Type="varchar" Mode="In" />
-          <Parameter Name="Active_Flag" Type="bigint" Mode="In" />
-          <Parameter Name="Rule_Description" Type="varchar" Mode="In" />
-          <Parameter Name="Start_Date" Type="datetime" Mode="In" />
-          <Parameter Name="End_Date" Type="datetime" Mode="In" />
-          <Parameter Name="Conditional_Clause" Type="varchar" Mode="In" />
-          <Parameter Name="Default_value" Type="varchar" Mode="In" />
-          <Parameter Name="Last_Modified_By" Type="varchar" Mode="In" />
-          <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="HXR_UPDATE_RULE_TYPE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="RuleType_ID" Type="bigint" Mode="In" />
-          <Parameter Name="RuleType_Name" Type="varchar" Mode="In" />
-          <Parameter Name="Active_Flag" Type="bigint" Mode="In" />
-          <Parameter Name="RuleType_Desc" Type="varchar" Mode="In" />
-          <Parameter Name="Last_Modified_By" Type="varchar" Mode="In" />
-          <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="HXR_UPDATE_USER_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="varchar" Mode="In" />
-          <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-          <Parameter Name="USER_ID" Type="bigint" Mode="In" />
-          <Parameter Name="Email_ID" Type="varchar" Mode="In" />
-          <Parameter Name="User_Name" Type="varchar" Mode="In" />
-          <Parameter Name="Active_Flag" Type="bigint" Mode="In" />
-          <Parameter Name="Role_Name" Type="varchar" Mode="In" />
-          <Parameter Name="Last_Modified_By" Type="varchar" Mode="In" />
-          <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="HXR_VALIDATE_COLUMN_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="varchar" Mode="In" />
-          <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-          <Parameter Name="IP_Address" Type="nvarchar" Mode="In" />
-          <Parameter Name="Database_Name" Type="varchar" Mode="In" />
-          <Parameter Name="Table_Name" Type="varchar" Mode="In" />
-          <Parameter Name="Source_Target" Type="varchar" Mode="In" />
-          <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="PRC_TO_CREATE_PROC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Table_name" Type="nvarchar" Mode="In" />
-          <Parameter Name="Config_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Status_Code" Type="nvarchar" Mode="InOut" />
-          <Parameter Name="Message" Type="nvarchar" Mode="InOut" />
-        </Function>
-        <Function Name="PROF_GET_BATCH_STATUS_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="No_of_rows" Type="int" Mode="In" />
-          <Parameter Name="Page_no" Type="int" Mode="In" />
-        </Function>
-        <Function Name="PROF_GET_PROFILER_RULE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Table_Name" Type="nvarchar" Mode="In" />
-          <Parameter Name="Column_Name" Type="nvarchar" Mode="In" />
-          <Parameter Name="Status_Code" Type="nvarchar" Mode="InOut" />
-          <Parameter Name="Message" Type="nvarchar" Mode="InOut" />
-        </Function>
-        <Function Name="PROFILER_CREATE_DYNAMIC_VIEW_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="TableName" Type="nvarchar" Mode="In" />
-          <Parameter Name="Role_ID" Type="bigint" Mode="In" />
-          <Parameter Name="ColumnList" Type="nvarchar(max)" Mode="In" />
-          <Parameter Name="RowCount" Type="bigint" Mode="In" />
-          <Parameter Name="Source_DB_Name" Type="nvarchar" Mode="In" />
-          <Parameter Name="ViewName" Type="nvarchar" Mode="InOut" />
-        </Function>
-        <Function Name="PROFILER_CREATE_RULES_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Config_ID" Type="bigint" Mode="In" />
-          <Parameter Name="Table_Name" Type="nvarchar" Mode="In" />
-          <Parameter Name="Column_Name" Type="nvarchar" Mode="In" />
-          <Parameter Name="Distinct_Value_List" Type="nvarchar(max)" Mode="In" />
-          <Parameter Name="Created_by" Type="nvarchar" Mode="In" />
-          <Parameter Name="Status_code" Type="nvarchar" Mode="InOut" />
-          <Parameter Name="Message" Type="nvarchar" Mode="InOut" />
-        </Function>
-        <Function Name="PROFILER_DROP_DYNAMIC_VIEW_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ViewName" Type="varchar" Mode="In" />
-          <Parameter Name="Source_DB_Name" Type="varchar" Mode="In" />
-          <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="PROFILER_GET_COLUMN_LIST_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="varchar" Mode="In" />
-          <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-          <Parameter Name="Config_ID" Type="bigint" Mode="In" />
-          <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="PROFILER_GET_DISTINCT_TEMPLATES_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Config_ID" Type="bigint" Mode="In" />
-          <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="PROFILER_GET_PARAMETER_VALUES_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Tool_ID" Type="bigint" Mode="In" />
-          <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="PROFILER_GET_TABLE_COLUMN_VALUES_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Config_ID" Type="bigint" Mode="In" />
-          <Parameter Name="Table_name" Type="varchar" Mode="In" />
-          <Parameter Name="Column_list" Type="nvarchar(max)" Mode="In" />
-          <Parameter Name="Row_Count" Type="varchar" Mode="In" />
-          <Parameter Name="PageNo" Type="int" Mode="In" />
-          <Parameter Name="RecordsPerPage" Type="int" Mode="In" />
-          <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-          <Parameter Name="TotalCount" Type="bigint" Mode="InOut" />
-        </Function>
-        <Function Name="PROFILER_GET_TABLE_DETAILS_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Table_name" Type="nvarchar" Mode="In" />
-          <Parameter Name="Config_id" Type="nvarchar" Mode="In" />
-          <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="PROFILER_GET_TEMPALTE_DETAILS_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="varchar" Mode="In" />
-          <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-          <Parameter Name="Template_Name" Type="varchar" Mode="In" />
-          <Parameter Name="Config_ID" Type="bigint" Mode="In" />
-          <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="PROFILER_GET_TEMPLATE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Template_Name" Type="nvarchar" Mode="In" />
-          <Parameter Name="Table_Name" Type="varchar" Mode="In" />
-          <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="PROFILER_INSERT_STATUS_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Config_ID" Type="bigint" Mode="In" />
-          <Parameter Name="Template_Name" Type="nvarchar" Mode="In" />
-          <Parameter Name="Table_Name" Type="nvarchar" Mode="In" />
-          <Parameter Name="Profile_Type" Type="nvarchar" Mode="In" />
-          <Parameter Name="Profile_Description" Type="nvarchar(max)" Mode="In" />
-          <Parameter Name="Profile_Start_Time" Type="datetime" Mode="In" />
-          <Parameter Name="Profile_Status" Type="char" Mode="In" />
-          <Parameter Name="Rec_Count" Type="bigint" Mode="In" />
-          <Parameter Name="Profiled_By" Type="nvarchar" Mode="In" />
-          <Parameter Name="Profile_ID" Type="bigint" Mode="In" />
-          <Parameter Name="Status_Code" Type="nvarchar" Mode="InOut" />
-          <Parameter Name="Message" Type="nvarchar" Mode="InOut" />
-        </Function>
-        <Function Name="PROFILER_INSERT_TEMPLATE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="PROFILER_UPDATE_TEMPLATE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Profile_ID" Type="bigint" Mode="In" />
-          <Parameter Name="Profiling_Status" Type="bit" Mode="In" />
-          <Parameter Name="Modified_By" Type="varchar" Mode="In" />
-          <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-          <Parameter Name="Message" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="RPT_GET_REPORT_DETAILS_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
-          <Parameter Name="Tool_ID" Type="bigint" Mode="In" />
-          <Parameter Name="Report_ID" Type="bigint" Mode="In" />
-          <Parameter Name="Report_Name" Type="varchar" Mode="In" />
-          <Parameter Name="Report_Display_Name" Type="varchar" Mode="In" />
-          <Parameter Name="Report_Description" Type="varchar" Mode="In" />
-          <Parameter Name="Report_Server_Path" Type="varchar" Mode="In" />
-          <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
           <Parameter Name="Message" Type="varchar" Mode="InOut" />
         </Function>
         <EntityContainer Name="DM_MetaDataModelStoreContainer" />
@@ -3113,13 +2697,6 @@
             <Parameter Name="Status_Code" Mode="InOut" Type="String" />
             <Parameter Name="Message" Mode="InOut" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="CMN_GET_ROLE_SP" ReturnType="Collection(DM_MetaDataModel.CMN_GET_ROLE_SP_Result)">
-            <Parameter Name="Client_ID" Mode="In" Type="String" />
-            <Parameter Name="Project_ID" Mode="In" Type="String" />
-            <Parameter Name="Role_ID" Mode="In" Type="Int64" />
-            <Parameter Name="Status_code" Mode="InOut" Type="String" />
-            <Parameter Name="Message" Mode="InOut" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="CMN_INSERT_ROLE_SP">
             <Parameter Name="Client_ID" Mode="In" Type="String" />
             <Parameter Name="Project_ID" Mode="In" Type="String" />
@@ -3184,6 +2761,19 @@
             <Parameter Name="Rule_Category_ID" Mode="In" Type="Int64" />
             <Parameter Name="Rule_ID" Mode="In" Type="Int64" />
             <Parameter Name="Status_Code" Mode="InOut" Type="String" />
+            <Parameter Name="Message" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DASM_INS_MASKING_TEMPLATE_SP1">
+            <Parameter Name="Role_ID" Mode="In" Type="Int64" />
+            <Parameter Name="Template_ID_out" Mode="InOut" Type="Int64" />
+            <Parameter Name="Status_Code" Mode="InOut" Type="String" />
+            <Parameter Name="Message" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="CMN_GET_ROLE_SP" ReturnType="Collection(DM_MetaDataModel.CMN_GET_ROLE_SP_Result1)">
+            <Parameter Name="Client_ID" Mode="In" Type="String" />
+            <Parameter Name="Project_ID" Mode="In" Type="String" />
+            <Parameter Name="Role_ID" Mode="In" Type="Int64" />
+            <Parameter Name="Status_code" Mode="InOut" Type="String" />
             <Parameter Name="Message" Mode="InOut" Type="String" />
           </FunctionImport>
         </EntityContainer>
@@ -4322,6 +3912,23 @@
           <Property Type="Decimal" Name="Rec_Fail_Percent" Nullable="true" Precision="10" Scale="2" />
           <Property Type="Int64" Name="Warnings" Nullable="true" />
           <Property Type="String" Name="Rule_Name" Nullable="false" MaxLength="255" />
+          <Property Type="Int64" Name="RuleCategory_ID" Nullable="true" />
+          <Property Type="Int64" Name="Rule_ID" Nullable="true" />
+          <Property Type="String" Name="Run_Number" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="CMN_GET_ROLE_SP1_Result">
+          <Property Type="Int64" Name="Role_ID" Nullable="false" />
+          <Property Type="String" Name="Role_Name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Role_Description" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="Active_Flag" Nullable="false" />
+          <Property Type="Byte" Name="Sys_Admin" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="CMN_GET_ROLE_SP_Result1">
+          <Property Type="Int64" Name="Role_ID" Nullable="false" />
+          <Property Type="String" Name="Role_Name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Role_Description" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="Active_Flag" Nullable="false" />
+          <Property Type="Byte" Name="Sys_Admin" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -4329,18 +3936,7 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="DM_MetaDataModelStoreContainer" CdmEntityContainer="DM_MetaDataEntities">
-          <FunctionImportMapping FunctionImportName="HXR_INSERT_METADATA_INFO_SP" FunctionName="DM_MetaDataModel.Store.HXR_INSERT_METADATA_INFO_SP" />
-          <FunctionImportMapping FunctionImportName="HXR_GET_TABLE_COLUMN_LIST_SP" FunctionName="DM_MetaDataModel.Store.HXR_GET_TABLE_COLUMN_LIST_SP" >
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DM_MetaDataModel.HXR_GET_TABLE_COLUMN_LIST_SP_Result">
-                <ScalarProperty Name="Column_Name" ColumnName="Column_Name" />
-                <ScalarProperty Name="Data_Type" ColumnName="Data_Type" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="HXR_GET_TABLES_LIST_SP" FunctionName="DM_MetaDataModel.Store.HXR_GET_TABLES_LIST_SP" />
           <FunctionImportMapping FunctionImportName="HXR_ALLOCATE_RULE_ATTRIBUTE_SP" FunctionName="DM_MetaDataModel.Store.HXR_ALLOCATE_RULE_ATTRIBUTE_SP" />
-          <FunctionImportMapping FunctionImportName="PRC_TO_CREATE_PROC" FunctionName="DM_MetaDataModel.Store.PRC_TO_CREATE_PROC" />
           <FunctionImportMapping FunctionImportName="HXR_ACTIVATE_RULE_ATTRIBUTE_SP" FunctionName="DM_MetaDataModel.Store.HXR_ACTIVATE_RULE_ATTRIBUTE_SP" />
           <FunctionImportMapping FunctionImportName="HXR_GET_ERROR_DESC_SP" FunctionName="DM_MetaDataModel.Store.HXR_GET_ERROR_DESC_SP">
             <ResultMapping>
@@ -4355,62 +3951,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="HXR_GET_RULE_CATEGORY_SP" FunctionName="DM_MetaDataModel.Store.HXR_GET_RULE_CATEGORY_SP">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DM_MetaDataModel.HXR_GET_RULE_CATEGORY_SP_Result">
-                <ScalarProperty Name="RuleCategory_ID" ColumnName="RuleCategory_ID" />
-                <ScalarProperty Name="RuleCategory_Name" ColumnName="RuleCategory_Name" />
-                <ScalarProperty Name="RuleCategory_Desc" ColumnName="RuleCategory_Desc" />
-                <ScalarProperty Name="Active_Flag" ColumnName="Active_Flag" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="HXR_UPDATE_RULE_ATTRIBUTE_SP" FunctionName="DM_MetaDataModel.Store.HXR_UPDATE_RULE_ATTRIBUTE_SP" />
-          <FunctionImportMapping FunctionImportName="HXR_VALIDATE_COLUMN_SP" FunctionName="DM_MetaDataModel.Store.HXR_VALIDATE_COLUMN_SP">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DM_MetaDataModel.HXR_VALIDATE_COLUMN_SP_Result">
-                <ScalarProperty Name="column_name" ColumnName="column_name" />
-                <ScalarProperty Name="data_type" ColumnName="data_type" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="HXR_GET_RULE_TYPE_SP" FunctionName="DM_MetaDataModel.Store.HXR_GET_RULE_TYPE_SP">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DM_MetaDataModel.HXR_GET_RULE_TYPE_SP_Result">
-                <ScalarProperty Name="RuleType_ID" ColumnName="RuleType_ID" />
-                <ScalarProperty Name="RuleType_Name" ColumnName="RuleType_Name" />
-                <ScalarProperty Name="RuleType_Desc" ColumnName="RuleType_Desc" />
-                <ScalarProperty Name="Active_Flag" ColumnName="Active_Flag" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="HXR_GET_RULE_SP" FunctionName="DM_MetaDataModel.Store.HXR_GET_RULE_SP">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DM_MetaDataModel.HXR_GET_RULE_SP_Result">
-                <ScalarProperty Name="Rule_ID" ColumnName="Rule_ID" />
-                <ScalarProperty Name="Rule_Name" ColumnName="Rule_Name" />
-                <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
-                <ScalarProperty Name="Active_Flag" ColumnName="Active_Flag" />
-                <ScalarProperty Name="Start_Date" ColumnName="Start_Date" />
-                <ScalarProperty Name="End_Date" ColumnName="End_Date" />
-                <ScalarProperty Name="Default_value" ColumnName="Default_value" />
-                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
-                <ScalarProperty Name="Last_Modified_Date" ColumnName="Last_Modified_Date" />
-                <ScalarProperty Name="Last_Modified_By" ColumnName="Last_Modified_By" />
-                <ScalarProperty Name="Rule_Description" ColumnName="Rule_Description" />
-                <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
-                <ScalarProperty Name="Conditional_Clause" ColumnName="Conditional_Clause" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="HXR_INSERT_RULE_ATTRIBUTE_SP" FunctionName="DM_MetaDataModel.Store.HXR_INSERT_RULE_ATTRIBUTE_SP" />
-          <FunctionImportMapping FunctionImportName="HXR_GET_RULE_VALIDATION_SP" FunctionName="DM_MetaDataModel.Store.HXR_GET_RULE_VALIDATION_SP" >
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DM_MetaDataModel.HXR_GET_RULE_VALIDATION_SP">
-                <ScalarProperty Name="VAL" ColumnName="VAL" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="DIMA_DELETE_MAPPING_MS_SP" FunctionName="DM_MetaDataModel.Store.DIMA_DELETE_MAPPING_MS_SP">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DM_MetaDataModel.DIMA_DELETE_MAPPING_MS_SP_Result">
@@ -4418,57 +3958,6 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="DIMA_UPDATE_TABLE_TYPE_SP" FunctionName="DM_MetaDataModel.Store.DIMA_UPDATE_TABLE_TYPE_SP" />
-          <FunctionImportMapping FunctionImportName="HXR_GET_RULE_ATTRIBUTE_FOR_DISPLAY_SP" FunctionName="DM_MetaDataModel.Store.HXR_GET_RULE_ATTRIBUTE_FOR_DISPLAY_SP">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DM_MetaDataModel.HXR_GET_RULE_ATTRIBUTE_FOR_DISPLAY_SP_Result">
-                <ScalarProperty Name="Attribute_Rule_ID" ColumnName="Attribute_Rule_ID" />
-                <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
-                <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
-                <ScalarProperty Name="Rule_ID" ColumnName="Rule_ID" />
-                <ScalarProperty Name="Rule_Name" ColumnName="Rule_Name" />
-                <ScalarProperty Name="Rule_Description" ColumnName="Rule_Description" />
-                <ScalarProperty Name="RuleType_ID" ColumnName="RuleType_ID" />
-                <ScalarProperty Name="RuleType_Name" ColumnName="RuleType_Name" />
-                <ScalarProperty Name="RuleType_Desc" ColumnName="RuleType_Desc" />
-                <ScalarProperty Name="RuleCategory_ID" ColumnName="RuleCategory_ID" />
-                <ScalarProperty Name="RuleCategory_Name" ColumnName="RuleCategory_Name" />
-                <ScalarProperty Name="RuleCategory_Desc" ColumnName="RuleCategory_Desc" />
-                <ScalarProperty Name="Error_Code" ColumnName="Error_Code" />
-                <ScalarProperty Name="Error_Description" ColumnName="Error_Description" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="Table_Name" ColumnName="Table_Name" />
-                <ScalarProperty Name="Column_Name" ColumnName="Column_Name" />
-                <ScalarProperty Name="Default_Value" ColumnName="Default_Value" />
-                <ScalarProperty Name="Conditional_Clause" ColumnName="Conditional_Clause" />
-                <ScalarProperty Name="Priority" ColumnName="Priority" />
-                <ScalarProperty Name="Reference_Table" ColumnName="Reference_Table" />
-                <ScalarProperty Name="Reference_Column" ColumnName="Reference_Column" />
-                <ScalarProperty Name="Reference_Cond" ColumnName="Reference_Cond" />
-                <ScalarProperty Name="Start_Date" ColumnName="Start_Date" />
-                <ScalarProperty Name="End_Date" ColumnName="End_Date" />
-                <ScalarProperty Name="Version_No" ColumnName="Version_No" />
-                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
-                <ScalarProperty Name="Last_Modified_Date" ColumnName="Last_Modified_Date" />
-                <ScalarProperty Name="Last_Modified_By" ColumnName="Last_Modified_By" />
-                <ScalarProperty Name="Rule_Desc" ColumnName="Rule_Desc" />
-                <ScalarProperty Name="Data_Steward" ColumnName="Data_Steward" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="RPT_GET_REPORT_DETAILS_SP" FunctionName="DM_MetaDataModel.Store.RPT_GET_REPORT_DETAILS_SP">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DM_MetaDataModel.RPT_GET_REPORT_DETAILS_SP_Result">
-                <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
-                <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
-                <ScalarProperty Name="Tool_ID" ColumnName="Tool_ID" />
-                <ScalarProperty Name="Report_ID" ColumnName="Report_ID" />
-                <ScalarProperty Name="Report_Name" ColumnName="Report_Name" />
-                <ScalarProperty Name="Report_Display_Name" ColumnName="Report_Display_Name" />
-                <ScalarProperty Name="Report_Description" ColumnName="Report_Description" />
-                <ScalarProperty Name="Report_Server_Path" ColumnName="Report_Server_Path" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="COMMON_GET_TABLE_LIST_SP" FunctionName="DM_MetaDataModel.Store.COMMON_GET_TABLE_LIST_SP">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DM_MetaDataModel.COMMON_GET_TABLE_LIST_SP_Result">
@@ -4477,40 +3966,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="PROFILER_GET_TABLE_DETAILS_SP" FunctionName="DM_MetaDataModel.Store.PROFILER_GET_TABLE_DETAILS_SP">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DM_MetaDataModel.PROFILER_GET_TABLE_DETAILS_SP_Result">
-                <ScalarProperty Name="Table_Name" ColumnName="Table_Name" />
-                <ScalarProperty Name="Column_Name" ColumnName="Column_Name" />
-                <ScalarProperty Name="data_type" ColumnName="data_type" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="PROFILER_GET_TEMPLATE_SP" FunctionName="DM_MetaDataModel.Store.PROFILER_GET_TEMPLATE_SP">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DM_MetaDataModel.PROFILER_GET_TEMPLATE_SP_Result">
-                <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
-                <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
-                <ScalarProperty Name="Template_Name" ColumnName="Template_Name" />
-                <ScalarProperty Name="Table_Name" ColumnName="Table_Name" />
-                <ScalarProperty Name="Column_Name" ColumnName="Column_Name" />
-                <ScalarProperty Name="Data_Type" ColumnName="Data_Type" />
-                <ScalarProperty Name="Null_Ratio_Profile" ColumnName="Null_Ratio_Profile" />
-                <ScalarProperty Name="Statistics_Profile" ColumnName="Statistics_Profile" />
-                <ScalarProperty Name="Value_Distribution_Profile" ColumnName="Value_Distribution_Profile" />
-                <ScalarProperty Name="Length_Distribution_Profile" ColumnName="Length_Distribution_Profile" />
-                <ScalarProperty Name="Pattern_Profile" ColumnName="Pattern_Profile" />
-                <ScalarProperty Name="Candidate_Key_Profile" ColumnName="Candidate_Key_Profile" />
-                <ScalarProperty Name="Profiling_Status" ColumnName="Profiling_Status" />
-                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
-                <ScalarProperty Name="Created_By" ColumnName="Created_By" />
-                <ScalarProperty Name="Modified_Date" ColumnName="Modified_Date" />
-                <ScalarProperty Name="Modified_By" ColumnName="Modified_By" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="PROFILER_INSERT_TEMPLATE_SP" FunctionName="DM_MetaDataModel.Store.PROFILER_INSERT_TEMPLATE_SP" />
-          <FunctionImportMapping FunctionImportName="PROFILER_UPDATE_TEMPLATE_SP" FunctionName="DM_MetaDataModel.Store.PROFILER_UPDATE_TEMPLATE_SP" />
           <FunctionImportMapping FunctionImportName="COMMON_GET_META_DATA_SP" FunctionName="DM_MetaDataModel.Store.COMMON_GET_META_DATA_SP">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DM_MetaDataModel.COMMON_GET_META_DATA_SP_Result">
@@ -4661,57 +4116,6 @@
           <FunctionImportMapping FunctionImportName="ETL_UPDATE_SOURCE_SP" FunctionName="DM_MetaDataModel.Store.ETL_UPDATE_SOURCE_SP" />
           <FunctionImportMapping FunctionImportName="ETL_UPDATE_TARGET_SP" FunctionName="DM_MetaDataModel.Store.ETL_UPDATE_TARGET_SP" />
           <FunctionImportMapping FunctionImportName="ETL_UPDATE_TRANS_SP" FunctionName="DM_MetaDataModel.Store.ETL_UPDATE_TRANS_SP" />
-          <FunctionImportMapping FunctionImportName="PROFILER_CREATE_DYNAMIC_VIEW_SP" FunctionName="DM_MetaDataModel.Store.PROFILER_CREATE_DYNAMIC_VIEW_SP" />
-          <FunctionImportMapping FunctionImportName="PROFILER_DROP_DYNAMIC_VIEW_SP" FunctionName="DM_MetaDataModel.Store.PROFILER_DROP_DYNAMIC_VIEW_SP" />
-          <FunctionImportMapping FunctionImportName="PROFILER_GET_DISTINCT_TEMPLATES_SP" FunctionName="DM_MetaDataModel.Store.PROFILER_GET_DISTINCT_TEMPLATES_SP" >
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DM_MetaDataModel.PROFILER_GET_DISTINCT_TEMPLATES_SP_Result">
-                <ScalarProperty Name="Template_Name" ColumnName="Template_Name" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="PROFILER_GET_PARAMETER_VALUES_SP" FunctionName="DM_MetaDataModel.Store.PROFILER_GET_PARAMETER_VALUES_SP">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DM_MetaDataModel.PROFILER_GET_PARAMETER_VALUES_SP_Result">
-                <ScalarProperty Name="Parameter_ID" ColumnName="Parameter_ID" />
-                <ScalarProperty Name="Prameter_value" ColumnName="Prameter_value" />
-                <ScalarProperty Name="Tool_ID" ColumnName="Tool_ID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="PROFILER_GET_TABLE_COLUMN_VALUES_SP" FunctionName="DM_MetaDataModel.Store.PROFILER_GET_TABLE_COLUMN_VALUES_SP" />
-          <FunctionImportMapping FunctionImportName="PROFILER_GET_TEMPALTE_DETAILS_SP" FunctionName="DM_MetaDataModel.Store.PROFILER_GET_TEMPALTE_DETAILS_SP">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DM_MetaDataModel.PROFILER_GET_TEMPALTE_DETAILS_SP_Result">
-                <ScalarProperty Name="Template_Name" ColumnName="Template_Name" />
-                <ScalarProperty Name="Table_Name" ColumnName="Table_Name" />
-                <ScalarProperty Name="Column_Name" ColumnName="Column_Name" />
-                <ScalarProperty Name="Null_Ratio_Profile" ColumnName="Null_Ratio_Profile" />
-                <ScalarProperty Name="Statistics_Profile" ColumnName="Statistics_Profile" />
-                <ScalarProperty Name="Value_Distribution_Profile" ColumnName="Value_Distribution_Profile" />
-                <ScalarProperty Name="Length_Distribution_Profile" ColumnName="Length_Distribution_Profile" />
-                <ScalarProperty Name="Pattern_Profile" ColumnName="Pattern_Profile" />
-                <ScalarProperty Name="Candidate_Key_Profile" ColumnName="Candidate_Key_Profile" />
-                <ScalarProperty Name="Profiling_Status" ColumnName="Profiling_Status" />
-                <ScalarProperty Name="Profile_Type" ColumnName="Profile_Type" />
-                <ScalarProperty Name="Rec_Count" ColumnName="Rec_Count" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="HXR_GET_RULE_FUNCTION_SP" FunctionName="DM_MetaDataModel.Store.HXR_GET_RULE_FUNCTION_SP">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DM_MetaDataModel.HXR_GET_RULE_FUNCTION_SP_Result">
-                <ScalarProperty Name="Function_ID" ColumnName="Function_ID" />
-                <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
-                <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
-                <ScalarProperty Name="Function_Syntax" ColumnName="Function_Syntax" />
-                <ScalarProperty Name="Data_type" ColumnName="Data_type" />
-                <ScalarProperty Name="Function_Sample" ColumnName="Function_Sample" />
-                <ScalarProperty Name="Create_date" ColumnName="Create_date" />
-                <ScalarProperty Name="Created_by" ColumnName="Created_by" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="ETL_GET_COLUMN_DATA_TYPE_SP" FunctionName="DM_MetaDataModel.Store.ETL_GET_COLUMN_DATA_TYPE_SP">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DM_MetaDataModel.ETL_GET_COLUMN_DATA_TYPE_SP_Result">
@@ -4816,15 +4220,7 @@
           <FunctionImportMapping FunctionImportName="ETL_INSERT_ADDTRANS_SP" FunctionName="DM_MetaDataModel.Store.ETL_INSERT_ADDTRANS_SP" />
           <FunctionImportMapping FunctionImportName="COMMON_INSERT_METADATA_INFO_SP" FunctionName="DM_MetaDataModel.Store.COMMON_INSERT_METADATA_INFO_SP" />
           <FunctionImportMapping FunctionImportName="ETL_GENERATE_TEMPLATES_EY_SP" FunctionName="DM_MetaDataModel.Store.ETL_GENERATE_TEMPLATES_EY_SP" />
-          <FunctionImportMapping FunctionImportName="HXR_INSERT_RULE_CATEGORY_SP" FunctionName="DM_MetaDataModel.Store.HXR_INSERT_RULE_CATEGORY_SP" />
-          <FunctionImportMapping FunctionImportName="HXR_UPDATE_RULE_CATEGORY_SP" FunctionName="DM_MetaDataModel.Store.HXR_UPDATE_RULE_CATEGORY_SP" />
-          <FunctionImportMapping FunctionImportName="HXR_INSERT_ERROR_SP" FunctionName="DM_MetaDataModel.Store.HXR_INSERT_ERROR_SP" />
-          <FunctionImportMapping FunctionImportName="HXR_UPDATE_ERROR_SP" FunctionName="DM_MetaDataModel.Store.HXR_UPDATE_ERROR_SP" />
-          <FunctionImportMapping FunctionImportName="HXR_INSERT_RULE_SP" FunctionName="DM_MetaDataModel.Store.HXR_INSERT_RULE_SP" />
-          <FunctionImportMapping FunctionImportName="HXR_UPDATE_RULE_SP" FunctionName="DM_MetaDataModel.Store.HXR_UPDATE_RULE_SP" />
           <FunctionImportMapping FunctionImportName="COMMON_INSERT_CONFIG_DETAILS_SP" FunctionName="DM_MetaDataModel.Store.COMMON_INSERT_CONFIG_DETAILS_SP" />
-          <FunctionImportMapping FunctionImportName="HXR_INSERT_RULE_TYPE_SP" FunctionName="DM_MetaDataModel.Store.HXR_INSERT_RULE_TYPE_SP" />
-          <FunctionImportMapping FunctionImportName="HXR_UPDATE_RULE_TYPE_SP" FunctionName="DM_MetaDataModel.Store.HXR_UPDATE_RULE_TYPE_SP" />
           <FunctionImportMapping FunctionImportName="COMMON_GET_TABLE_COLUMN_LIST_SP" FunctionName="DM_MetaDataModel.Store.COMMON_GET_TABLE_COLUMN_LIST_SP">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DM_MetaDataModel.COMMON_GET_TABLE_COLUMN_LIST_SP_Result">
@@ -4906,27 +4302,8 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="HXR_GET_OBJECTNAME_SP" FunctionName="DM_MetaDataModel.Store.HXR_GET_OBJECTNAME_SP">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DM_MetaDataModel.HXR_GET_OBJECTNAME_SP_Result">
-                <ScalarProperty Name="TYPE" ColumnName="TYPE" />
-                <ScalarProperty Name="Object_Name" ColumnName="Object_Name" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="HXR_GET_PARAMETERCOUNT_SP" FunctionName="DM_MetaDataModel.Store.HXR_GET_PARAMETERCOUNT_SP">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DM_MetaDataModel.HXR_GET_PARAMETERCOUNT_SP_Result">
-                <ScalarProperty Name="No_of_Tables" ColumnName="No of Tables" />
-                <ScalarProperty Name="No_of_Views" ColumnName="No of Views" />
-                <ScalarProperty Name="No_of_Procedures" ColumnName="No of Procedures" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="COMMON_GET_TABLE_DATA_SP" FunctionName="DM_MetaDataModel.Store.COMMON_GET_TABLE_DATA_SP" />
           <FunctionImportMapping FunctionImportName="COMMON_UPDATE_BATCH_ID_SP" FunctionName="DM_MetaDataModel.Store.COMMON_UPDATE_BATCH_ID_SP" />
-          <FunctionImportMapping FunctionImportName="PROFILER_CREATE_RULES_SP" FunctionName="DM_MetaDataModel.Store.PROFILER_CREATE_RULES_SP" />
-          <FunctionImportMapping FunctionImportName="PROFILER_GET_COLUMN_LIST_SP" FunctionName="DM_MetaDataModel.Store.PROFILER_GET_COLUMN_LIST_SP" />
           <FunctionImportMapping FunctionImportName="ATMTN_COPY_TEMPLATE_SP" FunctionName="DM_MetaDataModel.Store.ATMTN_COPY_TEMPLATE_SP" />
           <FunctionImportMapping FunctionImportName="ETL_GET_COLUMN_DETAIL_SP" FunctionName="DM_MetaDataModel.Store.ETL_GET_COLUMN_DETAIL_SP">
             <ResultMapping>
@@ -5054,13 +4431,6 @@
                 <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
                 <ScalarProperty Name="User_ID" ColumnName="User_ID" />
                 <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="PROFILER_INSERT_STATUS_SP" FunctionName="DM_MetaDataModel.Store.PROFILER_INSERT_STATUS_SP" >
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DM_MetaDataModel.PROFILER_INSERT_STATUS_SP_Result">
-                <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -5284,16 +4654,6 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="CMN_CHANGE_PASSWORD_SP" FunctionName="DM_MetaDataModel.Store.CMN_CHANGE_PASSWORD_SP" />
-          <FunctionImportMapping FunctionImportName="PROF_GET_PROFILER_RULE_SP" FunctionName="DM_MetaDataModel.Store.PROF_GET_PROFILER_RULE_SP">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DM_MetaDataModel.PROF_GET_PROFILER_RULE_SP_Result">
-                <ScalarProperty Name="Table_Name" ColumnName="Table_Name" />
-                <ScalarProperty Name="Column_Name" ColumnName="Column_Name" />
-                <ScalarProperty Name="Conditional_Clause" ColumnName="Conditional_Clause" />
-                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="CMN_GUESS_DATA_TYPE_SP" FunctionName="DM_MetaDataModel.Store.CMN_GUESS_DATA_TYPE_SP">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DM_MetaDataModel.CMN_GUESS_DATA_TYPE_SP_Result">
@@ -5327,14 +4687,6 @@
                 <ScalarProperty Name="Action" ColumnName="Action" />
                 <ScalarProperty Name="Controller" ColumnName="Controller" />
                 <ScalarProperty Name="ToolId" ColumnName="ToolId" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="HXR_GET_RUN_ID_SP" FunctionName="DM_MetaDataModel.Store.HXR_GET_RUN_ID_SP" >
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DM_MetaDataModel.HXR_GET_RUN_ID_SP_Result">
-                <ScalarProperty Name="Run_Number" ColumnName="Run_Number" />
-                <ScalarProperty Name="Run_ID" ColumnName="Run_ID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -5411,21 +4763,6 @@
           <FunctionImportMapping FunctionImportName="ETL_INSERT_TEMPLATE_SP" FunctionName="DM_MetaDataModel.Store.ETL_INSERT_TEMPLATE_SP" />
           <FunctionImportMapping FunctionImportName="DASM_CHECK_DUPLICATE_RUN_SP" FunctionName="DM_MetaDataModel.Store.DASM_CHECK_DUPLICATE_RUN_SP" />
           <FunctionImportMapping FunctionImportName="ETL_GET_THRESH_LIMIT_SP" FunctionName="DM_MetaDataModel.Store.ETL_GET_THRESH_LIMIT_SP" />
-          <FunctionImportMapping FunctionImportName="PROF_GET_BATCH_STATUS_SP" FunctionName="DM_MetaDataModel.Store.PROF_GET_BATCH_STATUS_SP">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DM_MetaDataModel.PROF_GET_BATCH_STATUS_SP_Result">
-                <ScalarProperty Name="Template_Name" ColumnName="Template_Name" />
-                <ScalarProperty Name="Table_Name" ColumnName="Table_Name" />
-                <ScalarProperty Name="Profile_ID" ColumnName="Profile_ID" />
-                <ScalarProperty Name="Profile_Status" ColumnName="Profile_Status" />
-                <ScalarProperty Name="Profile_Description" ColumnName="Profile_Description" />
-                <ScalarProperty Name="Start_Time" ColumnName="Start_Time" />
-                <ScalarProperty Name="End_Time" ColumnName="End_Time" />
-                <ScalarProperty Name="Total_Count" ColumnName="Total_Count" />
-                <ScalarProperty Name="ROW_NUM" ColumnName="ROW_NUM" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="CMN_CHECK_COLUMN_DATA_TYPE_SP" FunctionName="DM_MetaDataModel.Store.CMN_CHECK_COLUMN_DATA_TYPE_SP" />
           <FunctionImportMapping FunctionImportName="CMN_GET_COL_DATA_TYPES_SP" FunctionName="DM_MetaDataModel.Store.CMN_GET_COL_DATA_TYPES_SP">
             <ResultMapping>
@@ -5437,17 +4774,6 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="CMN_GET_TABLE_COL_COUNT_SP" FunctionName="DM_MetaDataModel.Store.CMN_GET_TABLE_COL_COUNT_SP" />
-          <FunctionImportMapping FunctionImportName="CMN_GET_ROLE_SP" FunctionName="DM_MetaDataModel.Store.CMN_GET_ROLE_SP">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DM_MetaDataModel.CMN_GET_ROLE_SP_Result">
-                <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
-                <ScalarProperty Name="Role_Name" ColumnName="Role_Name" />
-                <ScalarProperty Name="Role_Description" ColumnName="Role_Description" />
-                <ScalarProperty Name="Active_Flag" ColumnName="Active_Flag" />
-                <ScalarProperty Name="Sys_Admin" ColumnName="Sys_Admin" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="CMN_INSERT_ROLE_SP" FunctionName="DM_MetaDataModel.Store.CMN_INSERT_ROLE_SP" />
           <FunctionImportMapping FunctionImportName="DASM_GET_MASKING_TEMPLATE_SP" FunctionName="DM_MetaDataModel.Store.DASM_GET_MASKING_TEMPLATE_SP">
           <ResultMapping>
@@ -5592,17 +4918,15 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="HXR_GET_RULE_ERROR_SUMMARY_SP" FunctionName="DM_MetaDataModel.Store.HXR_GET_RULE_ERROR_SUMMARY_SP">
+          <FunctionImportMapping FunctionImportName="DASM_INS_MASKING_TEMPLATE_SP1" FunctionName="DM_MetaDataModel.Store.DASM_INS_MASKING_TEMPLATE_SP" />
+          <FunctionImportMapping FunctionImportName="CMN_GET_ROLE_SP" FunctionName="DM_MetaDataModel.Store.CMN_GET_ROLE_SP">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="DM_MetaDataModel.HXR_GET_RULE_ERROR_SUMMARY_SP_Result">
-                <ScalarProperty Name="RuleCategory_Name" ColumnName="RuleCategory_Name" />
-                <ScalarProperty Name="Column_Name" ColumnName="Column_Name" />
-                <ScalarProperty Name="Re" ColumnName="Re" />
-                <ScalarProperty Name="Rec_Pass_Percent" ColumnName="Rec_Pass_Percent" />
-                <ScalarProperty Name="Record_Fail_Count" ColumnName="Record_Fail_Count" />
-                <ScalarProperty Name="Rec_Fail_Percent" ColumnName="Rec_Fail_Percent" />
-                <ScalarProperty Name="Warnings" ColumnName="Warnings" />
-                <ScalarProperty Name="Rule_Name" ColumnName="Rule_Name" />
+              <ComplexTypeMapping TypeName="DM_MetaDataModel.CMN_GET_ROLE_SP_Result1">
+                <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+                <ScalarProperty Name="Role_Name" ColumnName="Role_Name" />
+                <ScalarProperty Name="Role_Description" ColumnName="Role_Description" />
+                <ScalarProperty Name="Active_Flag" ColumnName="Active_Flag" />
+                <ScalarProperty Name="Sys_Admin" ColumnName="Sys_Admin" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

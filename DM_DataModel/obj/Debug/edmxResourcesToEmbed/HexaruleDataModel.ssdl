@@ -25,6 +25,7 @@
     <Parameter Name="Modified_by" Type="nvarchar" Mode="In" />
     <Parameter Name="Run_ID" Type="bigint" Mode="In" />
     <Parameter Name="Run_ID_OUTPUT" Type="bigint" Mode="InOut" />
+    <Parameter Name="Role_ID" Type="bigint" Mode="In" />
     <Parameter Name="Status_Code" Type="nvarchar" Mode="InOut" />
     <Parameter Name="Message" Type="nvarchar" Mode="InOut" />
   </Function>
@@ -56,6 +57,16 @@
     <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
     <Parameter Name="Message" Type="varchar" Mode="InOut" />
   </Function>
+  <Function Name="CMN_CHECK_COLUMN_DATA_TYPE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Client_ID" Type="varchar" Mode="In" />
+    <Parameter Name="Project_ID" Type="varchar" Mode="In" />
+    <Parameter Name="Table_Name" Type="varchar" Mode="In" />
+    <Parameter Name="Column_name" Type="varchar" Mode="In" />
+    <Parameter Name="Config_ID" Type="bigint" Mode="In" />
+    <Parameter Name="ColumnType" Type="varchar" Mode="In" />
+    <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
+    <Parameter Name="Message" Type="varchar" Mode="InOut" />
+  </Function>
   <Function Name="CMN_CHECK_KEY_COLS_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Client_ID" Type="varchar" Mode="In" />
     <Parameter Name="Project_ID" Type="varchar" Mode="In" />
@@ -73,6 +84,13 @@
   <Function Name="CMN_GET_CLIENT_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="User_Name" Type="varchar" Mode="In" />
     <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
+    <Parameter Name="Message" Type="varchar" Mode="InOut" />
+  </Function>
+  <Function Name="CMN_GET_COL_DATA_TYPES_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Client_ID" Type="varchar" Mode="In" />
+    <Parameter Name="Project_ID" Type="varchar" Mode="In" />
+    <Parameter Name="Config_ID" Type="bigint" Mode="In" />
+    <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
     <Parameter Name="Message" Type="varchar" Mode="InOut" />
   </Function>
   <Function Name="CMN_GET_DATA_MASK_TYPE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -130,11 +148,27 @@
     <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
     <Parameter Name="Message" Type="varchar" Mode="InOut" />
   </Function>
+  <Function Name="CMN_GET_ROLE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Client_ID" Type="varchar" Mode="In" />
+    <Parameter Name="Project_ID" Type="varchar" Mode="In" />
+    <Parameter Name="Role_ID" Type="bigint" Mode="In" />
+    <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
+    <Parameter Name="Message" Type="varchar" Mode="InOut" />
+  </Function>
   <Function Name="CMN_GET_SCHEDULED_JOBS_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
     <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
     <Parameter Name="Tool_ID" Type="bigint" Mode="In" />
     <Parameter Name="Trans_Type" Type="varchar" Mode="In" />
+    <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
+    <Parameter Name="Message" Type="varchar" Mode="InOut" />
+  </Function>
+  <Function Name="CMN_GET_TABLE_COL_COUNT_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Client_ID" Type="varchar" Mode="In" />
+    <Parameter Name="Project_ID" Type="varchar" Mode="In" />
+    <Parameter Name="Config_ID" Type="bigint" Mode="In" />
+    <Parameter Name="Table_Name" Type="varchar" Mode="In" />
+    <Parameter Name="Column_Count" Type="bigint" Mode="InOut" />
     <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
     <Parameter Name="Message" Type="varchar" Mode="InOut" />
   </Function>
@@ -195,6 +229,16 @@
     <Parameter Name="Project_ID" Type="varchar" Mode="In" />
     <Parameter Name="Project_Description" Type="varchar" Mode="In" />
     <Parameter Name="Modified_By" Type="varchar" Mode="In" />
+    <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
+    <Parameter Name="Message" Type="varchar" Mode="InOut" />
+  </Function>
+  <Function Name="CMN_INSERT_ROLE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
+    <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
+    <Parameter Name="Role_Name" Type="varchar" Mode="In" />
+    <Parameter Name="Role_Description" Type="varchar" Mode="In" />
+    <Parameter Name="Active_Flag" Type="varchar" Mode="In" />
+    <Parameter Name="Sys_Admin" Type="varchar" Mode="In" />
     <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
     <Parameter Name="Message" Type="varchar" Mode="InOut" />
   </Function>
@@ -269,6 +313,7 @@
     <Parameter Name="Source_Target" Type="nvarchar" Mode="In" />
     <Parameter Name="DB_Type" Type="varchar" Mode="In" />
     <Parameter Name="Tool_ID" Type="bigint" Mode="In" />
+    <Parameter Name="Role_ID" Type="int" Mode="In" />
     <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
     <Parameter Name="Message" Type="varchar" Mode="InOut" />
   </Function>
@@ -327,6 +372,7 @@
     <Parameter Name="OS_PASSWORD" Type="nvarchar" Mode="In" />
     <Parameter Name="Last_Modified_Date" Type="datetime" Mode="In" />
     <Parameter Name="Last_Modified_By" Type="nvarchar" Mode="In" />
+    <Parameter Name="Role_ID" Type="int" Mode="In" />
     <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
     <Parameter Name="Message" Type="varchar" Mode="InOut" />
   </Function>
@@ -361,6 +407,7 @@
     <Parameter Name="Project_ID" Type="varchar" Mode="In" />
     <Parameter Name="type" Type="varchar" Mode="In" />
     <Parameter Name="Teamplate_ID" Type="bigint" Mode="In" />
+    <Parameter Name="Role_ID" Type="bigint" Mode="In" />
     <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
     <Parameter Name="Message" Type="varchar" Mode="InOut" />
   </Function>
@@ -401,24 +448,18 @@
     <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
     <Parameter Name="Message" Type="varchar" Mode="InOut" />
   </Function>
-  <Function Name="DASM_GET_MASKED_DATA_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Client_ID" Type="varchar" Mode="In" />
-    <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-    <Parameter Name="Template_ID" Type="bigint" Mode="In" />
-    <Parameter Name="Tool_ID" Type="bigint" Mode="In" />
-    <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
   <Function Name="DASM_GET_MASKING_TEMPLATE_DETAILS_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Client_ID" Type="varchar" Mode="In" />
     <Parameter Name="Project_ID" Type="varchar" Mode="In" />
     <Parameter Name="Template_Name" Type="varchar" Mode="In" />
+    <Parameter Name="Role_ID" Type="bigint" Mode="In" />
     <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
     <Parameter Name="Message" Type="varchar" Mode="InOut" />
   </Function>
   <Function Name="DASM_GET_MASKING_TEMPLATE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Client_ID" Type="varchar" Mode="In" />
     <Parameter Name="Project_ID" Type="varchar" Mode="In" />
+    <Parameter Name="Role_ID" Type="bigint" Mode="In" />
     <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
     <Parameter Name="Message" Type="varchar" Mode="InOut" />
   </Function>
@@ -447,12 +488,14 @@
   <Function Name="DASM_GET_TARGETSERVER_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Client_ID" Type="varchar" Mode="In" />
     <Parameter Name="Project_ID" Type="varchar" Mode="In" />
+    <Parameter Name="Role_ID" Type="bigint" Mode="In" />
     <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
     <Parameter Name="Message" Type="varchar" Mode="InOut" />
   </Function>
   <Function Name="DASM_GET_TEMPLATE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Client_ID" Type="varchar" Mode="In" />
     <Parameter Name="Project_ID" Type="varchar" Mode="In" />
+    <Parameter Name="Role_ID" Type="bigint" Mode="In" />
     <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
     <Parameter Name="Message" Type="varchar" Mode="InOut" />
   </Function>
@@ -465,6 +508,7 @@
     <Parameter Name="Message" Type="varchar" Mode="InOut" />
   </Function>
   <Function Name="DASM_INS_MASKING_TEMPLATE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Role_ID" Type="bigint" Mode="In" />
     <Parameter Name="Template_ID_out" Type="bigint" Mode="InOut" />
     <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
     <Parameter Name="Message" Type="varchar" Mode="InOut" />
@@ -474,6 +518,7 @@
     <Parameter Name="Project_ID" Type="varchar" Mode="In" />
     <Parameter Name="Tool_ID" Type="bigint" Mode="In" />
     <Parameter Name="Template_ID" Type="bigint" Mode="In" />
+    <Parameter Name="Role_ID" Type="bigint" Mode="In" />
     <Parameter Name="Task" Type="varchar" Mode="In" />
     <Parameter Name="Modified_By" Type="varchar" Mode="In" />
     <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
@@ -489,6 +534,7 @@
     <Parameter Name="Template_ID" Type="bigint" Mode="In" />
     <Parameter Name="Run_ID" Type="bigint" Mode="In" />
     <Parameter Name="Tool_ID" Type="bigint" Mode="In" />
+    <Parameter Name="Role_ID" Type="bigint" Mode="In" />
     <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
     <Parameter Name="Message" Type="varchar" Mode="InOut" />
   </Function>
@@ -497,6 +543,7 @@
     <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
     <Parameter Name="Tool_ID" Type="bigint" Mode="In" />
     <Parameter Name="Template_ID" Type="bigint" Mode="In" />
+    <Parameter Name="Role_ID" Type="bigint" Mode="In" />
     <Parameter Name="Modified_By" Type="varchar" Mode="In" />
     <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
     <Parameter Name="Message" Type="varchar" Mode="InOut" />
@@ -524,6 +571,7 @@
     <Parameter Name="Project_ID" Type="varchar" Mode="In" />
     <Parameter Name="Template_Name" Type="varchar" Mode="In" />
     <Parameter Name="Tool_ID" Type="bigint" Mode="In" />
+    <Parameter Name="Role_ID" Type="bigint" Mode="In" />
     <Parameter Name="Run_User" Type="varchar" Mode="In" />
     <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
     <Parameter Name="Message" Type="varchar" Mode="InOut" />
@@ -536,6 +584,7 @@
     <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
     <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
     <Parameter Name="Tool_ID" Type="bigint" Mode="In" />
+    <Parameter Name="Role_ID" Type="bigint" Mode="In" />
   </Function>
   <Function Name="DRD_GET_SOURCE_TARGET_TABLE_COLUMNS_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
@@ -571,6 +620,15 @@
     <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
     <Parameter Name="Message" Type="varchar" Mode="InOut" />
   </Function>
+  <Function Name="DRD_INSERT_AUTOMATON_TEMPLATE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Client_ID" Type="varchar" Mode="In" />
+    <Parameter Name="Project_ID" Type="varchar" Mode="In" />
+    <Parameter Name="Atmtn_Template_ID" Type="varchar" Mode="In" />
+    <Parameter Name="Role_ID" Type="bigint" Mode="In" />
+    <Parameter Name="Updated_By" Type="varchar" Mode="In" />
+    <Parameter Name="Status_Code" Type="nvarchar" Mode="InOut" />
+    <Parameter Name="Message" Type="nvarchar" Mode="InOut" />
+  </Function>
   <Function Name="ETL_DELETE_SOURCE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Row_ID" Type="bigint" Mode="In" />
     <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
@@ -596,6 +654,7 @@
     <Parameter Name="Client_ID" Type="varchar" Mode="In" />
     <Parameter Name="Project_ID" Type="varchar" Mode="In" />
     <Parameter Name="Tool_ID" Type="bigint" Mode="In" />
+    <Parameter Name="Table_count" Type="int" Mode="InOut" />
     <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
     <Parameter Name="Message" Type="varchar" Mode="InOut" />
   </Function>
@@ -619,6 +678,7 @@
     <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
     <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
     <Parameter Name="Tool_ID" Type="bigint" Mode="In" />
+    <Parameter Name="Role_ID" Type="bigint" Mode="In" />
     <Parameter Name="SourceTarget" Type="nvarchar" Mode="In" />
     <Parameter Name="DB_Type" Type="nvarchar" Mode="In" />
     <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
@@ -644,9 +704,20 @@
     <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
     <Parameter Name="Message" Type="varchar" Mode="InOut" />
   </Function>
+  <Function Name="ETL_GET_SOURCE_TARGET_MAPPING_DTLS_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Client_ID" Type="varchar" Mode="In" />
+    <Parameter Name="Project_ID" Type="varchar" Mode="In" />
+    <Parameter Name="Template_ID" Type="bigint" Mode="In" />
+    <Parameter Name="Role_ID" Type="bigint" Mode="In" />
+    <Parameter Name="Table_Name" Type="varchar" Mode="In" />
+    <Parameter Name="Source_OR_Target" Type="varchar" Mode="In" />
+    <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
+    <Parameter Name="Message" Type="varchar" Mode="InOut" />
+  </Function>
   <Function Name="ETL_GET_SOURCE_TARGET_TABLE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
     <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
+    <Parameter Name="Role_ID" Type="bigint" Mode="In" />
     <Parameter Name="Source_Target" Type="nvarchar" Mode="In" />
     <Parameter Name="Tool_ID" Type="bigint" Mode="In" />
     <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
@@ -785,6 +856,7 @@
     <Parameter Name="File_Delimiter" Type="varchar" Mode="In" />
     <Parameter Name="Data_Starting_Line" Type="varchar" Mode="In" />
     <Parameter Name="Target_Table" Type="varchar" Mode="In" />
+    <Parameter Name="Header_Row" Type="char" Mode="In" />
     <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
     <Parameter Name="Message" Type="varchar" Mode="InOut" />
   </Function>
@@ -987,407 +1059,6 @@
     <Parameter Name="Run_ID" Type="bigint" Mode="In" />
     <Parameter Name="Rule_category_ID" Type="bigint" Mode="In" />
     <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="HXR_GET_OBJECTNAME_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-    <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="HXR_GET_PARAMETERCOUNT_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Client_ID" Type="varchar" Mode="In" />
-    <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-    <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="HXR_GET_PROJECT_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Client_ID" Type="varchar" Mode="In" />
-    <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="HXR_GET_RULE_ATTRIBUTE_FOR_DISPLAY_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Table_name" Type="nvarchar" Mode="In" />
-    <Parameter Name="Column_Name" Type="nvarchar" Mode="In" />
-    <Parameter Name="Rule_Type_ID" Type="bigint" Mode="In" />
-    <Parameter Name="PageNo" Type="int" Mode="In" />
-    <Parameter Name="RecordsPerPage" Type="int" Mode="In" />
-    <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-    <Parameter Name="TotalCount" Type="bigint" Mode="InOut" />
-  </Function>
-  <Function Name="HXR_GET_RULE_CATEGORY_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="RuleCategory_ID" Type="bigint" Mode="In" />
-    <Parameter Name="RuleCategory_Name" Type="varchar" Mode="In" />
-    <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="HXR_GET_RULE_FUNCTION_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Data_type" Type="varchar" Mode="In" />
-    <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="HXR_GET_RULE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-    <Parameter Name="Rule_Id" Type="bigint" Mode="In" />
-    <Parameter Name="Rule_Name" Type="varchar" Mode="In" />
-    <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="HXR_GET_RULE_TYPE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-    <Parameter Name="RuleType_ID" Type="bigint" Mode="In" />
-    <Parameter Name="RuleType_Name" Type="varchar" Mode="In" />
-    <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="HXR_GET_RULE_VALIDATION_ERROR_DATA_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Table_Name" Type="nvarchar" Mode="In" />
-    <Parameter Name="Rule_cateogry_ID" Type="bigint" Mode="In" />
-    <Parameter Name="Rule_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Config_ID" Type="bigint" Mode="In" />
-    <Parameter Name="PageNo" Type="int" Mode="In" />
-    <Parameter Name="RecordsPerPage" Type="int" Mode="In" />
-    <Parameter Name="Run_ID" Type="bigint" Mode="In" />
-    <Parameter Name="Status_code" Type="nvarchar" Mode="InOut" />
-    <Parameter Name="Message" Type="nvarchar" Mode="InOut" />
-    <Parameter Name="TotalCount" Type="bigint" Mode="InOut" />
-  </Function>
-  <Function Name="HXR_GET_RULE_VALIDATION_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Client_ID" Type="varchar" Mode="In" />
-    <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-    <Parameter Name="Tool_ID" Type="bigint" Mode="In" />
-    <Parameter Name="Tablename" Type="varchar" Mode="In" />
-    <Parameter Name="Query" Type="varchar(max)" Mode="In" />
-    <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="HXR_GET_RUN_ID_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Client_Id" Type="varchar" Mode="In" />
-    <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-    <Parameter Name="Table_name" Type="varchar" Mode="In" />
-    <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="HXR_GET_TABLE_COLUMN_LIST_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Database_IP" Type="nvarchar" Mode="In" />
-    <Parameter Name="Source_Target" Type="nvarchar" Mode="In" />
-    <Parameter Name="Database_Name" Type="nvarchar" Mode="In" />
-    <Parameter Name="Table_Name" Type="nvarchar" Mode="In" />
-    <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="HXR_GET_TABLES_LIST_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Database_IP" Type="nvarchar" Mode="In" />
-    <Parameter Name="Source_Target" Type="nvarchar" Mode="In" />
-    <Parameter Name="Database_Name" Type="nvarchar" Mode="In" />
-    <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="HXR_INSERT_CLIENT_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Client_ID" Type="varchar" Mode="In" />
-    <Parameter Name="Client_Name" Type="varchar" Mode="In" />
-    <Parameter Name="Created_By" Type="varchar" Mode="In" />
-    <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="HXR_INSERT_ERROR_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Client_ID" Type="varchar" Mode="In" />
-    <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-    <Parameter Name="Error_Code" Type="varchar" Mode="In" />
-    <Parameter Name="Error_Description" Type="nvarchar" Mode="In" />
-    <Parameter Name="Last_Modified_By" Type="varchar" Mode="In" />
-    <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="HXR_INSERT_METADATA_INFO_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Client_ID" Type="varchar" Mode="In" />
-    <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-    <Parameter Name="IP_Address" Type="nvarchar" Mode="In" />
-    <Parameter Name="Database_Name" Type="varchar" Mode="In" />
-    <Parameter Name="Source_Target" Type="varchar" Mode="In" />
-    <Parameter Name="Config_ID" Type="varchar" Mode="In" />
-    <Parameter Name="Last_Modified_By" Type="varchar" Mode="In" />
-    <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="HXR_INSERT_RULE_ATTRIBUTE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Rule_ID" Type="bigint" Mode="In" />
-    <Parameter Name="RuleType_ID" Type="bigint" Mode="In" />
-    <Parameter Name="Error_Code" Type="nvarchar" Mode="In" />
-    <Parameter Name="RuleCategory_ID" Type="bigint" Mode="In" />
-    <Parameter Name="Table_name" Type="nvarchar" Mode="In" />
-    <Parameter Name="Column_Name" Type="nvarchar" Mode="In" />
-    <Parameter Name="Default_value" Type="nvarchar" Mode="In" />
-    <Parameter Name="Conditional_Clause" Type="nvarchar" Mode="In" />
-    <Parameter Name="Rule_Description" Type="nvarchar" Mode="In" />
-    <Parameter Name="Priority" Type="nvarchar" Mode="In" />
-    <Parameter Name="Reference_Table" Type="nvarchar" Mode="In" />
-    <Parameter Name="Reference_Column" Type="nvarchar" Mode="In" />
-    <Parameter Name="Reference_Cond" Type="nvarchar" Mode="In" />
-    <Parameter Name="Data_Steward" Type="nvarchar" Mode="In" />
-    <Parameter Name="Last_Modified_By" Type="nvarchar" Mode="In" />
-    <Parameter Name="Status_code" Type="nvarchar" Mode="InOut" />
-    <Parameter Name="Message" Type="nvarchar" Mode="InOut" />
-  </Function>
-  <Function Name="HXR_INSERT_RULE_CATEGORY_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="RuleCategory_Name" Type="varchar" Mode="In" />
-    <Parameter Name="RuleCategory_Desc" Type="varchar" Mode="In" />
-    <Parameter Name="Inserted_by" Type="varchar" Mode="In" />
-    <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="HXR_INSERT_RULE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Client_ID" Type="varchar" Mode="In" />
-    <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-    <Parameter Name="Rule_Name" Type="varchar" Mode="In" />
-    <Parameter Name="Rule_Description" Type="varchar" Mode="In" />
-    <Parameter Name="Start_Date" Type="datetime" Mode="In" />
-    <Parameter Name="End_Date" Type="datetime" Mode="In" />
-    <Parameter Name="Conditional_Clause" Type="varchar" Mode="In" />
-    <Parameter Name="Default_value" Type="varchar" Mode="In" />
-    <Parameter Name="Last_Modified_By" Type="varchar" Mode="In" />
-    <Parameter Name="Rule_ID" Type="bigint" Mode="InOut" />
-    <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="HXR_INSERT_RULE_TYPE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-    <Parameter Name="RuleType_Name" Type="varchar" Mode="In" />
-    <Parameter Name="RuleType_Desc" Type="varchar" Mode="In" />
-    <Parameter Name="Inserted_by" Type="varchar" Mode="In" />
-    <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="HXR_UPDATE_ERROR_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Client_ID" Type="varchar" Mode="In" />
-    <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-    <Parameter Name="Error_Code" Type="varchar" Mode="In" />
-    <Parameter Name="Error_Description" Type="varchar" Mode="In" />
-    <Parameter Name="Active_Flag" Type="bigint" Mode="In" />
-    <Parameter Name="Last_Modified_By" Type="varchar" Mode="In" />
-    <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="HXR_UPDATE_RULE_ATTRIBUTE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Client_ID" Type="varchar" Mode="In" />
-    <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-    <Parameter Name="Attribute_Rule_ID" Type="bigint" Mode="In" />
-    <Parameter Name="Rule_ID" Type="varchar" Mode="In" />
-    <Parameter Name="RuleType_ID" Type="bigint" Mode="In" />
-    <Parameter Name="IS_Predefined" Type="char" Mode="In" />
-    <Parameter Name="Error_Code" Type="varchar" Mode="In" />
-    <Parameter Name="RuleCategory_ID" Type="bigint" Mode="In" />
-    <Parameter Name="Column_Name" Type="varchar" Mode="In" />
-    <Parameter Name="Default_value" Type="varchar" Mode="In" />
-    <Parameter Name="Conditional_Clause" Type="nvarchar(max)" Mode="In" />
-    <Parameter Name="Rule_Description" Type="nvarchar" Mode="In" />
-    <Parameter Name="Priority" Type="varchar" Mode="In" />
-    <Parameter Name="Data_Steward" Type="varchar" Mode="In" />
-    <Parameter Name="Last_Modified_By" Type="varchar" Mode="In" />
-    <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="HXR_UPDATE_RULE_CATEGORY_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="RuleCategory_ID" Type="bigint" Mode="In" />
-    <Parameter Name="RuleCategory_Name" Type="varchar" Mode="In" />
-    <Parameter Name="RuleCategory_Desc" Type="varchar" Mode="In" />
-    <Parameter Name="Active_Flag" Type="bigint" Mode="In" />
-    <Parameter Name="Last_Modified_By" Type="varchar" Mode="In" />
-    <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="HXR_UPDATE_RULE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Client_ID" Type="varchar" Mode="In" />
-    <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-    <Parameter Name="Rule_ID" Type="bigint" Mode="In" />
-    <Parameter Name="Rule_Name" Type="varchar" Mode="In" />
-    <Parameter Name="Active_Flag" Type="bigint" Mode="In" />
-    <Parameter Name="Rule_Description" Type="varchar" Mode="In" />
-    <Parameter Name="Start_Date" Type="datetime" Mode="In" />
-    <Parameter Name="End_Date" Type="datetime" Mode="In" />
-    <Parameter Name="Conditional_Clause" Type="varchar" Mode="In" />
-    <Parameter Name="Default_value" Type="varchar" Mode="In" />
-    <Parameter Name="Last_Modified_By" Type="varchar" Mode="In" />
-    <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="HXR_UPDATE_RULE_TYPE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="RuleType_ID" Type="bigint" Mode="In" />
-    <Parameter Name="RuleType_Name" Type="varchar" Mode="In" />
-    <Parameter Name="Active_Flag" Type="bigint" Mode="In" />
-    <Parameter Name="RuleType_Desc" Type="varchar" Mode="In" />
-    <Parameter Name="Last_Modified_By" Type="varchar" Mode="In" />
-    <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="HXR_UPDATE_USER_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Client_ID" Type="varchar" Mode="In" />
-    <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-    <Parameter Name="USER_ID" Type="bigint" Mode="In" />
-    <Parameter Name="Email_ID" Type="varchar" Mode="In" />
-    <Parameter Name="User_Name" Type="varchar" Mode="In" />
-    <Parameter Name="Active_Flag" Type="bigint" Mode="In" />
-    <Parameter Name="Role_Name" Type="varchar" Mode="In" />
-    <Parameter Name="Last_Modified_By" Type="varchar" Mode="In" />
-    <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="HXR_VALIDATE_COLUMN_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Client_ID" Type="varchar" Mode="In" />
-    <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-    <Parameter Name="IP_Address" Type="nvarchar" Mode="In" />
-    <Parameter Name="Database_Name" Type="varchar" Mode="In" />
-    <Parameter Name="Table_Name" Type="varchar" Mode="In" />
-    <Parameter Name="Source_Target" Type="varchar" Mode="In" />
-    <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="PRC_TO_CREATE_PROC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Table_name" Type="nvarchar" Mode="In" />
-    <Parameter Name="Config_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Status_Code" Type="nvarchar" Mode="InOut" />
-    <Parameter Name="Message" Type="nvarchar" Mode="InOut" />
-  </Function>
-  <Function Name="PROF_GET_PROFILER_RULE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Table_Name" Type="nvarchar" Mode="In" />
-    <Parameter Name="Column_Name" Type="nvarchar" Mode="In" />
-    <Parameter Name="Status_Code" Type="nvarchar" Mode="InOut" />
-    <Parameter Name="Message" Type="nvarchar" Mode="InOut" />
-  </Function>
-  <Function Name="PROFILER_CREATE_DYNAMIC_VIEW_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="TableName" Type="nvarchar" Mode="In" />
-    <Parameter Name="ColumnList" Type="nvarchar(max)" Mode="In" />
-    <Parameter Name="RowCount" Type="bigint" Mode="In" />
-    <Parameter Name="Source_DB_Name" Type="nvarchar" Mode="In" />
-    <Parameter Name="ViewName" Type="nvarchar" Mode="InOut" />
-  </Function>
-  <Function Name="PROFILER_CREATE_RULES_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Config_ID" Type="bigint" Mode="In" />
-    <Parameter Name="Table_Name" Type="nvarchar" Mode="In" />
-    <Parameter Name="Column_Name" Type="nvarchar" Mode="In" />
-    <Parameter Name="Distinct_Value_List" Type="nvarchar(max)" Mode="In" />
-    <Parameter Name="Created_by" Type="nvarchar" Mode="In" />
-    <Parameter Name="Status_code" Type="nvarchar" Mode="InOut" />
-    <Parameter Name="Message" Type="nvarchar" Mode="InOut" />
-  </Function>
-  <Function Name="PROFILER_DROP_DYNAMIC_VIEW_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="ViewName" Type="varchar" Mode="In" />
-    <Parameter Name="Source_DB_Name" Type="varchar" Mode="In" />
-    <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="PROFILER_GET_COLUMN_LIST_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Client_ID" Type="varchar" Mode="In" />
-    <Parameter Name="Project_ID" Type="varchar" Mode="In" />
-    <Parameter Name="Config_ID" Type="bigint" Mode="In" />
-    <Parameter Name="Status_code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="PROFILER_GET_DISTINCT_TEMPLATES_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Config_ID" Type="bigint" Mode="In" />
-    <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="PROFILER_GET_PARAMETER_VALUES_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Tool_ID" Type="bigint" Mode="In" />
-    <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="PROFILER_GET_TABLE_COLUMN_VALUES_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Config_ID" Type="bigint" Mode="In" />
-    <Parameter Name="Table_name" Type="varchar" Mode="In" />
-    <Parameter Name="Column_list" Type="nvarchar(max)" Mode="In" />
-    <Parameter Name="Row_Count" Type="varchar" Mode="In" />
-    <Parameter Name="PageNo" Type="int" Mode="In" />
-    <Parameter Name="RecordsPerPage" Type="int" Mode="In" />
-    <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-    <Parameter Name="TotalCount" Type="bigint" Mode="InOut" />
-  </Function>
-  <Function Name="PROFILER_GET_TABLE_DETAILS_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Table_name" Type="nvarchar" Mode="In" />
-    <Parameter Name="Config_id" Type="nvarchar" Mode="In" />
-    <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="PROFILER_GET_TEMPALTE_DETAILS_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Template_Name" Type="varchar" Mode="In" />
-    <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="PROFILER_GET_TEMPLATE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Template_Name" Type="nvarchar" Mode="In" />
-    <Parameter Name="Table_Name" Type="varchar" Mode="In" />
-    <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="PROFILER_INSERT_STATUS_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Config_ID" Type="bigint" Mode="In" />
-    <Parameter Name="Template_Name" Type="nvarchar" Mode="In" />
-    <Parameter Name="Table_Name" Type="nvarchar" Mode="In" />
-    <Parameter Name="Profile_Type" Type="nvarchar" Mode="In" />
-    <Parameter Name="Profile_Description" Type="nvarchar(max)" Mode="In" />
-    <Parameter Name="Profile_Start_Time" Type="datetime" Mode="In" />
-    <Parameter Name="Profile_Status" Type="char" Mode="In" />
-    <Parameter Name="Rec_Count" Type="bigint" Mode="In" />
-    <Parameter Name="Profiled_By" Type="nvarchar" Mode="In" />
-    <Parameter Name="Profile_ID" Type="bigint" Mode="In" />
-    <Parameter Name="Status_Code" Type="nvarchar" Mode="InOut" />
-    <Parameter Name="Message" Type="nvarchar" Mode="InOut" />
-  </Function>
-  <Function Name="PROFILER_INSERT_TEMPLATE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="PROFILER_UPDATE_TEMPLATE_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Profile_ID" Type="bigint" Mode="In" />
-    <Parameter Name="Profiling_Status" Type="bit" Mode="In" />
-    <Parameter Name="Modified_By" Type="varchar" Mode="In" />
-    <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
-    <Parameter Name="Message" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="RPT_GET_REPORT_DETAILS_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Client_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Project_ID" Type="nvarchar" Mode="In" />
-    <Parameter Name="Tool_ID" Type="bigint" Mode="In" />
-    <Parameter Name="Report_ID" Type="bigint" Mode="In" />
-    <Parameter Name="Report_Name" Type="varchar" Mode="In" />
-    <Parameter Name="Report_Display_Name" Type="varchar" Mode="In" />
-    <Parameter Name="Report_Description" Type="varchar" Mode="In" />
-    <Parameter Name="Report_Server_Path" Type="varchar" Mode="In" />
-    <Parameter Name="Status_Code" Type="varchar" Mode="InOut" />
     <Parameter Name="Message" Type="varchar" Mode="InOut" />
   </Function>
   <EntityContainer Name="DM_MetaDataModelStoreContainer" />

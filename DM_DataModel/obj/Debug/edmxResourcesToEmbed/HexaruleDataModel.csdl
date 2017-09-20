@@ -162,6 +162,7 @@
       <Parameter Name="Client_ID" Mode="In" Type="String" />
       <Parameter Name="Project_ID" Mode="In" Type="String" />
       <Parameter Name="Tool_ID" Mode="In" Type="Int64" />
+      <Parameter Name="Role_ID" Mode="In" Type="Int64" />
       <Parameter Name="Tablename" Mode="In" Type="String" />
       <Parameter Name="Query" Mode="In" Type="String" />
       <Parameter Name="Status_Code" Mode="InOut" Type="String" />
@@ -505,6 +506,7 @@
     </FunctionImport>
     <FunctionImport Name="PROFILER_CREATE_DYNAMIC_VIEW_SP">
       <Parameter Name="TableName" Mode="In" Type="String" />
+      <Parameter Name="Role_ID" Mode="In" Type="Int64" />
       <Parameter Name="ColumnList" Mode="In" Type="String" />
       <Parameter Name="RowCount" Mode="In" Type="Int64" />
       <Parameter Name="Source_DB_Name" Mode="In" Type="String" />
@@ -540,7 +542,10 @@
       <Parameter Name="TotalCount" Mode="InOut" Type="Int64" />
     </FunctionImport>
     <FunctionImport Name="PROFILER_GET_TEMPALTE_DETAILS_SP" ReturnType="Collection(DM_MetaDataModel.PROFILER_GET_TEMPALTE_DETAILS_SP_Result)">
+      <Parameter Name="Client_ID" Mode="In" Type="String" />
+      <Parameter Name="Project_ID" Mode="In" Type="String" />
       <Parameter Name="Template_Name" Mode="In" Type="String" />
+      <Parameter Name="Config_ID" Mode="In" Type="Int64" />
       <Parameter Name="Status_Code" Mode="InOut" Type="String" />
       <Parameter Name="Message" Mode="InOut" Type="String" />
     </FunctionImport>
@@ -562,6 +567,7 @@
       <Parameter Name="Client_ID" Mode="In" Type="String" />
       <Parameter Name="Project_ID" Mode="In" Type="String" />
       <Parameter Name="Tool_ID" Mode="In" Type="Int64" />
+      <Parameter Name="Role_ID" Mode="In" Type="Int64" />
       <Parameter Name="SourceTarget" Mode="In" Type="String" />
       <Parameter Name="DB_Type" Mode="In" Type="String" />
       <Parameter Name="Status_Code" Mode="InOut" Type="String" />
@@ -570,6 +576,7 @@
     <FunctionImport Name="ETL_GET_SOURCE_TARGET_TABLE_SP" ReturnType="Collection(DM_MetaDataModel.ETL_GET_SOURCE_TARGET_TABLE_SP_Result)">
       <Parameter Name="Client_ID" Mode="In" Type="String" />
       <Parameter Name="Project_ID" Mode="In" Type="String" />
+      <Parameter Name="Role_ID" Mode="In" Type="Int64" />
       <Parameter Name="Source_Target" Mode="In" Type="String" />
       <Parameter Name="Tool_ID" Mode="In" Type="Int64" />
       <Parameter Name="Status_Code" Mode="InOut" Type="String" />
@@ -667,6 +674,7 @@
       <Parameter Name="Client_ID" Mode="In" Type="String" />
       <Parameter Name="Project_ID" Mode="In" Type="String" />
       <Parameter Name="Tool_ID" Mode="In" Type="Int64" />
+      <Parameter Name="Table_count" Mode="InOut" Type="Int32" />
       <Parameter Name="Status_code" Mode="InOut" Type="String" />
       <Parameter Name="Message" Mode="InOut" Type="String" />
     </FunctionImport>
@@ -759,6 +767,7 @@
       <Parameter Name="OS_PASSWORD" Mode="In" Type="String" />
       <Parameter Name="Last_Modified_Date" Mode="In" Type="DateTime" />
       <Parameter Name="Last_Modified_By" Mode="In" Type="String" />
+      <Parameter Name="Role_ID" Mode="In" Type="Int32" />
       <Parameter Name="Status_Code" Mode="InOut" Type="String" />
       <Parameter Name="Message" Mode="InOut" Type="String" />
     </FunctionImport>
@@ -768,6 +777,7 @@
       <Parameter Name="Source_Target" Mode="In" Type="String" />
       <Parameter Name="DB_Type" Mode="In" Type="String" />
       <Parameter Name="Tool_ID" Mode="In" Type="Int64" />
+      <Parameter Name="Role_ID" Mode="In" Type="Int32" />
       <Parameter Name="Status_Code" Mode="InOut" Type="String" />
       <Parameter Name="Message" Mode="InOut" Type="String" />
     </FunctionImport>
@@ -834,6 +844,7 @@
       <Parameter Name="Project_ID" Mode="In" Type="String" />
       <Parameter Name="Template_Name" Mode="In" Type="String" />
       <Parameter Name="Tool_ID" Mode="In" Type="Int64" />
+      <Parameter Name="Role_ID" Mode="In" Type="Int64" />
       <Parameter Name="Run_User" Mode="In" Type="String" />
       <Parameter Name="Status_Code" Mode="InOut" Type="String" />
       <Parameter Name="Message" Mode="InOut" Type="String" />
@@ -1056,6 +1067,7 @@
       <Parameter Name="Client_ID" Mode="In" Type="String" />
       <Parameter Name="Project_ID" Mode="In" Type="String" />
       <Parameter Name="Tool_ID" Mode="In" Type="Int64" />
+      <Parameter Name="Role_ID" Mode="In" Type="Int64" />
     </FunctionImport>
     <FunctionImport Name="DRD_GET_TEMPLATE_DETAILS_SP" ReturnType="Collection(DM_MetaDataModel.DRD_GET_TEMPLATE_DETAILS_SP_Result)">
       <Parameter Name="Client_ID" Mode="In" Type="String" />
@@ -1134,6 +1146,7 @@
       <Parameter Name="Modified_by" Mode="In" Type="String" />
       <Parameter Name="Run_ID" Mode="In" Type="Int64" />
       <Parameter Name="Run_ID_OUTPUT" Mode="InOut" Type="Int64" />
+      <Parameter Name="Role_ID" Mode="In" Type="Int64" />
       <Parameter Name="Status_Code" Mode="InOut" Type="String" />
       <Parameter Name="Message" Mode="InOut" Type="String" />
     </FunctionImport>
@@ -1228,6 +1241,7 @@
     <FunctionImport Name="DASM_GET_TEMPLATE_SP" ReturnType="Collection(DM_MetaDataModel.DASM_GET_TEMPLATE_SP_Result)">
       <Parameter Name="Client_ID" Mode="In" Type="String" />
       <Parameter Name="Project_ID" Mode="In" Type="String" />
+      <Parameter Name="Role_ID" Mode="In" Type="Int64" />
       <Parameter Name="Status_Code" Mode="InOut" Type="String" />
       <Parameter Name="Message" Mode="InOut" Type="String" />
     </FunctionImport>
@@ -1249,19 +1263,12 @@
       <Parameter Name="Status_Code" Mode="InOut" Type="String" />
       <Parameter Name="Message" Mode="InOut" Type="String" />
     </FunctionImport>
-    <FunctionImport Name="DASM_FX_GET_CRITERIAMASTER_SP" ReturnType="Collection(DM_MetaDataModel.DASM_FX_GET_CRITERIAMASTER_SP_Result)">
-      <Parameter Name="Client_ID" Mode="In" Type="String" />
-      <Parameter Name="Project_ID" Mode="In" Type="String" />
-      <Parameter Name="type" Mode="In" Type="String" />
-      <Parameter Name="Teamplate_ID" Mode="In" Type="Int64" />
-      <Parameter Name="Status_Code" Mode="InOut" Type="String" />
-      <Parameter Name="Message" Mode="InOut" Type="String" />
-    </FunctionImport>
     <FunctionImport Name="DASM_UP_TRANSFERPROCESS_SP">
       <Parameter Name="Client_ID" Mode="In" Type="String" />
       <Parameter Name="Project_ID" Mode="In" Type="String" />
       <Parameter Name="Tool_ID" Mode="In" Type="Int64" />
       <Parameter Name="Template_ID" Mode="In" Type="Int64" />
+      <Parameter Name="Role_ID" Mode="In" Type="Int64" />
       <Parameter Name="Modified_By" Mode="In" Type="String" />
       <Parameter Name="Status_Code" Mode="InOut" Type="String" />
       <Parameter Name="Message" Mode="InOut" Type="String" />
@@ -1280,6 +1287,7 @@
       <Parameter Name="Template_ID" Mode="In" Type="Int64" />
       <Parameter Name="Run_ID" Mode="In" Type="Int64" />
       <Parameter Name="Tool_ID" Mode="In" Type="Int64" />
+      <Parameter Name="Role_ID" Mode="In" Type="Int64" />
       <Parameter Name="Status_Code" Mode="InOut" Type="String" />
       <Parameter Name="Message" Mode="InOut" Type="String" />
     </FunctionImport>
@@ -1295,6 +1303,7 @@
       <Parameter Name="Project_ID" Mode="In" Type="String" />
       <Parameter Name="Tool_ID" Mode="In" Type="Int64" />
       <Parameter Name="Template_ID" Mode="In" Type="Int64" />
+      <Parameter Name="Role_ID" Mode="In" Type="Int64" />
       <Parameter Name="Task" Mode="In" Type="String" />
       <Parameter Name="Modified_By" Mode="In" Type="String" />
       <Parameter Name="Status_Code" Mode="InOut" Type="String" />
@@ -1501,19 +1510,6 @@
       <Parameter Name="Status_code" Mode="InOut" Type="String" />
       <Parameter Name="Message" Mode="InOut" Type="String" />
     </FunctionImport>
-    <FunctionImport Name="DASM_GET_MASKING_TEMPLATE_DETAILS_SP" ReturnType="Collection(DM_MetaDataModel.DASM_GET_MASKING_TEMPLATE_DETAILS_SP_Result)">
-      <Parameter Name="Client_ID" Mode="In" Type="String" />
-      <Parameter Name="Project_ID" Mode="In" Type="String" />
-      <Parameter Name="Template_Name" Mode="In" Type="String" />
-      <Parameter Name="Status_Code" Mode="InOut" Type="String" />
-      <Parameter Name="Message" Mode="InOut" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="DASM_GET_MASKING_TEMPLATE_SP" ReturnType="Collection(DM_MetaDataModel.DASM_GET_MASKING_TEMPLATE_SP_Result)">
-      <Parameter Name="Client_ID" Mode="In" Type="String" />
-      <Parameter Name="Project_ID" Mode="In" Type="String" />
-      <Parameter Name="Status_Code" Mode="InOut" Type="String" />
-      <Parameter Name="Message" Mode="InOut" Type="String" />
-    </FunctionImport>
     <FunctionImport Name="DASM_INS_MASKING_TEMPLATE_SP">
       <Parameter Name="Template_ID_out" Mode="InOut" Type="Int64" />
       <Parameter Name="Status_Code" Mode="InOut" Type="String" />
@@ -1522,6 +1518,7 @@
     <FunctionImport Name="DASM_GET_TARGETSERVER_SP" ReturnType="Collection(DM_MetaDataModel.DASM_GET_TARGETSERVER_SP_Result)">
       <Parameter Name="Client_ID" Mode="In" Type="String" />
       <Parameter Name="Project_ID" Mode="In" Type="String" />
+      <Parameter Name="Role_ID" Mode="In" Type="Int64" />
       <Parameter Name="Status_Code" Mode="InOut" Type="String" />
       <Parameter Name="Message" Mode="InOut" Type="String" />
     </FunctionImport>
@@ -1569,6 +1566,7 @@
       <Parameter Name="File_Delimiter" Mode="In" Type="String" />
       <Parameter Name="Data_Starting_Line" Mode="In" Type="String" />
       <Parameter Name="Target_Table" Mode="In" Type="String" />
+      <Parameter Name="Header_Row" Mode="In" Type="String" />
       <Parameter Name="Status_Code" Mode="InOut" Type="String" />
       <Parameter Name="Message" Mode="InOut" Type="String" />
     </FunctionImport>
@@ -1593,6 +1591,117 @@
       <Parameter Name="Client_ID" Mode="In" Type="String" />
       <Parameter Name="Project_ID" Mode="In" Type="String" />
       <Parameter Name="Template_ID" Mode="In" Type="Int64" />
+      <Parameter Name="Status_code" Mode="InOut" Type="String" />
+      <Parameter Name="Message" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="PROF_GET_BATCH_STATUS_SP" ReturnType="Collection(DM_MetaDataModel.PROF_GET_BATCH_STATUS_SP_Result)">
+      <Parameter Name="Client_ID" Mode="In" Type="String" />
+      <Parameter Name="Project_ID" Mode="In" Type="String" />
+      <Parameter Name="No_of_rows" Mode="In" Type="Int32" />
+      <Parameter Name="Page_no" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="CMN_CHECK_COLUMN_DATA_TYPE_SP">
+      <Parameter Name="Client_ID" Mode="In" Type="String" />
+      <Parameter Name="Project_ID" Mode="In" Type="String" />
+      <Parameter Name="Table_Name" Mode="In" Type="String" />
+      <Parameter Name="Column_name" Mode="In" Type="String" />
+      <Parameter Name="Config_ID" Mode="In" Type="Int64" />
+      <Parameter Name="ColumnType" Mode="In" Type="String" />
+      <Parameter Name="Status_code" Mode="InOut" Type="String" />
+      <Parameter Name="Message" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="CMN_GET_COL_DATA_TYPES_SP" ReturnType="Collection(DM_MetaDataModel.CMN_GET_COL_DATA_TYPES_SP_Result)">
+      <Parameter Name="Client_ID" Mode="In" Type="String" />
+      <Parameter Name="Project_ID" Mode="In" Type="String" />
+      <Parameter Name="Config_ID" Mode="In" Type="Int64" />
+      <Parameter Name="Status_code" Mode="InOut" Type="String" />
+      <Parameter Name="Message" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="CMN_GET_TABLE_COL_COUNT_SP">
+      <Parameter Name="Client_ID" Mode="In" Type="String" />
+      <Parameter Name="Project_ID" Mode="In" Type="String" />
+      <Parameter Name="Config_ID" Mode="In" Type="Int64" />
+      <Parameter Name="Table_Name" Mode="In" Type="String" />
+      <Parameter Name="Column_Count" Mode="InOut" Type="Int64" />
+      <Parameter Name="Status_Code" Mode="InOut" Type="String" />
+      <Parameter Name="Message" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="CMN_INSERT_ROLE_SP">
+      <Parameter Name="Client_ID" Mode="In" Type="String" />
+      <Parameter Name="Project_ID" Mode="In" Type="String" />
+      <Parameter Name="Role_Name" Mode="In" Type="String" />
+      <Parameter Name="Role_Description" Mode="In" Type="String" />
+      <Parameter Name="Active_Flag" Mode="In" Type="String" />
+      <Parameter Name="Sys_Admin" Mode="In" Type="String" />
+      <Parameter Name="Status_code" Mode="InOut" Type="String" />
+      <Parameter Name="Message" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="DASM_GET_MASKING_TEMPLATE_SP" ReturnType="Collection(DM_MetaDataModel.DASM_GET_MASKING_TEMPLATE_SP_Result)">
+      <Parameter Name="Client_ID" Mode="In" Type="String" />
+      <Parameter Name="Project_ID" Mode="In" Type="String" />
+      <Parameter Name="Role_ID" Mode="In" Type="Int64" />
+      <Parameter Name="Status_Code" Mode="InOut" Type="String" />
+      <Parameter Name="Message" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="DRD_INSERT_AUTOMATON_TEMPLATE_SP" ReturnType="Collection(DM_MetaDataModel.DRD_INSERT_AUTOMATON_TEMPLATE_SP_Result)">
+      <Parameter Name="Client_ID" Mode="In" Type="String" />
+      <Parameter Name="Project_ID" Mode="In" Type="String" />
+      <Parameter Name="Atmtn_Template_ID" Mode="In" Type="String" />
+      <Parameter Name="Role_ID" Mode="In" Type="Int64" />
+      <Parameter Name="Updated_By" Mode="In" Type="String" />
+      <Parameter Name="Status_Code" Mode="InOut" Type="String" />
+      <Parameter Name="Message" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="ETL_GET_CONN_STRING_SP1" ReturnType="Collection(DM_MetaDataModel.ETL_GET_CONN_STRING_SP1_Result)">
+      <Parameter Name="Client_ID" Mode="In" Type="String" />
+      <Parameter Name="Project_ID" Mode="In" Type="String" />
+      <Parameter Name="Tool_ID" Mode="In" Type="Int64" />
+      <Parameter Name="Role_ID" Mode="In" Type="Int64" />
+      <Parameter Name="SourceTarget" Mode="In" Type="String" />
+      <Parameter Name="DB_Type" Mode="In" Type="String" />
+      <Parameter Name="Status_Code" Mode="InOut" Type="String" />
+      <Parameter Name="Message" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="COMMON_GET_CONFIG_DETAILS_SP1" ReturnType="Collection(DM_MetaDataModel.COMMON_GET_CONFIG_DETAILS_SP1_Result)">
+      <Parameter Name="Client_ID" Mode="In" Type="String" />
+      <Parameter Name="Project_ID" Mode="In" Type="String" />
+      <Parameter Name="Source_Target" Mode="In" Type="String" />
+      <Parameter Name="DB_Type" Mode="In" Type="String" />
+      <Parameter Name="Tool_ID" Mode="In" Type="Int64" />
+      <Parameter Name="Role_ID" Mode="In" Type="Int32" />
+      <Parameter Name="Status_Code" Mode="InOut" Type="String" />
+      <Parameter Name="Message" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="ETL_GET_SOURCE_TARGET_MAPPING_DTLS_SP" ReturnType="Collection(DM_MetaDataModel.ETL_GET_SOURCE_TARGET_MAPPING_DTLS_SP_Result)">
+      <Parameter Name="Client_ID" Mode="In" Type="String" />
+      <Parameter Name="Project_ID" Mode="In" Type="String" />
+      <Parameter Name="Template_ID" Mode="In" Type="Int64" />
+      <Parameter Name="Role_ID" Mode="In" Type="Int64" />
+      <Parameter Name="Table_Name" Mode="In" Type="String" />
+      <Parameter Name="Source_OR_Target" Mode="In" Type="String" />
+      <Parameter Name="Status_Code" Mode="InOut" Type="String" />
+      <Parameter Name="Message" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="HXR_GET_RULE_ERROR_SUMMARY_SP" ReturnType="Collection(DM_MetaDataModel.HXR_GET_RULE_ERROR_SUMMARY_SP_Result)">
+      <Parameter Name="Client_ID" Mode="In" Type="String" />
+      <Parameter Name="Project_ID" Mode="In" Type="String" />
+      <Parameter Name="Table_Name" Mode="In" Type="String" />
+      <Parameter Name="Run_Number" Mode="In" Type="String" />
+      <Parameter Name="Rule_Category_ID" Mode="In" Type="Int64" />
+      <Parameter Name="Rule_ID" Mode="In" Type="Int64" />
+      <Parameter Name="Status_Code" Mode="InOut" Type="String" />
+      <Parameter Name="Message" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="DASM_INS_MASKING_TEMPLATE_SP1">
+      <Parameter Name="Role_ID" Mode="In" Type="Int64" />
+      <Parameter Name="Template_ID_out" Mode="InOut" Type="Int64" />
+      <Parameter Name="Status_Code" Mode="InOut" Type="String" />
+      <Parameter Name="Message" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="CMN_GET_ROLE_SP" ReturnType="Collection(DM_MetaDataModel.CMN_GET_ROLE_SP_Result1)">
+      <Parameter Name="Client_ID" Mode="In" Type="String" />
+      <Parameter Name="Project_ID" Mode="In" Type="String" />
+      <Parameter Name="Role_ID" Mode="In" Type="Int64" />
       <Parameter Name="Status_code" Mode="InOut" Type="String" />
       <Parameter Name="Message" Mode="InOut" Type="String" />
     </FunctionImport>
@@ -2250,11 +2359,6 @@
     <Property Type="String" Name="Defination" Nullable="true" />
     <Property Type="String" Name="Defination1" Nullable="true" />
   </ComplexType>
-  <ComplexType Name="HXR_GET_TARGETSERVER_SP_Result">
-    <Property Type="String" Name="Server_IP" Nullable="true" MaxLength="50" />
-    <Property Type="String" Name="Database" Nullable="true" MaxLength="50" />
-    <Property Type="String" Name="User" Nullable="true" MaxLength="50" />
-  </ComplexType>
   <ComplexType Name="HXR_GET_TRANSFERRESULT_SP_Result">
     <Property Type="String" Name="Type" Nullable="true" MaxLength="100" />
     <Property Type="String" Name="Object_Name" Nullable="true" MaxLength="150" />
@@ -2333,6 +2437,7 @@
     <Property Type="Int32" Name="Target_Col_Seq_No" Nullable="true" />
     <Property Type="String" Name="Source_Expression" Nullable="true" MaxLength="500" />
     <Property Type="String" Name="Target_Expression" Nullable="true" MaxLength="500" />
+    <Property Type="Int64" Name="Automaton_Template_ID" Nullable="true" />
   </ComplexType>
   <ComplexType Name="ETL_GET_TEMPLATE_SOURCE_TARGET_TABLE_SP_Result">
     <Property Type="Int64" Name="Row_ID" Nullable="false" />
@@ -2383,6 +2488,9 @@
     <Property Type="String" Name="Client_ID" Nullable="false" MaxLength="25" />
     <Property Type="String" Name="Client_Name" Nullable="false" MaxLength="50" />
     <Property Type="String" Name="Project_ID" Nullable="true" MaxLength="12" />
+    <Property Type="Int32" Name="Role_ID" Nullable="true" />
+    <Property Type="Int64" Name="User_ID" Nullable="false" />
+    <Property Type="Byte" Name="IsAdmin" Nullable="false" />
   </ComplexType>
   <ComplexType Name="PROFILER_INSERT_STATUS_SP_Result">
     <Property Type="Int64" Name="ProfileID" Nullable="true" />
@@ -2624,5 +2732,128 @@
   </ComplexType>
   <ComplexType Name="DASM_GET_SLICING_RUNID_SP_Result">
     <Property Type="Int64" Name="Run_ID" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="PROF_GET_BATCH_STATUS_SP_Result">
+    <Property Type="String" Name="Template_Name" Nullable="false" MaxLength="150" />
+    <Property Type="String" Name="Table_Name" Nullable="false" MaxLength="150" />
+    <Property Type="Int64" Name="Profile_ID" Nullable="false" />
+    <Property Type="String" Name="Profile_Status" Nullable="false" MaxLength="2" />
+    <Property Type="String" Name="Profile_Description" Nullable="true" />
+    <Property Type="String" Name="Start_Time" Nullable="true" MaxLength="4000" />
+    <Property Type="String" Name="End_Time" Nullable="true" MaxLength="4000" />
+    <Property Type="Int32" Name="Total_Count" Nullable="true" />
+    <Property Type="Int64" Name="ROW_NUM" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="CMN_GET_COL_DATA_TYPES_SP_Result">
+    <Property Type="String" Name="DataType" Nullable="true" MaxLength="8000" />
+    <Property Type="Int32" Name="isEdit" Nullable="false" />
+    <Property Type="String" Name="Type_Description" Nullable="true" MaxLength="8000" />
+  </ComplexType>
+  <ComplexType Name="CMN_GET_ROLE_SP_Result">
+    <Property Type="Int32" Name="Role_ID" Nullable="false" />
+    <Property Type="String" Name="Role_Name" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="Role_Description" Nullable="true" MaxLength="200" />
+    <Property Type="Int32" Name="Active_Flag" Nullable="false" />
+    <Property Type="Byte" Name="Sys_Admin" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="DASM_GET_MASKING_TEMPLATE_SP_Result1">
+    <Property Type="Int64" Name="Template_ID" Nullable="false" />
+    <Property Type="String" Name="Template_Name" Nullable="false" MaxLength="150" />
+  </ComplexType>
+  <ComplexType Name="DRD_INSERT_AUTOMATON_TEMPLATE_SP_Result">
+    <Property Type="String" Name="Client_ID" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="Project_ID" Nullable="false" MaxLength="12" />
+    <Property Type="String" Name="Template_Name" Nullable="false" MaxLength="500" />
+    <Property Type="String" Name="Source_Table_Name" Nullable="false" MaxLength="500" />
+    <Property Type="String" Name="Source_Column_Name" Nullable="false" MaxLength="500" />
+    <Property Type="Int64" Name="Source_Col_Seq_No" Nullable="false" />
+    <Property Type="String" Name="Source_Data_Type" Nullable="false" MaxLength="250" />
+    <Property Type="String" Name="Source_Expression" Nullable="true" MaxLength="1000" />
+    <Property Type="String" Name="Target_Table_Name" Nullable="false" MaxLength="500" />
+    <Property Type="String" Name="Target_Column_Name" Nullable="false" MaxLength="500" />
+    <Property Type="Int64" Name="Target_Col_Seq_No" Nullable="false" />
+    <Property Type="String" Name="Target_Data_Type" Nullable="false" MaxLength="500" />
+    <Property Type="String" Name="Target_Expression" Nullable="true" MaxLength="2000" />
+    <Property Type="String" Name="IS_Key_Column" Nullable="false" MaxLength="1" />
+    <Property Type="String" Name="Modified_By" Nullable="false" MaxLength="500" />
+    <Property Type="Int64" Name="Tool_ID" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="ETL_GET_CONN_STRING_SP1_Result">
+    <Property Type="Int64" Name="Config_ID" Nullable="false" />
+    <Property Type="String" Name="Client_ID" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="Project_ID" Nullable="false" MaxLength="12" />
+    <Property Type="Int64" Name="Tool_ID" Nullable="false" />
+    <Property Type="String" Name="Source_Target" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="DB_Type" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Server_Name" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Server_IP_Address" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Server_Port" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Database_Name" Nullable="true" MaxLength="50" />
+    <Property Type="Binary" Name="Database_Password" Nullable="false" />
+    <Property Type="String" Name="Schema_Name" Nullable="true" MaxLength="50" />
+    <Property Type="Binary" Name="Schema_Password" Nullable="false" />
+    <Property Type="Int64" Name="Active_Flag" Nullable="false" />
+    <Property Type="String" Name="OS_Username" Nullable="true" MaxLength="50" />
+    <Property Type="Binary" Name="OS_Password" Nullable="false" />
+    <Property Type="DateTime" Name="Create_Date" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="Last_Modified_Date" Nullable="true" Precision="23" />
+    <Property Type="String" Name="Last_Modified_By" Nullable="true" MaxLength="255" />
+  </ComplexType>
+  <ComplexType Name="COMMON_GET_CONFIG_DETAILS_SP1_Result">
+    <Property Type="Int64" Name="Config_ID" Nullable="false" />
+    <Property Type="String" Name="Client_ID" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="Project_ID" Nullable="false" MaxLength="12" />
+    <Property Type="String" Name="Source_Target" Nullable="true" MaxLength="50" />
+    <Property Type="Int64" Name="Tool_ID" Nullable="false" />
+    <Property Type="String" Name="DB_Type" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Server_Name" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Server_IP_Address" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Server_Port" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Database_Name" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Database_Password" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="Schema_Name" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Schema_Password" Nullable="true" MaxLength="30" />
+    <Property Type="Int64" Name="Active_Flag" Nullable="false" />
+    <Property Type="String" Name="OS_Username" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="OS_Password" Nullable="true" MaxLength="30" />
+    <Property Type="DateTime" Name="Create_Date" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="Last_Modified_Date" Nullable="true" Precision="23" />
+    <Property Type="String" Name="Last_Modified_By" Nullable="true" MaxLength="255" />
+  </ComplexType>
+  <ComplexType Name="ETL_GET_SOURCE_TARGET_MAPPING_DTLS_SP_Result">
+    <Property Type="Int32" Name="row_ID" Nullable="false" />
+    <Property Type="String" Name="Table_Name" Nullable="false" MaxLength="257" />
+    <Property Type="String" Name="Column_Name" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="Data_Type" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="Ordinal_Position" Nullable="true" />
+    <Property Type="String" Name="Data_precision" Nullable="true" MaxLength="4" />
+    <Property Type="String" Name="Data_scale" Nullable="true" MaxLength="4" />
+  </ComplexType>
+  <ComplexType Name="HXR_GET_RULE_ERROR_SUMMARY_SP_Result">
+    <Property Type="String" Name="RuleCategory_Name" Nullable="true" MaxLength="25" />
+    <Property Type="String" Name="Column_Name" Nullable="true" MaxLength="200" />
+    <Property Type="Int64" Name="Re" Nullable="true" />
+    <Property Type="Decimal" Name="Rec_Pass_Percent" Nullable="true" Precision="10" Scale="2" />
+    <Property Type="Int64" Name="Record_Fail_Count" Nullable="true" />
+    <Property Type="Decimal" Name="Rec_Fail_Percent" Nullable="true" Precision="10" Scale="2" />
+    <Property Type="Int64" Name="Warnings" Nullable="true" />
+    <Property Type="String" Name="Rule_Name" Nullable="false" MaxLength="255" />
+    <Property Type="Int64" Name="RuleCategory_ID" Nullable="true" />
+    <Property Type="Int64" Name="Rule_ID" Nullable="true" />
+    <Property Type="String" Name="Run_Number" Nullable="true" MaxLength="100" />
+  </ComplexType>
+  <ComplexType Name="CMN_GET_ROLE_SP1_Result">
+    <Property Type="Int64" Name="Role_ID" Nullable="false" />
+    <Property Type="String" Name="Role_Name" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="Role_Description" Nullable="true" MaxLength="200" />
+    <Property Type="Int32" Name="Active_Flag" Nullable="false" />
+    <Property Type="Byte" Name="Sys_Admin" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="CMN_GET_ROLE_SP_Result1">
+    <Property Type="Int64" Name="Role_ID" Nullable="false" />
+    <Property Type="String" Name="Role_Name" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="Role_Description" Nullable="true" MaxLength="200" />
+    <Property Type="Int32" Name="Active_Flag" Nullable="false" />
+    <Property Type="Byte" Name="Sys_Admin" Nullable="false" />
   </ComplexType>
 </Schema>
