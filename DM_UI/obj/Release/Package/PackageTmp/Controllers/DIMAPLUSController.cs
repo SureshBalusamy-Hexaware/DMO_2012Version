@@ -79,8 +79,14 @@ namespace DM_UI.Controllers
         {
             ViewDatas();
             ViewBags(UIProperties.DIMAPLUSMenu.Integration);
+            HXRConfigurationMSEntity _configEntity = UIProperties.Sessions.ConfigEntity;
+            ViewData["DatabaseIP"] = _configEntity.ServerIPAddress;
+            ViewData["SourceTarget"] = _configEntity.SourceTarget;
+            ViewData["DatabaseName"] = _configEntity.SchemaName;
+            ViewData["ConfigId"] = _configEntity.Config_ID;
             return View();
         }
+
 
         public ActionResult ReportRunIDDetail(int TemplateID, int RunID)
         {

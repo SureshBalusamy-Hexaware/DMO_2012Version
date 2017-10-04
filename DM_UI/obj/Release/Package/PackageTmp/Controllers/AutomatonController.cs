@@ -51,8 +51,10 @@ namespace DM_UI.Controllers
 
             ViewData["SourceConfigID"] = GetDBConfiguID("SOURCE");
 
+            HXRConfigurationMSEntity _configEntity = UIProperties.Sessions.ConfigEntity;
+            ViewData["ConfigId"] = _configEntity.Config_ID;
             return View("BusinessName");
-        }
+        } 
 
 
         private void ViewBags(UIProperties.DIMAPLUSMenu MenuId)
@@ -1149,7 +1151,6 @@ namespace DM_UI.Controllers
         [ActionName("DownloadPackage")]
         public ActionResult DownloadPackage(string TemplateID, string TemplateName)
         {
-
             string filePath = Path.Combine(ConfigurationManager.AppSettings["Generatexml_Save_PkgLocation"], TemplateName + ".dtsx");
             var fname = Path.GetFileName(filePath);
             if (!System.IO.File.Exists(filePath))
@@ -1267,17 +1268,14 @@ namespace DM_UI.Controllers
 
         }
         [ActionName("GenerateReconcile")]
-        public dynamic GenerateReconcile(string Template_ID)
+        public object GenerateReconcile(string Template_ID)
         {
             string Client_ID = UIProperties.Sessions.Client.Client_ID;
             string project_ID = UIProperties.Sessions.Client.project_ID;
             string StatusCode = string.Empty, Message = string.Empty;
 
-            _autoMS.GenerateReconcile(Client_ID, project_ID, Template_ID, UIProperties.Sessions.Client.Role_ID, UIProperties.Sessions.Client.User_ID.ToString(), ref StatusCode, ref Message);
-
-            //return Json(new { StatusCode = StatusCode, Message = Message }, JsonRequestBehavior.AllowGet);
-            return new { StatusCode = StatusCode, Message = Message };
-
+            _autoMS.GenerateReconcile(Client_ID, project_ID, Template_ID,Convert.ToInt16( UIProperties.Sessions.Client.Role_ID), UIProperties.Sessions.Client.User_ID.ToString(), ref StatusCode, ref Message);
+            return Json(new { StatusCode = StatusCode, Message = Message }, JsonRequestBehavior.AllowGet);
         }
 
     }

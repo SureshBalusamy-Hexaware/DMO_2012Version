@@ -25,6 +25,16 @@ public partial class HXR_GET_RULE_TYPE_SP_Result
 
     public long Active_Flag { get; set; }
 
+    public string Client_ID { get; set; }
+
+    public string Project_ID { get; set; }
+
+    public System.DateTime Create_Date { get; set; }
+
+    public Nullable<System.DateTime> Last_Modified_Date { get; set; }
+
+    public string Last_Modified { get; set; }
+
 }
 
 }

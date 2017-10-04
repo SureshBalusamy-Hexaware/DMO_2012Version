@@ -272,10 +272,9 @@
             dataType: 'json',
             data: { Template_ID: TemplateID },
             success: function (data) {
+                alert(data.Message);
             },
             error: function (xhr) {
-                HideProgress();
-                // alert(xhr);
             }
         });
 

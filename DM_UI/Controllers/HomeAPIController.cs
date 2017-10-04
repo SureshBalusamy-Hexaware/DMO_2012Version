@@ -40,7 +40,7 @@ namespace DM_UI.Controllers
                 string message = string.Empty;
                 string status_code = string.Empty;
 
-                string SqlFileLocation = ConfigurationManager.AppSettings["DBDeployFolder"];
+                string SqlFileLocation = ConfigurationManager.AppSettings["Path_DBDeployFolder"];
                 string EncryptedFile = ConfigurationManager.AppSettings["EncryptedFile"];
                 string DecryptedFile = ConfigurationManager.AppSettings["DecryptedFile"];
                 SqlFileLocation = AppDomain.CurrentDomain.BaseDirectory + @"\" + SqlFileLocation;

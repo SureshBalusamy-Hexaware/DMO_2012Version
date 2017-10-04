@@ -506,7 +506,7 @@ namespace DM_UI.Controllers
                       }
                     }).ToArray()
             };
-            return _rows;
+            return _rows;   
 
             //return _ruleMS.GetRuleAttributes(client_ID, project_ID, Table_Name, Column_Name, Rule_TypeID, ref  StatusCode, ref Message);
 

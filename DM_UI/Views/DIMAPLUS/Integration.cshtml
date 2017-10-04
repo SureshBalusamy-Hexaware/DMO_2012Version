@@ -6,7 +6,6 @@
 
 <script lang="ja" type="text/javascript">
     $(document).ready(function () {
-        debugger;
         var baseUrl = '@Url.Content("~/")';
         var client_ID = $("#hdnClientId").val();
         var project_ID = $("#hdnProjectId").val();
@@ -17,11 +16,10 @@
 
         var selectedColumn = [];
         var selectedhouseno1 = [];
-    
-        //var ColumnNames;
-        //var columns = [];
+
+
         $("#ddlSourceTablles").change(function () {
-         
+
             var tablename = $("#ddlSourceTablles option:selected").text();
             var rowcount = "ALL"; //$("#ddSampleNoRecords option:selected").text();
             var colModel = new Array();
@@ -30,16 +28,7 @@
             var ColumnModel;
             var rows;
 
-            //var selectedRow = jQuery("#jqgrid1").jqGrid('getGridParam', 'selarrrow');
-            //if (selectedRow == undefined || selectedRow == "") {
-            //    alert('Select column(s) to view data');
-            //    return;
-            //}
-
             var selectedColumns = '*';
-            //for (var i = 0; i < selectedRow.length; i++) {
-            //    selectedColumns += '[' + jQuery("#jqgrid1").jqGrid('getCell', selectedRow[i], 'columnname') + "],";
-            //}
 
             rows = null;
 
@@ -47,11 +36,11 @@
                 url: baseUrl + "api/DataProfilerAPI/GetProfilerSampleDataColHeader",
                 type: "GET",
                 contentType: "application/json; charset=utf-8",
-                data: { config_ID: 20331, table_name: tablename, column_list: selectedColumns, row_count: rowcount },
+                data: { config_ID: configId, table_name: tablename, column_list: selectedColumns, row_count: rowcount },
                 dataType: "json",
                 cache: false,
                 success: function (data) {
-                  
+
                     var cols = data.ColNames;
                     //rows = data.rows;
                     if (cols == undefined) { alert(data); return; }
@@ -60,7 +49,7 @@
                     for (var i = 0; i < uFields.length ; i++) {
                         columns.push(uFields[i]);
                     }
-                    
+
                     ColumnNames = columns;
 
                     var uFields = cols.split(',');
@@ -73,7 +62,7 @@
                     $("#sampledata").GridUnload();
                     $grid = jQuery("#sampledata").jqGrid({
                         mtype: 'GET',
-                        postData: { config_ID: 20331, table_name: tablename, column_list: selectedColumns, row_count: rowcount },
+                        postData: { config_ID: configId, table_name: tablename, column_list: selectedColumns, row_count: rowcount },
                         url: baseUrl + "api/DataProfilerAPI/GetProfilerSampleData",
                         datatype: 'json',
                         //data: JSON.parse(rows),
@@ -97,7 +86,6 @@
                         closeAfterEdit: true,
                         caption: 'Sample Data',
                         loadComplete: function () {
-                           // debugger;
                             var rows = $("#sampledata").jqGrid('getDataIDs');
                             for (i = 0; i < rows.length; i++) {
                                 var rowData = $("#sampledata").getRowData(rows[i]);
@@ -121,41 +109,103 @@
         });
         $('#btnSAPIntegration').click(function () {
 
-            //var rowData = "";
-            //var selectedRow = jQuery("#sampledata").jqGrid('getGridParam', 'selarrrow');
-            //if (selectedRow == undefined || selectedRow == "") {
-            //    alert('Select column(s) to view data');
-            //    return;
-            //}
-            //debugger;
-            //var selectedColumns = '';
-            //for (var i = 0; i < selectedRow.length; i++) {
 
-            //    var rowId = $("#sampledata").jqGrid('getGridParam', 'selrow');
-            //    rowData = jQuery("#sampledata").getRowData(rowId);
-            //    //for (var i = 0; i < rowData.length; i++) {
+            var data = "";
+            var selectedRow = jQuery("#sampledata").jqGrid('getGridParam', 'selarrrow');
+            if (selectedRow == undefined || selectedRow == "") {
+                alert('Select column(s) to view data');
+                return;
+            }
 
-            //    //    selectedColumns += rowData[i];
-            //    //}
+            var selectedColumns = '';
+            for (var  i = 0; i < selectedRow.length; i++) {
 
-            //    //selectedColumns += '[' + jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'ROW_ID') + "],";
-               
-            //}
-            //console.log(rowData);
+                data = jQuery("#sampledata").getRowData(i);
+
+                if ($("#ddlBAPIFunctions option:selected").text() == "Create BussinessPartner")
+                {
+
+                selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'PARTN_CAT') + ",";
+                selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'PARTN_GRP') + ",";
+
+                selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'FIRSTNAME') + ",";
+                selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'LASTNAME') + ",";
+                selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'SEX') + ",";
+                selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'BIRTHDATE') + ",";
+
+                selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'HOUSE_NO') + ",";
+                selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'HOUSE_NO2') + ",";
+                selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'STREET') + ",";
+                selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'CITY') + ",";
+                selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'POSTL_COD1') + ",";
+                selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'COUNTRY') + ",";
+                selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'REGION') + ",";
+
+                selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'TELEPHONE') + ",";
+                selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'TEXTN') + ",";
+
+                selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'FAX') + ",";
+                selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'FEXTN') + ",";
+
+                selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'EMAIL') + ",";
+                }
+                if ($("#ddlBAPIFunctions option:selected").text() == "Create Contract") {
+
+
+                    selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'DOC_TYPE') + ",";
+                    selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'SALES_ORG') + ",";
+                    selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'DISTR_CHAN') + ",";
+                    selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'DIVISION') + ",";
+                    selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'SALES_GRP') + ",";
+                    selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'SALES_OFF') + ",";
+                    selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'PURCH_DATE') + ",";
+                    var name  = jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'NAME') + ",";
+                    selectedColumns += name.replace(',', '');
+                    selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'INCOTERMS1') + ",";
+                    selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'INCOTERMS2') + ",";
+                    selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'PMNTTRMS') + ",";
+                    selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'PRICE_DATE') + ",";
+                    selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'DOC_DATE') + ",";
+                    selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'SHIP_COND') + ",";
+                    selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'BILL_DATE') + ",";
+                    selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'CURRENCY') + ",";
+
+                    selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'MATERIAL') + ",";
+                    selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'TARGET_QTY') + ",";
+                    selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'ITEM_CATEG') + ",";
+
+                    selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'PARTN_ROLE') + ",";
+                    selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'PARTN_NUMBER') + ",";
+
+                    selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'COND_TYPE') + ",";
+                    selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'CURRENCY') + ",";
+
+                    selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'CON_ST_DATE') + ",";
+                    selectedColumns += jQuery("#sampledata").jqGrid('getCell', selectedRow[i], 'CON_EN_DATE') + ",";
+                }
+                selectedColumns += "+";
+
+            }
 
             $.ajax({
                 type: "GET",
                 url: baseUrl + "api/DataProfilerAPI/SapIntegration",
-                
-                data: {  functionname: $("#ddlBAPIFunctions option:selected").text() },
+
+                data: { column_list: selectedColumns, functionname: $("#ddlBAPIFunctions option:selected").text() },
                 dataType: 'json',
                 success: function (data) {
-                    alert(data);
+                    var stringsplit = data.split(':');
+                    var resultsplit = "";
+                    var newLine = "\r\n"
+                    for (var i = 0; i < stringsplit.length - 1; i++) {
+                        resultsplit = resultsplit + stringsplit[i] + newLine;
+                    }
+                    alert(resultsplit);
                 }
             });
 
         });
-       
+
     });
 </script>
 <div class="content-body width-per-100">
@@ -179,14 +229,14 @@
                 </select>
 
             </div>
-           
+
         </div>
     </div>
     <div class="group" style="width: 60%;margin: 0 auto;float:none;">
         <div class="form-btn-row" style="width:60%;">
-            <input name="btnTestDBcon" value="Post to SAP"  id="btnSAPIntegration" title="Verify Database connection" class="button btn-width-150"
+            <input name="btnTestDBcon" value="Post to SAP" id="btnSAPIntegration" title="Verify Database connection" class="button btn-width-150"
                    type="submit" tabindex="23" />
-         
+
         </div>
     </div>
 

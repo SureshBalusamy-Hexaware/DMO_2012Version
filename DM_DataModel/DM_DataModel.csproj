@@ -123,6 +123,9 @@
     <Compile Include="CMN_GUESS_DATA_TYPE_SP_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="COMMON_ADD_CLIENT_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="COMMON_GET_CONFIG_DETAILS_SP1_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
@@ -133,6 +136,12 @@
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="COMMON_GET_META_DATA_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="COMMON_GET_SOURCE_TARGET_CONFIGID_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="COMMON_GET_SOURCE_TARGET_TABLE_COLUMNS_SP_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="COMMON_GET_TABLE_COLUMN_LIST_SP_Result.cs">
@@ -151,6 +160,9 @@
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DASM_GET_CRITERIA_TYPE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DASM_GET_CRITERIA_TYP_COL_SP_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DASM_GET_CRI_OBJ_COUNT_SP1_Result.cs">
@@ -174,6 +186,9 @@
     <Compile Include="DASM_GET_OBJECTNAME_SP_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DASM_GET_SCRIPTDIFINATION_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DASM_GET_SLICING_RUNID_SP_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
@@ -186,7 +201,37 @@
     <Compile Include="DASM_GET_TRANSFERRESULT_SP_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DASM_MASK_TABLE_COLUMNS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DIMA_DELETE_MAPPING_MS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DIMA_GET_KEY_COLUMN_LIST_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DIMA_GET_PRIMARY_KEY_COLUMN_VALUES_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DIMA_GET_REPORT_LUKUP_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DIMA_GET_TABLE_TYPE_CNT_BKP_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DIMA_GET_TABLE_TYPE_CNT_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DIMA_GET_TABLE_TYPE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DIMA_GET_TBL_NAME_CNT_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DIMPLS_GET_CRITERIA_TYPE_COLUMN_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DRD_GET_DATACOMPARE_REPORT_SP_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DRD_GET_DATARECON_REPORT_SP_Result.cs">
@@ -204,7 +249,13 @@
     <Compile Include="DRD_GET_TEMPLATE_DETAILS_SP_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DRD_GET_TEMPLATE_TRANS_DETAILS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DRD_INSERT_AUTOMATON_TEMPLATE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DRD_INSERT_AUTOMATON_TEMPLATE_SP_Result1.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ETL_GET_COLUMN_DATA_TYPE_SP_Result.cs">
@@ -219,6 +270,15 @@
     <Compile Include="ETL_GET_CONN_STRING_SP_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ETL_GET_DESIGN_MASTER_DTLS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ETL_GET_FILE_DOWNLOAD_TEMPLATE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ETL_GET_FILE_UPLOAD_TEMPLATE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ETL_GET_SOURCE_SP_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
@@ -231,16 +291,31 @@
     <Compile Include="ETL_GET_SOURCE_TARGET_TABLE_SP_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ETL_GET_SOURCE_TEMPLATE_LIST_INFAGEN_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ETL_GET_SOURCE_TEMPLATE_LIST_SP_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ETL_GET_SOURCE_TEMPLATE_SP_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ETL_GET_TABLE_ATTRIBUTE_DTLS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ETL_GET_TARGET_SP_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ETL_GET_TARGET_TEMPLATE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ETL_GET_TBL_EXPORT_STATUS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ETL_GET_TEMPLATE_COUNT_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ETL_GET_TEMPLATE_DETAILS4MASTERPKG_SP_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ETL_GET_TEMPLATE_SOURCE_TARGET_TABLE_SP_Result.cs">
@@ -253,6 +328,9 @@
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ETL_GET_TEMPLATE_TABLE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ETL_GET_TEMP_SRC_TGT_TBL_SP_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ETL_GET_TRANS_METADATA_Result.cs">
@@ -283,7 +361,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HexaruleDataModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="HXR_ADD_CLIENT_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="HXR_AUTHENTICATE_USER_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_FORGOT_PASSWORD_SP_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="HXR_FX_GET_CRITERIAMASTER_SP_Result.cs">
@@ -296,6 +380,9 @@
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="HXR_GET_CLIENT_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_CONSTRING_SP_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="HXR_GET_CRITERIA_ALL_SP_Result.cs">
@@ -316,7 +403,16 @@
     <Compile Include="HXR_GET_KEY_COLUMNS_SP_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="HXR_GET_META_DATA_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_OBJECTNAME_SP1_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="HXR_GET_OBJECTNAME_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_PARAMETERCOUNT_SP1_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="HXR_GET_PARAMETERCOUNT_SP_Result.cs">
@@ -325,31 +421,67 @@
     <Compile Include="HXR_GET_PROJECT_SP_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="HXR_GET_PROJECT_SP_Result1.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_RULE_ATTRIBUTE_FOR_DISPLAY_SP1_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_RULE_ATTRIBUTE_FOR_DISPLAY_SP_BKP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="HXR_GET_RULE_ATTRIBUTE_FOR_DISPLAY_SP_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="HXR_GET_RULE_ATTRIBUTE_SP_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="HXR_GET_RULE_CATEGORY_SP1_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="HXR_GET_RULE_CATEGORY_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_RULE_ERROR_SUMMARY_DETAILS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_RULE_ERROR_SUMMARY_SP1_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="HXR_GET_RULE_ERROR_SUMMARY_SP_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="HXR_GET_RULE_FUNCTION_SP1_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="HXR_GET_RULE_FUNCTION_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_RULE_SP1_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="HXR_GET_RULE_SP_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="HXR_GET_RULE_TYPE_SP1_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="HXR_GET_RULE_TYPE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_RULE_TYPE_SP_Result1.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="HXR_GET_RULE_VALIDATION_RESULTS_SP_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="HXR_GET_RULE_VALIDATION_RESULTS_SP_Result1.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="HXR_GET_RULE_VALIDATION_SP.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_RUN_ID_SP1_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="HXR_GET_RUN_ID_SP_Result.cs">
@@ -358,13 +490,40 @@
     <Compile Include="HXR_GET_SCRIPTDIFINATION_SP_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="HXR_GET_TABLE_COLUMN_LIST_SP1_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="HXR_GET_TABLE_COLUMN_LIST_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_TARGETSERVER_SP_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="HXR_GET_TOOL_SP_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="HXR_GET_TRANSFERRESULT_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_GET_USER_DETAILS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_INSERT_ERROR_SP1_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_INSERT_RULE_CATEGORY_SP1_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_INSERT_RULE_SP1_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_INSERT_RULE_TYPE_SP1_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_INSERT_RULE_TYPE_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HXR_VALIDATE_COLUMN_SP1_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="HXR_VALIDATE_COLUMN_SP_Result.cs">
@@ -396,16 +555,31 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProfilerOutput.xsd</DependentUpon>
     </Compile>
+    <Compile Include="PROFILER_GET_DISTINCT_TEMPLATES_SP1_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="PROFILER_GET_DISTINCT_TEMPLATES_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PROFILER_GET_PARAMETER_VALUES_SP1_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="PROFILER_GET_PARAMETER_VALUES_SP_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="PROFILER_GET_TABLE_DETAILS_SP1_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="PROFILER_GET_TABLE_DETAILS_SP_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="PROFILER_GET_TEMPALTE_DETAILS_SP1_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="PROFILER_GET_TEMPALTE_DETAILS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PROFILER_GET_TEMPLATE_SP1_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="PROFILER_GET_TEMPLATE_SP_Result.cs">
@@ -414,7 +588,13 @@
     <Compile Include="PROFILER_INSERT_STATUS_SP_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="PROF_GET_BATCH_STATUS_SP1_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="PROF_GET_BATCH_STATUS_SP_Result.cs">
+      <DependentUpon>HexaruleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PROF_GET_PROFILER_RULE_SP1_Result.cs">
       <DependentUpon>HexaruleDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="PROF_GET_PROFILER_RULE_SP_Result.cs">

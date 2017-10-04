@@ -1064,7 +1064,7 @@ namespace DM_UI.Controllers
 
                 //if (!string.IsNullOrWhiteSpace(FileName))
                 //{
-                //    string ExcelFileLocation = ConfigurationManager.AppSettings["ExcelFileLocation"];
+                //    string ExcelFileLocation = ConfigurationManager.AppSettings["Path_ExcelFileLocation"];
                 //    string FilePath = ExcelFileLocation + FileName;
                 //    List<string> SheetNames = SheetName.Split('~').Distinct<string>().ToList();
                 //    var TargetAutomatonAttributes = new List<AutomatonSourceEntity>();
@@ -1110,7 +1110,7 @@ namespace DM_UI.Controllers
 
                 //if (!string.IsNullOrWhiteSpace(FileName))
                 //{
-                //    string ExcelFileLocation = ConfigurationManager.AppSettings["ExcelFileLocation"];
+                //    string ExcelFileLocation = ConfigurationManager.AppSettings["Path_ExcelFileLocation"];
                 //    string FilePath = ExcelFileLocation + FileName;
                 //    List<string> SheetNames = SheetName.Split('~').Distinct<string>().ToList();
                 //    var TargetAutomatonAttributes = new List<AutomatonSourceEntity>();
@@ -1577,7 +1577,7 @@ namespace DM_UI.Controllers
             string Client_ID = UIProperties.Sessions.Client.Client_ID;
             string project_ID = UIProperties.Sessions.Client.project_ID;
             string UserName = UIProperties.Sessions.UserName;
-            string TemplatePath = System.IO.Path.Combine(ConfigurationManager.AppSettings["Generatexml_Save_PkgLocation"], TemplateName + ".dtsx");
+            string TemplatePath = System.IO.Path.Combine(ConfigurationManager.AppSettings["Path_Generatexml_Save_PkgLocation"], TemplateName + ".dtsx");
             string ToolID = UIProperties.Sessions.ToolID;
             string RunStatus = "S";
 
@@ -1613,7 +1613,7 @@ namespace DM_UI.Controllers
             string project_ID = UIProperties.Sessions.Client.project_ID;
             string StatusCode = string.Empty, Message = string.Empty;
 
-            _autoMS.GenerateReconcile(Client_ID, project_ID, Template_ID, UIProperties.Sessions.Client.Role_ID, UIProperties.Sessions.Client.User_ID.ToString(), ref StatusCode, ref Message);
+            _autoMS.GenerateReconcile(Client_ID, project_ID, Template_ID, Convert.ToInt16(UIProperties.Sessions.Client.Role_ID), UIProperties.Sessions.Client.User_ID.ToString(), ref StatusCode, ref Message);
 
             //return Json(new { StatusCode = StatusCode, Message = Message }, JsonRequestBehavior.AllowGet);
             return new { StatusCode = StatusCode, Message = Message };

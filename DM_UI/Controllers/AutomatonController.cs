@@ -16,6 +16,8 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Data.OleDb;
 using ClosedXML.Excel;
+using System.Security.Principal;
+using System.Security.AccessControl;
 
 namespace DM_UI.Controllers
 {
@@ -51,6 +53,8 @@ namespace DM_UI.Controllers
 
             ViewData["SourceConfigID"] = GetDBConfiguID("SOURCE");
 
+            HXRConfigurationMSEntity _configEntity = UIProperties.Sessions.ConfigEntity;
+            ViewData["ConfigId"] = _configEntity.Config_ID;
             return View("BusinessName");
         }
 
@@ -281,11 +285,29 @@ namespace DM_UI.Controllers
         [HttpPost]
         public JsonResult GenerateXML(string Template_ID, string TemplateType)
         {
-            string[] msg = new string[2];
-            //string Generated_SSIS_PkgLocation = ConfigurationManager.AppSettings["Generatexml_SSIS_PkgLocation"];
-            string Generated_SSIS_PkgLocation = ConfigurationManager.AppSettings["transformation_pkg"];
-            //string Generatexml_Save_PkgLocation = ConfigurationManager.AppSettings["Generatexml_Save_PkgLocation"];
-            string Generatexml_Save_PkgLocation = ConfigurationManager.AppSettings["generatexml_transformation"];
+            string[] msg = new string[2];            
+            string Generated_SSIS_PkgLocation = ConfigurationManager.AppSettings["Path_transformation_pkg"];            
+            string Generatexml_Save_PkgLocation = ConfigurationManager.AppSettings["Path_generatexml_transformation"];
+
+            try
+            {
+                string dir = Path.GetDirectoryName(Generated_SSIS_PkgLocation);
+                if (!Directory.Exists(dir))
+                {
+                    Directory.CreateDirectory(dir);
+                    //DirectoryInfo dInfo = new DirectoryInfo(dir);
+                    //DirectorySecurity dSecurity = dInfo.GetAccessControl();
+                    //dSecurity.AddAccessRule(new FileSystemAccessRule(new SecurityIdentifier(WellKnownSidType.WorldSid, 
+                    //    null), FileSystemRights.FullControl,
+                    //    InheritanceFlags.ObjectInherit | InheritanceFlags.ContainerInherit, 
+                    //    PropagationFlags.NoPropagateInherit, AccessControlType.Allow));
+                    //dInfo.SetAccessControl(dSecurity);
+                }
+            }
+            catch (Exception __ex)
+            {
+                msg[1] = Generated_SSIS_PkgLocation ;
+            }
 
             if (System.IO.File.Exists(Generated_SSIS_PkgLocation))
             {
@@ -326,13 +348,13 @@ namespace DM_UI.Controllers
             try
             {
                 string[] msg = new string[2];
-                //string Generated_SSIS_PkgLocation = ConfigurationManager.AppSettings["Generatexml_SSIS_PkgLocation"];
-                //string Generatexml_Save_PkgLocation = ConfigurationManager.AppSettings["Generatexml_Save_PkgLocation"];
+                //string Generated_SSIS_PkgLocation = ConfigurationManager.AppSettings["Path_Generatexml_SSIS_PkgLocation"];
+                
 
-                string Generated_SSIS_PkgLocation = ConfigurationManager.AppSettings["dynamicupload_pkg"];
-                string Generatexml_Save_PkgLocation = ConfigurationManager.AppSettings["generatexml_fileupload"];
+                string Generated_SSIS_PkgLocation = ConfigurationManager.AppSettings["Path_dynamicupload_pkg"];
+                string Generatexml_Save_PkgLocation = ConfigurationManager.AppSettings["Path_generatexml_fileupload"];
 
-                //string AutomatonSSISpath = ConfigurationManager.AppSettings["AutomatonSSISpath"];
+                //string AutomatonSSISpath = ConfigurationManager.AppSettings["Path_AutomatonSSISpath"];
                 //if (System.IO.File.Exists(AutomatonSSISpath))
                 //{
                 Package pkg;
@@ -380,11 +402,11 @@ namespace DM_UI.Controllers
         {
             string[] msg = new string[2];
 
-            //string Generated_SSIS_PkgLocation = ConfigurationManager.AppSettings["Generatexml_SSIS_MasterPkgLocation"];
-            //string Generatexml_Save_PkgLocation = ConfigurationManager.AppSettings["Generatexml_Save_PkgLocation"];
+            //string Generated_SSIS_PkgLocation = ConfigurationManager.AppSettings["Path_Generatexml_SSIS_MasterPkgLocation"];
+            
 
-            string Generated_SSIS_PkgLocation = ConfigurationManager.AppSettings["master_pkg"];
-            string Generatexml_Save_PkgLocation = ConfigurationManager.AppSettings["Generatexml_Save_PkgLocation"];
+            string Generated_SSIS_PkgLocation = ConfigurationManager.AppSettings["Path_master_pkg"];
+            string Generatexml_Save_PkgLocation = ConfigurationManager.AppSettings["Path_Generatexml_Save_PkgLocation"];
 
             if (System.IO.File.Exists(Generated_SSIS_PkgLocation))
             {
@@ -437,15 +459,15 @@ namespace DM_UI.Controllers
         public JsonResult RunPackage(string TemplateName, string TemplateType)
         {
             string[] msg = new string[2];
-            //string Generatexml_Save_PkgLocation = Path.Combine(ConfigurationManager.AppSettings["Generatexml_Save_PkgLocation"], TemplateName + ".dtsx");
+            
             string Generatexml_Save_PkgLocation = string.Empty;
 
             if (TemplateType == "Transformation" || TemplateType == "DataType")
-                Generatexml_Save_PkgLocation = Path.Combine(ConfigurationManager.AppSettings["generatexml_transformation"], TemplateName + ".dtsx");
+                Generatexml_Save_PkgLocation = Path.Combine(ConfigurationManager.AppSettings["Path_generatexml_transformation"], TemplateName + ".dtsx");
             else if (TemplateType == "Master")
-                Generatexml_Save_PkgLocation = ConfigurationManager.AppSettings["master_pkg"];
+                Generatexml_Save_PkgLocation = ConfigurationManager.AppSettings["Path_master_pkg"];
             else if (TemplateType == "FileUpload")
-                Generatexml_Save_PkgLocation = Path.Combine(ConfigurationManager.AppSettings["generatexml_fileupload"], TemplateName + ".dtsx");
+                Generatexml_Save_PkgLocation = Path.Combine(ConfigurationManager.AppSettings["Path_generatexml_fileupload"], TemplateName + ".dtsx");
 
             if (System.IO.File.Exists(Generatexml_Save_PkgLocation))
             {
@@ -576,8 +598,8 @@ namespace DM_UI.Controllers
         {
 
             string filePath = string.Empty;
-            //string ExcelFileLocation = ConfigurationManager.AppSettings["ExcelFileLocation"];
-            string ExcelFileLocation = ConfigurationManager.AppSettings["ExcelFileLocation"];
+            //string ExcelFileLocation = ConfigurationManager.AppSettings["Path_ExcelFileLocation"];
+            string ExcelFileLocation = ConfigurationManager.AppSettings["Path_ExcelFileLocation"];
 
             var httpRequest = System.Web.HttpContext.Current.Request;
             System.IO.DirectoryInfo exportExcelInfo = new DirectoryInfo(ExcelFileLocation);
@@ -638,7 +660,7 @@ namespace DM_UI.Controllers
         public string ReadExcelSheetName()
         {
             string filePath = string.Empty;
-            string ExcelFileLocation = ConfigurationManager.AppSettings["FlatFileLocation"];
+            string ExcelFileLocation = ConfigurationManager.AppSettings["Path_FlatFileLocation"];
             var httpRequest = System.Web.HttpContext.Current.Request;
             try
             {
@@ -711,7 +733,7 @@ namespace DM_UI.Controllers
         {
 
             string filePath = string.Empty;
-            string ExcelFileLocation = ConfigurationManager.AppSettings["ExcelFileLocation"];
+            string ExcelFileLocation = ConfigurationManager.AppSettings["Path_ExcelFileLocation"];
             var httpRequest = System.Web.HttpContext.Current.Request;
 
 
@@ -967,9 +989,9 @@ namespace DM_UI.Controllers
         {
             string msg = "success";
 
-            string pkgLocation = ConfigurationManager.AppSettings["AutomatonSSISpath"];
+            string pkgLocation = ConfigurationManager.AppSettings["Path_AutomatonSSISpath"];
             string Generated_SSIS_PkgLocation = ConfigurationManager.AppSettings["Generated_SSIS_PkgLocation"];
-            string ExcelFileLocation = ConfigurationManager.AppSettings["ExcelFileLocation"];
+            string ExcelFileLocation = ConfigurationManager.AppSettings["Path_ExcelFileLocation"];
 
             if (System.IO.File.Exists(pkgLocation))
             {
@@ -1113,15 +1135,15 @@ namespace DM_UI.Controllers
             string[] msg = new string[2];
             string StatusCode = string.Empty, Message = string.Empty;
 
-            // string TemplatePath = Path.Combine(ConfigurationManager.AppSettings["Generatexml_Save_PkgLocation"], TemplateName + ".dtsx");
+            
             string TemplatePath = string.Empty;
 
             if (TemplateType == "Transformation" || TemplateType == "DataType")
-                TemplatePath = Path.Combine(ConfigurationManager.AppSettings["generatexml_transformation"], TemplateName + ".dtsx");
+                TemplatePath = Path.Combine(ConfigurationManager.AppSettings["Path_generatexml_transformation"], TemplateName + ".dtsx");
             else if (TemplateType == "Master")
-                TemplatePath = ConfigurationManager.AppSettings["master_pkg"];
+                TemplatePath = ConfigurationManager.AppSettings["Path_master_pkg"];
             else if (TemplateType == "FileUpload")
-                TemplatePath = Path.Combine(ConfigurationManager.AppSettings["generatexml_fileupload"], TemplateName + ".dtsx");
+                TemplatePath = Path.Combine(ConfigurationManager.AppSettings["Path_generatexml_fileupload"], TemplateName + ".dtsx");
 
             string Client_ID = UIProperties.Sessions.Client.Client_ID;
             string project_ID = UIProperties.Sessions.Client.project_ID;
@@ -1149,7 +1171,7 @@ namespace DM_UI.Controllers
         [ActionName("DownloadPackage")]
         public ActionResult DownloadPackage(string TemplateID, string TemplateName)
         {
-            string filePath = Path.Combine(ConfigurationManager.AppSettings["Generatexml_Save_PkgLocation"], TemplateName + ".dtsx");
+            string filePath = Path.Combine(ConfigurationManager.AppSettings["Path_Generatexml_Save_PkgLocation"], TemplateName + ".dtsx");
             var fname = Path.GetFileName(filePath);
             if (!System.IO.File.Exists(filePath))
             {
@@ -1197,7 +1219,7 @@ namespace DM_UI.Controllers
         {
             string StatusCode = string.Empty, Message = string.Empty;
 
-            string designTemplate = Path.Combine(ConfigurationManager.AppSettings["DesignDocFolder"], "Automaton_ETL_Design_template.docx");
+            string designTemplate = Path.Combine(ConfigurationManager.AppSettings["Path_DesignDocFolder"], "Automaton_ETL_Design_template.docx");
 
             _autoMS.GenerateDesignDocument(
                 UIProperties.Sessions.Client.Client_ID
@@ -1206,7 +1228,7 @@ namespace DM_UI.Controllers
                 , Convert.ToInt64("" + TemplateID)
                 , TemplateName, designTemplate, UIProperties.Sessions.Client.Role_ID, ref StatusCode, ref Message);
 
-            string filePath = Path.Combine(ConfigurationManager.AppSettings["DesignGeneratedDocFolder"], TemplateName + ".docx");
+            string filePath = Path.Combine(ConfigurationManager.AppSettings["Path_DesignGeneratedDocFolder"], TemplateName + ".docx");
             string contentType = "application/xml";
             if (!System.IO.File.Exists(filePath))
             {
@@ -1266,17 +1288,14 @@ namespace DM_UI.Controllers
 
         }
         [ActionName("GenerateReconcile")]
-        public dynamic GenerateReconcile(string Template_ID)
+        public object GenerateReconcile(string Template_ID)
         {
             string Client_ID = UIProperties.Sessions.Client.Client_ID;
             string project_ID = UIProperties.Sessions.Client.project_ID;
             string StatusCode = string.Empty, Message = string.Empty;
 
-            _autoMS.GenerateReconcile(Client_ID, project_ID, Template_ID, UIProperties.Sessions.Client.Role_ID, UIProperties.Sessions.Client.User_ID.ToString(), ref StatusCode, ref Message);
-
-            //return Json(new { StatusCode = StatusCode, Message = Message }, JsonRequestBehavior.AllowGet);
-            return new { StatusCode = StatusCode, Message = Message };
-
+            _autoMS.GenerateReconcile(Client_ID, project_ID, Template_ID, Convert.ToInt16(UIProperties.Sessions.Client.Role_ID), UIProperties.Sessions.Client.User_ID.ToString(), ref StatusCode, ref Message);
+            return Json(new { StatusCode = StatusCode, Message = Message }, JsonRequestBehavior.AllowGet);
         }
 
     }

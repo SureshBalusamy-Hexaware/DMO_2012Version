@@ -86,7 +86,7 @@ namespace DM_UI.Controllers
                     UIProperties.Sessions.RoleName = RoleName;
                     UIProperties.Sessions.UserName = Convert.ToString(user.UserName).Trim();
                     InitializeSession();
-
+                    CommonHelper.DirectoryCheck();
                     return RedirectToAction("Index");
                 }
                 else
@@ -159,7 +159,7 @@ namespace DM_UI.Controllers
         {
             IDASEM _dasem = new DASEMService();
             string filePath = string.Empty;
-            string SqlFileLocation = ConfigurationManager.AppSettings["DBDeployFolder"];
+            string SqlFileLocation = ConfigurationManager.AppSettings["Path_DBDeployFolder"];
             string EncryptedFile = ConfigurationManager.AppSettings["EncryptedFile"];
             SqlFileLocation = AppDomain.CurrentDomain.BaseDirectory + @"\" + SqlFileLocation;
 
@@ -343,17 +343,13 @@ namespace DM_UI.Controllers
 
             if (mresult)
             {
-
                 return "Saved successfully.";
             }
             else
             {
                 return Message;
             }
-
-
         }
-
         [HttpGet]
         public JsonResult GetUserTools(string Client_ID, string Project_ID, string UserName)
         {

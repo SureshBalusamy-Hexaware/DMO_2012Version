@@ -598,7 +598,7 @@ namespace DM_BusinessService
         {
             return _autoMS.DateColumnCheck(client_ID, project_ID, table_Name, column_name, config_ID, columnType, ref status_Code, ref message);
         }
-        public void GenerateReconcile(string client_ID, string project_ID, string template_ID, long? RoleId, string UpdatedBy, ref string StatusCode, ref string Message)
+        public void GenerateReconcile(string client_ID, string project_ID, string template_ID, int RoleId, string UpdatedBy, ref string StatusCode, ref string Message)
         {
             _autoMS.GenerateReconcile(client_ID, project_ID, template_ID, RoleId, UpdatedBy, ref StatusCode, ref Message);
         }

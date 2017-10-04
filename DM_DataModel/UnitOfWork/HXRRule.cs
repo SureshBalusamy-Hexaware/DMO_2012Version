@@ -202,13 +202,13 @@ namespace DM_DataModel.UnitOfWork
 
         }
 
-        public List<HXR_GET_RULE_TYPE_SP_Result> GetRuleType(Nullable<long> ruleType_ID, string ruleType_Name, string client_ID, string project_ID, ref string status_Code, ref string message)
+        public List<HXR_GET_RULE_TYPE_SP_Result1> GetRuleType(Nullable<long> ruleType_ID, string ruleType_Name, string client_ID, string project_ID, ref string status_Code, ref string message)
         {
             var OutPut_status_Code = new ObjectParameter("status_Code", typeof(string));
             var OutPut_message = new ObjectParameter("message", typeof(string));
             try
             {
-                var result = _context.HXR_GET_RULE_TYPE_SP(client_ID, project_ID, ruleType_ID, ruleType_Name, OutPut_status_Code, OutPut_message).ToList<HXR_GET_RULE_TYPE_SP_Result>();
+                var result = _context.HXR_GET_RULE_TYPE_SP(client_ID, project_ID, ruleType_ID, ruleType_Name, OutPut_status_Code, OutPut_message).ToList<HXR_GET_RULE_TYPE_SP_Result1>();
 
                 status_Code = OutPut_status_Code.Value.ToString();
                 message = OutPut_message.Value.ToString();
@@ -1324,7 +1324,8 @@ namespace DM_DataModel.UnitOfWork
         #endregion
 
         #region RuleType
-        public void SaveRuleType(string client_ID, string project_ID, string ruleType_Name, string ruleType_Desc, string inserted_by, ref  string status_Code, ref string message)
+        public void SaveRuleType(string client_ID, string project_ID, string ruleType_Name, 
+            string ruleType_Desc, string inserted_by, ref  string status_Code, ref string message)
         {
             var OutPut_status_Code = new ObjectParameter("status_Code", typeof(string));
             var OutPut_message = new ObjectParameter("message", typeof(string));

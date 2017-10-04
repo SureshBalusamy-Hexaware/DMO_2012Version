@@ -25,7 +25,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/01/2016 16:42:36</publishTime>
     </File>
     <File Include="App_Start/UIProperties.cs">
-      <publishTime>09/04/2017 17:46:53</publishTime>
+      <publishTime>09/21/2017 11:51:43</publishTime>
     </File>
     <File Include="App_Start/WebApiConfig.cs">
       <publishTime>08/01/2016 16:41:54</publishTime>
@@ -136,19 +136,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/10/2016 10:55:34</publishTime>
     </File>
     <File Include="bin/DM_BusinessService.dll">
-      <publishTime>09/11/2017 10:43:43</publishTime>
+      <publishTime>09/25/2017 18:04:43</publishTime>
     </File>
     <File Include="bin/DM_BusinessService.pdb">
       <publishTime>11/10/2016 10:55:36</publishTime>
     </File>
     <File Include="bin/DM_DataModel.dll">
-      <publishTime>09/11/2017 10:43:43</publishTime>
+      <publishTime>09/25/2017 18:04:42</publishTime>
     </File>
     <File Include="bin/DM_DataModel.pdb">
       <publishTime>11/10/2016 10:55:35</publishTime>
     </File>
     <File Include="bin/DM_UI.dll">
-      <publishTime>09/13/2017 16:26:22</publishTime>
+      <publishTime>09/25/2017 18:04:44</publishTime>
     </File>
     <File Include="bin/DM_UI.pdb">
       <publishTime>11/10/2016 10:55:37</publishTime>
@@ -559,10 +559,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/01/2016 16:42:36</publishTime>
     </File>
     <File Include="Controllers/AutomatAPIController.cs">
-      <publishTime>08/22/2017 15:15:48</publishTime>
+      <publishTime>09/21/2017 11:05:56</publishTime>
     </File>
     <File Include="Controllers/AutomatonController.cs">
-      <publishTime>09/13/2017 16:09:09</publishTime>
+      <publishTime>09/21/2017 16:03:41</publishTime>
     </File>
     <File Include="Controllers/ConfigMSController.cs">
       <publishTime>07/27/2017 12:13:22</publishTime>
@@ -574,7 +574,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/07/2016 10:59:41</publishTime>
     </File>
     <File Include="Controllers/DataProfilerAPIController.cs">
-      <publishTime>09/07/2017 16:05:58</publishTime>
+      <publishTime>09/25/2017 14:29:15</publishTime>
     </File>
     <File Include="Controllers/DataProfilerController.cs">
       <publishTime>07/21/2017 14:55:03</publishTime>
@@ -592,7 +592,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/23/2017 17:31:07</publishTime>
     </File>
     <File Include="Controllers/DIMAPLUSController.cs">
-      <publishTime>09/11/2017 14:55:25</publishTime>
+      <publishTime>09/21/2017 11:44:58</publishTime>
     </File>
     <File Include="Controllers/HexaruleController.cs">
       <publishTime>07/21/2017 14:55:03</publishTime>
@@ -604,7 +604,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/30/2017 18:42:11</publishTime>
     </File>
     <File Include="Controllers/HXRRuleAPIController.cs">
-      <publishTime>08/23/2017 13:01:30</publishTime>
+      <publishTime>09/14/2017 15:05:43</publishTime>
     </File>
     <File Include="Controllers/InfaGenController.cs">
       <publishTime>07/21/2017 14:48:55</publishTime>
@@ -628,10 +628,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/01/2016 16:42:36</publishTime>
     </File>
     <File Include="DM_UI.csproj">
-      <publishTime>09/05/2017 13:19:01</publishTime>
+      <publishTime>09/25/2017 14:27:38</publishTime>
     </File>
     <File Include="DM_UI.csproj.user">
-      <publishTime>09/12/2017 15:23:54</publishTime>
+      <publishTime>09/25/2017 14:27:38</publishTime>
     </File>
     <File Include="ErrorLog.txt">
       <publishTime>05/17/2017 12:43:05</publishTime>
@@ -1711,7 +1711,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/29/2017 16:37:09</publishTime>
     </File>
     <File Include="Views/Automaton/BusinessName.cshtml">
-      <publishTime>08/23/2017 16:15:34</publishTime>
+      <publishTime>09/21/2017 10:39:33</publishTime>
     </File>
     <File Include="Views/Automaton/CopyTemplate.cshtml">
       <publishTime>09/01/2016 16:07:35</publishTime>
@@ -1738,7 +1738,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/22/2016 17:11:19</publishTime>
     </File>
     <File Include="Views/Automaton/ReviewAndGenerate.cshtml">
-      <publishTime>09/13/2017 16:04:47</publishTime>
+      <publishTime>09/21/2017 16:03:41</publishTime>
     </File>
     <File Include="Views/Automaton/UploadExcel.cshtml">
       <publishTime>09/12/2017 12:35:39</publishTime>
@@ -1795,7 +1795,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/11/2017 19:20:53</publishTime>
     </File>
     <File Include="Views/DIMAPLUS/Integration.cshtml">
-      <publishTime>09/11/2017 14:56:47</publishTime>
+      <publishTime>09/21/2017 11:33:43</publishTime>
     </File>
     <File Include="Views/DIMAPLUS/Purge.cshtml">
       <publishTime>03/22/2017 11:14:37</publishTime>
@@ -1819,10 +1819,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/24/2016 14:45:39</publishTime>
     </File>
     <File Include="Views/Hexarule/HXRRuleAllocation.cshtml">
-      <publishTime>09/29/2016 15:19:40</publishTime>
+      <publishTime>09/14/2017 11:33:31</publishTime>
     </File>
     <File Include="Views/Hexarule/HXRShowRules.cshtml">
-      <publishTime>03/07/2017 10:59:06</publishTime>
+      <publishTime>09/14/2017 10:52:19</publishTime>
     </File>
     <File Include="Views/Hexarule/HXRUserDefineRule.cshtml">
       <publishTime>06/23/2017 10:21:03</publishTime>
@@ -1834,7 +1834,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/01/2016 16:42:39</publishTime>
     </File>
     <File Include="Views/Hexarule/RuleAllocation.cshtml">
-      <publishTime>10/24/2016 14:45:39</publishTime>
+      <publishTime>09/14/2017 14:38:49</publishTime>
     </File>
     <File Include="Views/Hexarule/RuleCategory.cshtml">
       <publishTime>09/29/2016 15:19:40</publishTime>
@@ -1969,7 +1969,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/01/2016 16:41:56</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>09/13/2017 16:26:23</publishTime>
+      <publishTime>09/21/2017 11:58:49</publishTime>
     </File>
     <File Include="Web.Debug.config">
       <publishTime>08/01/2016 16:41:56</publishTime>

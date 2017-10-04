@@ -246,21 +246,6 @@ E:\Workarea\Source code\2012Version\DM_DataModel\bin\Debug\EntityFrameworkExtras
 E:\Workarea\Source code\2012Version\DM_DataModel\obj\Debug\DM_DataModel.csprojResolveAssemblyReference.cache
 E:\Workarea\Source code\2012Version\DM_DataModel\obj\Debug\DM_DataModel.dll
 E:\Workarea\Source code\2012Version\DM_DataModel\obj\Debug\DM_DataModel.pdb
-D:\2012Version\DM_DataModel\bin\Debug\DM_DataModel.dll.config
-D:\2012Version\DM_DataModel\bin\Debug\DM_DataModel.dll
-D:\2012Version\DM_DataModel\bin\Debug\DM_DataModel.pdb
-D:\2012Version\DM_DataModel\bin\Debug\DM_BusinessEntities.dll
-D:\2012Version\DM_DataModel\bin\Debug\EntityFramework.dll
-D:\2012Version\DM_DataModel\bin\Debug\EntityFramework.SqlServer.dll
-D:\2012Version\DM_DataModel\bin\Debug\EntityFrameworkExtras.EF6.dll
-D:\2012Version\DM_DataModel\bin\Debug\Microsoft.SqlServer.DTSRuntimeWrap.dll
-D:\2012Version\DM_DataModel\bin\Debug\DM_BusinessEntities.pdb
-D:\2012Version\DM_DataModel\bin\Debug\EntityFramework.xml
-D:\2012Version\DM_DataModel\bin\Debug\EntityFramework.SqlServer.xml
-D:\2012Version\DM_DataModel\bin\Debug\EntityFrameworkExtras.EF6.pdb
-D:\2012Version\DM_DataModel\obj\Debug\DM_DataModel.csprojResolveAssemblyReference.cache
-D:\2012Version\DM_DataModel\obj\Debug\DM_DataModel.dll
-D:\2012Version\DM_DataModel\obj\Debug\DM_DataModel.pdb
 E:\Share\Ramesh\22082017\DM_DataModel\bin\Debug\DM_DataModel.dll.config
 E:\Share\Ramesh\22082017\DM_DataModel\bin\Debug\DM_DataModel.dll
 E:\Share\Ramesh\22082017\DM_DataModel\bin\Debug\DM_DataModel.pdb
@@ -291,3 +276,33 @@ D:\12092017\DM_DataModel\bin\Debug\EntityFrameworkExtras.EF6.pdb
 D:\12092017\DM_DataModel\obj\Debug\DM_DataModel.csprojResolveAssemblyReference.cache
 D:\12092017\DM_DataModel\obj\Debug\DM_DataModel.dll
 D:\12092017\DM_DataModel\obj\Debug\DM_DataModel.pdb
+E:\Share\Ramesh\25092017\DM_DataModel\bin\Debug\DM_DataModel.dll.config
+E:\Share\Ramesh\25092017\DM_DataModel\bin\Debug\DM_DataModel.dll
+E:\Share\Ramesh\25092017\DM_DataModel\bin\Debug\DM_DataModel.pdb
+E:\Share\Ramesh\25092017\DM_DataModel\bin\Debug\DM_BusinessEntities.dll
+E:\Share\Ramesh\25092017\DM_DataModel\bin\Debug\EntityFramework.dll
+E:\Share\Ramesh\25092017\DM_DataModel\bin\Debug\EntityFramework.SqlServer.dll
+E:\Share\Ramesh\25092017\DM_DataModel\bin\Debug\EntityFrameworkExtras.EF6.dll
+E:\Share\Ramesh\25092017\DM_DataModel\bin\Debug\Microsoft.SqlServer.DTSRuntimeWrap.dll
+E:\Share\Ramesh\25092017\DM_DataModel\bin\Debug\DM_BusinessEntities.pdb
+E:\Share\Ramesh\25092017\DM_DataModel\bin\Debug\EntityFramework.xml
+E:\Share\Ramesh\25092017\DM_DataModel\bin\Debug\EntityFramework.SqlServer.xml
+E:\Share\Ramesh\25092017\DM_DataModel\bin\Debug\EntityFrameworkExtras.EF6.pdb
+E:\Share\Ramesh\25092017\DM_DataModel\obj\Debug\DM_DataModel.csprojResolveAssemblyReference.cache
+E:\Share\Ramesh\25092017\DM_DataModel\obj\Debug\DM_DataModel.dll
+E:\Share\Ramesh\25092017\DM_DataModel\obj\Debug\DM_DataModel.pdb
+D:\2012Version\DM_DataModel\bin\Debug\DM_DataModel.dll.config
+D:\2012Version\DM_DataModel\bin\Debug\DM_DataModel.dll
+D:\2012Version\DM_DataModel\bin\Debug\DM_DataModel.pdb
+D:\2012Version\DM_DataModel\bin\Debug\DM_BusinessEntities.dll
+D:\2012Version\DM_DataModel\bin\Debug\EntityFramework.dll
+D:\2012Version\DM_DataModel\bin\Debug\EntityFramework.SqlServer.dll
+D:\2012Version\DM_DataModel\bin\Debug\EntityFrameworkExtras.EF6.dll
+D:\2012Version\DM_DataModel\bin\Debug\Microsoft.SqlServer.DTSRuntimeWrap.dll
+D:\2012Version\DM_DataModel\bin\Debug\DM_BusinessEntities.pdb
+D:\2012Version\DM_DataModel\bin\Debug\EntityFramework.xml
+D:\2012Version\DM_DataModel\bin\Debug\EntityFramework.SqlServer.xml
+D:\2012Version\DM_DataModel\bin\Debug\EntityFrameworkExtras.EF6.pdb
+D:\2012Version\DM_DataModel\obj\Debug\DM_DataModel.csprojResolveAssemblyReference.cache
+D:\2012Version\DM_DataModel\obj\Debug\DM_DataModel.dll
+D:\2012Version\DM_DataModel\obj\Debug\DM_DataModel.pdb

@@ -303,23 +303,6 @@ E:\Workarea\Source code\2012Version\DM_BusinessService\bin\Debug\EntityFramework
 E:\Workarea\Source code\2012Version\DM_BusinessService\obj\Debug\DM_BusinessService.csprojResolveAssemblyReference.cache
 E:\Workarea\Source code\2012Version\DM_BusinessService\obj\Debug\DM_BusinessService.dll
 E:\Workarea\Source code\2012Version\DM_BusinessService\obj\Debug\DM_BusinessService.pdb
-D:\2012Version\DM_BusinessService\bin\Debug\DM_BusinessService.dll.config
-D:\2012Version\DM_BusinessService\bin\Debug\DM_BusinessService.dll
-D:\2012Version\DM_BusinessService\bin\Debug\DM_BusinessService.pdb
-D:\2012Version\DM_BusinessService\bin\Debug\AutoMapper.dll
-D:\2012Version\DM_BusinessService\bin\Debug\DM_BusinessEntities.dll
-D:\2012Version\DM_BusinessService\bin\Debug\DM_DataModel.dll
-D:\2012Version\DM_BusinessService\bin\Debug\EntityFramework.dll
-D:\2012Version\DM_BusinessService\bin\Debug\EntityFramework.SqlServer.dll
-D:\2012Version\DM_BusinessService\bin\Debug\Microsoft.SqlServer.DTSRuntimeWrap.dll
-D:\2012Version\DM_BusinessService\bin\Debug\DM_BusinessEntities.pdb
-D:\2012Version\DM_BusinessService\bin\Debug\DM_DataModel.pdb
-D:\2012Version\DM_BusinessService\bin\Debug\AutoMapper.xml
-D:\2012Version\DM_BusinessService\bin\Debug\EntityFramework.xml
-D:\2012Version\DM_BusinessService\bin\Debug\EntityFramework.SqlServer.xml
-D:\2012Version\DM_BusinessService\obj\Debug\DM_BusinessService.csprojResolveAssemblyReference.cache
-D:\2012Version\DM_BusinessService\obj\Debug\DM_BusinessService.dll
-D:\2012Version\DM_BusinessService\obj\Debug\DM_BusinessService.pdb
 E:\Share\Ramesh\22082017\DM_BusinessService\bin\Debug\DM_BusinessService.dll.config
 E:\Share\Ramesh\22082017\DM_BusinessService\bin\Debug\DM_BusinessService.dll
 E:\Share\Ramesh\22082017\DM_BusinessService\bin\Debug\DM_BusinessService.pdb
@@ -354,3 +337,20 @@ D:\12092017\DM_BusinessService\bin\Debug\EntityFramework.SqlServer.xml
 D:\12092017\DM_BusinessService\obj\Debug\DM_BusinessService.csprojResolveAssemblyReference.cache
 D:\12092017\DM_BusinessService\obj\Debug\DM_BusinessService.dll
 D:\12092017\DM_BusinessService\obj\Debug\DM_BusinessService.pdb
+D:\2012Version\DM_BusinessService\bin\Debug\DM_BusinessService.dll.config
+D:\2012Version\DM_BusinessService\bin\Debug\DM_BusinessService.dll
+D:\2012Version\DM_BusinessService\bin\Debug\DM_BusinessService.pdb
+D:\2012Version\DM_BusinessService\bin\Debug\AutoMapper.dll
+D:\2012Version\DM_BusinessService\bin\Debug\DM_BusinessEntities.dll
+D:\2012Version\DM_BusinessService\bin\Debug\DM_DataModel.dll
+D:\2012Version\DM_BusinessService\bin\Debug\EntityFramework.dll
+D:\2012Version\DM_BusinessService\bin\Debug\EntityFramework.SqlServer.dll
+D:\2012Version\DM_BusinessService\bin\Debug\Microsoft.SqlServer.DTSRuntimeWrap.dll
+D:\2012Version\DM_BusinessService\bin\Debug\DM_BusinessEntities.pdb
+D:\2012Version\DM_BusinessService\bin\Debug\DM_DataModel.pdb
+D:\2012Version\DM_BusinessService\bin\Debug\AutoMapper.xml
+D:\2012Version\DM_BusinessService\bin\Debug\EntityFramework.xml
+D:\2012Version\DM_BusinessService\bin\Debug\EntityFramework.SqlServer.xml
+D:\2012Version\DM_BusinessService\obj\Debug\DM_BusinessService.csprojResolveAssemblyReference.cache
+D:\2012Version\DM_BusinessService\obj\Debug\DM_BusinessService.dll
+D:\2012Version\DM_BusinessService\obj\Debug\DM_BusinessService.pdb

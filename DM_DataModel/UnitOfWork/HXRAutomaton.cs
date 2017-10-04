@@ -2259,17 +2259,18 @@ namespace DM_DataModel.UnitOfWork
                 throw e;
             }
         }
-        public void GenerateReconcile(string client_ID, string project_ID, string template_ID, long? RoleId, string UpdatedBy, ref string StatusCode, ref string Message)
+        public void GenerateReconcile(string client_ID, string project_ID, string template_ID, int RoleId, string UpdatedBy, ref string StatusCode, ref string Message)
         {
-            var OutPut_status_Code = new ObjectParameter("status_Code", typeof(string));
-            var OutPut_message = new ObjectParameter("message", typeof(string));
+            var OutPut_status_Code = new ObjectParameter("Status_Code", typeof(string));
+            var OutPut_message = new ObjectParameter("Message", typeof(string));
 
             try
             {
-                _context.DRD_INSERT_AUTOMATON_TEMPLATE_SP(client_ID, project_ID, template_ID, RoleId, UpdatedBy, OutPut_status_Code, OutPut_message);
+                //_context.DRD_INSERT_AUTOMATON_TEMPLATE_SP(client_ID, project_ID, template_ID, RoleId, UpdatedBy, OutPut_status_Code, OutPut_message);
+                _context.DRD_INS_AUTOMATON_TEMPLATE_SP(client_ID, project_ID, template_ID, RoleId, UpdatedBy, OutPut_status_Code, OutPut_message);
 
-               // StatusCode = OutPut_status_Code.Value.ToString();
-                //Message = OutPut_message.Value.ToString();
+                StatusCode = OutPut_status_Code.Value.ToString();
+                Message = OutPut_message.Value.ToString();
 
             }
             catch (DbEntityValidationException e)

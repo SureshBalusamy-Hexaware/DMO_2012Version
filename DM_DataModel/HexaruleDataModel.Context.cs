@@ -467,33 +467,6 @@ public partial class DM_MetaDataEntities : DbContext
     }
 
 
-    public virtual ObjectResult<HXR_GET_RULE_TYPE_SP_Result> HXR_GET_RULE_TYPE_SP(string client_ID, string project_ID, Nullable<long> ruleType_ID, string ruleType_Name, ObjectParameter status_Code, ObjectParameter message)
-    {
-
-        var client_IDParameter = client_ID != null ?
-            new ObjectParameter("Client_ID", client_ID) :
-            new ObjectParameter("Client_ID", typeof(string));
-
-
-        var project_IDParameter = project_ID != null ?
-            new ObjectParameter("Project_ID", project_ID) :
-            new ObjectParameter("Project_ID", typeof(string));
-
-
-        var ruleType_IDParameter = ruleType_ID.HasValue ?
-            new ObjectParameter("RuleType_ID", ruleType_ID) :
-            new ObjectParameter("RuleType_ID", typeof(long));
-
-
-        var ruleType_NameParameter = ruleType_Name != null ?
-            new ObjectParameter("RuleType_Name", ruleType_Name) :
-            new ObjectParameter("RuleType_Name", typeof(string));
-
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<HXR_GET_RULE_TYPE_SP_Result>("HXR_GET_RULE_TYPE_SP", client_IDParameter, project_IDParameter, ruleType_IDParameter, ruleType_NameParameter, status_Code, message);
-    }
-
-
     public virtual ObjectResult<HXR_GET_RULE_SP_Result> HXR_GET_RULE_SP(string client_ID, string project_ID, Nullable<long> rule_Id, string rule_Name, ObjectParameter status_Code, ObjectParameter message)
     {
 
@@ -2938,38 +2911,6 @@ public partial class DM_MetaDataEntities : DbContext
 
 
         return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<COMMON_GET_CONFIG_DETAILS_SP_Result>("COMMON_GET_CONFIG_DETAILS_SP", client_IDParameter, project_IDParameter, source_TargetParameter, dB_TypeParameter, tool_IDParameter, role_IDParameter, status_Code, message);
-    }
-
-
-    public virtual int HXR_INSERT_RULE_TYPE_SP(string client_ID, string project_ID, string ruleType_Name, string ruleType_Desc, string inserted_by, ObjectParameter status_code, ObjectParameter message)
-    {
-
-        var client_IDParameter = client_ID != null ?
-            new ObjectParameter("Client_ID", client_ID) :
-            new ObjectParameter("Client_ID", typeof(string));
-
-
-        var project_IDParameter = project_ID != null ?
-            new ObjectParameter("Project_ID", project_ID) :
-            new ObjectParameter("Project_ID", typeof(string));
-
-
-        var ruleType_NameParameter = ruleType_Name != null ?
-            new ObjectParameter("RuleType_Name", ruleType_Name) :
-            new ObjectParameter("RuleType_Name", typeof(string));
-
-
-        var ruleType_DescParameter = ruleType_Desc != null ?
-            new ObjectParameter("RuleType_Desc", ruleType_Desc) :
-            new ObjectParameter("RuleType_Desc", typeof(string));
-
-
-        var inserted_byParameter = inserted_by != null ?
-            new ObjectParameter("Inserted_by", inserted_by) :
-            new ObjectParameter("Inserted_by", typeof(string));
-
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("HXR_INSERT_RULE_TYPE_SP", client_IDParameter, project_IDParameter, ruleType_NameParameter, ruleType_DescParameter, inserted_byParameter, status_code, message);
     }
 
 
@@ -5916,38 +5857,6 @@ public partial class DM_MetaDataEntities : DbContext
     }
 
 
-    public virtual ObjectResult<DRD_INSERT_AUTOMATON_TEMPLATE_SP_Result> DRD_INSERT_AUTOMATON_TEMPLATE_SP(string client_ID, string project_ID, string atmtn_Template_ID, Nullable<long> role_ID, string updated_By, ObjectParameter status_Code, ObjectParameter message)
-    {
-
-        var client_IDParameter = client_ID != null ?
-            new ObjectParameter("Client_ID", client_ID) :
-            new ObjectParameter("Client_ID", typeof(string));
-
-
-        var project_IDParameter = project_ID != null ?
-            new ObjectParameter("Project_ID", project_ID) :
-            new ObjectParameter("Project_ID", typeof(string));
-
-
-        var atmtn_Template_IDParameter = atmtn_Template_ID != null ?
-            new ObjectParameter("Atmtn_Template_ID", atmtn_Template_ID) :
-            new ObjectParameter("Atmtn_Template_ID", typeof(string));
-
-
-        var role_IDParameter = role_ID.HasValue ?
-            new ObjectParameter("Role_ID", role_ID) :
-            new ObjectParameter("Role_ID", typeof(long));
-
-
-        var updated_ByParameter = updated_By != null ?
-            new ObjectParameter("Updated_By", updated_By) :
-            new ObjectParameter("Updated_By", typeof(string));
-
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DRD_INSERT_AUTOMATON_TEMPLATE_SP_Result>("DRD_INSERT_AUTOMATON_TEMPLATE_SP", client_IDParameter, project_IDParameter, atmtn_Template_IDParameter, role_IDParameter, updated_ByParameter, status_Code, message);
-    }
-
-
     public virtual ObjectResult<ETL_GET_CONN_STRING_SP1_Result> ETL_GET_CONN_STRING_SP1(string client_ID, string project_ID, Nullable<long> tool_ID, Nullable<long> role_ID, string sourceTarget, string dB_Type, ObjectParameter status_Code, ObjectParameter message)
     {
 
@@ -6108,7 +6017,1548 @@ public partial class DM_MetaDataEntities : DbContext
     }
 
 
-    public virtual ObjectResult<CMN_GET_ROLE_SP_Result1> CMN_GET_ROLE_SP(string client_ID, string project_ID, Nullable<long> role_ID, ObjectParameter status_code, ObjectParameter message)
+    public virtual ObjectResult<CMN_GET_ROLE_SP_Result> CMN_GET_ROLE_SP(string client_ID, string project_ID, Nullable<int> role_ID, ObjectParameter status_code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var role_IDParameter = role_ID.HasValue ?
+            new ObjectParameter("Role_ID", role_ID) :
+            new ObjectParameter("Role_ID", typeof(int));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CMN_GET_ROLE_SP_Result>("CMN_GET_ROLE_SP", client_IDParameter, project_IDParameter, role_IDParameter, status_code, message);
+    }
+
+
+    public virtual ObjectResult<DRD_INSERT_AUTOMATON_TEMPLATE_SP_Result1> DRD_INSERT_AUTOMATON_TEMPLATE_SP(string client_ID, string project_ID, string atmtn_Template_ID, Nullable<int> role_ID, string updated_By, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var atmtn_Template_IDParameter = atmtn_Template_ID != null ?
+            new ObjectParameter("Atmtn_Template_ID", atmtn_Template_ID) :
+            new ObjectParameter("Atmtn_Template_ID", typeof(string));
+
+
+        var role_IDParameter = role_ID.HasValue ?
+            new ObjectParameter("Role_ID", role_ID) :
+            new ObjectParameter("Role_ID", typeof(int));
+
+
+        var updated_ByParameter = updated_By != null ?
+            new ObjectParameter("Updated_By", updated_By) :
+            new ObjectParameter("Updated_By", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DRD_INSERT_AUTOMATON_TEMPLATE_SP_Result1>("DRD_INSERT_AUTOMATON_TEMPLATE_SP", client_IDParameter, project_IDParameter, atmtn_Template_IDParameter, role_IDParameter, updated_ByParameter, status_Code, message);
+    }
+
+
+    public virtual int DRD_INS_AUTOMATON_TEMPLATE_SP(string client_ID, string project_ID, string atmtn_Template_ID, Nullable<int> role_ID, string updated_By, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var atmtn_Template_IDParameter = atmtn_Template_ID != null ?
+            new ObjectParameter("Atmtn_Template_ID", atmtn_Template_ID) :
+            new ObjectParameter("Atmtn_Template_ID", typeof(string));
+
+
+        var role_IDParameter = role_ID.HasValue ?
+            new ObjectParameter("Role_ID", role_ID) :
+            new ObjectParameter("Role_ID", typeof(int));
+
+
+        var updated_ByParameter = updated_By != null ?
+            new ObjectParameter("Updated_By", updated_By) :
+            new ObjectParameter("Updated_By", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DRD_INS_AUTOMATON_TEMPLATE_SP", client_IDParameter, project_IDParameter, atmtn_Template_IDParameter, role_IDParameter, updated_ByParameter, status_Code, message);
+    }
+
+
+    public virtual int PRC_TO_CHNAGE_DATE_FORMAT_DDMMYY_SP(string table_Name, string schema_Name, string column_Type)
+    {
+
+        var table_NameParameter = table_Name != null ?
+            new ObjectParameter("Table_Name", table_Name) :
+            new ObjectParameter("Table_Name", typeof(string));
+
+
+        var schema_NameParameter = schema_Name != null ?
+            new ObjectParameter("Schema_Name", schema_Name) :
+            new ObjectParameter("Schema_Name", typeof(string));
+
+
+        var column_TypeParameter = column_Type != null ?
+            new ObjectParameter("Column_Type", column_Type) :
+            new ObjectParameter("Column_Type", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PRC_TO_CHNAGE_DATE_FORMAT_DDMMYY_SP", table_NameParameter, schema_NameParameter, column_TypeParameter);
+    }
+
+
+    public virtual int PRC_TO_CHNAGE_DATE_FORMAT_SP(string change_What)
+    {
+
+        var change_WhatParameter = change_What != null ?
+            new ObjectParameter("Change_What", change_What) :
+            new ObjectParameter("Change_What", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PRC_TO_CHNAGE_DATE_FORMAT_SP", change_WhatParameter);
+    }
+
+
+    public virtual int PRC_TO_CREATE_RULE_RUN_AUDIT_TABLE()
+    {
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PRC_TO_CREATE_RULE_RUN_AUDIT_TABLE");
+    }
+
+
+    public virtual int PRC_TO_CREATE_RUN_AUDIT_TABLE()
+    {
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PRC_TO_CREATE_RUN_AUDIT_TABLE");
+    }
+
+
+    public virtual ObjectResult<string> proc_generate_excel_with_columns(string db_name, string table_name, string file_name)
+    {
+
+        var db_nameParameter = db_name != null ?
+            new ObjectParameter("db_name", db_name) :
+            new ObjectParameter("db_name", typeof(string));
+
+
+        var table_nameParameter = table_name != null ?
+            new ObjectParameter("table_name", table_name) :
+            new ObjectParameter("table_name", typeof(string));
+
+
+        var file_nameParameter = file_name != null ?
+            new ObjectParameter("file_name", file_name) :
+            new ObjectParameter("file_name", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("proc_generate_excel_with_columns", db_nameParameter, table_nameParameter, file_nameParameter);
+    }
+
+
+    public virtual int PROC_GET_PRIMARY_KEY_COL_SP(string table_name, ObjectParameter primary_Key_Col)
+    {
+
+        var table_nameParameter = table_name != null ?
+            new ObjectParameter("Table_name", table_name) :
+            new ObjectParameter("Table_name", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PROC_GET_PRIMARY_KEY_COL_SP", table_nameParameter, primary_Key_Col);
+    }
+
+
+    public virtual int PROF_CREATE_DYN_VIEW_BTCH_SP(string client_ID, string project_ID, string template_name, Nullable<long> role_ID, ObjectParameter viewName)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var template_nameParameter = template_name != null ?
+            new ObjectParameter("Template_name", template_name) :
+            new ObjectParameter("Template_name", typeof(string));
+
+
+        var role_IDParameter = role_ID.HasValue ?
+            new ObjectParameter("Role_ID", role_ID) :
+            new ObjectParameter("Role_ID", typeof(long));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PROF_CREATE_DYN_VIEW_BTCH_SP", client_IDParameter, project_IDParameter, template_nameParameter, role_IDParameter, viewName);
+    }
+
+
+    public virtual ObjectResult<string> Profiler_Get_Batch_Template_Detail(Nullable<int> profile_ID)
+    {
+
+        var profile_IDParameter = profile_ID.HasValue ?
+            new ObjectParameter("Profile_ID", profile_ID) :
+            new ObjectParameter("Profile_ID", typeof(int));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("Profiler_Get_Batch_Template_Detail", profile_IDParameter);
+    }
+
+
+    public virtual int PROFILER_INS_XML_RESULTS_SP(string xml)
+    {
+
+        var xmlParameter = xml != null ?
+            new ObjectParameter("xml", xml) :
+            new ObjectParameter("xml", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PROFILER_INS_XML_RESULTS_SP", xmlParameter);
+    }
+
+
+    public virtual int PROFILER_INSERT_PROF_AUDIT_SP(string client_ID, string project_ID, Nullable<long> profile_ID, string batch_ID, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var profile_IDParameter = profile_ID.HasValue ?
+            new ObjectParameter("Profile_ID", profile_ID) :
+            new ObjectParameter("Profile_ID", typeof(long));
+
+
+        var batch_IDParameter = batch_ID != null ?
+            new ObjectParameter("Batch_ID", batch_ID) :
+            new ObjectParameter("Batch_ID", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PROFILER_INSERT_PROF_AUDIT_SP", client_IDParameter, project_IDParameter, profile_IDParameter, batch_IDParameter, status_Code, message);
+    }
+
+
+    public virtual int PROFILER_PROFILE_ALL_TABLES_SP(string client_ID, string project_ID, Nullable<long> config_ID, string table_name_list, string profiled_By, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var config_IDParameter = config_ID.HasValue ?
+            new ObjectParameter("Config_ID", config_ID) :
+            new ObjectParameter("Config_ID", typeof(long));
+
+
+        var table_name_listParameter = table_name_list != null ?
+            new ObjectParameter("Table_name_list", table_name_list) :
+            new ObjectParameter("Table_name_list", typeof(string));
+
+
+        var profiled_ByParameter = profiled_By != null ?
+            new ObjectParameter("Profiled_By", profiled_By) :
+            new ObjectParameter("Profiled_By", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PROFILER_PROFILE_ALL_TABLES_SP", client_IDParameter, project_IDParameter, config_IDParameter, table_name_listParameter, profiled_ByParameter, status_Code, message);
+    }
+
+
+    public virtual int ProfilerGetRecCount(string tableName, ObjectParameter cOUNT)
+    {
+
+        var tableNameParameter = tableName != null ?
+            new ObjectParameter("TableName", tableName) :
+            new ObjectParameter("TableName", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ProfilerGetRecCount", tableNameParameter, cOUNT);
+    }
+
+
+    public virtual int ATMTN_GET_CONNECTION_DETAILS_FUZZY_SP(string client_ID, string project_ID, Nullable<long> tool_ID, Nullable<int> template_ID, Nullable<long> role_ID, string pKG_Save_Location, ObjectParameter status_code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var tool_IDParameter = tool_ID.HasValue ?
+            new ObjectParameter("Tool_ID", tool_ID) :
+            new ObjectParameter("Tool_ID", typeof(long));
+
+
+        var template_IDParameter = template_ID.HasValue ?
+            new ObjectParameter("Template_ID", template_ID) :
+            new ObjectParameter("Template_ID", typeof(int));
+
+
+        var role_IDParameter = role_ID.HasValue ?
+            new ObjectParameter("Role_ID", role_ID) :
+            new ObjectParameter("Role_ID", typeof(long));
+
+
+        var pKG_Save_LocationParameter = pKG_Save_Location != null ?
+            new ObjectParameter("PKG_Save_Location", pKG_Save_Location) :
+            new ObjectParameter("PKG_Save_Location", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ATMTN_GET_CONNECTION_DETAILS_FUZZY_SP", client_IDParameter, project_IDParameter, tool_IDParameter, template_IDParameter, role_IDParameter, pKG_Save_LocationParameter, status_code, message);
+    }
+
+
+    public virtual int ATMTN_GET_CONNECTION_DETAILS_SP(string client_ID, string project_ID, Nullable<long> tool_ID, Nullable<int> template_ID, Nullable<int> role_ID, string pKG_Save_Location, ObjectParameter status_code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var tool_IDParameter = tool_ID.HasValue ?
+            new ObjectParameter("Tool_ID", tool_ID) :
+            new ObjectParameter("Tool_ID", typeof(long));
+
+
+        var template_IDParameter = template_ID.HasValue ?
+            new ObjectParameter("Template_ID", template_ID) :
+            new ObjectParameter("Template_ID", typeof(int));
+
+
+        var role_IDParameter = role_ID.HasValue ?
+            new ObjectParameter("Role_ID", role_ID) :
+            new ObjectParameter("Role_ID", typeof(int));
+
+
+        var pKG_Save_LocationParameter = pKG_Save_Location != null ?
+            new ObjectParameter("PKG_Save_Location", pKG_Save_Location) :
+            new ObjectParameter("PKG_Save_Location", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ATMTN_GET_CONNECTION_DETAILS_SP", client_IDParameter, project_IDParameter, tool_IDParameter, template_IDParameter, role_IDParameter, pKG_Save_LocationParameter, status_code, message);
+    }
+
+
+    public virtual ObjectResult<string> ATMTN_GET_DATATYPE_DETAILS_SP(string client_ID, string project_ID, Nullable<long> tool_ID, Nullable<int> template_ID, Nullable<int> tableExists, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var tool_IDParameter = tool_ID.HasValue ?
+            new ObjectParameter("Tool_ID", tool_ID) :
+            new ObjectParameter("Tool_ID", typeof(long));
+
+
+        var template_IDParameter = template_ID.HasValue ?
+            new ObjectParameter("Template_ID", template_ID) :
+            new ObjectParameter("Template_ID", typeof(int));
+
+
+        var tableExistsParameter = tableExists.HasValue ?
+            new ObjectParameter("TableExists", tableExists) :
+            new ObjectParameter("TableExists", typeof(int));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("ATMTN_GET_DATATYPE_DETAILS_SP", client_IDParameter, project_IDParameter, tool_IDParameter, template_IDParameter, tableExistsParameter, message);
+    }
+
+
+    public virtual int CMN_DATA_MAKSING_SP(string input_value, ObjectParameter masked_output)
+    {
+
+        var input_valueParameter = input_value != null ?
+            new ObjectParameter("Input_value", input_value) :
+            new ObjectParameter("Input_value", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CMN_DATA_MAKSING_SP", input_valueParameter, masked_output);
+    }
+
+
+    public virtual int CMN_EXCL_UPLOAD_AUDIT_SP(string client_ID, string project_ID, string source_Table_Name, string target_Table_name, Nullable<long> source_Column_count, Nullable<long> source_Record_Count, Nullable<long> tool_ID, Nullable<long> role_ID, Nullable<long> batch_ID, string upload_status, string modified_by, Nullable<long> run_ID, ObjectParameter run_ID_OUTPUT, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var source_Table_NameParameter = source_Table_Name != null ?
+            new ObjectParameter("Source_Table_Name", source_Table_Name) :
+            new ObjectParameter("Source_Table_Name", typeof(string));
+
+
+        var target_Table_nameParameter = target_Table_name != null ?
+            new ObjectParameter("Target_Table_name", target_Table_name) :
+            new ObjectParameter("Target_Table_name", typeof(string));
+
+
+        var source_Column_countParameter = source_Column_count.HasValue ?
+            new ObjectParameter("Source_Column_count", source_Column_count) :
+            new ObjectParameter("Source_Column_count", typeof(long));
+
+
+        var source_Record_CountParameter = source_Record_Count.HasValue ?
+            new ObjectParameter("Source_Record_Count", source_Record_Count) :
+            new ObjectParameter("Source_Record_Count", typeof(long));
+
+
+        var tool_IDParameter = tool_ID.HasValue ?
+            new ObjectParameter("Tool_ID", tool_ID) :
+            new ObjectParameter("Tool_ID", typeof(long));
+
+
+        var role_IDParameter = role_ID.HasValue ?
+            new ObjectParameter("Role_ID", role_ID) :
+            new ObjectParameter("Role_ID", typeof(long));
+
+
+        var batch_IDParameter = batch_ID.HasValue ?
+            new ObjectParameter("Batch_ID", batch_ID) :
+            new ObjectParameter("Batch_ID", typeof(long));
+
+
+        var upload_statusParameter = upload_status != null ?
+            new ObjectParameter("Upload_status", upload_status) :
+            new ObjectParameter("Upload_status", typeof(string));
+
+
+        var modified_byParameter = modified_by != null ?
+            new ObjectParameter("Modified_by", modified_by) :
+            new ObjectParameter("Modified_by", typeof(string));
+
+
+        var run_IDParameter = run_ID.HasValue ?
+            new ObjectParameter("Run_ID", run_ID) :
+            new ObjectParameter("Run_ID", typeof(long));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CMN_EXCL_UPLOAD_AUDIT_SP", client_IDParameter, project_IDParameter, source_Table_NameParameter, target_Table_nameParameter, source_Column_countParameter, source_Record_CountParameter, tool_IDParameter, role_IDParameter, batch_IDParameter, upload_statusParameter, modified_byParameter, run_IDParameter, run_ID_OUTPUT, status_Code, message);
+    }
+
+
+    public virtual int CMN_GET_ENTITY_DATA_SP(string client_ID, string project_ID, Nullable<long> entity_ID, string display_Type, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var entity_IDParameter = entity_ID.HasValue ?
+            new ObjectParameter("Entity_ID", entity_ID) :
+            new ObjectParameter("Entity_ID", typeof(long));
+
+
+        var display_TypeParameter = display_Type != null ?
+            new ObjectParameter("Display_Type", display_Type) :
+            new ObjectParameter("Display_Type", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CMN_GET_ENTITY_DATA_SP", client_IDParameter, project_IDParameter, entity_IDParameter, display_TypeParameter, status_Code, message);
+    }
+
+
+    public virtual int CMN_GET_TBL_COLUMN_DTLS_SP(string client_ID, string project_ID, string table_Name, Nullable<long> config_ID, ObjectParameter status_code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var table_NameParameter = table_Name != null ?
+            new ObjectParameter("Table_Name", table_Name) :
+            new ObjectParameter("Table_Name", typeof(string));
+
+
+        var config_IDParameter = config_ID.HasValue ?
+            new ObjectParameter("Config_ID", config_ID) :
+            new ObjectParameter("Config_ID", typeof(long));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CMN_GET_TBL_COLUMN_DTLS_SP", client_IDParameter, project_IDParameter, table_NameParameter, config_IDParameter, status_code, message);
+    }
+
+
+    public virtual int CMN_INSERT_THRESHOLD_SP(Nullable<int> tool_ID, string limit, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var tool_IDParameter = tool_ID.HasValue ?
+            new ObjectParameter("Tool_ID", tool_ID) :
+            new ObjectParameter("Tool_ID", typeof(int));
+
+
+        var limitParameter = limit != null ?
+            new ObjectParameter("Limit", limit) :
+            new ObjectParameter("Limit", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CMN_INSERT_THRESHOLD_SP", tool_IDParameter, limitParameter, status_Code, message);
+    }
+
+
+    public virtual int CMN_PROCESS_OFFLINE_JOBS_SP()
+    {
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CMN_PROCESS_OFFLINE_JOBS_SP");
+    }
+
+
+    public virtual int CMN_STRAT_DEPLOY_SP()
+    {
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CMN_STRAT_DEPLOY_SP");
+    }
+
+
+    public virtual int CMN_UPDATE_ENTITY_DETAILS_SP(ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CMN_UPDATE_ENTITY_DETAILS_SP", status_Code, message);
+    }
+
+
+    public virtual int CMN_UPDATE_ENTITY_SP(ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CMN_UPDATE_ENTITY_SP", status_Code, message);
+    }
+
+
+    public virtual int CMN_UPDATE_SCHEDULED_JOBS_SP(Nullable<long> offline_Job_ID, Nullable<System.DateTime> schedule_date, string is_delete, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var offline_Job_IDParameter = offline_Job_ID.HasValue ?
+            new ObjectParameter("Offline_Job_ID", offline_Job_ID) :
+            new ObjectParameter("Offline_Job_ID", typeof(long));
+
+
+        var schedule_dateParameter = schedule_date.HasValue ?
+            new ObjectParameter("Schedule_date", schedule_date) :
+            new ObjectParameter("Schedule_date", typeof(System.DateTime));
+
+
+        var is_deleteParameter = is_delete != null ?
+            new ObjectParameter("Is_delete", is_delete) :
+            new ObjectParameter("Is_delete", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CMN_UPDATE_SCHEDULED_JOBS_SP", offline_Job_IDParameter, schedule_dateParameter, is_deleteParameter, status_Code, message);
+    }
+
+
+    public virtual int CMN_VALIDATE_EXPRESSION_SP(string client_ID, string project_ID, Nullable<long> config_ID, string tablename, string expression, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var config_IDParameter = config_ID.HasValue ?
+            new ObjectParameter("Config_ID", config_ID) :
+            new ObjectParameter("Config_ID", typeof(long));
+
+
+        var tablenameParameter = tablename != null ?
+            new ObjectParameter("Tablename", tablename) :
+            new ObjectParameter("Tablename", typeof(string));
+
+
+        var expressionParameter = expression != null ?
+            new ObjectParameter("Expression", expression) :
+            new ObjectParameter("Expression", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CMN_VALIDATE_EXPRESSION_SP", client_IDParameter, project_IDParameter, config_IDParameter, tablenameParameter, expressionParameter, status_Code, message);
+    }
+
+
+    public virtual int CMN_VALIDATE_KEY_COLUMN_SP(string client_ID, string project_ID, string table_Name, Nullable<long> config_ID, string key_Column1, string key_Column2, string key_Column3, string key_Column4, string key_Column5, ObjectParameter is_key_Columns, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var table_NameParameter = table_Name != null ?
+            new ObjectParameter("Table_Name", table_Name) :
+            new ObjectParameter("Table_Name", typeof(string));
+
+
+        var config_IDParameter = config_ID.HasValue ?
+            new ObjectParameter("Config_ID", config_ID) :
+            new ObjectParameter("Config_ID", typeof(long));
+
+
+        var key_Column1Parameter = key_Column1 != null ?
+            new ObjectParameter("Key_Column1", key_Column1) :
+            new ObjectParameter("Key_Column1", typeof(string));
+
+
+        var key_Column2Parameter = key_Column2 != null ?
+            new ObjectParameter("Key_Column2", key_Column2) :
+            new ObjectParameter("Key_Column2", typeof(string));
+
+
+        var key_Column3Parameter = key_Column3 != null ?
+            new ObjectParameter("Key_Column3", key_Column3) :
+            new ObjectParameter("Key_Column3", typeof(string));
+
+
+        var key_Column4Parameter = key_Column4 != null ?
+            new ObjectParameter("Key_Column4", key_Column4) :
+            new ObjectParameter("Key_Column4", typeof(string));
+
+
+        var key_Column5Parameter = key_Column5 != null ?
+            new ObjectParameter("Key_Column5", key_Column5) :
+            new ObjectParameter("Key_Column5", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CMN_VALIDATE_KEY_COLUMN_SP", client_IDParameter, project_IDParameter, table_NameParameter, config_IDParameter, key_Column1Parameter, key_Column2Parameter, key_Column3Parameter, key_Column4Parameter, key_Column5Parameter, is_key_Columns, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<COMMON_ADD_CLIENT_SP_Result> COMMON_ADD_CLIENT_SP(string client_ID, string user_Name, string password, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var user_NameParameter = user_Name != null ?
+            new ObjectParameter("User_Name", user_Name) :
+            new ObjectParameter("User_Name", typeof(string));
+
+
+        var passwordParameter = password != null ?
+            new ObjectParameter("Password", password) :
+            new ObjectParameter("Password", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<COMMON_ADD_CLIENT_SP_Result>("COMMON_ADD_CLIENT_SP", client_IDParameter, user_NameParameter, passwordParameter, status_Code, message);
+    }
+
+
+    public virtual int COMMON_GET_BATCH_DATA_SP(string client_ID, string project_ID, Nullable<long> config_ID, string table_Name, Nullable<long> batch_ID, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var config_IDParameter = config_ID.HasValue ?
+            new ObjectParameter("Config_ID", config_ID) :
+            new ObjectParameter("Config_ID", typeof(long));
+
+
+        var table_NameParameter = table_Name != null ?
+            new ObjectParameter("Table_Name", table_Name) :
+            new ObjectParameter("Table_Name", typeof(string));
+
+
+        var batch_IDParameter = batch_ID.HasValue ?
+            new ObjectParameter("Batch_ID", batch_ID) :
+            new ObjectParameter("Batch_ID", typeof(long));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("COMMON_GET_BATCH_DATA_SP", client_IDParameter, project_IDParameter, config_IDParameter, table_NameParameter, batch_IDParameter, status_Code, message);
+    }
+
+
+    public virtual int COMMON_GET_METADATA_TABLES_LIST_SP(string iP_Address, string database_Name, ObjectParameter status_code, ObjectParameter message)
+    {
+
+        var iP_AddressParameter = iP_Address != null ?
+            new ObjectParameter("IP_Address", iP_Address) :
+            new ObjectParameter("IP_Address", typeof(string));
+
+
+        var database_NameParameter = database_Name != null ?
+            new ObjectParameter("Database_Name", database_Name) :
+            new ObjectParameter("Database_Name", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("COMMON_GET_METADATA_TABLES_LIST_SP", iP_AddressParameter, database_NameParameter, status_code, message);
+    }
+
+
+    public virtual ObjectResult<COMMON_GET_SOURCE_TARGET_CONFIGID_SP_Result> COMMON_GET_SOURCE_TARGET_CONFIGID_SP(string client_ID, string project_ID, Nullable<long> tool_ID, Nullable<long> role_ID, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var tool_IDParameter = tool_ID.HasValue ?
+            new ObjectParameter("Tool_ID", tool_ID) :
+            new ObjectParameter("Tool_ID", typeof(long));
+
+
+        var role_IDParameter = role_ID.HasValue ?
+            new ObjectParameter("Role_ID", role_ID) :
+            new ObjectParameter("Role_ID", typeof(long));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<COMMON_GET_SOURCE_TARGET_CONFIGID_SP_Result>("COMMON_GET_SOURCE_TARGET_CONFIGID_SP", client_IDParameter, project_IDParameter, tool_IDParameter, role_IDParameter, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<COMMON_GET_SOURCE_TARGET_TABLE_COLUMNS_SP_Result> COMMON_GET_SOURCE_TARGET_TABLE_COLUMNS_SP(string client_ID, string project_ID, string source_Table_Name, string target_Table_Name, string source_Config_ID, string target_Config_ID, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var source_Table_NameParameter = source_Table_Name != null ?
+            new ObjectParameter("Source_Table_Name", source_Table_Name) :
+            new ObjectParameter("Source_Table_Name", typeof(string));
+
+
+        var target_Table_NameParameter = target_Table_Name != null ?
+            new ObjectParameter("Target_Table_Name", target_Table_Name) :
+            new ObjectParameter("Target_Table_Name", typeof(string));
+
+
+        var source_Config_IDParameter = source_Config_ID != null ?
+            new ObjectParameter("Source_Config_ID", source_Config_ID) :
+            new ObjectParameter("Source_Config_ID", typeof(string));
+
+
+        var target_Config_IDParameter = target_Config_ID != null ?
+            new ObjectParameter("Target_Config_ID", target_Config_ID) :
+            new ObjectParameter("Target_Config_ID", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<COMMON_GET_SOURCE_TARGET_TABLE_COLUMNS_SP_Result>("COMMON_GET_SOURCE_TARGET_TABLE_COLUMNS_SP", client_IDParameter, project_IDParameter, source_Table_NameParameter, target_Table_NameParameter, source_Config_IDParameter, target_Config_IDParameter, status_Code, message);
+    }
+
+
+    public virtual int DASM_GET_CRI_OBJ_DETL_SP(string client_ID, string project_ID, string object_Type, string template_Name, string config_ID, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var object_TypeParameter = object_Type != null ?
+            new ObjectParameter("Object_Type", object_Type) :
+            new ObjectParameter("Object_Type", typeof(string));
+
+
+        var template_NameParameter = template_Name != null ?
+            new ObjectParameter("Template_Name", template_Name) :
+            new ObjectParameter("Template_Name", typeof(string));
+
+
+        var config_IDParameter = config_ID != null ?
+            new ObjectParameter("Config_ID", config_ID) :
+            new ObjectParameter("Config_ID", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DASM_GET_CRI_OBJ_DETL_SP", client_IDParameter, project_IDParameter, object_TypeParameter, template_NameParameter, config_IDParameter, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<DASM_GET_CRITERIA_TYP_COL_SP_Result> DASM_GET_CRITERIA_TYP_COL_SP(string type, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var typeParameter = type != null ?
+            new ObjectParameter("Type", type) :
+            new ObjectParameter("Type", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DASM_GET_CRITERIA_TYP_COL_SP_Result>("DASM_GET_CRITERIA_TYP_COL_SP", typeParameter, status_Code, message);
+    }
+
+
+    public virtual int DASM_GET_MASKED_DATA_SP(string client_ID, string project_ID, Nullable<long> template_ID, Nullable<long> tool_ID, Nullable<long> role_ID, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var template_IDParameter = template_ID.HasValue ?
+            new ObjectParameter("Template_ID", template_ID) :
+            new ObjectParameter("Template_ID", typeof(long));
+
+
+        var tool_IDParameter = tool_ID.HasValue ?
+            new ObjectParameter("Tool_ID", tool_ID) :
+            new ObjectParameter("Tool_ID", typeof(long));
+
+
+        var role_IDParameter = role_ID.HasValue ?
+            new ObjectParameter("Role_ID", role_ID) :
+            new ObjectParameter("Role_ID", typeof(long));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DASM_GET_MASKED_DATA_SP", client_IDParameter, project_IDParameter, template_IDParameter, tool_IDParameter, role_IDParameter, status_Code, message);
+    }
+
+
+    public virtual int DASM_GET_ROW_FOR_PROCESSING_SP(string client_ID, string project_ID, string object_Type, Nullable<long> template_ID, string config_ID, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var object_TypeParameter = object_Type != null ?
+            new ObjectParameter("Object_Type", object_Type) :
+            new ObjectParameter("Object_Type", typeof(string));
+
+
+        var template_IDParameter = template_ID.HasValue ?
+            new ObjectParameter("Template_ID", template_ID) :
+            new ObjectParameter("Template_ID", typeof(long));
+
+
+        var config_IDParameter = config_ID != null ?
+            new ObjectParameter("Config_ID", config_ID) :
+            new ObjectParameter("Config_ID", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DASM_GET_ROW_FOR_PROCESSING_SP", client_IDParameter, project_IDParameter, object_TypeParameter, template_IDParameter, config_IDParameter, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<DASM_GET_SCRIPTDIFINATION_SP_Result> DASM_GET_SCRIPTDIFINATION_SP(string client_ID, string project_ID, string type, Nullable<long> tool_ID, Nullable<long> role_ID, string objectname, ObjectParameter status_code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var typeParameter = type != null ?
+            new ObjectParameter("type", type) :
+            new ObjectParameter("type", typeof(string));
+
+
+        var tool_IDParameter = tool_ID.HasValue ?
+            new ObjectParameter("Tool_ID", tool_ID) :
+            new ObjectParameter("Tool_ID", typeof(long));
+
+
+        var role_IDParameter = role_ID.HasValue ?
+            new ObjectParameter("Role_ID", role_ID) :
+            new ObjectParameter("Role_ID", typeof(long));
+
+
+        var objectnameParameter = objectname != null ?
+            new ObjectParameter("objectname", objectname) :
+            new ObjectParameter("objectname", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DASM_GET_SCRIPTDIFINATION_SP_Result>("DASM_GET_SCRIPTDIFINATION_SP", client_IDParameter, project_IDParameter, typeParameter, tool_IDParameter, role_IDParameter, objectnameParameter, status_code, message);
+    }
+
+
+    public virtual int DASM_INSERT_MASKING_AUDIT_LOG_SP(string client_ID, string project_ID, Nullable<long> tool_ID, Nullable<long> template_ID, Nullable<long> role_ID, string task, string modified_By, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var tool_IDParameter = tool_ID.HasValue ?
+            new ObjectParameter("Tool_ID", tool_ID) :
+            new ObjectParameter("Tool_ID", typeof(long));
+
+
+        var template_IDParameter = template_ID.HasValue ?
+            new ObjectParameter("Template_ID", template_ID) :
+            new ObjectParameter("Template_ID", typeof(long));
+
+
+        var role_IDParameter = role_ID.HasValue ?
+            new ObjectParameter("Role_ID", role_ID) :
+            new ObjectParameter("Role_ID", typeof(long));
+
+
+        var taskParameter = task != null ?
+            new ObjectParameter("Task", task) :
+            new ObjectParameter("Task", typeof(string));
+
+
+        var modified_ByParameter = modified_By != null ?
+            new ObjectParameter("Modified_By", modified_By) :
+            new ObjectParameter("Modified_By", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DASM_INSERT_MASKING_AUDIT_LOG_SP", client_IDParameter, project_IDParameter, tool_IDParameter, template_IDParameter, role_IDParameter, taskParameter, modified_ByParameter, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<DASM_MASK_TABLE_COLUMNS_SP_Result> DASM_MASK_TABLE_COLUMNS_SP(string client_ID, string project_ID, Nullable<long> template_ID, Nullable<long> role_ID, ObjectParameter status_code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var template_IDParameter = template_ID.HasValue ?
+            new ObjectParameter("Template_ID", template_ID) :
+            new ObjectParameter("Template_ID", typeof(long));
+
+
+        var role_IDParameter = role_ID.HasValue ?
+            new ObjectParameter("Role_ID", role_ID) :
+            new ObjectParameter("Role_ID", typeof(long));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DASM_MASK_TABLE_COLUMNS_SP_Result>("DASM_MASK_TABLE_COLUMNS_SP", client_IDParameter, project_IDParameter, template_IDParameter, role_IDParameter, status_code, message);
+    }
+
+
+    public virtual int DASM_UPDATE_CRITERIA_SP(string client_ID, string project_ID, string type, string object_Name, string slicing_Field, string slicing_Value, Nullable<long> flag)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var typeParameter = type != null ?
+            new ObjectParameter("type", type) :
+            new ObjectParameter("type", typeof(string));
+
+
+        var object_NameParameter = object_Name != null ?
+            new ObjectParameter("Object_Name", object_Name) :
+            new ObjectParameter("Object_Name", typeof(string));
+
+
+        var slicing_FieldParameter = slicing_Field != null ?
+            new ObjectParameter("Slicing_Field", slicing_Field) :
+            new ObjectParameter("Slicing_Field", typeof(string));
+
+
+        var slicing_ValueParameter = slicing_Value != null ?
+            new ObjectParameter("Slicing_Value", slicing_Value) :
+            new ObjectParameter("Slicing_Value", typeof(string));
+
+
+        var flagParameter = flag.HasValue ?
+            new ObjectParameter("flag", flag) :
+            new ObjectParameter("flag", typeof(long));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DASM_UPDATE_CRITERIA_SP", client_IDParameter, project_IDParameter, typeParameter, object_NameParameter, slicing_FieldParameter, slicing_ValueParameter, flagParameter);
+    }
+
+
+    public virtual ObjectResult<string> DIMA_GET_FOLDER_LIST_SP(string client_ID, string project_ID, string repository_Name, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var repository_NameParameter = repository_Name != null ?
+            new ObjectParameter("Repository_Name", repository_Name) :
+            new ObjectParameter("Repository_Name", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("DIMA_GET_FOLDER_LIST_SP", client_IDParameter, project_IDParameter, repository_NameParameter, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<DIMA_GET_KEY_COLUMN_LIST_SP_Result> DIMA_GET_KEY_COLUMN_LIST_SP(string client_ID, string project_ID, string tool_Name, Nullable<long> config_ID, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var tool_NameParameter = tool_Name != null ?
+            new ObjectParameter("Tool_Name", tool_Name) :
+            new ObjectParameter("Tool_Name", typeof(string));
+
+
+        var config_IDParameter = config_ID.HasValue ?
+            new ObjectParameter("Config_ID", config_ID) :
+            new ObjectParameter("Config_ID", typeof(long));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DIMA_GET_KEY_COLUMN_LIST_SP_Result>("DIMA_GET_KEY_COLUMN_LIST_SP", client_IDParameter, project_IDParameter, tool_NameParameter, config_IDParameter, status_Code, message);
+    }
+
+
+    public virtual int DIMA_GET_N_LUKUP_SP(string client_ID, string project_ID, string no_of_records, string table_Type, string repository_name, string folder_Name, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var no_of_recordsParameter = no_of_records != null ?
+            new ObjectParameter("No_of_records", no_of_records) :
+            new ObjectParameter("No_of_records", typeof(string));
+
+
+        var table_TypeParameter = table_Type != null ?
+            new ObjectParameter("Table_Type", table_Type) :
+            new ObjectParameter("Table_Type", typeof(string));
+
+
+        var repository_nameParameter = repository_name != null ?
+            new ObjectParameter("Repository_name", repository_name) :
+            new ObjectParameter("Repository_name", typeof(string));
+
+
+        var folder_NameParameter = folder_Name != null ?
+            new ObjectParameter("Folder_Name", folder_Name) :
+            new ObjectParameter("Folder_Name", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DIMA_GET_N_LUKUP_SP", client_IDParameter, project_IDParameter, no_of_recordsParameter, table_TypeParameter, repository_nameParameter, folder_NameParameter, status_Code, message);
+    }
+
+
+    public virtual int DIMA_GET_N_MAPPING_LUKUP_SP(string client_ID, string project_ID, string no_of_records, string repository_name, string folder_Name, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var no_of_recordsParameter = no_of_records != null ?
+            new ObjectParameter("No_of_records", no_of_records) :
+            new ObjectParameter("No_of_records", typeof(string));
+
+
+        var repository_nameParameter = repository_name != null ?
+            new ObjectParameter("Repository_name", repository_name) :
+            new ObjectParameter("Repository_name", typeof(string));
+
+
+        var folder_NameParameter = folder_Name != null ?
+            new ObjectParameter("Folder_Name", folder_Name) :
+            new ObjectParameter("Folder_Name", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DIMA_GET_N_MAPPING_LUKUP_SP", client_IDParameter, project_IDParameter, no_of_recordsParameter, repository_nameParameter, folder_NameParameter, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<DIMA_GET_PRIMARY_KEY_COLUMN_VALUES_SP_Result> DIMA_GET_PRIMARY_KEY_COLUMN_VALUES_SP(string client_ID, string project_ID, string tool_Name, Nullable<long> config_ID, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var tool_NameParameter = tool_Name != null ?
+            new ObjectParameter("Tool_Name", tool_Name) :
+            new ObjectParameter("Tool_Name", typeof(string));
+
+
+        var config_IDParameter = config_ID.HasValue ?
+            new ObjectParameter("Config_ID", config_ID) :
+            new ObjectParameter("Config_ID", typeof(long));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DIMA_GET_PRIMARY_KEY_COLUMN_VALUES_SP_Result>("DIMA_GET_PRIMARY_KEY_COLUMN_VALUES_SP", client_IDParameter, project_IDParameter, tool_NameParameter, config_IDParameter, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<DIMA_GET_REPORT_LUKUP_SP_Result> DIMA_GET_REPORT_LUKUP_SP(string client_ID, string project_ID, string mapping_Name, string table_Name, string table_Type, string repository_name, string folder_Name, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var mapping_NameParameter = mapping_Name != null ?
+            new ObjectParameter("Mapping_Name", mapping_Name) :
+            new ObjectParameter("Mapping_Name", typeof(string));
+
+
+        var table_NameParameter = table_Name != null ?
+            new ObjectParameter("Table_Name", table_Name) :
+            new ObjectParameter("Table_Name", typeof(string));
+
+
+        var table_TypeParameter = table_Type != null ?
+            new ObjectParameter("Table_Type", table_Type) :
+            new ObjectParameter("Table_Type", typeof(string));
+
+
+        var repository_nameParameter = repository_name != null ?
+            new ObjectParameter("Repository_name", repository_name) :
+            new ObjectParameter("Repository_name", typeof(string));
+
+
+        var folder_NameParameter = folder_Name != null ?
+            new ObjectParameter("Folder_Name", folder_Name) :
+            new ObjectParameter("Folder_Name", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DIMA_GET_REPORT_LUKUP_SP_Result>("DIMA_GET_REPORT_LUKUP_SP", client_IDParameter, project_IDParameter, mapping_NameParameter, table_NameParameter, table_TypeParameter, repository_nameParameter, folder_NameParameter, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<string> DIMA_GET_REPOSITORY_NAME_SP(string client_ID, string project_ID, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("DIMA_GET_REPOSITORY_NAME_SP", client_IDParameter, project_IDParameter, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<DIMA_GET_TABLE_TYPE_CNT_BKP_SP_Result> DIMA_GET_TABLE_TYPE_CNT_BKP_SP(string client_ID, string project_ID, string table_Name, string table_Type1, string table_Type2, string repository_name, string folder_Name, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var table_NameParameter = table_Name != null ?
+            new ObjectParameter("Table_Name", table_Name) :
+            new ObjectParameter("Table_Name", typeof(string));
+
+
+        var table_Type1Parameter = table_Type1 != null ?
+            new ObjectParameter("Table_Type1", table_Type1) :
+            new ObjectParameter("Table_Type1", typeof(string));
+
+
+        var table_Type2Parameter = table_Type2 != null ?
+            new ObjectParameter("Table_Type2", table_Type2) :
+            new ObjectParameter("Table_Type2", typeof(string));
+
+
+        var repository_nameParameter = repository_name != null ?
+            new ObjectParameter("Repository_name", repository_name) :
+            new ObjectParameter("Repository_name", typeof(string));
+
+
+        var folder_NameParameter = folder_Name != null ?
+            new ObjectParameter("Folder_Name", folder_Name) :
+            new ObjectParameter("Folder_Name", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DIMA_GET_TABLE_TYPE_CNT_BKP_SP_Result>("DIMA_GET_TABLE_TYPE_CNT_BKP_SP", client_IDParameter, project_IDParameter, table_NameParameter, table_Type1Parameter, table_Type2Parameter, repository_nameParameter, folder_NameParameter, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<DIMA_GET_TABLE_TYPE_CNT_SP_Result> DIMA_GET_TABLE_TYPE_CNT_SP(string client_ID, string project_ID, string table_Name, string table_Type1, string table_Type2, string repository_name, string folder_Name, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var table_NameParameter = table_Name != null ?
+            new ObjectParameter("Table_Name", table_Name) :
+            new ObjectParameter("Table_Name", typeof(string));
+
+
+        var table_Type1Parameter = table_Type1 != null ?
+            new ObjectParameter("Table_Type1", table_Type1) :
+            new ObjectParameter("Table_Type1", typeof(string));
+
+
+        var table_Type2Parameter = table_Type2 != null ?
+            new ObjectParameter("Table_Type2", table_Type2) :
+            new ObjectParameter("Table_Type2", typeof(string));
+
+
+        var repository_nameParameter = repository_name != null ?
+            new ObjectParameter("Repository_name", repository_name) :
+            new ObjectParameter("Repository_name", typeof(string));
+
+
+        var folder_NameParameter = folder_Name != null ?
+            new ObjectParameter("Folder_Name", folder_Name) :
+            new ObjectParameter("Folder_Name", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DIMA_GET_TABLE_TYPE_CNT_SP_Result>("DIMA_GET_TABLE_TYPE_CNT_SP", client_IDParameter, project_IDParameter, table_NameParameter, table_Type1Parameter, table_Type2Parameter, repository_nameParameter, folder_NameParameter, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<DIMA_GET_TABLE_TYPE_SP_Result> DIMA_GET_TABLE_TYPE_SP(string client_ID, string project_ID, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DIMA_GET_TABLE_TYPE_SP_Result>("DIMA_GET_TABLE_TYPE_SP", client_IDParameter, project_IDParameter, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<DIMA_GET_TBL_NAME_CNT_SP_Result> DIMA_GET_TBL_NAME_CNT_SP(string client_ID, string project_ID, string table_Name, string table_Type, string repository_name, string folder_Name, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var table_NameParameter = table_Name != null ?
+            new ObjectParameter("Table_Name", table_Name) :
+            new ObjectParameter("Table_Name", typeof(string));
+
+
+        var table_TypeParameter = table_Type != null ?
+            new ObjectParameter("Table_Type", table_Type) :
+            new ObjectParameter("Table_Type", typeof(string));
+
+
+        var repository_nameParameter = repository_name != null ?
+            new ObjectParameter("Repository_name", repository_name) :
+            new ObjectParameter("Repository_name", typeof(string));
+
+
+        var folder_NameParameter = folder_Name != null ?
+            new ObjectParameter("Folder_Name", folder_Name) :
+            new ObjectParameter("Folder_Name", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DIMA_GET_TBL_NAME_CNT_SP_Result>("DIMA_GET_TBL_NAME_CNT_SP", client_IDParameter, project_IDParameter, table_NameParameter, table_TypeParameter, repository_nameParameter, folder_NameParameter, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<DIMPLS_GET_CRITERIA_TYPE_COLUMN_SP_Result> DIMPLS_GET_CRITERIA_TYPE_COLUMN_SP(string type, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var typeParameter = type != null ?
+            new ObjectParameter("Type", type) :
+            new ObjectParameter("Type", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DIMPLS_GET_CRITERIA_TYPE_COLUMN_SP_Result>("DIMPLS_GET_CRITERIA_TYPE_COLUMN_SP", typeParameter, status_Code, message);
+    }
+
+
+    public virtual int DIMPLS_GET_CRITERIA_TYPE_SP(string client_ID, string project_ID, string type, string tool_ID, Nullable<long> config_ID, string columname, string slicingvalue, Nullable<int> pageNo, Nullable<int> recordsPerPage, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var typeParameter = type != null ?
+            new ObjectParameter("Type", type) :
+            new ObjectParameter("Type", typeof(string));
+
+
+        var tool_IDParameter = tool_ID != null ?
+            new ObjectParameter("Tool_ID", tool_ID) :
+            new ObjectParameter("Tool_ID", typeof(string));
+
+
+        var config_IDParameter = config_ID.HasValue ?
+            new ObjectParameter("Config_ID", config_ID) :
+            new ObjectParameter("Config_ID", typeof(long));
+
+
+        var columnameParameter = columname != null ?
+            new ObjectParameter("Columname", columname) :
+            new ObjectParameter("Columname", typeof(string));
+
+
+        var slicingvalueParameter = slicingvalue != null ?
+            new ObjectParameter("Slicingvalue", slicingvalue) :
+            new ObjectParameter("Slicingvalue", typeof(string));
+
+
+        var pageNoParameter = pageNo.HasValue ?
+            new ObjectParameter("PageNo", pageNo) :
+            new ObjectParameter("PageNo", typeof(int));
+
+
+        var recordsPerPageParameter = recordsPerPage.HasValue ?
+            new ObjectParameter("RecordsPerPage", recordsPerPage) :
+            new ObjectParameter("RecordsPerPage", typeof(int));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DIMPLS_GET_CRITERIA_TYPE_SP", client_IDParameter, project_IDParameter, typeParameter, tool_IDParameter, config_IDParameter, columnameParameter, slicingvalueParameter, pageNoParameter, recordsPerPageParameter, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<string> DIMPLS_GET_SCRIPT_DEFINITION_SP(string client_ID, string project_ID, string type, Nullable<long> tool_ID, Nullable<long> role_ID, string objectname, ObjectParameter status_code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var typeParameter = type != null ?
+            new ObjectParameter("type", type) :
+            new ObjectParameter("type", typeof(string));
+
+
+        var tool_IDParameter = tool_ID.HasValue ?
+            new ObjectParameter("Tool_ID", tool_ID) :
+            new ObjectParameter("Tool_ID", typeof(long));
+
+
+        var role_IDParameter = role_ID.HasValue ?
+            new ObjectParameter("Role_ID", role_ID) :
+            new ObjectParameter("Role_ID", typeof(long));
+
+
+        var objectnameParameter = objectname != null ?
+            new ObjectParameter("objectname", objectname) :
+            new ObjectParameter("objectname", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("DIMPLS_GET_SCRIPT_DEFINITION_SP", client_IDParameter, project_IDParameter, typeParameter, tool_IDParameter, role_IDParameter, objectnameParameter, status_code, message);
+    }
+
+
+    public virtual int DIMPLS_GET_SLICING_COL_VALUE_SP(string client_ID, string project_ID, string column_name, Nullable<long> config_ID, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var column_nameParameter = column_name != null ?
+            new ObjectParameter("Column_name", column_name) :
+            new ObjectParameter("Column_name", typeof(string));
+
+
+        var config_IDParameter = config_ID.HasValue ?
+            new ObjectParameter("Config_ID", config_ID) :
+            new ObjectParameter("Config_ID", typeof(long));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DIMPLS_GET_SLICING_COL_VALUE_SP", client_IDParameter, project_IDParameter, column_nameParameter, config_IDParameter, status_Code, message);
+    }
+
+
+    public virtual int DIMPLS_UPDATE_PURGE_DATA_SP(string client_ID, string project_ID, Nullable<long> role_ID, string objectname, string fieldname, string value, Nullable<int> dflag, Nullable<long> tool_ID, ObjectParameter status_Code, ObjectParameter message)
     {
 
         var client_IDParameter = client_ID != null ?
@@ -6126,7 +7576,1914 @@ public partial class DM_MetaDataEntities : DbContext
             new ObjectParameter("Role_ID", typeof(long));
 
 
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CMN_GET_ROLE_SP_Result1>("CMN_GET_ROLE_SP", client_IDParameter, project_IDParameter, role_IDParameter, status_code, message);
+        var objectnameParameter = objectname != null ?
+            new ObjectParameter("Objectname", objectname) :
+            new ObjectParameter("Objectname", typeof(string));
+
+
+        var fieldnameParameter = fieldname != null ?
+            new ObjectParameter("Fieldname", fieldname) :
+            new ObjectParameter("Fieldname", typeof(string));
+
+
+        var valueParameter = value != null ?
+            new ObjectParameter("value", value) :
+            new ObjectParameter("value", typeof(string));
+
+
+        var dflagParameter = dflag.HasValue ?
+            new ObjectParameter("dflag", dflag) :
+            new ObjectParameter("dflag", typeof(int));
+
+
+        var tool_IDParameter = tool_ID.HasValue ?
+            new ObjectParameter("Tool_ID", tool_ID) :
+            new ObjectParameter("Tool_ID", typeof(long));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DIMPLS_UPDATE_PURGE_DATA_SP", client_IDParameter, project_IDParameter, role_IDParameter, objectnameParameter, fieldnameParameter, valueParameter, dflagParameter, tool_IDParameter, status_Code, message);
+    }
+
+
+    public virtual int DIMPLS_UPDATE_TRANSFERPROCESS_SP(string client_ID, string project_ID, Nullable<long> tool_ID, Nullable<long> role_ID, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var tool_IDParameter = tool_ID.HasValue ?
+            new ObjectParameter("Tool_ID", tool_ID) :
+            new ObjectParameter("Tool_ID", typeof(long));
+
+
+        var role_IDParameter = role_ID.HasValue ?
+            new ObjectParameter("Role_ID", role_ID) :
+            new ObjectParameter("Role_ID", typeof(long));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DIMPLS_UPDATE_TRANSFERPROCESS_SP", client_IDParameter, project_IDParameter, tool_IDParameter, role_IDParameter, status_Code, message);
+    }
+
+
+    public virtual int DRD_DATA_COMPARE_SP_TEST(string client_ID, string project_ID, string template_Name, Nullable<long> tool_ID, Nullable<long> role_ID, string run_User, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var template_NameParameter = template_Name != null ?
+            new ObjectParameter("Template_Name", template_Name) :
+            new ObjectParameter("Template_Name", typeof(string));
+
+
+        var tool_IDParameter = tool_ID.HasValue ?
+            new ObjectParameter("Tool_ID", tool_ID) :
+            new ObjectParameter("Tool_ID", typeof(long));
+
+
+        var role_IDParameter = role_ID.HasValue ?
+            new ObjectParameter("Role_ID", role_ID) :
+            new ObjectParameter("Role_ID", typeof(long));
+
+
+        var run_UserParameter = run_User != null ?
+            new ObjectParameter("Run_User", run_User) :
+            new ObjectParameter("Run_User", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DRD_DATA_COMPARE_SP_TEST", client_IDParameter, project_IDParameter, template_NameParameter, tool_IDParameter, role_IDParameter, run_UserParameter, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<DRD_GET_DATACOMPARE_REPORT_SP_Result> DRD_GET_DATACOMPARE_REPORT_SP(string client_ID, string project_ID, Nullable<long> run_ID, Nullable<long> template_ID)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var run_IDParameter = run_ID.HasValue ?
+            new ObjectParameter("Run_ID", run_ID) :
+            new ObjectParameter("Run_ID", typeof(long));
+
+
+        var template_IDParameter = template_ID.HasValue ?
+            new ObjectParameter("Template_ID", template_ID) :
+            new ObjectParameter("Template_ID", typeof(long));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DRD_GET_DATACOMPARE_REPORT_SP_Result>("DRD_GET_DATACOMPARE_REPORT_SP", client_IDParameter, project_IDParameter, run_IDParameter, template_IDParameter);
+    }
+
+
+    public virtual ObjectResult<DRD_GET_TEMPLATE_TRANS_DETAILS_SP_Result> DRD_GET_TEMPLATE_TRANS_DETAILS_SP(string client_ID, string project_ID, Nullable<long> atmtn_Tempalte_ID, string table_Name, string column_name, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var atmtn_Tempalte_IDParameter = atmtn_Tempalte_ID.HasValue ?
+            new ObjectParameter("Atmtn_Tempalte_ID", atmtn_Tempalte_ID) :
+            new ObjectParameter("Atmtn_Tempalte_ID", typeof(long));
+
+
+        var table_NameParameter = table_Name != null ?
+            new ObjectParameter("Table_Name", table_Name) :
+            new ObjectParameter("Table_Name", typeof(string));
+
+
+        var column_nameParameter = column_name != null ?
+            new ObjectParameter("Column_name", column_name) :
+            new ObjectParameter("Column_name", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DRD_GET_TEMPLATE_TRANS_DETAILS_SP_Result>("DRD_GET_TEMPLATE_TRANS_DETAILS_SP", client_IDParameter, project_IDParameter, atmtn_Tempalte_IDParameter, table_NameParameter, column_nameParameter, status_Code, message);
+    }
+
+
+    public virtual int DRD_INSERT_TEMPLATE_SP(ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DRD_INSERT_TEMPLATE_SP", status_Code, message);
+    }
+
+
+    public virtual int ETL_COPY_TEMPLATE_SP(string client_ID, string project_ID, Nullable<long> old_Template_ID, string new_Template_Name, string created_By, ObjectParameter new_Template_ID, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var old_Template_IDParameter = old_Template_ID.HasValue ?
+            new ObjectParameter("Old_Template_ID", old_Template_ID) :
+            new ObjectParameter("Old_Template_ID", typeof(long));
+
+
+        var new_Template_NameParameter = new_Template_Name != null ?
+            new ObjectParameter("New_Template_Name", new_Template_Name) :
+            new ObjectParameter("New_Template_Name", typeof(string));
+
+
+        var created_ByParameter = created_By != null ?
+            new ObjectParameter("Created_By", created_By) :
+            new ObjectParameter("Created_By", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ETL_COPY_TEMPLATE_SP", client_IDParameter, project_IDParameter, old_Template_IDParameter, new_Template_NameParameter, created_ByParameter, new_Template_ID, status_Code, message);
+    }
+
+
+    public virtual int ETL_GENERATE_MERGE_EY_SP(string table_name, string target_table, string database_name_src, string database_name_tgt, string cols_to_exclude, string schema, Nullable<bool> ommit_images, Nullable<bool> ommit_identity, Nullable<int> tOP, string cols_to_include, Nullable<bool> update_only_if_changed, Nullable<bool> disable_constraints, string fROM, Nullable<bool> include_timestamp, Nullable<bool> debug_mode, Nullable<bool> ommit_computed_cols, ObjectParameter mergestmnt_op)
+    {
+
+        var table_nameParameter = table_name != null ?
+            new ObjectParameter("table_name", table_name) :
+            new ObjectParameter("table_name", typeof(string));
+
+
+        var target_tableParameter = target_table != null ?
+            new ObjectParameter("target_table", target_table) :
+            new ObjectParameter("target_table", typeof(string));
+
+
+        var database_name_srcParameter = database_name_src != null ?
+            new ObjectParameter("database_name_src", database_name_src) :
+            new ObjectParameter("database_name_src", typeof(string));
+
+
+        var database_name_tgtParameter = database_name_tgt != null ?
+            new ObjectParameter("database_name_tgt", database_name_tgt) :
+            new ObjectParameter("database_name_tgt", typeof(string));
+
+
+        var cols_to_excludeParameter = cols_to_exclude != null ?
+            new ObjectParameter("cols_to_exclude", cols_to_exclude) :
+            new ObjectParameter("cols_to_exclude", typeof(string));
+
+
+        var schemaParameter = schema != null ?
+            new ObjectParameter("schema", schema) :
+            new ObjectParameter("schema", typeof(string));
+
+
+        var ommit_imagesParameter = ommit_images.HasValue ?
+            new ObjectParameter("ommit_images", ommit_images) :
+            new ObjectParameter("ommit_images", typeof(bool));
+
+
+        var ommit_identityParameter = ommit_identity.HasValue ?
+            new ObjectParameter("ommit_identity", ommit_identity) :
+            new ObjectParameter("ommit_identity", typeof(bool));
+
+
+        var tOPParameter = tOP.HasValue ?
+            new ObjectParameter("TOP", tOP) :
+            new ObjectParameter("TOP", typeof(int));
+
+
+        var cols_to_includeParameter = cols_to_include != null ?
+            new ObjectParameter("cols_to_include", cols_to_include) :
+            new ObjectParameter("cols_to_include", typeof(string));
+
+
+        var update_only_if_changedParameter = update_only_if_changed.HasValue ?
+            new ObjectParameter("update_only_if_changed", update_only_if_changed) :
+            new ObjectParameter("update_only_if_changed", typeof(bool));
+
+
+        var disable_constraintsParameter = disable_constraints.HasValue ?
+            new ObjectParameter("disable_constraints", disable_constraints) :
+            new ObjectParameter("disable_constraints", typeof(bool));
+
+
+        var fROMParameter = fROM != null ?
+            new ObjectParameter("FROM", fROM) :
+            new ObjectParameter("FROM", typeof(string));
+
+
+        var include_timestampParameter = include_timestamp.HasValue ?
+            new ObjectParameter("include_timestamp", include_timestamp) :
+            new ObjectParameter("include_timestamp", typeof(bool));
+
+
+        var debug_modeParameter = debug_mode.HasValue ?
+            new ObjectParameter("debug_mode", debug_mode) :
+            new ObjectParameter("debug_mode", typeof(bool));
+
+
+        var ommit_computed_colsParameter = ommit_computed_cols.HasValue ?
+            new ObjectParameter("ommit_computed_cols", ommit_computed_cols) :
+            new ObjectParameter("ommit_computed_cols", typeof(bool));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ETL_GENERATE_MERGE_EY_SP", table_nameParameter, target_tableParameter, database_name_srcParameter, database_name_tgtParameter, cols_to_excludeParameter, schemaParameter, ommit_imagesParameter, ommit_identityParameter, tOPParameter, cols_to_includeParameter, update_only_if_changedParameter, disable_constraintsParameter, fROMParameter, include_timestampParameter, debug_modeParameter, ommit_computed_colsParameter, mergestmnt_op);
+    }
+
+
+    public virtual ObjectResult<string> ETL_GET_COLUMN_LIST_SP(string client_ID, string project_ID, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("ETL_GET_COLUMN_LIST_SP", client_IDParameter, project_IDParameter, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<string> ETL_GET_COLUMN_TABLE_LIST_SP(string client_ID, string project_ID, string field_Name, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var field_NameParameter = field_Name != null ?
+            new ObjectParameter("Field_Name", field_Name) :
+            new ObjectParameter("Field_Name", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("ETL_GET_COLUMN_TABLE_LIST_SP", client_IDParameter, project_IDParameter, field_NameParameter, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<ETL_GET_DESIGN_MASTER_DTLS_SP_Result> ETL_GET_DESIGN_MASTER_DTLS_SP(string client_ID, string project_ID, Nullable<long> tool_ID, Nullable<long> template_ID, Nullable<long> role_ID, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var tool_IDParameter = tool_ID.HasValue ?
+            new ObjectParameter("Tool_ID", tool_ID) :
+            new ObjectParameter("Tool_ID", typeof(long));
+
+
+        var template_IDParameter = template_ID.HasValue ?
+            new ObjectParameter("Template_ID", template_ID) :
+            new ObjectParameter("Template_ID", typeof(long));
+
+
+        var role_IDParameter = role_ID.HasValue ?
+            new ObjectParameter("Role_ID", role_ID) :
+            new ObjectParameter("Role_ID", typeof(long));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ETL_GET_DESIGN_MASTER_DTLS_SP_Result>("ETL_GET_DESIGN_MASTER_DTLS_SP", client_IDParameter, project_IDParameter, tool_IDParameter, template_IDParameter, role_IDParameter, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<ETL_GET_FILE_DOWNLOAD_TEMPLATE_SP_Result> ETL_GET_FILE_DOWNLOAD_TEMPLATE_SP(string template_ID, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var template_IDParameter = template_ID != null ?
+            new ObjectParameter("Template_ID", template_ID) :
+            new ObjectParameter("Template_ID", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ETL_GET_FILE_DOWNLOAD_TEMPLATE_SP_Result>("ETL_GET_FILE_DOWNLOAD_TEMPLATE_SP", template_IDParameter, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<ETL_GET_FILE_UPLOAD_TEMPLATE_SP_Result> ETL_GET_FILE_UPLOAD_TEMPLATE_SP(string template_ID, Nullable<long> role_ID, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var template_IDParameter = template_ID != null ?
+            new ObjectParameter("Template_ID", template_ID) :
+            new ObjectParameter("Template_ID", typeof(string));
+
+
+        var role_IDParameter = role_ID.HasValue ?
+            new ObjectParameter("Role_ID", role_ID) :
+            new ObjectParameter("Role_ID", typeof(long));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ETL_GET_FILE_UPLOAD_TEMPLATE_SP_Result>("ETL_GET_FILE_UPLOAD_TEMPLATE_SP", template_IDParameter, role_IDParameter, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<ETL_GET_SOURCE_TEMPLATE_LIST_INFAGEN_SP_Result> ETL_GET_SOURCE_TEMPLATE_LIST_INFAGEN_SP(string client_ID, string project_ID, string type, ObjectParameter status_code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var typeParameter = type != null ?
+            new ObjectParameter("Type", type) :
+            new ObjectParameter("Type", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ETL_GET_SOURCE_TEMPLATE_LIST_INFAGEN_SP_Result>("ETL_GET_SOURCE_TEMPLATE_LIST_INFAGEN_SP", client_IDParameter, project_IDParameter, typeParameter, status_code, message);
+    }
+
+
+    public virtual ObjectResult<ETL_GET_TABLE_ATTRIBUTE_DTLS_SP_Result> ETL_GET_TABLE_ATTRIBUTE_DTLS_SP(string client_ID, string project_ID, Nullable<long> tool_ID, Nullable<long> template_ID, Nullable<long> role_ID, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var tool_IDParameter = tool_ID.HasValue ?
+            new ObjectParameter("Tool_ID", tool_ID) :
+            new ObjectParameter("Tool_ID", typeof(long));
+
+
+        var template_IDParameter = template_ID.HasValue ?
+            new ObjectParameter("Template_ID", template_ID) :
+            new ObjectParameter("Template_ID", typeof(long));
+
+
+        var role_IDParameter = role_ID.HasValue ?
+            new ObjectParameter("Role_ID", role_ID) :
+            new ObjectParameter("Role_ID", typeof(long));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ETL_GET_TABLE_ATTRIBUTE_DTLS_SP_Result>("ETL_GET_TABLE_ATTRIBUTE_DTLS_SP", client_IDParameter, project_IDParameter, tool_IDParameter, template_IDParameter, role_IDParameter, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<ETL_GET_TBL_EXPORT_STATUS_SP_Result> ETL_GET_TBL_EXPORT_STATUS_SP(string client_ID, string project_ID, Nullable<long> config_ID, string request_User, ObjectParameter status_code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var config_IDParameter = config_ID.HasValue ?
+            new ObjectParameter("Config_ID", config_ID) :
+            new ObjectParameter("Config_ID", typeof(long));
+
+
+        var request_UserParameter = request_User != null ?
+            new ObjectParameter("Request_User", request_User) :
+            new ObjectParameter("Request_User", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ETL_GET_TBL_EXPORT_STATUS_SP_Result>("ETL_GET_TBL_EXPORT_STATUS_SP", client_IDParameter, project_IDParameter, config_IDParameter, request_UserParameter, status_code, message);
+    }
+
+
+    public virtual ObjectResult<ETL_GET_TEMP_SRC_TGT_TBL_SP_Result> ETL_GET_TEMP_SRC_TGT_TBL_SP(string p_Client_ID, string p_Project_ID, Nullable<double> p_Template_ID, ObjectParameter p_Status_Code, ObjectParameter p_Message)
+    {
+
+        var p_Client_IDParameter = p_Client_ID != null ?
+            new ObjectParameter("p_Client_ID", p_Client_ID) :
+            new ObjectParameter("p_Client_ID", typeof(string));
+
+
+        var p_Project_IDParameter = p_Project_ID != null ?
+            new ObjectParameter("p_Project_ID", p_Project_ID) :
+            new ObjectParameter("p_Project_ID", typeof(string));
+
+
+        var p_Template_IDParameter = p_Template_ID.HasValue ?
+            new ObjectParameter("p_Template_ID", p_Template_ID) :
+            new ObjectParameter("p_Template_ID", typeof(double));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ETL_GET_TEMP_SRC_TGT_TBL_SP_Result>("ETL_GET_TEMP_SRC_TGT_TBL_SP", p_Client_IDParameter, p_Project_IDParameter, p_Template_IDParameter, p_Status_Code, p_Message);
+    }
+
+
+    public virtual ObjectResult<ETL_GET_TEMPLATE_COUNT_SP_Result> ETL_GET_TEMPLATE_COUNT_SP(string client_ID, string project_ID, string field_Name, string table_Name, string detail, string detail_Type, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var field_NameParameter = field_Name != null ?
+            new ObjectParameter("Field_Name", field_Name) :
+            new ObjectParameter("Field_Name", typeof(string));
+
+
+        var table_NameParameter = table_Name != null ?
+            new ObjectParameter("Table_Name", table_Name) :
+            new ObjectParameter("Table_Name", typeof(string));
+
+
+        var detailParameter = detail != null ?
+            new ObjectParameter("Detail", detail) :
+            new ObjectParameter("Detail", typeof(string));
+
+
+        var detail_TypeParameter = detail_Type != null ?
+            new ObjectParameter("Detail_Type", detail_Type) :
+            new ObjectParameter("Detail_Type", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ETL_GET_TEMPLATE_COUNT_SP_Result>("ETL_GET_TEMPLATE_COUNT_SP", client_IDParameter, project_IDParameter, field_NameParameter, table_NameParameter, detailParameter, detail_TypeParameter, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<ETL_GET_TEMPLATE_DETAILS4MASTERPKG_SP_Result> ETL_GET_TEMPLATE_DETAILS4MASTERPKG_SP(Nullable<long> role_ID, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var role_IDParameter = role_ID.HasValue ?
+            new ObjectParameter("Role_ID", role_ID) :
+            new ObjectParameter("Role_ID", typeof(long));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ETL_GET_TEMPLATE_DETAILS4MASTERPKG_SP_Result>("ETL_GET_TEMPLATE_DETAILS4MASTERPKG_SP", role_IDParameter, status_Code, message);
+    }
+
+
+    public virtual int ETL_INSERT_FILE_DOWNLOAD_TEMPLATE_SP(string template_ID, string source_Name, string file_Location, string file_Name, string prefix_Filename, string batch_Portion, string batch_Name_Values, string file_Type, string file_Delimiter, string data_Starting_Line, string target_Table, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var template_IDParameter = template_ID != null ?
+            new ObjectParameter("Template_ID", template_ID) :
+            new ObjectParameter("Template_ID", typeof(string));
+
+
+        var source_NameParameter = source_Name != null ?
+            new ObjectParameter("Source_Name", source_Name) :
+            new ObjectParameter("Source_Name", typeof(string));
+
+
+        var file_LocationParameter = file_Location != null ?
+            new ObjectParameter("File_Location", file_Location) :
+            new ObjectParameter("File_Location", typeof(string));
+
+
+        var file_NameParameter = file_Name != null ?
+            new ObjectParameter("File_Name", file_Name) :
+            new ObjectParameter("File_Name", typeof(string));
+
+
+        var prefix_FilenameParameter = prefix_Filename != null ?
+            new ObjectParameter("Prefix_Filename", prefix_Filename) :
+            new ObjectParameter("Prefix_Filename", typeof(string));
+
+
+        var batch_PortionParameter = batch_Portion != null ?
+            new ObjectParameter("Batch_Portion", batch_Portion) :
+            new ObjectParameter("Batch_Portion", typeof(string));
+
+
+        var batch_Name_ValuesParameter = batch_Name_Values != null ?
+            new ObjectParameter("Batch_Name_Values", batch_Name_Values) :
+            new ObjectParameter("Batch_Name_Values", typeof(string));
+
+
+        var file_TypeParameter = file_Type != null ?
+            new ObjectParameter("File_Type", file_Type) :
+            new ObjectParameter("File_Type", typeof(string));
+
+
+        var file_DelimiterParameter = file_Delimiter != null ?
+            new ObjectParameter("File_Delimiter", file_Delimiter) :
+            new ObjectParameter("File_Delimiter", typeof(string));
+
+
+        var data_Starting_LineParameter = data_Starting_Line != null ?
+            new ObjectParameter("Data_Starting_Line", data_Starting_Line) :
+            new ObjectParameter("Data_Starting_Line", typeof(string));
+
+
+        var target_TableParameter = target_Table != null ?
+            new ObjectParameter("Target_Table", target_Table) :
+            new ObjectParameter("Target_Table", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ETL_INSERT_FILE_DOWNLOAD_TEMPLATE_SP", template_IDParameter, source_NameParameter, file_LocationParameter, file_NameParameter, prefix_FilenameParameter, batch_PortionParameter, batch_Name_ValuesParameter, file_TypeParameter, file_DelimiterParameter, data_Starting_LineParameter, target_TableParameter, status_Code, message);
+    }
+
+
+    public virtual int ETL_INSERT_RUN_AUDIT_SP(string client_ID, string project_ID, string template_Name, Nullable<long> role_ID, string modified_by, Nullable<long> run_ID, ObjectParameter run_ID_OUTPUT, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var template_NameParameter = template_Name != null ?
+            new ObjectParameter("Template_Name", template_Name) :
+            new ObjectParameter("Template_Name", typeof(string));
+
+
+        var role_IDParameter = role_ID.HasValue ?
+            new ObjectParameter("Role_ID", role_ID) :
+            new ObjectParameter("Role_ID", typeof(long));
+
+
+        var modified_byParameter = modified_by != null ?
+            new ObjectParameter("Modified_by", modified_by) :
+            new ObjectParameter("Modified_by", typeof(string));
+
+
+        var run_IDParameter = run_ID.HasValue ?
+            new ObjectParameter("Run_ID", run_ID) :
+            new ObjectParameter("Run_ID", typeof(long));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ETL_INSERT_RUN_AUDIT_SP", client_IDParameter, project_IDParameter, template_NameParameter, role_IDParameter, modified_byParameter, run_IDParameter, run_ID_OUTPUT, status_Code, message);
+    }
+
+
+    public virtual int ETL_INSERT_UPLOAD_RUN_AUDIT_SP(string client_ID, string project_ID, string template_Name, Nullable<long> role_ID, string modified_by, Nullable<long> run_ID, ObjectParameter run_ID_OUTPUT, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var template_NameParameter = template_Name != null ?
+            new ObjectParameter("Template_Name", template_Name) :
+            new ObjectParameter("Template_Name", typeof(string));
+
+
+        var role_IDParameter = role_ID.HasValue ?
+            new ObjectParameter("Role_ID", role_ID) :
+            new ObjectParameter("Role_ID", typeof(long));
+
+
+        var modified_byParameter = modified_by != null ?
+            new ObjectParameter("Modified_by", modified_by) :
+            new ObjectParameter("Modified_by", typeof(string));
+
+
+        var run_IDParameter = run_ID.HasValue ?
+            new ObjectParameter("Run_ID", run_ID) :
+            new ObjectParameter("Run_ID", typeof(long));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ETL_INSERT_UPLOAD_RUN_AUDIT_SP", client_IDParameter, project_IDParameter, template_NameParameter, role_IDParameter, modified_byParameter, run_IDParameter, run_ID_OUTPUT, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<HXR_ADD_CLIENT_SP_Result> HXR_ADD_CLIENT_SP(string client_ID, string user_Name, string password, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var user_NameParameter = user_Name != null ?
+            new ObjectParameter("User_Name", user_Name) :
+            new ObjectParameter("User_Name", typeof(string));
+
+
+        var passwordParameter = password != null ?
+            new ObjectParameter("Password", password) :
+            new ObjectParameter("Password", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<HXR_ADD_CLIENT_SP_Result>("HXR_ADD_CLIENT_SP", client_IDParameter, user_NameParameter, passwordParameter, status_Code, message);
+    }
+
+
+    public virtual int HXR_CREATE_DB_LINK_SP(string iP_Address, string userName, string password, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var iP_AddressParameter = iP_Address != null ?
+            new ObjectParameter("IP_Address", iP_Address) :
+            new ObjectParameter("IP_Address", typeof(string));
+
+
+        var userNameParameter = userName != null ?
+            new ObjectParameter("UserName", userName) :
+            new ObjectParameter("UserName", typeof(string));
+
+
+        var passwordParameter = password != null ?
+            new ObjectParameter("Password", password) :
+            new ObjectParameter("Password", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("HXR_CREATE_DB_LINK_SP", iP_AddressParameter, userNameParameter, passwordParameter, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<string> HXR_FIND_USER_SP(string client_ID, string user_Name, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var user_NameParameter = user_Name != null ?
+            new ObjectParameter("User_Name", user_Name) :
+            new ObjectParameter("User_Name", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("HXR_FIND_USER_SP", client_IDParameter, user_NameParameter, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<HXR_FORGOT_PASSWORD_SP_Result> HXR_FORGOT_PASSWORD_SP(string client_ID, string user_Name, string email_ID, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var user_NameParameter = user_Name != null ?
+            new ObjectParameter("User_Name", user_Name) :
+            new ObjectParameter("User_Name", typeof(string));
+
+
+        var email_IDParameter = email_ID != null ?
+            new ObjectParameter("Email_ID", email_ID) :
+            new ObjectParameter("Email_ID", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<HXR_FORGOT_PASSWORD_SP_Result>("HXR_FORGOT_PASSWORD_SP", client_IDParameter, user_NameParameter, email_IDParameter, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<HXR_GET_CONSTRING_SP_Result> HXR_GET_CONSTRING_SP(string client_ID, string project_ID, Nullable<long> tool_ID, Nullable<long> role_ID, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var tool_IDParameter = tool_ID.HasValue ?
+            new ObjectParameter("Tool_ID", tool_ID) :
+            new ObjectParameter("Tool_ID", typeof(long));
+
+
+        var role_IDParameter = role_ID.HasValue ?
+            new ObjectParameter("Role_ID", role_ID) :
+            new ObjectParameter("Role_ID", typeof(long));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<HXR_GET_CONSTRING_SP_Result>("HXR_GET_CONSTRING_SP", client_IDParameter, project_IDParameter, tool_IDParameter, role_IDParameter, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<HXR_GET_META_DATA_SP_Result> HXR_GET_META_DATA_SP(string client_ID, string project_ID, string database_IP, string table_name, string column_Name, string config_ID, string source_Target, ObjectParameter status_code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var database_IPParameter = database_IP != null ?
+            new ObjectParameter("Database_IP", database_IP) :
+            new ObjectParameter("Database_IP", typeof(string));
+
+
+        var table_nameParameter = table_name != null ?
+            new ObjectParameter("Table_name", table_name) :
+            new ObjectParameter("Table_name", typeof(string));
+
+
+        var column_NameParameter = column_Name != null ?
+            new ObjectParameter("Column_Name", column_Name) :
+            new ObjectParameter("Column_Name", typeof(string));
+
+
+        var config_IDParameter = config_ID != null ?
+            new ObjectParameter("Config_ID", config_ID) :
+            new ObjectParameter("Config_ID", typeof(string));
+
+
+        var source_TargetParameter = source_Target != null ?
+            new ObjectParameter("Source_Target", source_Target) :
+            new ObjectParameter("Source_Target", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<HXR_GET_META_DATA_SP_Result>("HXR_GET_META_DATA_SP", client_IDParameter, project_IDParameter, database_IPParameter, table_nameParameter, column_NameParameter, config_IDParameter, source_TargetParameter, status_code, message);
+    }
+
+
+    public virtual int HXR_GET_METADATA_TABLES_LIST_SP(string client_ID, string project_ID, string iP_Address, string database_Name, string source_Target, ObjectParameter status_code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var iP_AddressParameter = iP_Address != null ?
+            new ObjectParameter("IP_Address", iP_Address) :
+            new ObjectParameter("IP_Address", typeof(string));
+
+
+        var database_NameParameter = database_Name != null ?
+            new ObjectParameter("Database_Name", database_Name) :
+            new ObjectParameter("Database_Name", typeof(string));
+
+
+        var source_TargetParameter = source_Target != null ?
+            new ObjectParameter("Source_Target", source_Target) :
+            new ObjectParameter("Source_Target", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("HXR_GET_METADATA_TABLES_LIST_SP", client_IDParameter, project_IDParameter, iP_AddressParameter, database_NameParameter, source_TargetParameter, status_code, message);
+    }
+
+
+    public virtual ObjectResult<HXR_GET_OBJECTNAME_SP1_Result> HXR_GET_OBJECTNAME_SP1(string client_ID, string project_ID, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<HXR_GET_OBJECTNAME_SP1_Result>("HXR_GET_OBJECTNAME_SP1", client_IDParameter, project_IDParameter, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<HXR_GET_PARAMETERCOUNT_SP1_Result> HXR_GET_PARAMETERCOUNT_SP1(string client_ID, string project_ID, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<HXR_GET_PARAMETERCOUNT_SP1_Result>("HXR_GET_PARAMETERCOUNT_SP1", client_IDParameter, project_IDParameter, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<HXR_GET_PROJECT_SP_Result1> HXR_GET_PROJECT_SP(string client_ID, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<HXR_GET_PROJECT_SP_Result1>("HXR_GET_PROJECT_SP", client_IDParameter, status_Code, message);
+    }
+
+
+    public virtual int HXR_GET_ROLE_SP(string client_ID, ObjectParameter status_code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("HXR_GET_ROLE_SP", client_IDParameter, status_code, message);
+    }
+
+
+    public virtual ObjectResult<HXR_GET_RULE_ATTRIBUTE_FOR_DISPLAY_SP1_Result> HXR_GET_RULE_ATTRIBUTE_FOR_DISPLAY_SP1(string client_ID, string project_ID, string table_name, string column_Name, Nullable<long> rule_Type_ID, Nullable<int> pageNo, Nullable<int> recordsPerPage, ObjectParameter status_Code, ObjectParameter message, ObjectParameter totalCount)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var table_nameParameter = table_name != null ?
+            new ObjectParameter("Table_name", table_name) :
+            new ObjectParameter("Table_name", typeof(string));
+
+
+        var column_NameParameter = column_Name != null ?
+            new ObjectParameter("Column_Name", column_Name) :
+            new ObjectParameter("Column_Name", typeof(string));
+
+
+        var rule_Type_IDParameter = rule_Type_ID.HasValue ?
+            new ObjectParameter("Rule_Type_ID", rule_Type_ID) :
+            new ObjectParameter("Rule_Type_ID", typeof(long));
+
+
+        var pageNoParameter = pageNo.HasValue ?
+            new ObjectParameter("PageNo", pageNo) :
+            new ObjectParameter("PageNo", typeof(int));
+
+
+        var recordsPerPageParameter = recordsPerPage.HasValue ?
+            new ObjectParameter("RecordsPerPage", recordsPerPage) :
+            new ObjectParameter("RecordsPerPage", typeof(int));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<HXR_GET_RULE_ATTRIBUTE_FOR_DISPLAY_SP1_Result>("HXR_GET_RULE_ATTRIBUTE_FOR_DISPLAY_SP1", client_IDParameter, project_IDParameter, table_nameParameter, column_NameParameter, rule_Type_IDParameter, pageNoParameter, recordsPerPageParameter, status_Code, message, totalCount);
+    }
+
+
+    public virtual ObjectResult<HXR_GET_RULE_ATTRIBUTE_FOR_DISPLAY_SP_BKP_Result> HXR_GET_RULE_ATTRIBUTE_FOR_DISPLAY_SP_BKP(string client_ID, string project_ID, string table_name, string column_Name, Nullable<long> rule_Type_ID, Nullable<int> pageNo, Nullable<int> recordsPerPage, ObjectParameter status_Code, ObjectParameter message, ObjectParameter totalCount)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var table_nameParameter = table_name != null ?
+            new ObjectParameter("Table_name", table_name) :
+            new ObjectParameter("Table_name", typeof(string));
+
+
+        var column_NameParameter = column_Name != null ?
+            new ObjectParameter("Column_Name", column_Name) :
+            new ObjectParameter("Column_Name", typeof(string));
+
+
+        var rule_Type_IDParameter = rule_Type_ID.HasValue ?
+            new ObjectParameter("Rule_Type_ID", rule_Type_ID) :
+            new ObjectParameter("Rule_Type_ID", typeof(long));
+
+
+        var pageNoParameter = pageNo.HasValue ?
+            new ObjectParameter("PageNo", pageNo) :
+            new ObjectParameter("PageNo", typeof(int));
+
+
+        var recordsPerPageParameter = recordsPerPage.HasValue ?
+            new ObjectParameter("RecordsPerPage", recordsPerPage) :
+            new ObjectParameter("RecordsPerPage", typeof(int));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<HXR_GET_RULE_ATTRIBUTE_FOR_DISPLAY_SP_BKP_Result>("HXR_GET_RULE_ATTRIBUTE_FOR_DISPLAY_SP_BKP", client_IDParameter, project_IDParameter, table_nameParameter, column_NameParameter, rule_Type_IDParameter, pageNoParameter, recordsPerPageParameter, status_Code, message, totalCount);
+    }
+
+
+    public virtual int HXR_GET_RULE_ERROR_DATA_SP(string client_ID, string project_ID, string iP_Address, string database_Name, string table_Name, ObjectParameter status_code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var iP_AddressParameter = iP_Address != null ?
+            new ObjectParameter("IP_Address", iP_Address) :
+            new ObjectParameter("IP_Address", typeof(string));
+
+
+        var database_NameParameter = database_Name != null ?
+            new ObjectParameter("Database_Name", database_Name) :
+            new ObjectParameter("Database_Name", typeof(string));
+
+
+        var table_NameParameter = table_Name != null ?
+            new ObjectParameter("Table_Name", table_Name) :
+            new ObjectParameter("Table_Name", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("HXR_GET_RULE_ERROR_DATA_SP", client_IDParameter, project_IDParameter, iP_AddressParameter, database_NameParameter, table_NameParameter, status_code, message);
+    }
+
+
+    public virtual ObjectResult<HXR_GET_RULE_ERROR_SUMMARY_DETAILS_SP_Result> HXR_GET_RULE_ERROR_SUMMARY_DETAILS_SP(string client_ID, string project_ID, string table_Name, string run_Number, Nullable<long> rule_Category_ID, Nullable<long> rule_ID, Nullable<int> pageNo, Nullable<int> recordsPerPage, ObjectParameter status_Code, ObjectParameter message, ObjectParameter totalCount)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var table_NameParameter = table_Name != null ?
+            new ObjectParameter("Table_Name", table_Name) :
+            new ObjectParameter("Table_Name", typeof(string));
+
+
+        var run_NumberParameter = run_Number != null ?
+            new ObjectParameter("Run_Number", run_Number) :
+            new ObjectParameter("Run_Number", typeof(string));
+
+
+        var rule_Category_IDParameter = rule_Category_ID.HasValue ?
+            new ObjectParameter("Rule_Category_ID", rule_Category_ID) :
+            new ObjectParameter("Rule_Category_ID", typeof(long));
+
+
+        var rule_IDParameter = rule_ID.HasValue ?
+            new ObjectParameter("Rule_ID", rule_ID) :
+            new ObjectParameter("Rule_ID", typeof(long));
+
+
+        var pageNoParameter = pageNo.HasValue ?
+            new ObjectParameter("PageNo", pageNo) :
+            new ObjectParameter("PageNo", typeof(int));
+
+
+        var recordsPerPageParameter = recordsPerPage.HasValue ?
+            new ObjectParameter("RecordsPerPage", recordsPerPage) :
+            new ObjectParameter("RecordsPerPage", typeof(int));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<HXR_GET_RULE_ERROR_SUMMARY_DETAILS_SP_Result>("HXR_GET_RULE_ERROR_SUMMARY_DETAILS_SP", client_IDParameter, project_IDParameter, table_NameParameter, run_NumberParameter, rule_Category_IDParameter, rule_IDParameter, pageNoParameter, recordsPerPageParameter, status_Code, message, totalCount);
+    }
+
+
+    public virtual ObjectResult<HXR_GET_RULE_ERROR_SUMMARY_SP1_Result> HXR_GET_RULE_ERROR_SUMMARY_SP1(string client_ID, string project_ID, string table_Name, string run_Number, Nullable<long> rule_Category_ID, Nullable<long> rule_ID, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var table_NameParameter = table_Name != null ?
+            new ObjectParameter("Table_Name", table_Name) :
+            new ObjectParameter("Table_Name", typeof(string));
+
+
+        var run_NumberParameter = run_Number != null ?
+            new ObjectParameter("Run_Number", run_Number) :
+            new ObjectParameter("Run_Number", typeof(string));
+
+
+        var rule_Category_IDParameter = rule_Category_ID.HasValue ?
+            new ObjectParameter("Rule_Category_ID", rule_Category_ID) :
+            new ObjectParameter("Rule_Category_ID", typeof(long));
+
+
+        var rule_IDParameter = rule_ID.HasValue ?
+            new ObjectParameter("Rule_ID", rule_ID) :
+            new ObjectParameter("Rule_ID", typeof(long));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<HXR_GET_RULE_ERROR_SUMMARY_SP1_Result>("HXR_GET_RULE_ERROR_SUMMARY_SP1", client_IDParameter, project_IDParameter, table_NameParameter, run_NumberParameter, rule_Category_IDParameter, rule_IDParameter, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<HXR_GET_RULE_FUNCTION_SP1_Result> HXR_GET_RULE_FUNCTION_SP1(string client_ID, string project_ID, string data_type, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var data_typeParameter = data_type != null ?
+            new ObjectParameter("Data_type", data_type) :
+            new ObjectParameter("Data_type", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<HXR_GET_RULE_FUNCTION_SP1_Result>("HXR_GET_RULE_FUNCTION_SP1", client_IDParameter, project_IDParameter, data_typeParameter, status_Code, message);
+    }
+
+
+    public virtual int HXR_GET_RULE_VALIDATION_ERROR_DATA_SP(string client_ID, string project_ID, string table_Name, Nullable<long> rule_cateogry_ID, string rule_ID, Nullable<long> config_ID, Nullable<int> pageNo, Nullable<int> recordsPerPage, Nullable<long> run_ID, ObjectParameter status_code, ObjectParameter message, ObjectParameter totalCount)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var table_NameParameter = table_Name != null ?
+            new ObjectParameter("Table_Name", table_Name) :
+            new ObjectParameter("Table_Name", typeof(string));
+
+
+        var rule_cateogry_IDParameter = rule_cateogry_ID.HasValue ?
+            new ObjectParameter("Rule_cateogry_ID", rule_cateogry_ID) :
+            new ObjectParameter("Rule_cateogry_ID", typeof(long));
+
+
+        var rule_IDParameter = rule_ID != null ?
+            new ObjectParameter("Rule_ID", rule_ID) :
+            new ObjectParameter("Rule_ID", typeof(string));
+
+
+        var config_IDParameter = config_ID.HasValue ?
+            new ObjectParameter("Config_ID", config_ID) :
+            new ObjectParameter("Config_ID", typeof(long));
+
+
+        var pageNoParameter = pageNo.HasValue ?
+            new ObjectParameter("PageNo", pageNo) :
+            new ObjectParameter("PageNo", typeof(int));
+
+
+        var recordsPerPageParameter = recordsPerPage.HasValue ?
+            new ObjectParameter("RecordsPerPage", recordsPerPage) :
+            new ObjectParameter("RecordsPerPage", typeof(int));
+
+
+        var run_IDParameter = run_ID.HasValue ?
+            new ObjectParameter("Run_ID", run_ID) :
+            new ObjectParameter("Run_ID", typeof(long));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("HXR_GET_RULE_VALIDATION_ERROR_DATA_SP", client_IDParameter, project_IDParameter, table_NameParameter, rule_cateogry_IDParameter, rule_IDParameter, config_IDParameter, pageNoParameter, recordsPerPageParameter, run_IDParameter, status_code, message, totalCount);
+    }
+
+
+    public virtual ObjectResult<HXR_GET_RULE_VALIDATION_RESULTS_SP_Result1> HXR_GET_RULE_VALIDATION_RESULTS_SP(string client_ID, string project_ID, Nullable<long> config_id, string table_name, Nullable<long> run_ID, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var config_idParameter = config_id.HasValue ?
+            new ObjectParameter("Config_id", config_id) :
+            new ObjectParameter("Config_id", typeof(long));
+
+
+        var table_nameParameter = table_name != null ?
+            new ObjectParameter("Table_name", table_name) :
+            new ObjectParameter("Table_name", typeof(string));
+
+
+        var run_IDParameter = run_ID.HasValue ?
+            new ObjectParameter("Run_ID", run_ID) :
+            new ObjectParameter("Run_ID", typeof(long));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<HXR_GET_RULE_VALIDATION_RESULTS_SP_Result1>("HXR_GET_RULE_VALIDATION_RESULTS_SP", client_IDParameter, project_IDParameter, config_idParameter, table_nameParameter, run_IDParameter, status_Code, message);
+    }
+
+
+    public virtual int HXR_GET_RULE_VALIDATION_SP1(string client_ID, string project_ID, Nullable<long> tool_ID, Nullable<long> role_ID, string tablename, string query, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var tool_IDParameter = tool_ID.HasValue ?
+            new ObjectParameter("Tool_ID", tool_ID) :
+            new ObjectParameter("Tool_ID", typeof(long));
+
+
+        var role_IDParameter = role_ID.HasValue ?
+            new ObjectParameter("Role_ID", role_ID) :
+            new ObjectParameter("Role_ID", typeof(long));
+
+
+        var tablenameParameter = tablename != null ?
+            new ObjectParameter("Tablename", tablename) :
+            new ObjectParameter("Tablename", typeof(string));
+
+
+        var queryParameter = query != null ?
+            new ObjectParameter("Query", query) :
+            new ObjectParameter("Query", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("HXR_GET_RULE_VALIDATION_SP1", client_IDParameter, project_IDParameter, tool_IDParameter, role_IDParameter, tablenameParameter, queryParameter, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<HXR_GET_RUN_ID_SP1_Result> HXR_GET_RUN_ID_SP1(string client_Id, string project_ID, string table_name, ObjectParameter status_code, ObjectParameter message)
+    {
+
+        var client_IdParameter = client_Id != null ?
+            new ObjectParameter("Client_Id", client_Id) :
+            new ObjectParameter("Client_Id", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var table_nameParameter = table_name != null ?
+            new ObjectParameter("Table_name", table_name) :
+            new ObjectParameter("Table_name", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<HXR_GET_RUN_ID_SP1_Result>("HXR_GET_RUN_ID_SP1", client_IdParameter, project_IDParameter, table_nameParameter, status_code, message);
+    }
+
+
+    public virtual ObjectResult<Nullable<short>> HXR_GET_SOURCE_ERROR_DATA_SP(string table_name, string primary_key_col, string primary_key_value, Nullable<long> config_ID, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var table_nameParameter = table_name != null ?
+            new ObjectParameter("Table_name", table_name) :
+            new ObjectParameter("Table_name", typeof(string));
+
+
+        var primary_key_colParameter = primary_key_col != null ?
+            new ObjectParameter("Primary_key_col", primary_key_col) :
+            new ObjectParameter("Primary_key_col", typeof(string));
+
+
+        var primary_key_valueParameter = primary_key_value != null ?
+            new ObjectParameter("Primary_key_value", primary_key_value) :
+            new ObjectParameter("Primary_key_value", typeof(string));
+
+
+        var config_IDParameter = config_ID.HasValue ?
+            new ObjectParameter("Config_ID", config_ID) :
+            new ObjectParameter("Config_ID", typeof(long));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<short>>("HXR_GET_SOURCE_ERROR_DATA_SP", table_nameParameter, primary_key_colParameter, primary_key_valueParameter, config_IDParameter, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<HXR_GET_TABLE_COLUMN_LIST_SP1_Result> HXR_GET_TABLE_COLUMN_LIST_SP1(string client_ID, string project_ID, string database_IP, string source_Target, string database_Name, string table_Name, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var database_IPParameter = database_IP != null ?
+            new ObjectParameter("Database_IP", database_IP) :
+            new ObjectParameter("Database_IP", typeof(string));
+
+
+        var source_TargetParameter = source_Target != null ?
+            new ObjectParameter("Source_Target", source_Target) :
+            new ObjectParameter("Source_Target", typeof(string));
+
+
+        var database_NameParameter = database_Name != null ?
+            new ObjectParameter("Database_Name", database_Name) :
+            new ObjectParameter("Database_Name", typeof(string));
+
+
+        var table_NameParameter = table_Name != null ?
+            new ObjectParameter("Table_Name", table_Name) :
+            new ObjectParameter("Table_Name", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<HXR_GET_TABLE_COLUMN_LIST_SP1_Result>("HXR_GET_TABLE_COLUMN_LIST_SP1", client_IDParameter, project_IDParameter, database_IPParameter, source_TargetParameter, database_NameParameter, table_NameParameter, status_Code, message);
+    }
+
+
+    public virtual int HXR_GET_TABLE_DATA_SP(string client_ID, string project_ID, string iP_Address, string database_Name, string table_Name, string source_Target, ObjectParameter status_code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var iP_AddressParameter = iP_Address != null ?
+            new ObjectParameter("IP_Address", iP_Address) :
+            new ObjectParameter("IP_Address", typeof(string));
+
+
+        var database_NameParameter = database_Name != null ?
+            new ObjectParameter("Database_Name", database_Name) :
+            new ObjectParameter("Database_Name", typeof(string));
+
+
+        var table_NameParameter = table_Name != null ?
+            new ObjectParameter("Table_Name", table_Name) :
+            new ObjectParameter("Table_Name", typeof(string));
+
+
+        var source_TargetParameter = source_Target != null ?
+            new ObjectParameter("Source_Target", source_Target) :
+            new ObjectParameter("Source_Target", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("HXR_GET_TABLE_DATA_SP", client_IDParameter, project_IDParameter, iP_AddressParameter, database_NameParameter, table_NameParameter, source_TargetParameter, status_code, message);
+    }
+
+
+    public virtual ObjectResult<string> HXR_GET_TABLES_LIST_SP1(string client_ID, string project_ID, string database_IP, string source_Target, string database_Name, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var database_IPParameter = database_IP != null ?
+            new ObjectParameter("Database_IP", database_IP) :
+            new ObjectParameter("Database_IP", typeof(string));
+
+
+        var source_TargetParameter = source_Target != null ?
+            new ObjectParameter("Source_Target", source_Target) :
+            new ObjectParameter("Source_Target", typeof(string));
+
+
+        var database_NameParameter = database_Name != null ?
+            new ObjectParameter("Database_Name", database_Name) :
+            new ObjectParameter("Database_Name", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("HXR_GET_TABLES_LIST_SP1", client_IDParameter, project_IDParameter, database_IPParameter, source_TargetParameter, database_NameParameter, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<HXR_GET_TARGETSERVER_SP_Result> HXR_GET_TARGETSERVER_SP(string client_ID, string project_ID, Nullable<long> role_ID, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var role_IDParameter = role_ID.HasValue ?
+            new ObjectParameter("Role_ID", role_ID) :
+            new ObjectParameter("Role_ID", typeof(long));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<HXR_GET_TARGETSERVER_SP_Result>("HXR_GET_TARGETSERVER_SP", client_IDParameter, project_IDParameter, role_IDParameter, status_Code, message);
+    }
+
+
+    public virtual ObjectResult<HXR_GET_USER_DETAILS_SP_Result> HXR_GET_USER_DETAILS_SP(string client_ID, string user_Name, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var user_NameParameter = user_Name != null ?
+            new ObjectParameter("User_Name", user_Name) :
+            new ObjectParameter("User_Name", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<HXR_GET_USER_DETAILS_SP_Result>("HXR_GET_USER_DETAILS_SP", client_IDParameter, user_NameParameter, status_Code, message);
+    }
+
+
+    public virtual int HXR_INSERT_CLIENT_SP(string client_ID, string client_Name, string created_By, ObjectParameter status_code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var client_NameParameter = client_Name != null ?
+            new ObjectParameter("Client_Name", client_Name) :
+            new ObjectParameter("Client_Name", typeof(string));
+
+
+        var created_ByParameter = created_By != null ?
+            new ObjectParameter("Created_By", created_By) :
+            new ObjectParameter("Created_By", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("HXR_INSERT_CLIENT_SP", client_IDParameter, client_NameParameter, created_ByParameter, status_code, message);
+    }
+
+
+    public virtual ObjectResult<HXR_INSERT_ERROR_SP1_Result> HXR_INSERT_ERROR_SP1(string client_ID, string project_ID, string error_Code, string error_Description, string last_Modified_By, ObjectParameter status_code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var error_CodeParameter = error_Code != null ?
+            new ObjectParameter("Error_Code", error_Code) :
+            new ObjectParameter("Error_Code", typeof(string));
+
+
+        var error_DescriptionParameter = error_Description != null ?
+            new ObjectParameter("Error_Description", error_Description) :
+            new ObjectParameter("Error_Description", typeof(string));
+
+
+        var last_Modified_ByParameter = last_Modified_By != null ?
+            new ObjectParameter("Last_Modified_By", last_Modified_By) :
+            new ObjectParameter("Last_Modified_By", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<HXR_INSERT_ERROR_SP1_Result>("HXR_INSERT_ERROR_SP1", client_IDParameter, project_IDParameter, error_CodeParameter, error_DescriptionParameter, last_Modified_ByParameter, status_code, message);
+    }
+
+
+    public virtual int HXR_INSERT_KEY_COLUMN_SP_bkp(string client_ID, string project_ID, Nullable<long> config_ID, string table_Name, string key_Column1, string key_Column2, string key_Column3, string key_Column4, string key_Column5, string created_By, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var config_IDParameter = config_ID.HasValue ?
+            new ObjectParameter("Config_ID", config_ID) :
+            new ObjectParameter("Config_ID", typeof(long));
+
+
+        var table_NameParameter = table_Name != null ?
+            new ObjectParameter("Table_Name", table_Name) :
+            new ObjectParameter("Table_Name", typeof(string));
+
+
+        var key_Column1Parameter = key_Column1 != null ?
+            new ObjectParameter("Key_Column1", key_Column1) :
+            new ObjectParameter("Key_Column1", typeof(string));
+
+
+        var key_Column2Parameter = key_Column2 != null ?
+            new ObjectParameter("Key_Column2", key_Column2) :
+            new ObjectParameter("Key_Column2", typeof(string));
+
+
+        var key_Column3Parameter = key_Column3 != null ?
+            new ObjectParameter("Key_Column3", key_Column3) :
+            new ObjectParameter("Key_Column3", typeof(string));
+
+
+        var key_Column4Parameter = key_Column4 != null ?
+            new ObjectParameter("Key_Column4", key_Column4) :
+            new ObjectParameter("Key_Column4", typeof(string));
+
+
+        var key_Column5Parameter = key_Column5 != null ?
+            new ObjectParameter("Key_Column5", key_Column5) :
+            new ObjectParameter("Key_Column5", typeof(string));
+
+
+        var created_ByParameter = created_By != null ?
+            new ObjectParameter("Created_By", created_By) :
+            new ObjectParameter("Created_By", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("HXR_INSERT_KEY_COLUMN_SP_bkp", client_IDParameter, project_IDParameter, config_IDParameter, table_NameParameter, key_Column1Parameter, key_Column2Parameter, key_Column3Parameter, key_Column4Parameter, key_Column5Parameter, created_ByParameter, status_Code, message);
+    }
+
+
+    public virtual int HXR_INSERT_METADATA_INFO_SP1(string client_ID, string project_ID, string iP_Address, string database_Name, string source_Target, string config_ID, string last_Modified_By, ObjectParameter status_code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var iP_AddressParameter = iP_Address != null ?
+            new ObjectParameter("IP_Address", iP_Address) :
+            new ObjectParameter("IP_Address", typeof(string));
+
+
+        var database_NameParameter = database_Name != null ?
+            new ObjectParameter("Database_Name", database_Name) :
+            new ObjectParameter("Database_Name", typeof(string));
+
+
+        var source_TargetParameter = source_Target != null ?
+            new ObjectParameter("Source_Target", source_Target) :
+            new ObjectParameter("Source_Target", typeof(string));
+
+
+        var config_IDParameter = config_ID != null ?
+            new ObjectParameter("Config_ID", config_ID) :
+            new ObjectParameter("Config_ID", typeof(string));
+
+
+        var last_Modified_ByParameter = last_Modified_By != null ?
+            new ObjectParameter("Last_Modified_By", last_Modified_By) :
+            new ObjectParameter("Last_Modified_By", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("HXR_INSERT_METADATA_INFO_SP1", client_IDParameter, project_IDParameter, iP_AddressParameter, database_NameParameter, source_TargetParameter, config_IDParameter, last_Modified_ByParameter, status_code, message);
+    }
+
+
+    public virtual int HXR_INSERT_ROLE_SP(string client_ID, string role_Name, string role_Description, string inserted_by, ObjectParameter status_code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var role_NameParameter = role_Name != null ?
+            new ObjectParameter("Role_Name", role_Name) :
+            new ObjectParameter("Role_Name", typeof(string));
+
+
+        var role_DescriptionParameter = role_Description != null ?
+            new ObjectParameter("Role_Description", role_Description) :
+            new ObjectParameter("Role_Description", typeof(string));
+
+
+        var inserted_byParameter = inserted_by != null ?
+            new ObjectParameter("Inserted_by", inserted_by) :
+            new ObjectParameter("Inserted_by", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("HXR_INSERT_ROLE_SP", client_IDParameter, role_NameParameter, role_DescriptionParameter, inserted_byParameter, status_code, message);
+    }
+
+
+    public virtual int HXR_INSERT_TOOL_SP(string client_ID, string project_ID, string tool_Name, string tool_Description, Nullable<long> role_ID, string inserted_by, ObjectParameter status_code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var tool_NameParameter = tool_Name != null ?
+            new ObjectParameter("Tool_Name", tool_Name) :
+            new ObjectParameter("Tool_Name", typeof(string));
+
+
+        var tool_DescriptionParameter = tool_Description != null ?
+            new ObjectParameter("Tool_Description", tool_Description) :
+            new ObjectParameter("Tool_Description", typeof(string));
+
+
+        var role_IDParameter = role_ID.HasValue ?
+            new ObjectParameter("Role_ID", role_ID) :
+            new ObjectParameter("Role_ID", typeof(long));
+
+
+        var inserted_byParameter = inserted_by != null ?
+            new ObjectParameter("Inserted_by", inserted_by) :
+            new ObjectParameter("Inserted_by", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("HXR_INSERT_TOOL_SP", client_IDParameter, project_IDParameter, tool_NameParameter, tool_DescriptionParameter, role_IDParameter, inserted_byParameter, status_code, message);
+    }
+
+
+    public virtual int HXR_PRC_TO_CREATE_ERROR_LOG_TABLES_SP(string client_ID, string project_ID, string table_name, string config_ID)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var table_nameParameter = table_name != null ?
+            new ObjectParameter("Table_name", table_name) :
+            new ObjectParameter("Table_name", typeof(string));
+
+
+        var config_IDParameter = config_ID != null ?
+            new ObjectParameter("Config_ID", config_ID) :
+            new ObjectParameter("Config_ID", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("HXR_PRC_TO_CREATE_ERROR_LOG_TABLES_SP", client_IDParameter, project_IDParameter, table_nameParameter, config_IDParameter);
+    }
+
+
+    public virtual int HXR_UPDATE_PASSWORD_SP(string client_ID, string user_Name, string email_ID, string new_Password, ObjectParameter status_code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var user_NameParameter = user_Name != null ?
+            new ObjectParameter("User_Name", user_Name) :
+            new ObjectParameter("User_Name", typeof(string));
+
+
+        var email_IDParameter = email_ID != null ?
+            new ObjectParameter("Email_ID", email_ID) :
+            new ObjectParameter("Email_ID", typeof(string));
+
+
+        var new_PasswordParameter = new_Password != null ?
+            new ObjectParameter("New_Password", new_Password) :
+            new ObjectParameter("New_Password", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("HXR_UPDATE_PASSWORD_SP", client_IDParameter, user_NameParameter, email_IDParameter, new_PasswordParameter, status_code, message);
+    }
+
+
+    public virtual ObjectResult<Nullable<short>> HXR_UPDATE_SOURCE_TABLE_SP(string table_name, string primary_key_col, string primary_key_value, string update_col, string update_val, string update_All, Nullable<long> rule_cateogry_ID, Nullable<long> rule_ID, Nullable<long> run_ID, Nullable<long> config_ID, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var table_nameParameter = table_name != null ?
+            new ObjectParameter("Table_name", table_name) :
+            new ObjectParameter("Table_name", typeof(string));
+
+
+        var primary_key_colParameter = primary_key_col != null ?
+            new ObjectParameter("Primary_key_col", primary_key_col) :
+            new ObjectParameter("Primary_key_col", typeof(string));
+
+
+        var primary_key_valueParameter = primary_key_value != null ?
+            new ObjectParameter("Primary_key_value", primary_key_value) :
+            new ObjectParameter("Primary_key_value", typeof(string));
+
+
+        var update_colParameter = update_col != null ?
+            new ObjectParameter("Update_col", update_col) :
+            new ObjectParameter("Update_col", typeof(string));
+
+
+        var update_valParameter = update_val != null ?
+            new ObjectParameter("Update_val", update_val) :
+            new ObjectParameter("Update_val", typeof(string));
+
+
+        var update_AllParameter = update_All != null ?
+            new ObjectParameter("Update_All", update_All) :
+            new ObjectParameter("Update_All", typeof(string));
+
+
+        var rule_cateogry_IDParameter = rule_cateogry_ID.HasValue ?
+            new ObjectParameter("Rule_cateogry_ID", rule_cateogry_ID) :
+            new ObjectParameter("Rule_cateogry_ID", typeof(long));
+
+
+        var rule_IDParameter = rule_ID.HasValue ?
+            new ObjectParameter("Rule_ID", rule_ID) :
+            new ObjectParameter("Rule_ID", typeof(long));
+
+
+        var run_IDParameter = run_ID.HasValue ?
+            new ObjectParameter("Run_ID", run_ID) :
+            new ObjectParameter("Run_ID", typeof(long));
+
+
+        var config_IDParameter = config_ID.HasValue ?
+            new ObjectParameter("Config_ID", config_ID) :
+            new ObjectParameter("Config_ID", typeof(long));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<short>>("HXR_UPDATE_SOURCE_TABLE_SP", table_nameParameter, primary_key_colParameter, primary_key_valueParameter, update_colParameter, update_valParameter, update_AllParameter, rule_cateogry_IDParameter, rule_IDParameter, run_IDParameter, config_IDParameter, status_Code, message);
+    }
+
+
+    public virtual int HXR_UPDATE_USER_SP(string client_ID, string project_ID, Nullable<long> uSER_ID, string email_ID, string user_Name, Nullable<long> active_Flag, string role_Name, string last_Modified_By, ObjectParameter status_code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var uSER_IDParameter = uSER_ID.HasValue ?
+            new ObjectParameter("USER_ID", uSER_ID) :
+            new ObjectParameter("USER_ID", typeof(long));
+
+
+        var email_IDParameter = email_ID != null ?
+            new ObjectParameter("Email_ID", email_ID) :
+            new ObjectParameter("Email_ID", typeof(string));
+
+
+        var user_NameParameter = user_Name != null ?
+            new ObjectParameter("User_Name", user_Name) :
+            new ObjectParameter("User_Name", typeof(string));
+
+
+        var active_FlagParameter = active_Flag.HasValue ?
+            new ObjectParameter("Active_Flag", active_Flag) :
+            new ObjectParameter("Active_Flag", typeof(long));
+
+
+        var role_NameParameter = role_Name != null ?
+            new ObjectParameter("Role_Name", role_Name) :
+            new ObjectParameter("Role_Name", typeof(string));
+
+
+        var last_Modified_ByParameter = last_Modified_By != null ?
+            new ObjectParameter("Last_Modified_By", last_Modified_By) :
+            new ObjectParameter("Last_Modified_By", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("HXR_UPDATE_USER_SP", client_IDParameter, project_IDParameter, uSER_IDParameter, email_IDParameter, user_NameParameter, active_FlagParameter, role_NameParameter, last_Modified_ByParameter, status_code, message);
+    }
+
+
+    public virtual int HXR_VALIDATE_RULE_SP(string clientid, string project_ID, string run_ID, string tablename, string created_by, ObjectParameter status_code, ObjectParameter message)
+    {
+
+        var clientidParameter = clientid != null ?
+            new ObjectParameter("Clientid", clientid) :
+            new ObjectParameter("Clientid", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var run_IDParameter = run_ID != null ?
+            new ObjectParameter("Run_ID", run_ID) :
+            new ObjectParameter("Run_ID", typeof(string));
+
+
+        var tablenameParameter = tablename != null ?
+            new ObjectParameter("Tablename", tablename) :
+            new ObjectParameter("Tablename", typeof(string));
+
+
+        var created_byParameter = created_by != null ?
+            new ObjectParameter("Created_by", created_by) :
+            new ObjectParameter("Created_by", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("HXR_VALIDATE_RULE_SP", clientidParameter, project_IDParameter, run_IDParameter, tablenameParameter, created_byParameter, status_code, message);
+    }
+
+
+    public virtual int HXR_INSERT_RULE_TYPE_SP(string client_ID, string project_ID, string ruleType_Name, string ruleType_Desc, string inserted_by, ObjectParameter status_code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var ruleType_NameParameter = ruleType_Name != null ?
+            new ObjectParameter("RuleType_Name", ruleType_Name) :
+            new ObjectParameter("RuleType_Name", typeof(string));
+
+
+        var ruleType_DescParameter = ruleType_Desc != null ?
+            new ObjectParameter("RuleType_Desc", ruleType_Desc) :
+            new ObjectParameter("RuleType_Desc", typeof(string));
+
+
+        var inserted_byParameter = inserted_by != null ?
+            new ObjectParameter("Inserted_by", inserted_by) :
+            new ObjectParameter("Inserted_by", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("HXR_INSERT_RULE_TYPE_SP", client_IDParameter, project_IDParameter, ruleType_NameParameter, ruleType_DescParameter, inserted_byParameter, status_code, message);
+    }
+
+
+    public virtual ObjectResult<HXR_GET_RULE_TYPE_SP_Result1> HXR_GET_RULE_TYPE_SP(string client_ID, string project_ID, Nullable<long> ruleType_ID, string ruleType_Name, ObjectParameter status_Code, ObjectParameter message)
+    {
+
+        var client_IDParameter = client_ID != null ?
+            new ObjectParameter("Client_ID", client_ID) :
+            new ObjectParameter("Client_ID", typeof(string));
+
+
+        var project_IDParameter = project_ID != null ?
+            new ObjectParameter("Project_ID", project_ID) :
+            new ObjectParameter("Project_ID", typeof(string));
+
+
+        var ruleType_IDParameter = ruleType_ID.HasValue ?
+            new ObjectParameter("RuleType_ID", ruleType_ID) :
+            new ObjectParameter("RuleType_ID", typeof(long));
+
+
+        var ruleType_NameParameter = ruleType_Name != null ?
+            new ObjectParameter("RuleType_Name", ruleType_Name) :
+            new ObjectParameter("RuleType_Name", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<HXR_GET_RULE_TYPE_SP_Result1>("HXR_GET_RULE_TYPE_SP", client_IDParameter, project_IDParameter, ruleType_IDParameter, ruleType_NameParameter, status_Code, message);
     }
 
 }

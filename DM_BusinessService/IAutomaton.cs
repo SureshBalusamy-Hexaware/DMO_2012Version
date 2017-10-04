@@ -74,7 +74,7 @@ namespace DM_BusinessService
         int DateColumnCheck(string client_ID, string project_ID, string table_Name, string column_name, Nullable<long> config_ID, string columnType, ref string status_Code,
             ref string message);
         List<AutomatonSourceEntity> GetMetaDataTableDetailAutomatic(string client_ID, string project_ID, long? template_ID, long? Role_ID, string Table_name, string Flag_type, string connectionid, ref string status_Code, ref string message);
-        void GenerateReconcile(string client_ID, string project_ID, string template_ID, long? RoleId, string UpdatedBy, ref string StatusCode, ref string Message);
+        void GenerateReconcile(string client_ID, string project_ID, string template_ID, int RoleId, string UpdatedBy, ref string StatusCode, ref string Message);
     }
 }
 

@@ -50,18 +50,7 @@ namespace DM_UI.App_Start
             }
 
         }
-        public static class Roles
-        {
-            public static string Admin
-            {
-                get { return ConfigurationManager.AppSettings["RoleAdmin"]; }
-            }
-            public static string User
-            {
-                get { return ConfigurationManager.AppSettings["RoleUser"]; }
-            }
-
-        }
+       
         //Last tool id 40
         public enum Tools
         {
@@ -253,7 +242,7 @@ namespace DM_UI.App_Start
         }
         public static string DownloadPath
         {
-            get { return ConfigurationManager.AppSettings["DownloadPath"]; }
+            get { return ConfigurationManager.AppSettings["Path_DownloadPath"]; }
         }
         public static string GetDataType(string _sqlDataType)
         {
@@ -346,18 +335,18 @@ new Menu { ToolId = ((int)Tools.DataRecon),	MenuId = 404, ParentMenuId = 0, Menu
 
 
 
-new Menu { ToolId = ((int)Tools.DIMAPLUS),	MenuId = 601, ParentMenuId = 0, MenuOrderId = 1,	MenuName = "Configuration",         Controller="DIMAPLUS", Action = "Index",                                  ActiveFlag = 1, HtmlAttribute= new htmlAttr { Selected = false, Style="width: 15%;" } },
-new Menu { ToolId = ((int)Tools.DIMAPLUS),	MenuId = 602, ParentMenuId = 0, MenuOrderId = 2,	MenuName = "Data Management",       Controller="DIMAPLUS", Action = null,                                     ActiveFlag = 1, HtmlAttribute= new htmlAttr { Selected = false, Style="width: 14%;" } },
+new Menu { ToolId = ((int)Tools.DIMAPLUS),	MenuId = 601, ParentMenuId = 0, MenuOrderId = 1,	MenuName = "Configuration",         Controller="DIMAPLUS", Action = "Index",                                  ActiveFlag = 1, HtmlAttribute= new htmlAttr { Selected = false, Style="width: 10%;" } },
+new Menu { ToolId = ((int)Tools.DIMAPLUS),	MenuId = 602, ParentMenuId = 0, MenuOrderId = 2,	MenuName = "Data Management",       Controller="DIMAPLUS", Action = null,                                     ActiveFlag = 1, HtmlAttribute= new htmlAttr { Selected = false, Style="width: 10%;" } },
 new Menu { ToolId = ((int)Tools.DIMAPLUS),	MenuId = 603, ParentMenuId = 602, MenuOrderId = 21,	MenuName = "Upload Excel File",                Controller="DIMAPLUS", Action = "UploadExcel",                          ActiveFlag = 1, HtmlAttribute= new htmlAttr { Selected = false, Style="width: 14%; margin: 1px !important; text-align: left; cursor: pointer; width: 99%;" } },
 //new Menu { ToolId = ((int)Tools.DIMAPLUS),	MenuId = 604, ParentMenuId = 602, MenuOrderId = 22,	MenuName = "Upload File Template",                Controller="DIMAPLUS", Action = "ExcelTemplate",                          ActiveFlag = 1, HtmlAttribute= new htmlAttr { Selected = false, Style="width: 14%; margin: 1px !important; text-align: left; cursor: pointer; width: 99%;" } },
-new Menu { ToolId = ((int)Tools.DIMAPLUS),	MenuId = 605, ParentMenuId = 602, MenuOrderId = 23, MenuName = "Download",              Controller="DIMAPLUS", Action = "Downloads",                              ActiveFlag = 1, HtmlAttribute= new htmlAttr { Selected = false, Style="width: 14%; margin: 1px !important; text-align: left; cursor: pointer; width: 99%;" } },
-new Menu { ToolId = ((int)Tools.DIMAPLUS),	MenuId = 606, ParentMenuId = 602, MenuOrderId = 24, MenuName = "Business Name",         Controller="DIMAPLUS", Action = "BusinessName",                           ActiveFlag = 1, HtmlAttribute= new htmlAttr { Selected = false, Style="width: 14%; margin: 1px !important; text-align: left; cursor: pointer; width: 99%;" } },
+new Menu { ToolId = ((int)Tools.DIMAPLUS),	MenuId = 605, ParentMenuId = 602, MenuOrderId = 23, MenuName = "Download",              Controller="DIMAPLUS", Action = "Downloads",                              ActiveFlag = 1, HtmlAttribute= new htmlAttr { Selected = false, Style="width: 10%; margin: 1px !important; text-align: left; cursor: pointer; width: 99%;" } },
+new Menu { ToolId = ((int)Tools.DIMAPLUS),	MenuId = 606, ParentMenuId = 602, MenuOrderId = 24, MenuName = "Business Name",         Controller="DIMAPLUS", Action = "BusinessName",                           ActiveFlag = 1, HtmlAttribute= new htmlAttr { Selected = false, Style="width: 10%; margin: 1px !important; text-align: left; cursor: pointer; width: 99%;" } },
 new Menu { ToolId = ((int)Tools.DIMAPLUS),	MenuId = 607, ParentMenuId = 0,  MenuOrderId = 3, MenuName = "Data Masking",          Controller="DIMAPLUS", Action = "DataMasking",                       ActiveFlag = 1, HtmlAttribute= new htmlAttr { Selected = false, Style="width: 10%;" } },
 new Menu { ToolId = ((int)Tools.DIMAPLUS),	MenuId = 608, ParentMenuId = 0,	MenuOrderId = 4, MenuName = "Slice Criteria",        Controller="DIMAPLUS", Action = "Criteria",                               ActiveFlag = 1, HtmlAttribute= new htmlAttr { Selected = false, Style="width: 10%;" } },
-new Menu { ToolId = ((int)Tools.DIMAPLUS),	MenuId = 609, ParentMenuId = 0,	MenuOrderId = 5, MenuName = "Copy Sliced Data",      Controller="DIMAPLUS", Action = "Copy",                                  ActiveFlag = 1, HtmlAttribute= new htmlAttr { Selected = false, Style="width: 15%;" } },                   
-new Menu { ToolId = ((int)Tools.DIMAPLUS),	MenuId = 610, ParentMenuId = 0,	MenuOrderId = 6, MenuName = "Purge Sliced Data",     Controller="DIMAPLUS", Action = "Purge",                                  ActiveFlag = 1, HtmlAttribute= new htmlAttr { Selected = false, Style="width: 15%;" } },                    
-new Menu { ToolId = ((int)Tools.DIMAPLUS),	MenuId = 612, ParentMenuId = 0,	MenuOrderId = 7, MenuName = "Integration",            Controller="DIMAPLUS", Action = "Integration",                                ActiveFlag = 1, HtmlAttribute= new htmlAttr { Selected = false, Style="width: 15%;" } },                     
-new Menu { ToolId = ((int)Tools.DIMAPLUS),	MenuId = 611, ParentMenuId = 0,	MenuOrderId = 8, MenuName = "Reports",               Controller="DIMAPLUS", Action = "Reports",                                ActiveFlag = 1, HtmlAttribute= new htmlAttr { Selected = false, Style="width: 15%;" } },
+new Menu { ToolId = ((int)Tools.DIMAPLUS),	MenuId = 609, ParentMenuId = 0,	MenuOrderId = 5, MenuName = "Copy Sliced Data",      Controller="DIMAPLUS", Action = "Copy",                                  ActiveFlag = 1, HtmlAttribute= new htmlAttr { Selected = false, Style="width: 10%;" } },                   
+new Menu { ToolId = ((int)Tools.DIMAPLUS),	MenuId = 610, ParentMenuId = 0,	MenuOrderId = 6, MenuName = "Purge Sliced Data",     Controller="DIMAPLUS", Action = "Purge",                                  ActiveFlag = 1, HtmlAttribute= new htmlAttr { Selected = false, Style="width: 10%;" } },                    
+new Menu { ToolId = ((int)Tools.DIMAPLUS),	MenuId = 612, ParentMenuId = 0,	MenuOrderId = 7, MenuName = "Integration",            Controller="DIMAPLUS", Action = "Integration",                                ActiveFlag = 1, HtmlAttribute= new htmlAttr { Selected = false, Style="width: 10%;" } },                     
+new Menu { ToolId = ((int)Tools.DIMAPLUS),	MenuId = 611, ParentMenuId = 0,	MenuOrderId = 8, MenuName = "Reports",               Controller="DIMAPLUS", Action = "Reports",                                ActiveFlag = 1, HtmlAttribute= new htmlAttr { Selected = false, Style="width: 10%;" } },
 
 
 new Menu { ToolId = ((int)Tools.HexaRule),	MenuId = 701, ParentMenuId = 0, MenuOrderId = 0,	MenuName = "Configuration",         Controller="Hexarule", Action = "Index",        ActiveFlag = 1, HtmlAttribute= new htmlAttr { Selected = false, Style="width: 10%;" } },

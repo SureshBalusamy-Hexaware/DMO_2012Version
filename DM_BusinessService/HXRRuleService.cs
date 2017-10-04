@@ -114,8 +114,8 @@ namespace DM_BusinessService
             var RuleType = _ruleMS.GetRuleType(ruleType_ID, ruleType_Name, client_ID, project_ID, ref status_Code, ref message);
             if (RuleType != null)
             {
-                Mapper.CreateMap<HXR_GET_RULE_TYPE_SP_Result, HXRRuleTypeEntity>();
-                var _RuleTypeModel = Mapper.Map<List<HXR_GET_RULE_TYPE_SP_Result>, List<HXRRuleTypeEntity>>(RuleType);
+                Mapper.CreateMap<HXR_GET_RULE_TYPE_SP_Result1, HXRRuleTypeEntity>();
+                var _RuleTypeModel = Mapper.Map<List<HXR_GET_RULE_TYPE_SP_Result1>, List<HXRRuleTypeEntity>>(RuleType);
                 return _RuleTypeModel;
             }
             return null;

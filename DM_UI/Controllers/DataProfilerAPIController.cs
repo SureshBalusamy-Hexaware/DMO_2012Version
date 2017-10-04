@@ -10,28 +10,28 @@ using DM_BusinessService;
 using DM_UI.App_Start;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using SAP.Middleware.Connector;
+//using SAP.Middleware.Connector;
 //using SPEED.SAPConnection;
-using SAPIntegration;
+//using SAPIntegration;
 
 namespace DM_UI.Controllers
 {
     public class DataProfilerAPIController : ApiController
     {
         private readonly IProfiler _profiler;
-        RfcDestination rfcDest = null;
+        //RfcDestination rfcDest = null;
 
         public DataProfilerAPIController()
         {
             
             _profiler = new ProfilerService();
-            SAPSystemConnect sapCfg = new SAPSystemConnect();
+            //SAPSystemConnect sapCfg = new SAPSystemConnect();
 
-            if (RfcDestinationManager.DestinationMonitors.Count == 0)
-            {
-                RfcDestinationManager.RegisterDestinationConfiguration(sapCfg);
-            }
-            rfcDest = RfcDestinationManager.GetDestination("mySAPdestination");
+            //if (RfcDestinationManager.DestinationMonitors.Count == 0)
+            //{
+            //    RfcDestinationManager.RegisterDestinationConfiguration(sapCfg);
+            //}
+            //rfcDest = RfcDestinationManager.GetDestination("mySAPdestination");
         }
 
         [HttpGet] // api/DataProfilerAPI/GetProfilerTableNames
@@ -230,29 +230,29 @@ namespace DM_UI.Controllers
             return data;
         }
 
-        [HttpGet]
-        public string SapIntegration( string functionname)
-        {
-           
-            string value="";
+        //[HttpGet]
+        //public string SapIntegration(string column_list, string functionname)
+        //{
 
-            if (functionname == "Create BussinessPartner")
-            {
-                Customers customer = new Customers();
-                value = "Business Partner Created" + customer.GetCustomerDetails(rfcDest);
-            }
+        //    string value = "";
+        //    string[] Splitrecord = column_list.Split('+');
 
-            if (functionname == "Create Contract")
-            {
-                Customers customer = new Customers();
-                value = "Contract Created " + customer.GetContract(rfcDest);
+        //    for (int i = 0; i < Splitrecord.Length - 1; i++)
+        //    {
+        //        string[] column_data = Splitrecord[i].Split(',');
+        //        Customers customer = new Customers();
+        //        if (functionname == "Create BussinessPartner")
+        //        {
+        //            value = value + "Business Partner Created" + customer.GetCustomerDetails(rfcDest, column_data) + ":";
+        //        }
+        //        if (functionname == "Create Contract")
+        //        {
+        //            value = "Contract Created " + customer.GetContract(rfcDest, column_data) + ":";
+        //        }
+        //    }
+        //    return value;
+        //}
 
-            }
-            return value;
-
-            
-          
-        }
 
         [HttpGet] //api/DataProfilerAPI/GetProfilerSampleData
         public object GetProfilerSampleData(int page, int rows, long config_ID, string table_name, string column_list, string row_count)
@@ -440,317 +440,333 @@ namespace DM_UI.Controllers
     }
 }
 
-namespace SAPIntegration
-{
-    public class Customers
-    {
-        protected string CustomerNo;
-        protected string CustomerName;
-        protected string Address;
-        protected string City;
-        protected string StateProvince;
-        protected string CountryCode;
-        protected string PostalCode;
-        protected string Region;
-        protected string Industry;
-        protected string District;
-        protected string SalesOrg;
-        protected string DistributionChannel;
-        protected string Division;
+//namespace SAPIntegration
+//{
+//    public class Customers
+//    {
+//        protected string CustomerNo;
+//        protected string CustomerName;
+//        protected string Address;
+//        protected string City;
+//        protected string StateProvince;
+//        protected string CountryCode;
+//        protected string PostalCode;
+//        protected string Region;
+//        protected string Industry;
+//        protected string District;
+//        protected string SalesOrg;
+//        protected string DistributionChannel;
+//        protected string Division;
 
-        public string GetContract(RfcDestination destination)
-        {
-            #region Contract
+//        public string GetContract(RfcDestination destination, string[] column_data)
+//        {
+//            #region Contract
 
-            string Contract="";
-             try
-            {
-            RfcRepository repo = destination.Repository;
+//            string Contract = "";
+//            try
+//            {
+//                RfcRepository repo = destination.Repository;
 
-            IRfcFunction contractDetails = repo.CreateFunction("BAPI_CONTRACT_CREATEFROMDATA");
+//                IRfcFunction contractDetails = repo.CreateFunction("BAPI_CONTRACT_CREATEFROMDATA");
 
-            //iMPORT
-            RfcStructureMetadata headermetaData = repo.GetStructureMetadata("BAPISDHD1");
-            IRfcStructure structheader = headermetaData.CreateStructure();
-            structheader.SetValue("DOC_TYPE", "MV");
-            structheader.SetValue("SALES_ORG", "2001");
-            structheader.SetValue("DISTR_CHAN", "01");
-            structheader.SetValue("DIVISION", "01");
-            structheader.SetValue("SALES_GRP", "201");
-            structheader.SetValue("SALES_OFF", "2001");
-            structheader.SetValue("PURCH_DATE", "20170901");
-            structheader.SetValue("NAME", "RAMESH");
-            structheader.SetValue("INCOTERMS1", "CIF");
-            structheader.SetValue("INCOTERMS2", "COSTS, INSURANCE & FREIGHT");
-            structheader.SetValue("PMNTTRMS", "0002");
-            structheader.SetValue("PRICE_DATE", "20170901");
-            structheader.SetValue("DOC_DATE", "20170901");
-            structheader.SetValue("SHIP_COND", "01");
-            structheader.SetValue("BILL_DATE", "20170901");
-            structheader.SetValue("CURRENCY", "EUR");
-            contractDetails.SetValue("CONTRACT_HEADER_IN", structheader);
+//                //iMPORT
+//                RfcStructureMetadata headermetaData = repo.GetStructureMetadata("BAPISDHD1");
+//                IRfcStructure structheader = headermetaData.CreateStructure();
+//                structheader.SetValue("DOC_TYPE", column_data[0].ToString());
+//                structheader.SetValue("SALES_ORG", column_data[1].ToString());
+//                structheader.SetValue("DISTR_CHAN", "0" + column_data[2].ToString());
+//                structheader.SetValue("DIVISION", "0" + column_data[3].ToString());
+//                structheader.SetValue("SALES_GRP", column_data[4].ToString());
+//                structheader.SetValue("SALES_OFF", column_data[5].ToString());
+//                structheader.SetValue("PURCH_DATE", DateFormat(column_data[6].Split('/')));
+//                structheader.SetValue("NAME", column_data[7].ToString());
+//                structheader.SetValue("INCOTERMS1", column_data[8].ToString());
+//                structheader.SetValue("INCOTERMS2", column_data[9].ToString());
+//                structheader.SetValue("PMNTTRMS", "000" + column_data[10].ToString());
+//                structheader.SetValue("PRICE_DATE", DateFormat(column_data[11].Split('/')));
+//                structheader.SetValue("DOC_DATE", DateFormat(column_data[12].Split('/')));
+//                structheader.SetValue("SHIP_COND", "0" + column_data[13].ToString());
+//                structheader.SetValue("BILL_DATE", DateFormat(column_data[14].Split('/')));
+//                structheader.SetValue("CURRENCY", column_data[15].ToString());
+//                contractDetails.SetValue("CONTRACT_HEADER_IN", structheader);
 
-            RfcStructureMetadata headerxmetaData = repo.GetStructureMetadata("BAPISDHD1X");
-            IRfcStructure structheaderx = headerxmetaData.CreateStructure();
-            structheaderx.SetValue("DOC_TYPE", "X");
-            structheaderx.SetValue("SALES_ORG", "X");
-            structheaderx.SetValue("DISTR_CHAN", "X");
-            structheaderx.SetValue("DIVISION", "X");
-            structheaderx.SetValue("SALES_GRP", "X");
-            structheaderx.SetValue("SALES_OFF", "X");
-            structheaderx.SetValue("PURCH_DATE", "X");
-            structheaderx.SetValue("NAME", "X");
-            structheaderx.SetValue("INCOTERMS1", "X");
-            structheaderx.SetValue("INCOTERMS2", "X");
-            structheaderx.SetValue("PMNTTRMS", "X");
-            structheaderx.SetValue("PRICE_DATE", "X");
-            structheaderx.SetValue("DOC_DATE", "X");
-            structheaderx.SetValue("SHIP_COND", "X");
-            structheaderx.SetValue("BILL_DATE", "X");
-            structheaderx.SetValue("CURRENCY", "X");
-            contractDetails.SetValue("CONTRACT_HEADER_INX", structheaderx);
-
-
-            //TABLES
-
-            RfcStructureMetadata CONTRACTITESM = repo.GetStructureMetadata("BAPISDITM");
-            IRfcStructure structcontractitesm = CONTRACTITESM.CreateStructure();
-            structcontractitesm.SetValue("ITM_NUMBER", "000010");
-            structcontractitesm.SetValue("MATERIAL", "000000000000000378");
-            structcontractitesm.SetValue("TARGET_QTY", "1000000");
-            structcontractitesm.SetValue("ITEM_CATEG", "MVN");
-            IRfcTable tblcontractitems = contractDetails.GetTable("CONTRACT_ITEMS_IN");
-            tblcontractitems.Append(structcontractitesm);
-            contractDetails.SetValue("CONTRACT_ITEMS_IN", tblcontractitems);
-
-            RfcStructureMetadata CONTRACTITESMx = repo.GetStructureMetadata("BAPISDITMX");
-            IRfcStructure structcontractitesmx = CONTRACTITESMx.CreateStructure();
-            structcontractitesmx.SetValue("ITM_NUMBER", "000010");
-            structcontractitesmx.SetValue("MATERIAL", "X");
-            structcontractitesmx.SetValue("TARGET_QTY", "X");
-            structcontractitesmx.SetValue("ITEM_CATEG", "X");
-            IRfcTable tblcontractitemsx = contractDetails.GetTable("CONTRACT_ITEMS_INX");
-            tblcontractitemsx.Append(structcontractitesmx);
-            contractDetails.SetValue("CONTRACT_ITEMS_INX", tblcontractitemsx);
-
-            RfcStructureMetadata CONTRACTPARTNER = repo.GetStructureMetadata("BAPIPARNR");
-            IRfcStructure structcontractpartner = CONTRACTPARTNER.CreateStructure();
-            structcontractpartner.SetValue("PARTN_ROLE", "AG");
-            structcontractpartner.SetValue("PARTN_NUMB", "0000000133");
-            IRfcTable tblcontractpartner = contractDetails.GetTable("CONTRACT_PARTNERS");
-            tblcontractpartner.Append(structcontractpartner);
-            contractDetails.SetValue("CONTRACT_PARTNERS", tblcontractpartner);
-
-            RfcStructureMetadata conditions = repo.GetStructureMetadata("BAPICOND");
-            IRfcStructure structconditions = conditions.CreateStructure();
-            structconditions.SetValue("ITM_NUMBER", "000010");
-            structconditions.SetValue("COND_TYPE", "VA00");
-            structconditions.SetValue("CURRENCY", "EUR");
-            IRfcTable tblconditions = contractDetails.GetTable("CONTRACT_CONDITIONS_IN");
-            tblconditions.Append(structconditions);
-            contractDetails.SetValue("CONTRACT_CONDITIONS_IN", tblconditions);
-
-            RfcStructureMetadata conditionsx = repo.GetStructureMetadata("BAPICONDX");
-            IRfcStructure structconditionsx = conditionsx.CreateStructure();
-            structconditionsx.SetValue("ITM_NUMBER", "000010");
-            structconditionsx.SetValue("COND_TYPE", "X");
-            structconditionsx.SetValue("CURRENCY", "X");
-            IRfcTable tblconditionsx = contractDetails.GetTable("CONTRACT_CONDITIONS_INX");
-            tblconditionsx.Append(structconditionsx);
-            contractDetails.SetValue("CONTRACT_CONDITIONS_INX", tblconditionsx);
-
-            RfcStructureMetadata contractdata = repo.GetStructureMetadata("BAPICTR");
-            IRfcStructure structcontract = contractdata.CreateStructure();
-            structcontract.SetValue("ITM_NUMBER", "000010");
-            structcontract.SetValue("CON_ST_DAT", "20170109");
-            structcontract.SetValue("CON_EN_DAT", "20170109");
-            IRfcTable tblcontract = contractDetails.GetTable("CONTRACT_DATA_IN");
-            tblcontract.Append(structcontract);
-            contractDetails.SetValue("CONTRACT_DATA_IN", tblcontract);
-
-            RfcStructureMetadata contractdataX = repo.GetStructureMetadata("BAPICTRX");
-            IRfcStructure structcontractX = contractdataX.CreateStructure();
-            structcontractX.SetValue("ITM_NUMBER", "000010");
-            structcontractX.SetValue("CON_ST_DAT", "X");
-            structcontractX.SetValue("CON_EN_DAT", "X");
-            IRfcTable tblcontractx = contractDetails.GetTable("CONTRACT_DATA_INX");
-            tblcontractx.Append(structcontractX);
-            contractDetails.SetValue("CONTRACT_DATA_INX", tblcontractx);
-
-            IRfcFunction COMMITcontractDetails = repo.CreateFunction("BAPI_TRANSACTION_COMMIT");
+//                RfcStructureMetadata headerxmetaData = repo.GetStructureMetadata("BAPISDHD1X");
+//                IRfcStructure structheaderx = headerxmetaData.CreateStructure();
+//                structheaderx.SetValue("DOC_TYPE", "X");
+//                structheaderx.SetValue("SALES_ORG", "X");
+//                structheaderx.SetValue("DISTR_CHAN", "X");
+//                structheaderx.SetValue("DIVISION", "X");
+//                structheaderx.SetValue("SALES_GRP", "X");
+//                structheaderx.SetValue("SALES_OFF", "X");
+//                structheaderx.SetValue("PURCH_DATE", "X");
+//                structheaderx.SetValue("NAME", "X");
+//                structheaderx.SetValue("INCOTERMS1", "X");
+//                structheaderx.SetValue("INCOTERMS2", "X");
+//                structheaderx.SetValue("PMNTTRMS", "X");
+//                structheaderx.SetValue("PRICE_DATE", "X");
+//                structheaderx.SetValue("DOC_DATE", "X");
+//                structheaderx.SetValue("SHIP_COND", "X");
+//                structheaderx.SetValue("BILL_DATE", "X");
+//                structheaderx.SetValue("CURRENCY", "X");
+//                contractDetails.SetValue("CONTRACT_HEADER_INX", structheaderx);
 
 
-            RfcSessionManager.BeginContext(destination);
-            contractDetails.Invoke(destination);
-            COMMITcontractDetails.Invoke(destination);
-            RfcSessionManager.EndContext(destination);
+//                //TABLES
 
-            Contract = contractDetails.GetValue("SALESDOCUMENT").ToString();
-            }
-             catch (RfcCommunicationException e)
-             {
+//                RfcStructureMetadata CONTRACTITESM = repo.GetStructureMetadata("BAPISDITM");
+//                IRfcStructure structcontractitesm = CONTRACTITESM.CreateStructure();
+//                structcontractitesm.SetValue("ITM_NUMBER", "000010");
+//                structcontractitesm.SetValue("MATERIAL", "000000000000000" + column_data[16].ToString());
+//                structcontractitesm.SetValue("TARGET_QTY", "1000000");
+//                structcontractitesm.SetValue("ITEM_CATEG", column_data[18].ToString());
+//                IRfcTable tblcontractitems = contractDetails.GetTable("CONTRACT_ITEMS_IN");
+//                tblcontractitems.Append(structcontractitesm);
+//                contractDetails.SetValue("CONTRACT_ITEMS_IN", tblcontractitems);
 
-             }
-             catch (RfcLogonException e)
-             {
-                 // user could not logon...
-             }
-             catch (RfcAbapRuntimeException e)
-             {
-                 // serious problem on ABAP system side...
-             }
-             catch (RfcAbapBaseException e)
-             {
-                 // The function module returned an ABAP exception, an ABAP message
-                 // or an ABAP class-based exception...
-             }
-             return Contract;
+//                RfcStructureMetadata CONTRACTITESMx = repo.GetStructureMetadata("BAPISDITMX");
+//                IRfcStructure structcontractitesmx = CONTRACTITESMx.CreateStructure();
+//                structcontractitesmx.SetValue("ITM_NUMBER", "000010");
+//                structcontractitesmx.SetValue("MATERIAL", "X");
+//                structcontractitesmx.SetValue("TARGET_QTY", "X");
+//                structcontractitesmx.SetValue("ITEM_CATEG", "X");
+//                IRfcTable tblcontractitemsx = contractDetails.GetTable("CONTRACT_ITEMS_INX");
+//                tblcontractitemsx.Append(structcontractitesmx);
+//                contractDetails.SetValue("CONTRACT_ITEMS_INX", tblcontractitemsx);
 
+//                RfcStructureMetadata CONTRACTPARTNER = repo.GetStructureMetadata("BAPIPARNR");
+//                IRfcStructure structcontractpartner = CONTRACTPARTNER.CreateStructure();
+//                structcontractpartner.SetValue("PARTN_ROLE", column_data[19]);
+//                structcontractpartner.SetValue("PARTN_NUMB", "0000000" + column_data[20]);
+//                IRfcTable tblcontractpartner = contractDetails.GetTable("CONTRACT_PARTNERS");
+//                tblcontractpartner.Append(structcontractpartner);
+//                contractDetails.SetValue("CONTRACT_PARTNERS", tblcontractpartner);
 
-            #endregion
-        }
-        public string GetCustomerDetails(RfcDestination destination)
-        {
+//                RfcStructureMetadata conditions = repo.GetStructureMetadata("BAPICOND");
+//                IRfcStructure structconditions = conditions.CreateStructure();
+//                structconditions.SetValue("ITM_NUMBER", "000010");
+//                structconditions.SetValue("COND_TYPE", column_data[21]);
+//                structconditions.SetValue("CURRENCY", column_data[22]);
+//                IRfcTable tblconditions = contractDetails.GetTable("CONTRACT_CONDITIONS_IN");
+//                tblconditions.Append(structconditions);
+//                contractDetails.SetValue("CONTRACT_CONDITIONS_IN", tblconditions);
 
-            string businesspartner="";
-            try
-            {
-          
-            RfcRepository repo = destination.Repository;
+//                RfcStructureMetadata conditionsx = repo.GetStructureMetadata("BAPICONDX");
+//                IRfcStructure structconditionsx = conditionsx.CreateStructure();
+//                structconditionsx.SetValue("ITM_NUMBER", "000010");
+//                structconditionsx.SetValue("COND_TYPE", "X");
+//                structconditionsx.SetValue("CURRENCY", "X");
+//                IRfcTable tblconditionsx = contractDetails.GetTable("CONTRACT_CONDITIONS_INX");
+//                tblconditionsx.Append(structconditionsx);
+//                contractDetails.SetValue("CONTRACT_CONDITIONS_INX", tblconditionsx);
 
-            #region Partner
+//                RfcStructureMetadata contractdata = repo.GetStructureMetadata("BAPICTR");
+//                IRfcStructure structcontract = contractdata.CreateStructure();
+//                structcontract.SetValue("ITM_NUMBER", "000010");
+//                structcontract.SetValue("CON_ST_DAT", DateFormat(column_data[23].Split('/')));
+//                structcontract.SetValue("CON_EN_DAT", DateFormat(column_data[24].Split('/')));
+//                IRfcTable tblcontract = contractDetails.GetTable("CONTRACT_DATA_IN");
+//                tblcontract.Append(structcontract);
+//                contractDetails.SetValue("CONTRACT_DATA_IN", tblcontract);
 
-            IRfcFunction orderDetails = repo.CreateFunction("BAPI_BUPA_CREATE_FROM_DATA");
+//                RfcStructureMetadata contractdataX = repo.GetStructureMetadata("BAPICTRX");
+//                IRfcStructure structcontractX = contractdataX.CreateStructure();
+//                structcontractX.SetValue("ITM_NUMBER", "000010");
+//                structcontractX.SetValue("CON_ST_DAT", "X");
+//                structcontractX.SetValue("CON_EN_DAT", "X");
+//                IRfcTable tblcontractx = contractDetails.GetTable("CONTRACT_DATA_INX");
+//                tblcontractx.Append(structcontractX);
+//                contractDetails.SetValue("CONTRACT_DATA_INX", tblcontractx);
 
-            orderDetails.SetValue("PARTNERCATEGORY", "1");
-            orderDetails.SetValue("PARTNERGROUP", "0001");
-
-
-            RfcStructureMetadata metaData = repo.GetStructureMetadata("BAPIBUS1006_CENTRAL");
-            IRfcStructure structPartners = metaData.CreateStructure();
-            structPartners.SetValue("TITLE_KEY", "0001");
-            orderDetails.SetValue("CENTRALDATA", structPartners);
-
-
-            RfcStructureMetadata am1 = repo.GetStructureMetadata("BAPIBUS1006_CENTRAL_PERSON");
-            IRfcStructure person = am1.CreateStructure();
-            person.SetValue("FIRSTNAME", "TEST3");
-            person.SetValue("LASTNAME", "LASTNAME3");
-            person.SetValue("SEX", "1");
-            person.SetValue("BIRTHDATE", "19770101");
-            orderDetails.SetValue("CENTRALDATAPERSON", person);
-
-
-            RfcStructureMetadata am2 = repo.GetStructureMetadata("BAPIBUS1006_ADDRESS");
-            IRfcStructure ADD = am2.CreateStructure();
-            ADD.SetValue("CITY", "CHENNAI");
-            ADD.SetValue("POSTL_COD1", "610001");
-            ADD.SetValue("STREET", "TEST");
-            ADD.SetValue("HOUSE_NO", "STR");
-            ADD.SetValue("HOUSE_NO2", "34");
-            ADD.SetValue("COUNTRY", "IN");
-            ADD.SetValue("REGION", "22");
-            ADD.SetValue("EXTADDRESSNUMBER", "444");
-            orderDetails.SetValue("ADDRESSDATA", ADD);
-
-            RfcStructureMetadata PHONE = repo.GetStructureMetadata("BAPIADTEL");
-            IRfcStructure structPartners1 = PHONE.CreateStructure();
-            structPartners1.SetValue("TELEPHONE", "8098582858");
-            structPartners1.SetValue("EXTENSION", "555");
-            IRfcTable tblPartner1 = orderDetails.GetTable("TELEFONDATA");
-            tblPartner1.Append(structPartners1);
-            orderDetails.SetValue("TELEFONDATA", tblPartner1);
+//                IRfcFunction COMMITcontractDetails = repo.CreateFunction("BAPI_TRANSACTION_COMMIT");
 
 
-            RfcStructureMetadata FAXDATA = repo.GetStructureMetadata("BAPIADFAX");
-            IRfcStructure structfaxdata = FAXDATA.CreateStructure();
-            structfaxdata.SetValue("FAX", "8098582858");
-            structfaxdata.SetValue("EXTENSION", "555");
-            IRfcTable tblfaxdata = orderDetails.GetTable("FAXDATA");
-            tblfaxdata.Append(structfaxdata);
-            orderDetails.SetValue("FAXDATA", tblfaxdata);
+//                RfcSessionManager.BeginContext(destination);
+//                contractDetails.Invoke(destination);
+//                COMMITcontractDetails.Invoke(destination);
+//                RfcSessionManager.EndContext(destination);
 
-            RfcStructureMetadata EMAILDATA = repo.GetStructureMetadata("BAPIADSMTP");
-            IRfcStructure structemaildata = EMAILDATA.CreateStructure();
-            structemaildata.SetValue("E_MAIL", "rram_2000@hotmail.com");
-            IRfcTable tblemaildata = orderDetails.GetTable("E_MAILDATA");
-            tblemaildata.Append(structemaildata);
-            orderDetails.SetValue("E_MAILDATA", tblemaildata);
+//                Contract = contractDetails.GetValue("SALESDOCUMENT").ToString();
+//            }
+//            catch (RfcCommunicationException e)
+//            {
 
+//            }
+//            catch (RfcLogonException e)
+//            {
+//                // user could not logon...
+//            }
+//            catch (RfcAbapRuntimeException e)
+//            {
+//                // serious problem on ABAP system side...
+//            }
+//            catch (RfcAbapBaseException e)
+//            {
+//                // The function module returned an ABAP exception, an ABAP message
+//                // or an ABAP class-based exception...
+//            }
+//            catch (Exception ex)
+//            {
 
-            IRfcFunction COMMITDetails = repo.CreateFunction("BAPI_TRANSACTION_COMMIT");
-            COMMITDetails.SetValue("WAIT", "X");
-
-            RfcSessionManager.BeginContext(destination);
-            orderDetails.Invoke(destination);
-            COMMITDetails.Invoke(destination);
-            RfcSessionManager.EndContext(destination);
-
-            businesspartner = orderDetails.GetValue("BUSINESSPARTNER").ToString();
-
-
-
-            #endregion 
-
-            
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-            
-                
-            }
-            catch (RfcCommunicationException e)
-            {
-
-            }
-            catch (RfcLogonException e)
-            {
-                // user could not logon...
-            }
-            catch (RfcAbapRuntimeException e)
-            {
-                // serious problem on ABAP system side...
-            }
-            catch (RfcAbapBaseException e)
-            {
-                // The function module returned an ABAP exception, an ABAP message
-                // or an ABAP class-based exception...
-            }
-            return businesspartner;
-
-        }
-    }
+//            }
+//            return Contract;
 
 
-    class SAPSystemConnect : IDestinationConfiguration
-    {
+//            #endregion
+//        }
+//        public string DateFormat(string[] BirthDateSeperation)
+//        {
+//            string year = BirthDateSeperation[2].Substring(0, 4);
+//            string Month = BirthDateSeperation[0].ToString().Length == 1 ? "0" + BirthDateSeperation[0].ToString() : BirthDateSeperation[0].ToString();
+//            string Day = BirthDateSeperation[1].ToString().Length == 1 ? "0" + BirthDateSeperation[1].ToString() : BirthDateSeperation[1].ToString();
+//            return year + Month + Day;
 
-        public bool ChangeEventsSupported()
-        {
-            return true;
-        }
-        public event RfcDestinationManager.ConfigurationChangeHandler ConfigurationChanged;
+//        }
+//        public string GetCustomerDetails(RfcDestination destination, string[] column_data)
+//        {
+
+//            string businesspartner = "";
+//            try
+//            {
+
+//                RfcRepository repo = destination.Repository;
+
+//                #region Partner
+
+//                IRfcFunction orderDetails = repo.CreateFunction("BAPI_BUPA_CREATE_FROM_DATA");
+
+//                orderDetails.SetValue("PARTNERCATEGORY", column_data[0].ToString());
+//                orderDetails.SetValue("PARTNERGROUP", "000" + column_data[1].ToString());
 
 
-        public RfcConfigParameters GetParameters(string destinationName)
-        {
+//                RfcStructureMetadata metaData = repo.GetStructureMetadata("BAPIBUS1006_CENTRAL");
+//                IRfcStructure structPartners = metaData.CreateStructure();
+//                structPartners.SetValue("TITLE_KEY", "0001");
+//                orderDetails.SetValue("CENTRALDATA", structPartners);
 
-            RfcConfigParameters parms = new RfcConfigParameters();
 
-            if (destinationName.Equals("mySAPdestination"))
-            {
-                parms.Add(RfcConfigParameters.AppServerHost, "172.25.121.226");
-                parms.Add(RfcConfigParameters.SystemNumber, "06");
-                parms.Add(RfcConfigParameters.User, "33937");
-                parms.Add(RfcConfigParameters.Password, "welcome456");
-                parms.Add(RfcConfigParameters.Client, "700");
-                parms.Add(RfcConfigParameters.Language, "EN");
-                parms.Add(RfcConfigParameters.PoolSize, "5");
-                parms.Add(RfcConfigParameters.PeakConnectionsLimit, "10");
-                parms.Add(RfcConfigParameters.IdleTimeout, "600");
+//                RfcStructureMetadata am1 = repo.GetStructureMetadata("BAPIBUS1006_CENTRAL_PERSON");
+//                IRfcStructure person = am1.CreateStructure();
+//                person.SetValue("FIRSTNAME", column_data[2].ToString());
+//                person.SetValue("LASTNAME", column_data[3].ToString());
+//                person.SetValue("SEX", column_data[4].ToString());
+//                person.SetValue("BIRTHDATE", DateFormat(column_data[5].Split('/')));
+//                orderDetails.SetValue("CENTRALDATAPERSON", person);
 
-            }
-            return parms;
-        }
 
-    }
-}
+//                RfcStructureMetadata am2 = repo.GetStructureMetadata("BAPIBUS1006_ADDRESS");
+//                IRfcStructure ADD = am2.CreateStructure();
+//                ADD.SetValue("CITY", column_data[9].ToString());
+//                ADD.SetValue("POSTL_COD1", column_data[10].ToString());
+//                ADD.SetValue("STREET", column_data[8].ToString());
+//                ADD.SetValue("HOUSE_NO", column_data[6].ToString());
+//                ADD.SetValue("HOUSE_NO2", column_data[7].ToString());
+//                ADD.SetValue("COUNTRY", column_data[11].ToString());
+//                ADD.SetValue("REGION", column_data[12].ToString());
+//                ADD.SetValue("EXTADDRESSNUMBER", "123");
+//                orderDetails.SetValue("ADDRESSDATA", ADD);
+
+//                RfcStructureMetadata PHONE = repo.GetStructureMetadata("BAPIADTEL");
+//                IRfcStructure structPartners1 = PHONE.CreateStructure();
+//                structPartners1.SetValue("TELEPHONE", column_data[13].ToString());
+//                structPartners1.SetValue("EXTENSION", column_data[14].ToString());
+//                IRfcTable tblPartner1 = orderDetails.GetTable("TELEFONDATA");
+//                tblPartner1.Append(structPartners1);
+//                orderDetails.SetValue("TELEFONDATA", tblPartner1);
+
+
+//                RfcStructureMetadata FAXDATA = repo.GetStructureMetadata("BAPIADFAX");
+//                IRfcStructure structfaxdata = FAXDATA.CreateStructure();
+//                structfaxdata.SetValue("FAX", column_data[15].ToString());
+//                structfaxdata.SetValue("EXTENSION", column_data[16].ToString());
+//                IRfcTable tblfaxdata = orderDetails.GetTable("FAXDATA");
+//                tblfaxdata.Append(structfaxdata);
+//                orderDetails.SetValue("FAXDATA", tblfaxdata);
+
+//                RfcStructureMetadata EMAILDATA = repo.GetStructureMetadata("BAPIADSMTP");
+//                IRfcStructure structemaildata = EMAILDATA.CreateStructure();
+//                structemaildata.SetValue("E_MAIL", column_data[17].ToString());
+//                IRfcTable tblemaildata = orderDetails.GetTable("E_MAILDATA");
+//                tblemaildata.Append(structemaildata);
+//                orderDetails.SetValue("E_MAILDATA", tblemaildata);
+
+
+//                IRfcFunction COMMITDetails = repo.CreateFunction("BAPI_TRANSACTION_COMMIT");
+//                COMMITDetails.SetValue("WAIT", "X");
+
+//                RfcSessionManager.BeginContext(destination);
+//                orderDetails.Invoke(destination);
+//                COMMITDetails.Invoke(destination);
+//                RfcSessionManager.EndContext(destination);
+
+//                businesspartner = orderDetails.GetValue("BUSINESSPARTNER").ToString();
+
+
+
+//                #endregion
+
+
+//                GC.Collect();
+//                GC.WaitForPendingFinalizers();
+
+
+//            }
+//            catch (RfcCommunicationException e)
+//            {
+
+//            }
+//            catch (RfcLogonException e)
+//            {
+//                // user could not logon...
+//            }
+//            catch (RfcAbapRuntimeException e)
+//            {
+//                // serious problem on ABAP system side...
+//            }
+//            catch (RfcAbapBaseException e)
+//            {
+//                // The function module returned an ABAP exception, an ABAP message
+//                // or an ABAP class-based exception...
+//            }
+//            catch (Exception ex)
+//            {
+
+//            }
+//            return businesspartner;
+
+//        }
+//    }
+
+
+//    class SAPSystemConnect : IDestinationConfiguration
+//    {
+
+//        public bool ChangeEventsSupported()
+//        {
+//            return true;
+//        }
+//        public event RfcDestinationManager.ConfigurationChangeHandler ConfigurationChanged;
+
+
+//        public RfcConfigParameters GetParameters(string destinationName)
+//        {
+
+//            RfcConfigParameters parms = new RfcConfigParameters();
+
+//            if (destinationName.Equals("mySAPdestination"))
+//            {
+//                parms.Add(RfcConfigParameters.AppServerHost, "172.25.121.226");
+//                parms.Add(RfcConfigParameters.SystemNumber, "06");
+//                parms.Add(RfcConfigParameters.User, "33937");
+//                parms.Add(RfcConfigParameters.Password, "welcome456");
+//                parms.Add(RfcConfigParameters.Client, "700");
+//                parms.Add(RfcConfigParameters.Language, "EN");
+//                parms.Add(RfcConfigParameters.PoolSize, "5");
+//                parms.Add(RfcConfigParameters.PeakConnectionsLimit, "10");
+//                parms.Add(RfcConfigParameters.IdleTimeout, "600");
+
+//            }
+//            return parms;
+//        }
+
+//    }
+//}

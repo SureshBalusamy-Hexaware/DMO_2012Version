@@ -243,7 +243,7 @@ html, body, form {
 /*-------------------------------------*/
 /*--------------Table start------------------*/
 .table-div {
-    padding: 0px 30px;
+    padding: 30px 30px;
 }
 
     .table-div table {
@@ -1296,7 +1296,7 @@ legend {
 .loginBox {
     background-color: #FFF;
     /*border: 1px solid #ABAAAA;*/
-    border:1px solid #ddd;
+    border: 1px solid #ddd;
     border-radius: 5px;
     color: #333;
     display: inline-block;
@@ -1437,4 +1437,3 @@ span.cellWithoutBackground {
 .failed {
     color: red;
 }
-

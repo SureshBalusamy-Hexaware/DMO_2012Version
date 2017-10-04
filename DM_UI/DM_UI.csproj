@@ -103,15 +103,6 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.SQLServer.ManagedDTS, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
-    <Reference Include="SAPConnectionManager">
-      <HintPath>C:\Users\33937\Downloads\SAP_Connection_Manager\SAP Connection Manager\SAPConnectionManager.dll</HintPath>
-    </Reference>
-    <Reference Include="sapnco">
-      <HintPath>C:\Users\33937\Downloads\SAP_Connection_Manager\SAP Connection Manager\sapnco.dll</HintPath>
-    </Reference>
-    <Reference Include="sapnco_utils">
-      <HintPath>C:\Users\33937\Downloads\SAP_Connection_Manager\SAP Connection Manager\sapnco_utils.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />

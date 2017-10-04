@@ -1626,13 +1626,6 @@
       <Parameter Name="Status_Code" Mode="InOut" Type="String" />
       <Parameter Name="Message" Mode="InOut" Type="String" />
     </FunctionImport>
-    <FunctionImport Name="CMN_GET_ROLE_SP" ReturnType="Collection(DM_MetaDataModel.CMN_GET_ROLE_SP_Result)">
-      <Parameter Name="Client_ID" Mode="In" Type="String" />
-      <Parameter Name="Project_ID" Mode="In" Type="String" />
-      <Parameter Name="Role_ID" Mode="In" Type="Int64" />
-      <Parameter Name="Status_code" Mode="InOut" Type="String" />
-      <Parameter Name="Message" Mode="InOut" Type="String" />
-    </FunctionImport>
     <FunctionImport Name="CMN_INSERT_ROLE_SP">
       <Parameter Name="Client_ID" Mode="In" Type="String" />
       <Parameter Name="Project_ID" Mode="In" Type="String" />
@@ -1647,15 +1640,6 @@
       <Parameter Name="Client_ID" Mode="In" Type="String" />
       <Parameter Name="Project_ID" Mode="In" Type="String" />
       <Parameter Name="Role_ID" Mode="In" Type="Int64" />
-      <Parameter Name="Status_Code" Mode="InOut" Type="String" />
-      <Parameter Name="Message" Mode="InOut" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="DRD_INSERT_AUTOMATON_TEMPLATE_SP" ReturnType="Collection(DM_MetaDataModel.DRD_INSERT_AUTOMATON_TEMPLATE_SP_Result)">
-      <Parameter Name="Client_ID" Mode="In" Type="String" />
-      <Parameter Name="Project_ID" Mode="In" Type="String" />
-      <Parameter Name="Atmtn_Template_ID" Mode="In" Type="String" />
-      <Parameter Name="Role_ID" Mode="In" Type="Int64" />
-      <Parameter Name="Updated_By" Mode="In" Type="String" />
       <Parameter Name="Status_Code" Mode="InOut" Type="String" />
       <Parameter Name="Message" Mode="InOut" Type="String" />
     </FunctionImport>
@@ -1704,6 +1688,84 @@
       <Parameter Name="Template_ID_out" Mode="InOut" Type="Int64" />
       <Parameter Name="Status_Code" Mode="InOut" Type="String" />
       <Parameter Name="Message" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="CMN_GET_ROLE_SP" ReturnType="Collection(DM_MetaDataModel.CMN_GET_ROLE_SP_Result)">
+      <Parameter Name="Client_ID" Mode="In" Type="String" />
+      <Parameter Name="Project_ID" Mode="In" Type="String" />
+      <Parameter Name="Role_ID" Mode="In" Type="Int32" />
+      <Parameter Name="Status_code" Mode="InOut" Type="String" />
+      <Parameter Name="Message" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="DRD_INSERT_AUTOMATON_TEMPLATE_SP" ReturnType="Collection(DM_MetaDataModel.DRD_INSERT_AUTOMATON_TEMPLATE_SP_Result1)">
+      <Parameter Name="Client_ID" Mode="In" Type="String" />
+      <Parameter Name="Project_ID" Mode="In" Type="String" />
+      <Parameter Name="Atmtn_Template_ID" Mode="In" Type="String" />
+      <Parameter Name="Role_ID" Mode="In" Type="Int32" />
+      <Parameter Name="Updated_By" Mode="In" Type="String" />
+      <Parameter Name="Status_Code" Mode="InOut" Type="String" />
+      <Parameter Name="Message" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="DRD_INS_AUTOMATON_TEMPLATE_SP">
+      <Parameter Name="Client_ID" Mode="In" Type="String" />
+      <Parameter Name="Project_ID" Mode="In" Type="String" />
+      <Parameter Name="Atmtn_Template_ID" Mode="In" Type="String" />
+      <Parameter Name="Role_ID" Mode="In" Type="Int32" />
+      <Parameter Name="Updated_By" Mode="In" Type="String" />
+      <Parameter Name="Status_Code" Mode="InOut" Type="String" />
+      <Parameter Name="Message" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="PRC_TO_CHNAGE_DATE_FORMAT_DDMMYY_SP">
+      <Parameter Name="Table_Name" Mode="In" Type="String" />
+      <Parameter Name="Schema_Name" Mode="In" Type="String" />
+      <Parameter Name="Column_Type" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="PRC_TO_CHNAGE_DATE_FORMAT_SP">
+      <Parameter Name="Change_What" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="PRC_TO_CREATE_RULE_RUN_AUDIT_TABLE" />
+    <FunctionImport Name="PRC_TO_CREATE_RUN_AUDIT_TABLE" />
+    <FunctionImport Name="proc_generate_excel_with_columns" ReturnType="Collection(String)">
+      <Parameter Name="db_name" Mode="In" Type="String" />
+      <Parameter Name="table_name" Mode="In" Type="String" />
+      <Parameter Name="file_name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="PROC_GET_PRIMARY_KEY_COL_SP">
+      <Parameter Name="Table_name" Mode="In" Type="String" />
+      <Parameter Name="Primary_Key_Col" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="PROF_CREATE_DYN_VIEW_BTCH_SP">
+      <Parameter Name="Client_ID" Mode="In" Type="String" />
+      <Parameter Name="Project_ID" Mode="In" Type="String" />
+      <Parameter Name="Template_name" Mode="In" Type="String" />
+      <Parameter Name="Role_ID" Mode="In" Type="Int64" />
+      <Parameter Name="ViewName" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Profiler_Get_Batch_Template_Detail" ReturnType="Collection(String)">
+      <Parameter Name="Profile_ID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="PROFILER_INS_XML_RESULTS_SP">
+      <Parameter Name="xml" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="PROFILER_INSERT_PROF_AUDIT_SP">
+      <Parameter Name="Client_ID" Mode="In" Type="String" />
+      <Parameter Name="Project_ID" Mode="In" Type="String" />
+      <Parameter Name="Profile_ID" Mode="In" Type="Int64" />
+      <Parameter Name="Batch_ID" Mode="In" Type="String" />
+      <Parameter Name="Status_Code" Mode="InOut" Type="String" />
+      <Parameter Name="Message" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="PROFILER_PROFILE_ALL_TABLES_SP">
+      <Parameter Name="Client_ID" Mode="In" Type="String" />
+      <Parameter Name="Project_ID" Mode="In" Type="String" />
+      <Parameter Name="Config_ID" Mode="In" Type="Int64" />
+      <Parameter Name="Table_name_list" Mode="In" Type="String" />
+      <Parameter Name="Profiled_By" Mode="In" Type="String" />
+      <Parameter Name="Status_Code" Mode="InOut" Type="String" />
+      <Parameter Name="Message" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="ProfilerGetRecCount">
+      <Parameter Name="TableName" Mode="In" Type="String" />
+      <Parameter Name="COUNT" Mode="InOut" Type="Int32" />
     </FunctionImport>
   </EntityContainer>
   <ComplexType Name="HXR_GET_CLIENT_SP_Result">
@@ -2841,5 +2903,102 @@
     <Property Type="Int64" Name="RuleCategory_ID" Nullable="true" />
     <Property Type="Int64" Name="Rule_ID" Nullable="true" />
     <Property Type="String" Name="Run_Number" Nullable="true" MaxLength="100" />
+  </ComplexType>
+  <ComplexType Name="CMN_GET_ROLE_SP1_Result">
+    <Property Type="Int64" Name="Role_ID" Nullable="false" />
+    <Property Type="String" Name="Role_Name" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="Role_Description" Nullable="true" MaxLength="200" />
+    <Property Type="Int32" Name="Active_Flag" Nullable="false" />
+    <Property Type="Byte" Name="Sys_Admin" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="CMN_GET_ROLE_SP_Result1">
+    <Property Type="Int64" Name="Role_ID" Nullable="false" />
+    <Property Type="String" Name="Role_Name" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="Role_Description" Nullable="true" MaxLength="200" />
+    <Property Type="Int32" Name="Active_Flag" Nullable="false" />
+    <Property Type="Byte" Name="Sys_Admin" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="DRD_INSERT_AUTOMATON_TEMPLATE_SP_Result1">
+    <Property Type="String" Name="Client_ID" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="Project_ID" Nullable="false" MaxLength="12" />
+    <Property Type="String" Name="Template_Name" Nullable="false" MaxLength="500" />
+    <Property Type="String" Name="Source_Table_Name" Nullable="false" MaxLength="500" />
+    <Property Type="String" Name="Source_Column_Name" Nullable="false" MaxLength="500" />
+    <Property Type="Int64" Name="Source_Col_Seq_No" Nullable="false" />
+    <Property Type="String" Name="Source_Data_Type" Nullable="false" MaxLength="250" />
+    <Property Type="String" Name="Source_Expression" Nullable="true" MaxLength="1000" />
+    <Property Type="String" Name="Target_Table_Name" Nullable="false" MaxLength="500" />
+    <Property Type="String" Name="Target_Column_Name" Nullable="false" MaxLength="500" />
+    <Property Type="Int64" Name="Target_Col_Seq_No" Nullable="false" />
+    <Property Type="String" Name="Target_Data_Type" Nullable="false" MaxLength="500" />
+    <Property Type="String" Name="Target_Expression" Nullable="true" MaxLength="2000" />
+    <Property Type="String" Name="IS_Key_Column" Nullable="false" MaxLength="1" />
+    <Property Type="String" Name="Modified_By" Nullable="false" MaxLength="500" />
+    <Property Type="Int64" Name="Tool_ID" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="PROF_GET_BATCH_STATUS_SP1_Result">
+    <Property Type="String" Name="Template_Name" Nullable="false" MaxLength="150" />
+    <Property Type="String" Name="Table_Name" Nullable="false" MaxLength="150" />
+    <Property Type="Int64" Name="Profile_ID" Nullable="false" />
+    <Property Type="String" Name="Profile_Status" Nullable="false" MaxLength="2" />
+    <Property Type="String" Name="Profile_Description" Nullable="true" />
+    <Property Type="String" Name="Start_Time" Nullable="true" MaxLength="4000" />
+    <Property Type="String" Name="End_Time" Nullable="true" MaxLength="4000" />
+    <Property Type="Int32" Name="Total_Count" Nullable="true" />
+    <Property Type="Int64" Name="ROW_NUM" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="PROF_GET_PROFILER_RULE_SP1_Result">
+    <Property Type="String" Name="table_name" Nullable="false" MaxLength="356" />
+    <Property Type="String" Name="Column_Name" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="Conditional_Clause" Nullable="true" MaxLength="500" />
+    <Property Type="DateTime" Name="Create_Date" Nullable="false" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="PROFILER_GET_DISTINCT_TEMPLATES_SP1_Result">
+    <Property Type="String" Name="Template_Name" Nullable="false" MaxLength="150" />
+    <Property Type="Int64" Name="profile_ID" Nullable="true" />
+    <Property Type="Int64" Name="Config_ID" Nullable="false" />
+    <Property Type="String" Name="Table_Name" Nullable="false" MaxLength="150" />
+    <Property Type="String" Name="Table_Schema" Nullable="true" MaxLength="100" />
+  </ComplexType>
+  <ComplexType Name="PROFILER_GET_PARAMETER_VALUES_SP1_Result">
+    <Property Type="Int64" Name="Parameter_ID" Nullable="false" />
+    <Property Type="String" Name="Prameter_value" Nullable="true" MaxLength="25" />
+    <Property Type="Int64" Name="Tool_ID" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="PROFILER_GET_TABLE_DETAILS_SP1_Result">
+    <Property Type="String" Name="Table_Name" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Column_Name" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="data_type" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Key_column" Nullable="true" MaxLength="150" />
+  </ComplexType>
+  <ComplexType Name="PROFILER_GET_TEMPALTE_DETAILS_SP1_Result">
+    <Property Type="String" Name="Template_Name" Nullable="false" MaxLength="150" />
+    <Property Type="String" Name="Table_Name" Nullable="false" MaxLength="251" />
+    <Property Type="String" Name="Column_Name" Nullable="false" MaxLength="150" />
+    <Property Type="Boolean" Name="Null_Ratio_Profile" Nullable="false" />
+    <Property Type="Boolean" Name="Statistics_Profile" Nullable="false" />
+    <Property Type="Boolean" Name="Value_Distribution_Profile" Nullable="false" />
+    <Property Type="Boolean" Name="Length_Distribution_Profile" Nullable="false" />
+    <Property Type="Boolean" Name="Pattern_Profile" Nullable="false" />
+    <Property Type="Boolean" Name="Candidate_Key_Profile" Nullable="false" />
+    <Property Type="Boolean" Name="Profiling_Status" Nullable="false" />
+    <Property Type="String" Name="Profile_Type" Nullable="false" MaxLength="12" />
+    <Property Type="Int64" Name="Rec_Count" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="PROFILER_GET_TEMPLATE_SP1_Result">
+    <Property Type="Int64" Name="Profile_ID" Nullable="true" />
+    <Property Type="String" Name="Column_Name" Nullable="false" MaxLength="150" />
+    <Property Type="String" Name="Data_Type" Nullable="false" MaxLength="50" />
+    <Property Type="Boolean" Name="Null_Ratio_Profile" Nullable="false" />
+    <Property Type="Boolean" Name="Statistics_Profile" Nullable="false" />
+    <Property Type="Boolean" Name="Value_Distribution_Profile" Nullable="false" />
+    <Property Type="Boolean" Name="Length_Distribution_Profile" Nullable="false" />
+    <Property Type="Boolean" Name="Pattern_Profile" Nullable="false" />
+    <Property Type="Boolean" Name="Candidate_Key_Profile" Nullable="false" />
+    <Property Type="Boolean" Name="Profiling_Status" Nullable="false" />
+    <Property Type="DateTime" Name="Create_Date" Nullable="false" Precision="23" />
+    <Property Type="String" Name="Created_By" Nullable="true" MaxLength="150" />
+    <Property Type="DateTime" Name="Modified_Date" Nullable="true" Precision="23" />
+    <Property Type="String" Name="Modified_By" Nullable="true" MaxLength="150" />
   </ComplexType>
 </Schema>

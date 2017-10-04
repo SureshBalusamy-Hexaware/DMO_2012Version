@@ -119,7 +119,8 @@ public static class CommonHelper
             oda.Fill(dt);
             connExcel.Close();
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             connExcel.Close();
             throw ex;
         }
@@ -167,7 +168,7 @@ public static class CommonHelper
     public static void ToCSV(this DataTable dtDataTable, string strFilePath)
     {
         StreamWriter sw = new StreamWriter(strFilePath, false);
-        
+
         //headers  
         for (int i = 0; i < dtDataTable.Columns.Count; i++)
         {
@@ -203,7 +204,45 @@ public static class CommonHelper
             sw.Write(sw.NewLine);
         }
         sw.Close();
-    }  
+    }
+    public static void DirectoryCheck()
+    {
+        string[] repositoryUrls = ConfigurationManager.AppSettings.AllKeys
+                                 .Where(key => key.StartsWith("Path_"))
+                                 .Select(key => ConfigurationManager.AppSettings[key])
+                                 .ToArray();
 
+        for (int i = 0; i < repositoryUrls.Length; i++)
+        {
+            try
+            {
+                string _path = repositoryUrls[i];
+
+                if (_path == "AutomaticDBDeploy")
+                    _path = AppDomain.CurrentDomain.BaseDirectory + _path + "\\";
+
+                string dir = Path.GetDirectoryName(_path);
+
+                if (!Directory.Exists(dir))                
+                    Directory.CreateDirectory(dir);
+                
+            }
+            catch (Exception __ex)
+            {
+                string filePath = AppDomain.CurrentDomain.BaseDirectory;
+                string _filePath = Path.GetFullPath(@"C:\DMO\directoryCheck.txt");
+
+                //if (!System.IO.File.Exists(_filePath))
+                //    System.IO.File.Create(_filePath);
+
+                using (StreamWriter writer = new StreamWriter(_filePath, true))
+                {
+                    writer.WriteLine("Date :" + DateTime.Now.ToString() +
+                        " Message :" + __ex.Message + "<br/>" + Environment.NewLine + "" + Environment.NewLine);
+                    writer.WriteLine(Environment.NewLine + "-----------------------------------------------------------------------------" + Environment.NewLine);
+                }
+            }
+        }
+    }
 }
 

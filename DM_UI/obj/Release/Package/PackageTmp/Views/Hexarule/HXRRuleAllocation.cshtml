@@ -8,7 +8,9 @@
     <script src="~/Scripts/jquery-1.9.1.min.js"></script>
     <script src="~/Scripts/i18n/grid.locale-en.js"></script>
     <script src="~/Scripts/jquery.jqGrid.min.js" type="text/javascript"></script>*@
+
 <script type="text/javascript">
+  
     $(document).ready(function () {
         var baseUrl = '@Url.Content("~/")';
 
@@ -25,7 +27,7 @@
             var project_ID = $("#hdnProjectId").val();
             var TableName = $("#select_table option:selected").text();
             var ConfigID = $("#hdnConfigID").val();
-
+            ShowProgress();
             $.ajax({
                 type: "GET",
                 //url: "GenerateObjects",
@@ -38,9 +40,11 @@
                     else
                         alert("Code generation failed.");
                     //  alert(data);
+                    HideProgress();
                 },
                 error: function (xhr) {
                     alert(xhr.statusText);
+                    HideProgress();
                 }
             });
         });
@@ -301,6 +305,12 @@
         //});
     }
 </script>
+
+<div class="loadingprogress" align="center">
+    Please wait.<br />
+    <br />
+    <img src="../Images/loader.gif" alt=" " />
+</div>
 <div class="content-body" style="width:100%;">
     <div style="width:98%;margin:auto;">
         <div class="group">

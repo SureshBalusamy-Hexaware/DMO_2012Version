@@ -48,7 +48,15 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
+
+
         baseUrl = '@Url.Content("~/")';
+        var client_ID = $("#hdnClientId").val();
+        var project_ID = $("#hdnProjectId").val();
+        var DatabaseIP = $("#hdnDatabaseIP").val();
+        var SourceTarget = $("#hdnSourceTarget").val();
+        var DatabaseName = $("#hdnDatabaseName").val();
+        var configId = $("#hdnConfigId").val();
 
         InitializingGrid();
 
@@ -59,7 +67,7 @@
             var _entityColDataType = $.ajax({
                 url: baseUrl + "api/AutomatAPI/GetTargetDBDataTypes",
                 data: { client_ID: $("#hdnClientId").val(), project_ID: $("#hdnProjectId").val(), config_ID: $("#hdnSourceConfigID").val() },
-                async: false,
+               async: false,
                 dataType: 'json',
                 success: function (data, result) {
                     if (!result) alert('Failure to retrieve record.');
@@ -145,7 +153,7 @@
                                             column_name: rowData.Column_Name,
                                             config_ID: '' + $("#hdnSourceConfigID").val() + '',
                                             columnType: '' + selectedVal + ''
-                                        },
+                                       },
                                         async: false,
                                         dataType: 'json',
                                         success: function (data, result) {
@@ -242,7 +250,7 @@
                     for (i = 0; i < l; i++) {
                         $this.jqGrid('editRow', ids[i], true);
                     }
-                    $($this.jqGrid()[0].grid.bDiv)[0].scrollTop = 0;
+                   $($this.jqGrid()[0].grid.bDiv)[0].scrollTop = 0;
 
                     if (_Validate() > 0) {
                         alert('Please review Validation Status.');
@@ -277,7 +285,7 @@
 
                 var Attribute_Business_Name = rowData['Attribute_Business_Name'];
                 if (Attribute_Business_Name.indexOf("input") != -1) {
-                    Attribute_Business_Name = jQuery('#' + (l) + '_Attribute_Business_Name').val();
+                   Attribute_Business_Name = jQuery('#' + (l) + '_Attribute_Business_Name').val();
                 }
                 if (Desscription.indexOf("input") != -1) {
                     Desscription = jQuery('#' + (l) + '_Attribute_Desscription').val();
@@ -319,7 +327,7 @@
             var baseUrl = '@Url.Content("~/")';
             $("#lodingMessage").hide();
 
-
+            var selectedColumn = [];
             var data = {};
             var grid = $('#grdBusinessName');
             var rows = grid.jqGrid('getDataIDs');
@@ -424,7 +432,7 @@
 
             $.ajax({
                 type: "POST",
-                data: JSON.stringify(SourceEntity),
+               data: JSON.stringify(SourceEntity),
                 url: baseUrl + "Api/AutomatAPI/SaveEntityList",
                 dataType: "json",
                 contentType: "application/json",
@@ -493,7 +501,7 @@
                 mytype: 'POST',
                 datatype: 'json',
                 url: ServiceUrl,
-                height: 100,
+                height: 50,
                 width: 1250,
                 autowidth: false,
                 shrinkToFit: false,
@@ -570,7 +578,7 @@
                 loadonce: true,
                 gridview: true,
                 pginput: false,
-                pgbuttons: false,
+               pgbuttons: false,
                 scrollOffset: 0,
                 reloadAfterSubmit: true,
                 showButtonPanel: true,
@@ -580,6 +588,8 @@
                     var rowData = $(this).jqGrid('getRowData', rowId);
                     $("#hdnTableName").val(rowData.Entity_Name);
                     BusinessCol(rowData.Entity_ID);
+                    $("#sampledata").jqGrid("GridUnload");
+                    $("#btnshowdata").attr('value', 'ShowData');
 
                 },
                 gridComplete: function () {
@@ -596,6 +606,97 @@
             });
         }
 
+        $("#btnshowdata").click(function () {
+            debugger;
+            if ($("#btnshowdata").val() == "ShowData") {
+                $("#btnshowdata").attr('value', 'HideData');
+                var rowcount = "ALL";
+                var colModel = new Array();
+                var colNames = new Array();
+                var ColumnNames;
+                var ColumnModel;
+                var rows;
+                var selectedColumns = '*';
+                rows = null;
+                $.ajax({
+                    url: baseUrl + "api/DataProfilerAPI/GetProfilerSampleDataColHeader",
+                    type: "GET",
+                    contentType: "application/json; charset=utf-8",
+                    data: { config_ID: configId, table_name: $("#hdnTableName").val(), column_list: selectedColumns, row_count: rowcount },
+                    dataType: "json",
+                    cache: false,
+                    success: function (data) {
+                        debugger;
+                        var cols = data.ColNames;
+                        //rows = data.rows;
+                        if (cols == undefined) { alert(data); return; }
+                        var uFields = cols.split(',');
+                        var columns = [];
+                        for (var i = 0; i < uFields.length ; i++) {
+                            columns.push(uFields[i]);
+                        }
+
+                        ColumnNames = columns;
+
+                        var uFields = cols.split(',');
+                        var columns = [];
+                        for (var i = 0; i < uFields.length ; i++) {
+                            columns.push({ name: uFields[i], index: uFields[i], width: 80, search: true, sortable: false, editable: true, hidden: false, align: 'center' });
+                        }
+                        ColumnModel = columns;
+
+                        $("#sampledata").GridUnload();
+                        $grid = jQuery("#sampledata").jqGrid({
+                            mtype: 'GET',
+                            postData: { config_ID: configId, table_name: $("#hdnTableName").val(), column_list: selectedColumns, row_count: rowcount },
+                            url: baseUrl + "api/DataProfilerAPI/GetProfilerSampleData",
+                            datatype: 'json',
+                            height: 250,
+                            //multiselect: true,
+                            width: 1250,
+                            rowNum: 50,
+                            rowList: [5, 10, 20, 50],
+                            colNames: ColumnNames,
+                            colModel: ColumnModel,
+                            pager: '#pager_sampledata',
+                            viewrecords: true,
+                            //loadonce: true,
+                            //gridview: true,
+                            //sortorder: 'asc',
+                            autowidth: false,
+                            shrinkToFit: false,
+                            scrollOffset: 0,
+                            showButtonPanel: true,
+                            closeAfterEdit: true,
+                            caption: 'Sample Data',
+                            //loadComplete: function () {
+                            //    var rows = $("#sampledata").jqGrid('getDataIDs');
+                            //    for (i = 0; i < rows.length; i++) {
+                            //        var rowData = $("#sampledata").getRowData(rows[i]);
+                            //        var columnName = rowData.columnname;
+                            //        if ($.inArray(columnName, selectedColumn) != -1) {
+                            //            $("#sampledata").jqGrid('setSelection', rows[i], true);
+                            //        }
+                            //    }
+                            //    //reset the array
+                            //    selectedColumn = [];
+                            //}
+                        })
+                        jQuery("#sampledata").jqGrid('sortableRows');
+                    },
+                    error: function (err) {
+                        //alert("Error with AJAX callback. Error: " + err.responseText);
+                        alert(err);
+                    }
+                });
+
+            }
+            else {
+                $("#btnshowdata").attr('value', 'ShowData');
+                $("#sampledata").jqGrid("GridUnload");
+            }
+
+        });
 
         $("#btnsaveBusinessCol").click(function () {
 
@@ -798,6 +899,9 @@
         }
     }
 
+
+
+
 </script>
 <div class="content-body width-per-100">
     <div style="width:95%;margin:auto;">
@@ -818,7 +922,9 @@
             </div>
         </div>
         <div class="group text-align-right" style="margin-bottom:0;width:97.5%;">
+            <input type="button" id="btnshowdata" value="ShowData" class="form-button">
             <input type="button" id="btnsave" value="Save" class="form-button">
+
         </div>
         <div class="group" style="margin-bottom:0;">
             <div class="div-header" style="margin-bottom:5px;">
@@ -841,6 +947,17 @@
                 Data Type(s)<span id="spDataType"></span>
             </div>
         </div>
+        <div class="group" style="margin-bottom:0;">
+            <div class="div-header" style="margin-bottom:5px;">
+                <span class="control-label label-bold">Data</span>
+            </div>
+        </div>
+        <div class="group">
+            <div class="form-group" style="padding-left: 10px;">
+                <table id="sampledata" class="scroll" align='center'></table>
+                <div id="pager_sampledata" class="scroll"></div>
+            </div>
+        </div>
     </div>
 </div>
 <input type="hidden" value="" id="hdnTableName" />
@@ -848,6 +965,4 @@
 <input type="hidden" value="@ViewData["ProjectID"]" id="hdnProjectId" />
 <input type="hidden" value="@ViewData["ToolID"]" id="hdnToolID" />
 <input type="hidden" value="@ViewData["SourceConfigID"]" id="hdnSourceConfigID" />
-
-
-
+<input type="hidden" value="@ViewData["ConfigID"]" id="hdnConfigId" />

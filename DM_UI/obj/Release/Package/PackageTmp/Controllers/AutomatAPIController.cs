@@ -1613,7 +1613,7 @@ namespace DM_UI.Controllers
             string project_ID = UIProperties.Sessions.Client.project_ID;
             string StatusCode = string.Empty, Message = string.Empty;
 
-            _autoMS.GenerateReconcile(Client_ID, project_ID, Template_ID, UIProperties.Sessions.Client.Role_ID, UIProperties.Sessions.Client.User_ID.ToString(), ref StatusCode, ref Message);
+            _autoMS.GenerateReconcile(Client_ID, project_ID, Template_ID, Convert.ToInt16(UIProperties.Sessions.Client.Role_ID), UIProperties.Sessions.Client.User_ID.ToString(), ref StatusCode, ref Message);
 
             //return Json(new { StatusCode = StatusCode, Message = Message }, JsonRequestBehavior.AllowGet);
             return new { StatusCode = StatusCode, Message = Message };
